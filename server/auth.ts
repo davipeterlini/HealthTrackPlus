@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Express } from "express";
+import { Express, Request } from "express";
 import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
@@ -65,6 +65,67 @@ export function setupAuth(app: Express) {
       }
     }),
   );
+  
+  // Configure Google OAuth Strategy if credentials are available
+  const googleClientId = process.env.GOOGLE_CLIENT_ID;
+  const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  
+  if (googleClientId && googleClientSecret) {
+    // Determine callback URL based on the environment
+    let callbackURL = 'http://localhost:5000/api/auth/google/callback';
+    
+    // In Replit environment, use the replit.dev domain which is the actual domain being used
+    if (process.env.REPLIT_DOMAINS) {
+      // Use the first domain from REPLIT_DOMAINS environment variable
+      const replitDomain = process.env.REPLIT_DOMAINS.split(',')[0].trim();
+      callbackURL = `https://${replitDomain}/api/auth/google/callback`;
+    }
+      
+    console.log('Google OAuth configured with callback URL:', callbackURL);
+      
+    passport.use(
+      new GoogleStrategy(
+        {
+          clientID: googleClientId,
+          clientSecret: googleClientSecret,
+          callbackURL,
+          scope: ['profile', 'email'],
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          try {
+            // Check if user exists by email
+            const email = profile.emails?.[0]?.value;
+            if (!email) {
+              return done(new Error('No email found in Google profile'));
+            }
+            
+            let user = await storage.getUserByEmail(email);
+            
+            // If user doesn't exist, create a new one
+            if (!user) {
+              const username = `google_${profile.id}`;
+              const name = profile.displayName || 'Google User';
+              
+              // Generate a random password for the Google user
+              const randomPass = randomBytes(16).toString('hex');
+              
+              // Create user with Google profile data
+              user = await storage.createUser({
+                username,
+                email,
+                password: await hashPassword(randomPass),
+                name
+              });
+            }
+            
+            return done(null, user);
+          } catch (error) {
+            return done(error);
+          }
+        }
+      )
+    );
+  }
 
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser(async (id: number, done) => {
@@ -166,4 +227,68 @@ export function setupAuth(app: Express) {
       return res.status(400).json({ message: "Invalid verification code" });
     }
   });
+  
+  // Google OAuth routes
+  if (googleClientId && googleClientSecret) {
+    // Check if Google OAuth is configured
+    app.get("/api/auth/google/is-configured", (req, res) => {
+      res.json({ isConfigured: true });
+    });
+    
+    // Route to initiate Google OAuth
+    app.get("/api/auth/google", (req, res, next) => {
+      console.log('Starting Google OAuth flow');
+      passport.authenticate("google", {
+        scope: ["profile", "email"]
+      })(req, res, next);
+    });
+    
+    // Callback route after Google authenticates the user
+    app.get(
+      "/api/auth/google/callback",
+      (req, res, next) => {
+        console.log('Google callback received:', req.url);
+        next();
+      },
+      (req, res, next) => {
+        passport.authenticate("google", (err, user, info) => {
+          if (err) {
+            console.error('Google authentication error:', err);
+            return res.redirect("/auth?error=google_auth_failed");
+          }
+          
+          if (!user) {
+            console.error('Google authentication failed:', info);
+            return res.redirect("/auth?error=google_auth_failed");
+          }
+          
+          req.login(user, (loginErr) => {
+            if (loginErr) {
+              console.error('Login error after Google auth:', loginErr);
+              return res.redirect("/auth?error=login_failed");
+            }
+            
+            next();
+          });
+        })(req, res, next);
+      },
+      (req, res) => {
+        // Successful authentication, redirect to dashboard
+        console.log('Google authentication successful, redirecting to dashboard');
+        res.redirect("/dashboard");
+      }
+    );
+  } else {
+    // Return not configured if Google credentials are missing
+    app.get("/api/auth/google/is-configured", (req, res) => {
+      res.json({ isConfigured: false });
+    });
+    
+    // Placeholder route for when Google OAuth is not configured
+    app.get("/api/auth/google", (req, res) => {
+      res.status(501).json({ 
+        error: "Google OAuth is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables." 
+      });
+    });
+  }
 }
