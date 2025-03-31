@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginData } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
+import { useOAuthConfig } from "@/hooks/use-oauth-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,6 +24,7 @@ interface LoginFormProps {
 
 export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
   const { loginMutation } = useAuth();
+  const { googleEnabled, isLoadingGoogleConfig } = useOAuthConfig();
   const [rememberMe, setRememberMe] = useState(false);
   
   const form = useForm<LoginData>({
@@ -41,8 +43,15 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
   };
   
   const handleOAuthLogin = (provider: string) => {
-    // In a real app, this would redirect to the OAuth provider
-    alert(`${provider} OAuth login would be implemented here.`);
+    if (provider === "Google" && googleEnabled) {
+      // Redirect to Google OAuth endpoint
+      window.location.href = "/api/auth/google";
+    } else if (provider === "Google" && !googleEnabled) {
+      alert("Google login is not configured yet.");
+    } else {
+      // For other providers like Facebook (not yet implemented)
+      alert(`${provider} OAuth login is not implemented yet.`);
+    }
   };
   
   return (
@@ -122,14 +131,20 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
             type="button"
             variant="outline"
             onClick={() => handleOAuthLogin("Google")}
+            disabled={isLoadingGoogleConfig || loginMutation.isPending}
           >
-            <FaGoogle className="mr-2 h-4 w-4" />
+            {isLoadingGoogleConfig ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <FaGoogle className="mr-2 h-4 w-4" />
+            )}
             Google
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => handleOAuthLogin("Facebook")}
+            disabled={loginMutation.isPending}
           >
             <FaFacebook className="mr-2 h-4 w-4" />
             Facebook
