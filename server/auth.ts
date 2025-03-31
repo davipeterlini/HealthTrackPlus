@@ -30,13 +30,27 @@ async function comparePasswords(supplied: string, stored: string) {
 }
 
 export function setupAuth(app: Express) {
+  // Use a more robust session configuration
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "healthtrack-super-secret-key",
-    resave: false,
-    saveUninitialized: false,
+    // Enable these options for more reliable session persistence
+    resave: true,
+    saveUninitialized: true,
     store: storage.sessionStore,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      // In Replit environment, secure cookies work with https:// domains
+      secure: process.env.REPLIT_DOMAINS ? true : false,
+      httpOnly: true,
+      // Using 'lax' for better compatibility with redirects
+      sameSite: "lax"
+    },
+    // Log session activity for debugging
+    rolling: true, // Refresh session with each response
+    name: "healthtrack.sid" // Custom cookie name
   };
 
+  // Trust the proxy when in production (like Replit's environment)
   app.set("trust proxy", 1);
   app.use(session(sessionSettings));
   app.use(passport.initialize());
@@ -204,11 +218,28 @@ export function setupAuth(app: Express) {
   });
 
   app.get("/api/user", (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!req.isAuthenticated()) {
+      console.log("User is not authenticated during /api/user request");
+      return res.sendStatus(401);
+    }
     
     // Strip password from response
     const { password: _, ...userWithoutPassword } = req.user as SelectUser;
+    console.log("User authenticated and returned:", req.user?.id);
     res.json(userWithoutPassword);
+  });
+  
+  // Add a check-auth endpoint for client to check after redirection
+  app.get("/api/check-auth", (req, res) => {
+    const isAuthenticated = req.isAuthenticated();
+    console.log("Check auth request, authenticated:", isAuthenticated, "sessionID:", req.sessionID);
+    res.json({ 
+      authenticated: isAuthenticated,
+      user: isAuthenticated ? (() => {
+        const { password: _, ...userWithoutPassword } = req.user as SelectUser;
+        return userWithoutPassword;
+      })() : null
+    });
   });
   
   // Verify 2FA code endpoint - in a real app this would validate against a stored secret
@@ -248,7 +279,17 @@ export function setupAuth(app: Express) {
       "/api/auth/google/callback",
       (req, res, next) => {
         console.log('Google callback received:', req.url);
-        next();
+        // Log all available cookies to debug session issues
+        console.log('Cookies received:', req.headers.cookie);
+        console.log('Session ID before auth:', req.sessionID);
+        
+        // Ensure session is saved before continuing
+        req.session.save((err) => {
+          if (err) {
+            console.error('Error saving session before auth:', err);
+          }
+          next();
+        });
       },
       (req, res, next) => {
         passport.authenticate("google", (err, user, info) => {
@@ -262,20 +303,46 @@ export function setupAuth(app: Express) {
             return res.redirect("/auth?error=google_auth_failed");
           }
           
+          console.log('Google auth successful for user:', user.id, user.email);
+          
+          // Set some flags in the session for tracking
+          req.session.oauthLogin = true;
+          req.session.oauthTimestamp = Date.now();
+          
           req.login(user, (loginErr) => {
             if (loginErr) {
               console.error('Login error after Google auth:', loginErr);
               return res.redirect("/auth?error=login_failed");
             }
             
-            next();
+            console.log('User logged in successfully:', req.isAuthenticated());
+            console.log('Session ID:', req.sessionID);
+            // Log session data for debugging
+            console.log('Session data:', req.session);
+            
+            // Explicitly save session after login before continuing
+            req.session.save((saveErr) => {
+              if (saveErr) {
+                console.error('Error saving session after login:', saveErr);
+                return res.redirect("/auth?error=session_save_failed");
+              }
+              next();
+            });
           });
         })(req, res, next);
       },
       (req, res) => {
-        // Successful authentication, redirect to dashboard
-        console.log('Google authentication successful, redirecting to dashboard');
-        res.redirect("/dashboard");
+        // Verify authentication one more time
+        if (req.isAuthenticated()) {
+          console.log('Authentication verified, redirecting to dashboard');
+          
+          // Add a timestamp to the URL to force client to revalidate cache
+          const timestamp = Date.now();
+          res.redirect(`/dashboard?auth_success=${timestamp}`);
+        } else {
+          console.error('User not authenticated after login, redirecting to auth page');
+          res.redirect("/auth?error=session_failed");
+        }
       }
     );
   } else {
