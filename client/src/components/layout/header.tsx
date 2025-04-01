@@ -59,27 +59,27 @@ export function Header() {
     <header className="bg-white dark:bg-gray-800 dark:border-b dark:border-gray-700 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex md:hidden">
+          <div className="flex items-center md:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-gray-500">
-                  <Menu className="h-6 w-6" />
+                <Button variant="ghost" size="icon" className="text-gray-500 -ml-3">
+                  <Menu className="h-5 w-5" />
                   <span className="sr-only">Open main menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="dark:bg-gray-800 dark:border-gray-700">
+              <SheetContent side="left" className="dark:bg-gray-800 dark:border-gray-700 w-[280px]">
                 <SheetHeader>
                   <SheetTitle className="text-left text-primary dark:text-primary-400 text-xl font-bold">Medicine Subscription Club</SheetTitle>
                 </SheetHeader>
-                <nav className="mt-6 flex flex-col space-y-1">
+                <nav className="mt-4 flex flex-col space-y-0.5">
                   {navItems.map((item) => (
                     <div key={item.path}>
                       <Link 
                         href={item.path}
-                        className={`block px-3 py-2 text-base font-medium rounded-md cursor-pointer ${
+                        className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer transition-colors ${
                           location === item.path
-                            ? "bg-primary-50 dark:bg-primary-900/20 text-primary dark:text-primary-foreground"
-                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
+                            ? "bg-primary/10 text-primary dark:bg-primary-900/20 dark:text-primary-foreground"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-gray-100"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
