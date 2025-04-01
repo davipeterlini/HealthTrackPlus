@@ -16,18 +16,18 @@ interface ActivityBreakdownProps {
 export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   // Activity type distribution (for demo purposes)
   const activityTypes = [
-    { type: "Walking", percentage: 58, color: "bg-primary-600" },
-    { type: "Running", percentage: 22, color: "bg-green-500" },
-    { type: "Cycling", percentage: 12, color: "bg-purple-500" },
-    { type: "Other", percentage: 8, color: "bg-blue-500" }
+    { type: "Walking", percentage: 58, color: "bg-primary-600 dark:bg-primary-500" },
+    { type: "Running", percentage: 22, color: "bg-green-500 dark:bg-green-400" },
+    { type: "Cycling", percentage: 12, color: "bg-purple-500 dark:bg-purple-400" },
+    { type: "Other", percentage: 8, color: "bg-blue-500 dark:bg-blue-400" }
   ];
   
   // Heart rate zones (for demo purposes)
   const heartRateZones = [
-    { name: "High", minutes: 12, color: "bg-red-50 text-red-800" },
-    { name: "Cardio", minutes: 25, color: "bg-orange-50 text-orange-800" },
-    { name: "Fat Burn", minutes: 38, color: "bg-yellow-50 text-yellow-800" },
-    { name: "Warm Up", minutes: 15, color: "bg-green-50 text-green-800" }
+    { name: "High", minutes: 12, color: "bg-red-50 text-red-800 dark:bg-red-900/30 dark:text-red-300" },
+    { name: "Cardio", minutes: 25, color: "bg-orange-50 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300" },
+    { name: "Fat Burn", minutes: 38, color: "bg-yellow-50 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300" },
+    { name: "Warm Up", minutes: 15, color: "bg-green-50 text-green-800 dark:bg-green-900/30 dark:text-green-300" }
   ];
   
   // Connected devices (for demo purposes)
@@ -47,7 +47,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   ];
   
   return (
-    <Card>
+    <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="text-gray-900 dark:text-gray-100">Activity Breakdown</CardTitle>
       </CardHeader>
@@ -124,7 +124,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
             <div className="mt-3 space-y-2">
               <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
                 <div className="flex items-center">
-                  <Heart className="h-5 w-5 text-red-500 mr-3" />
+                  <Heart className="h-5 w-5 text-red-500 dark:text-red-400 mr-3" />
                   <span className="text-sm text-gray-700 dark:text-gray-300">Average Heart Rate</span>
                 </div>
                 <div className="flex items-center">
@@ -135,7 +135,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
               
               <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
                 <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 dark:text-primary-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                   <span className="text-sm text-gray-700 dark:text-gray-300">Elevation Gain</span>
@@ -148,7 +148,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
               
               <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
                 <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 dark:text-green-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                   <span className="text-sm text-gray-700 dark:text-gray-300">Pace</span>
