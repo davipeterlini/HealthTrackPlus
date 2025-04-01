@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
+import { useDevMode } from "@/hooks/use-dev-mode";
 import { Loader2 } from "lucide-react";
 import { Redirect, Route } from "wouter";
 
@@ -10,6 +11,12 @@ export function ProtectedRoute({
   component: () => React.JSX.Element;
 }) {
   const { user, isLoading } = useAuth();
+  const { skipAuth } = useDevMode();
+
+  // Em modo de desenvolvimento com skipAuth ativado, ignoramos a verificação de autenticação
+  if (skipAuth) {
+    return <Route path={path} component={Component} />;
+  }
 
   if (isLoading) {
     return (
