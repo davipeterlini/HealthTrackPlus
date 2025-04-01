@@ -29,7 +29,7 @@ export function DevModeToggle() {
 
   return (
     <Draggable handle=".drag-handle">
-      <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg border dark:border-gray-700 z-50 flex flex-col">
+      <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-900 shadow-lg rounded-lg border dark:border-gray-700 z-50 flex flex-col">
         <div className="drag-handle flex items-center justify-between p-2 cursor-move border-b dark:border-gray-700">
           <div className="flex items-center">
             <GripHorizontal className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" />

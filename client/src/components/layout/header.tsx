@@ -56,13 +56,13 @@ export function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow">
+    <header className="bg-white dark:bg-gray-900 dark:border-b dark:border-gray-800 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/">
-                <h1 className="text-xl font-bold text-primary cursor-pointer">HealthTrack</h1>
+                <h1 className="text-xl font-bold text-primary dark:text-primary-foreground cursor-pointer">HealthTrack</h1>
               </Link>
             </div>
             <nav className="hidden md:ml-10 md:flex md:space-x-8">
@@ -133,9 +133,9 @@ export function Header() {
                   <span className="sr-only">Open main menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
+              <SheetContent side="left" className="dark:bg-gray-900 dark:border-gray-800">
                 <SheetHeader>
-                  <SheetTitle className="text-left text-primary text-xl font-bold">HealthTrack</SheetTitle>
+                  <SheetTitle className="text-left text-primary dark:text-primary-foreground text-xl font-bold">HealthTrack</SheetTitle>
                 </SheetHeader>
                 <nav className="mt-6 flex flex-col space-y-1">
                   {navItems.map((item) => (
@@ -156,7 +156,7 @@ export function Header() {
                   ))}
                 </nav>
 
-                <div className="mt-auto pt-6 border-t border-gray-200">
+                <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800">
                   <div className="flex items-center px-3 py-2">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
@@ -181,9 +181,9 @@ export function Header() {
                     >
                       Sign out
                     </Button>
-                    <div className="mt-2 px-3 pt-2 border-t border-gray-200">
+                    <div className="mt-2 px-3 pt-2 border-t border-gray-200 dark:border-gray-800">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium">Tema</span>
+                        <span className="text-sm font-medium dark:text-gray-300">Tema</span>
                         <ThemeToggle />
                       </div>
                     </div>

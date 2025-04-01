@@ -56,7 +56,7 @@ export default function AuthPage() {
     <div className="min-h-screen w-full flex bg-gray-50 dark:bg-gray-900">
       {/* Auth form section */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-8">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md bg-white dark:bg-gray-800 dark:border-gray-700">
           <CardContent className="pt-6">
             <div className="mb-8 text-center">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">HealthTrack</h1>
