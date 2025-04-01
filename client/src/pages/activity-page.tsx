@@ -21,18 +21,18 @@ export default function ActivityPage() {
         {isLoading ? (
           <>
             <div className="lg:col-span-2">
-              <Card>
-                <Skeleton className="h-80 w-full" />
+              <Card className="dark:bg-gray-800 dark:border-gray-700">
+                <Skeleton className="h-80 w-full dark:bg-gray-700" />
               </Card>
             </div>
-            <Card>
-              <Skeleton className="h-80 w-full" />
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
+              <Skeleton className="h-80 w-full dark:bg-gray-700" />
             </Card>
           </>
         ) : (
           <>
             <div className="lg:col-span-2">
-              <Card>
+              <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <ActivitySummary 
                   activities={activities || []} 
                   selectedDate={selectedDate}

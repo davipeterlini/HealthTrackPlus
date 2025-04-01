@@ -68,16 +68,15 @@ export function Header() {
             <nav className="hidden md:ml-10 md:flex md:space-x-8">
               {navItems.map((item) => (
                 <div key={item.path}>
-                  <Link href={item.path}>
-                    <div
-                      className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${
-                        location === item.path
-                          ? "border-primary text-primary dark:text-primary-foreground"
-                          : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
-                      }`}
-                    >
-                      {item.label}
-                    </div>
+                  <Link 
+                    href={item.path}
+                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${
+                      location === item.path
+                        ? "border-primary text-primary dark:text-primary-foreground"
+                        : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
+                    }`}
+                  >
+                    {item.label}
                   </Link>
                 </div>
               ))}
@@ -140,17 +139,16 @@ export function Header() {
                 <nav className="mt-6 flex flex-col space-y-1">
                   {navItems.map((item) => (
                     <div key={item.path}>
-                      <Link href={item.path}>
-                        <div 
-                          className={`px-3 py-2 text-base font-medium rounded-md cursor-pointer ${
-                            location === item.path
-                              ? "bg-primary-50 dark:bg-primary-900/20 text-primary dark:text-primary-foreground"
-                              : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
-                          }`}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.label}
-                        </div>
+                      <Link 
+                        href={item.path}
+                        className={`block px-3 py-2 text-base font-medium rounded-md cursor-pointer ${
+                          location === item.path
+                            ? "bg-primary-50 dark:bg-primary-900/20 text-primary dark:text-primary-foreground"
+                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.label}
                       </Link>
                     </div>
                   ))}

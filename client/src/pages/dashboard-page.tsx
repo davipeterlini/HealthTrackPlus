@@ -69,8 +69,8 @@ export default function DashboardPage() {
             <div className="mt-5 space-y-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary-100">
-                    <Calendar className="h-4 w-4 text-primary-600" />
+                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900 dark:bg-opacity-30">
+                    <Calendar className="h-4 w-4 text-primary-600 dark:text-primary-400" />
                   </span>
                 </div>
                 <div className="ml-4">
@@ -81,8 +81,8 @@ export default function DashboardPage() {
               
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-green-100">
-                    <Thermometer className="h-4 w-4 text-green-600" />
+                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 dark:bg-opacity-30">
+                    <Thermometer className="h-4 w-4 text-green-600 dark:text-green-400" />
                   </span>
                 </div>
                 <div className="ml-4">
@@ -93,8 +93,8 @@ export default function DashboardPage() {
               
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-purple-100">
-                    <Video className="h-4 w-4 text-purple-600" />
+                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 dark:bg-opacity-30">
+                    <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                   </span>
                 </div>
                 <div className="ml-4">
@@ -124,8 +124,8 @@ export default function DashboardPage() {
                     <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true"></span>
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-green-100">
-                          <Calendar className="h-4 w-4 text-green-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-green-100 dark:bg-green-900 dark:bg-opacity-30">
+                          <Calendar className="h-4 w-4 text-green-600 dark:text-green-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
@@ -145,8 +145,8 @@ export default function DashboardPage() {
                     <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true"></span>
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-primary-100">
-                          <Heart className="h-4 w-4 text-primary-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-primary-100 dark:bg-primary-900 dark:bg-opacity-30">
+                          <Heart className="h-4 w-4 text-primary-600 dark:text-primary-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
@@ -166,8 +166,8 @@ export default function DashboardPage() {
                     <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true"></span>
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-purple-100">
-                          <Video className="h-4 w-4 text-purple-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-purple-100 dark:bg-purple-900 dark:bg-opacity-30">
+                          <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
@@ -186,8 +186,8 @@ export default function DashboardPage() {
                   <div className="relative pb-0">
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-blue-100">
-                          <Footprints className="h-4 w-4 text-blue-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-blue-100 dark:bg-blue-900 dark:bg-opacity-30">
+                          <Footprints className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
