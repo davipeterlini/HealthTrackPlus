@@ -46,17 +46,17 @@ export default function AuthPage() {
   
   if (showTwoFactor) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
         <TwoFactorForm onBack={() => setShowTwoFactor(false)} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen w-full flex bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen w-full flex bg-gray-50 dark:bg-gray-800">
       {/* Auth form section */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-8">
-        <Card className="w-full max-w-md bg-white dark:bg-gray-800 dark:border-gray-700">
+        <Card className="w-full max-w-md bg-white dark:bg-gray-900 dark:border-gray-700">
           <CardContent className="pt-6">
             <div className="mb-8 text-center">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">HealthTrack</h1>

@@ -47,21 +47,21 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   ];
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="dark:bg-gray-900 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="text-gray-900 dark:text-gray-100">Activity Breakdown</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Activity Types</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">Activity Types</h4>
           <div className="mt-2 space-y-4">
             {activityTypes.map((item, i) => (
               <div key={i}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{item.type}</span>
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{item.percentage}%</span>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-200">{item.type}</span>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-200">{item.percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                   <div className={`${item.color} h-2 rounded-full`} style={{ width: `${item.percentage}%` }}></div>
                 </div>
               </div>
@@ -70,11 +70,11 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
         </div>
         
         <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Heart Rate Zones</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">Heart Rate Zones</h4>
           
           <div className="mt-2 grid grid-cols-2 gap-4">
             {heartRateZones.map((zone, i) => (
-              <div key={i} className={`${zone.color} dark:bg-gray-800 dark:border dark:border-gray-700 rounded-md p-3`}>
+              <div key={i} className={`${zone.color} dark:bg-gray-900 dark:border dark:border-gray-700 rounded-md p-3`}>
                 <span className="text-xs font-medium">{zone.name}</span>
                 <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{zone.minutes} min</p>
               </div>
@@ -83,22 +83,22 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
         </div>
         
         <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Connected Devices</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">Connected Devices</h4>
           
           <div className="mt-3 space-y-3">
             {connectedDevices.map((device, i) => (
               <div key={i} className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                     {device.type === 'watch' ? (
-                      <Watch className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                      <Watch className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                     ) : (
-                      <Smartphone className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                      <Smartphone className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                     )}
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{device.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Last synced: {device.lastSynced}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-300">Last synced: {device.lastSynced}</p>
                   </div>
                 </div>
                 <div>
@@ -119,13 +119,13 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
         
         {activity && activity.steps > 0 && (
           <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-            <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Activity Details</h4>
+            <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">Activity Details</h4>
             
             <div className="mt-3 space-y-2">
-              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
                 <div className="flex items-center">
                   <Heart className="h-5 w-5 text-red-500 dark:text-red-400 mr-3" />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Average Heart Rate</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-200">Average Heart Rate</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-sm font-medium dark:text-gray-100">76 bpm</span>
@@ -133,12 +133,12 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
                 </div>
               </div>
               
-              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
                 <div className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 dark:text-primary-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Elevation Gain</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-200">Elevation Gain</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-sm font-medium dark:text-gray-100">48 m</span>
@@ -146,12 +146,12 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
                 </div>
               </div>
               
-              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
                 <div className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 dark:text-green-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Pace</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-200">Pace</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-sm font-medium dark:text-gray-100">9:24 /km</span>

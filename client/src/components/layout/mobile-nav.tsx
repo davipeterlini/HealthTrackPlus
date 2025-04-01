@@ -19,7 +19,7 @@ export function MobileNav() {
   ];
   
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shadow-lg z-10">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg z-10">
       <div className="grid grid-cols-5">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -29,7 +29,7 @@ export function MobileNav() {
             <div key={item.path} className="flex justify-center">
               <Link href={item.path} className={`flex flex-col items-center py-3 ${
                 isActive 
-                  ? 'text-primary dark:text-primary-foreground font-medium' 
+                  ? 'text-primary dark:text-primary-400 font-medium' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}>
                 <Icon className="h-5 w-5" />
