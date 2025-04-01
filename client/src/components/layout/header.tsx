@@ -62,7 +62,6 @@ export function Header() {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/">
-                <h1 className="text-xl font-bold text-primary dark:text-primary-400 cursor-pointer">HealthTrack</h1>
               </Link>
             </div>
             <nav className="hidden md:ml-10 md:flex md:space-x-8">
@@ -134,7 +133,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="left" className="dark:bg-gray-800 dark:border-gray-700">
                 <SheetHeader>
-                  <SheetTitle className="text-left text-primary dark:text-primary-400 text-xl font-bold">HealthTrack</SheetTitle>
+                  <SheetTitle className="text-left text-primary dark:text-primary-400 text-xl font-bold">Medicine Subscription Club</SheetTitle>
                 </SheetHeader>
                 <nav className="mt-6 flex flex-col space-y-1">
                   {navItems.map((item) => (
