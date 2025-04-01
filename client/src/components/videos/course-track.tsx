@@ -28,14 +28,14 @@ export function CourseTrack({ track }: CourseTrackProps) {
   const sortedVideos = trackVideos?.sort((a, b) => a.order - b.order) || [];
   
   return (
-    <Card className="bg-gray-50 shadow-sm overflow-hidden">
-      <div className="px-4 py-5 sm:px-6 bg-primary-50 border-b border-primary-100">
+    <Card className="bg-gray-50 dark:bg-gray-800 shadow-sm overflow-hidden dark:border-gray-700">
+      <div className="px-4 py-5 sm:px-6 bg-primary-50 dark:bg-primary-900 border-b border-primary-100 dark:border-primary-800">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-base font-medium text-primary-900">{track.title}</h4>
-            <p className="mt-1 text-sm text-primary-700">{track.description}</p>
+            <h4 className="text-base font-medium text-primary-900 dark:text-primary-100">{track.title}</h4>
+            <p className="mt-1 text-sm text-primary-700 dark:text-primary-300">{track.description}</p>
           </div>
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-200">
             {track.videoCount} Videos
           </span>
         </div>
@@ -43,7 +43,7 @@ export function CourseTrack({ track }: CourseTrackProps) {
           <div className="relative pt-1">
             <div className="flex mb-2 items-center justify-between">
               <div>
-                <span className="text-xs font-semibold inline-block text-primary-700">
+                <span className="text-xs font-semibold inline-block text-primary-700 dark:text-primary-300">
                   {trackProgress}% Complete
                 </span>
               </div>
@@ -54,7 +54,7 @@ export function CourseTrack({ track }: CourseTrackProps) {
       </div>
       
       {expanded && (
-        <div className="px-4 py-5 sm:p-6 divide-y divide-gray-200">
+        <div className="px-4 py-5 sm:p-6 divide-y divide-gray-200 dark:divide-gray-700">
           {isLoading ? (
             Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="py-4">
@@ -86,8 +86,8 @@ export function CourseTrack({ track }: CourseTrackProps) {
                 <div key={video.id} className="py-4">
                   <div className="flex items-center">
                     <div className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${
-                      status === "completed" ? "bg-green-100" : 
-                      status === "inProgress" ? "bg-yellow-100" : "bg-gray-100"
+                      status === "completed" ? "bg-green-100 dark:bg-green-900" : 
+                      status === "inProgress" ? "bg-yellow-100 dark:bg-yellow-900" : "bg-gray-100 dark:bg-gray-800"
                     }`}>
                       {status === "completed" ? (
                         <CheckCircle className="h-5 w-5 text-green-500" />
@@ -98,15 +98,15 @@ export function CourseTrack({ track }: CourseTrackProps) {
                       )}
                     </div>
                     <div className="ml-3 flex-1">
-                      <p className="text-sm font-medium text-gray-900">{video.title} ({video.duration})</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{video.title} ({video.duration})</p>
                       {status === "completed" && (
-                        <p className="text-xs text-gray-500">Completed on Oct 15, 2023</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Completed on Oct 15, 2023</p>
                       )}
                       {status === "inProgress" && (
-                        <p className="text-xs text-gray-500">In progress - {progress}% complete</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">In progress - {progress}% complete</p>
                       )}
                       {status === "locked" && (
-                        <p className="text-xs text-gray-500">Complete previous videos to unlock</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Complete previous videos to unlock</p>
                       )}
                     </div>
                     <Button
@@ -126,12 +126,12 @@ export function CourseTrack({ track }: CourseTrackProps) {
         </div>
       )}
       
-      <div className="px-4 py-4 sm:px-6 bg-gray-50 border-t border-gray-200">
+      <div className="px-4 py-4 sm:px-6 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => setExpanded(!expanded)}
-          className="text-primary-600 hover:text-primary-700"
+          className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
         >
           {expanded ? "Hide details" : "Show all videos"} {expanded ? "↑" : "↓"}
         </Button>

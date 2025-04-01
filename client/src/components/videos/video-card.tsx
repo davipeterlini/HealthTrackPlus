@@ -76,9 +76,9 @@ export function VideoCard({ video }: VideoCardProps) {
   };
   
   const getProgressColor = (progress: number): string => {
-    if (progress === 0) return "bg-gray-100 text-gray-800";
-    if (progress === 100) return "bg-green-100 text-green-800";
-    return "bg-yellow-100 text-yellow-800";
+    if (progress === 0) return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
+    if (progress === 100) return "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300";
+    return "bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300";
   };
   
   // For video thumbnail, we'll use a color background since we can't load images
@@ -93,18 +93,18 @@ export function VideoCard({ video }: VideoCardProps) {
   const bgColor = colorMap[video.category] || "bg-gray-600";
   
   return (
-    <Card className="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-      <div className="relative pb-[56.25%] bg-gray-200">
+    <Card className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 dark:border-gray-700">
+      <div className="relative pb-[56.25%] bg-gray-200 dark:bg-gray-700">
         <div className={`absolute inset-0 flex items-center justify-center ${bgColor}`}>
           <button 
-            className="w-16 h-16 rounded-full bg-white bg-opacity-75 flex items-center justify-center z-10 hover:bg-opacity-90 transition-all duration-200"
+            className="w-16 h-16 rounded-full bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 flex items-center justify-center z-10 hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-all duration-200"
             onClick={handleWatchVideo}
           >
-            <Play className="h-8 w-8 text-primary-600 ml-1" />
+            <Play className="h-8 w-8 text-primary-600 dark:text-primary-400 ml-1" />
           </button>
           {currentProgress > 0 && (
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200">
-              <div className="h-full bg-primary-500" style={{ width: `${currentProgress}%` }}></div>
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-600">
+              <div className="h-full bg-primary-500 dark:bg-primary-400" style={{ width: `${currentProgress}%` }}></div>
             </div>
           )}
         </div>
@@ -112,21 +112,21 @@ export function VideoCard({ video }: VideoCardProps) {
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div>
-            <h4 className="text-base font-medium text-gray-900">{video.title}</h4>
+            <h4 className="text-base font-medium text-gray-900 dark:text-gray-100">{video.title}</h4>
             <div className="mt-1 flex items-center">
-              <span className="text-xs text-gray-500">{video.duration}</span>
-              <span className="mx-1 text-gray-300">•</span>
-              <span className="text-xs text-gray-500">{video.category}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">{video.duration}</span>
+              <span className="mx-1 text-gray-300 dark:text-gray-600">•</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">{video.category}</span>
             </div>
           </div>
           <Badge className={getProgressColor(currentProgress)}>
             {getProgressLabel(currentProgress)}
           </Badge>
         </div>
-        <p className="mt-2 text-sm text-gray-600">{video.description}</p>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{video.description}</p>
         <div className="mt-4">
           <button 
-            className="text-sm font-medium text-primary-600 hover:text-primary-500"
+            className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
             onClick={handleWatchVideo}
           >
             {currentProgress === 100 ? "Rewatch video" : "Watch video"}
@@ -153,8 +153,8 @@ export function VideoCard({ video }: VideoCardProps) {
             </div>
           </div>
           <div className="mt-2">
-            <h3 className="text-sm font-medium text-gray-900">Video Description</h3>
-            <p className="mt-1 text-sm text-gray-500">{video.description}</p>
+            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Video Description</h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{video.description}</p>
           </div>
         </DialogContent>
       </Dialog>
