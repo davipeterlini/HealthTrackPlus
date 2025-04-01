@@ -8,13 +8,30 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AuthPage() {
-  const { user } = useAuth();
+  const { user, refetchUser } = useAuth();
   const [, navigate] = useLocation();
   const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [activeTab, setActiveTab] = useState("login");
+  
+  useEffect(() => {
+    // Check for URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    
+    // If there's an error, clear it from the URL
+    if (error) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
+    // Try to refresh user data on page load
+    if (refetchUser) {
+      refetchUser().catch(err => console.error("Failed to refresh user data:", err));
+    }
+  }, [refetchUser]);
   
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [user, navigate]);
   
@@ -39,7 +56,7 @@ export default function AuthPage() {
               </p>
             </div>
             
-            <Tabs defaultValue="login" className="w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="login">Login</TabsTrigger>
                 <TabsTrigger value="register">Register</TabsTrigger>

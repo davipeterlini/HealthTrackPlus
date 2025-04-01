@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '../language-switcher';
 import { useAuth } from "@/hooks/use-auth";
 import {
   Avatar,
@@ -36,7 +38,9 @@ export function Header() {
   const [location] = useLocation();
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+  const { t } = useTranslation();
+
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -45,11 +49,11 @@ export function Header() {
       .toUpperCase()
       .slice(0, 2);
   };
-  
+
   const handleLogout = () => {
     logoutMutation.mutate();
   };
-  
+
   return (
     <header className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,7 +80,7 @@ export function Header() {
               ))}
             </nav>
           </div>
-          
+
           <div className="hidden md:ml-4 md:flex md:items-center">
             <Button 
               variant="ghost" 
@@ -117,7 +121,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          
+
           <div className="flex items-center md:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
@@ -146,7 +150,7 @@ export function Header() {
                     </Link>
                   ))}
                 </nav>
-                
+
                 <div className="mt-auto pt-6 border-t border-gray-200">
                   <div className="flex items-center px-3 py-2">
                     <Avatar className="h-10 w-10">
@@ -177,6 +181,7 @@ export function Header() {
               </SheetContent>
             </Sheet>
           </div>
+          <LanguageSwitcher />
         </div>
       </div>
     </header>

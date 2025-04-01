@@ -99,6 +99,7 @@ export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   password: true,
   name: true,
+  avatar: true,
 });
 
 export const insertMedicalExamSchema = createInsertSchema(medicalExams).omit({

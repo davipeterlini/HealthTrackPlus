@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginData } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
+import { useOAuthConfig } from "@/hooks/use-oauth-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,14 +17,84 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
+import { useLocation } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 interface LoginFormProps {
   onRequestTwoFactor: () => void;
 }
 
 export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
-  const { loginMutation } = useAuth();
+  const { loginMutation, refetchUser } = useAuth();
+  const { googleEnabled, isLoadingGoogleConfig } = useOAuthConfig();
   const [rememberMe, setRememberMe] = useState(false);
+  const [location, setLocation] = useLocation();
+  const { toast } = useToast();
+  const [checkingAuth, setCheckingAuth] = useState(false);
+
+  // Check for authentication after redirect from OAuth
+  useEffect(() => {
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    
+    // If there's an error parameter, show it
+    if (error) {
+      toast({
+        title: "Authentication Error",
+        description: `Error during authentication: ${error.replace(/_/g, " ")}`,
+        variant: "destructive"
+      });
+      
+      // Clear the URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return;
+    }
+    
+    // If we were redirected from OAuth, check authentication status
+    const fromOAuth = location.includes('/auth') && document.referrer.includes('/api/auth/');
+    if (fromOAuth) {
+      setCheckingAuth(true);
+      
+      // Verify authentication status
+      fetch('/api/check-auth')
+        .then(res => res.json())
+        .then(data => {
+          if (data.authenticated) {
+            console.log("Authentication verified after OAuth redirect");
+            // Refetch user data
+            if (refetchUser) {
+              refetchUser().then(() => {
+                toast({
+                  title: "Login Successful",
+                  description: "You have been successfully logged in via Google."
+                });
+                // Redirect to dashboard
+                setLocation('/dashboard');
+              });
+            }
+          } else {
+            console.log("Not authenticated after OAuth redirect");
+            toast({
+              title: "Authentication Failed",
+              description: "Failed to authenticate with Google. Please try again.",
+              variant: "destructive"
+            });
+          }
+        })
+        .catch(err => {
+          console.error("Error checking auth status:", err);
+          toast({
+            title: "Authentication Error",
+            description: "An error occurred while verifying your authentication.",
+            variant: "destructive"
+          });
+        })
+        .finally(() => {
+          setCheckingAuth(false);
+        });
+    }
+  }, [location, refetchUser, toast, setLocation]);
   
   const form = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
@@ -41,8 +112,15 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
   };
   
   const handleOAuthLogin = (provider: string) => {
-    // In a real app, this would redirect to the OAuth provider
-    alert(`${provider} OAuth login would be implemented here.`);
+    if (provider === "Google" && googleEnabled) {
+      // Redirect to Google OAuth endpoint
+      window.location.href = "/api/auth/google";
+    } else if (provider === "Google" && !googleEnabled) {
+      alert("Google login is not configured yet.");
+    } else {
+      // For other providers like Facebook (not yet implemented)
+      alert(`${provider} OAuth login is not implemented yet.`);
+    }
   };
   
   return (
@@ -122,14 +200,20 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
             type="button"
             variant="outline"
             onClick={() => handleOAuthLogin("Google")}
+            disabled={isLoadingGoogleConfig || loginMutation.isPending || checkingAuth}
           >
-            <FaGoogle className="mr-2 h-4 w-4" />
-            Google
+            {isLoadingGoogleConfig || checkingAuth ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <FaGoogle className="mr-2 h-4 w-4" />
+            )}
+            {checkingAuth ? "Verifying..." : "Google"}
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => handleOAuthLogin("Facebook")}
+            disabled={loginMutation.isPending || checkingAuth}
           >
             <FaFacebook className="mr-2 h-4 w-4" />
             Facebook

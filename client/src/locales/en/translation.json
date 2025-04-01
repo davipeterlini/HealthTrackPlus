@@ -1,0 +1,22 @@
+
+{
+  "navigation": {
+    "dashboard": "Dashboard",
+    "exams": "Exams",
+    "activity": "Activity",
+    "nutrition": "Nutrition",
+    "videos": "Videos"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username"
+  },
+  "health": {
+    "summary": "Health Summary",
+    "insights": "Health Insights",
+    "activity": "Activity Overview"
+  }
+}
