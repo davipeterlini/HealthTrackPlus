@@ -227,10 +227,10 @@ export class MemStorage implements IStorage {
   private initSampleVideos() {
     const sampleVideos: Omit<Video, 'id'>[] = [
       {
-        title: 'Stress Reduction Techniques',
+        title: 'Meditação Guiada para Ansiedade e Stress',
         duration: '18:32',
         category: 'Mental Health',
-        description: 'Learn effective techniques to reduce stress in daily life',
+        description: 'Uma meditação guiada para reduzir ansiedade e estresse, com foco em respiração e relaxamento profundo',
         thumbnailUrl: '',
         videoUrl: 'https://www.youtube.com/embed/0F9szTYowN0'
       },
