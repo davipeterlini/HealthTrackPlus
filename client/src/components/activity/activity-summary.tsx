@@ -31,11 +31,6 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   const minutesGoal = 60;
   const distanceGoal = 5; // 5km per day
   
-  // Goals
-  const stepsGoal = 10000;
-  const caloriesGoal = 600;
-  const minutesGoal = 60;
-  
   // Calculate percentages
   const stepsPercentage = Math.min((steps / stepsGoal) * 100, 100);
   const caloriesPercentage = Math.min((calories / caloriesGoal) * 100, 100);
