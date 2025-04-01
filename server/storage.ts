@@ -231,7 +231,8 @@ export class MemStorage implements IStorage {
         duration: '18:32',
         category: 'Mental Health',
         description: 'Learn effective techniques to reduce stress in daily life',
-        thumbnailUrl: ''
+        thumbnailUrl: '',
+        videoUrl: 'https://www.youtube.com/embed/0F9szTYowN0'
       },
       {
         title: 'Nutrition Basics for Wellness',

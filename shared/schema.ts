@@ -384,18 +384,14 @@ export type CourseTrack = typeof courseTracks.$inferSelect;
 export type TrackVideo = typeof trackVideos.$inferSelect;
 
 
-export interface Activity {
+export interface Video {
   id: number;
-  userId: number;
-  date: Date;
-  steps: number;
-  distance: number;
-  calories: number;
-  minutes: number;
-  activityType: 'walking' | 'running' | 'cycling' | 'other';
-  heartRate?: number;
-  source?: 'manual' | 'googleFit' | 'appleHealth' | 'fitbit';
-  customActivityName?: string;
+  title: string;
+  duration: string;
+  category: string;
+  description: string;
+  thumbnailUrl: string;
+  videoUrl?: string;
 }
 
 // Login schema

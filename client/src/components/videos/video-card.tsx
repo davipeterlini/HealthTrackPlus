@@ -140,17 +140,32 @@ export function VideoCard({ video }: VideoCardProps) {
           <DialogHeader>
             <DialogTitle>{video.title}</DialogTitle>
           </DialogHeader>
-          <div className="relative bg-black aspect-video rounded-md overflow-hidden flex items-center justify-center">
-            <div className="text-white text-center px-4">
-              <div className="text-4xl mb-4">🎬</div>
-              <p>This is where the actual video would play.</p>
-              <p className="text-sm text-gray-400 mt-2">For this demo, we're simulating video playback.</p>
-              <Progress 
-                value={watchProgress} 
-                className="mt-6 bg-primary-600" 
-              />
-              <p className="text-sm mt-2">Progress: {watchProgress}%</p>
-            </div>
+          <div className="relative bg-black aspect-video rounded-md overflow-hidden">
+            {video.id === 1 ? (
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/0F9szTYowN0" 
+                title={video.title}
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full"
+              ></iframe>
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-white text-center px-4">
+                  <div className="text-4xl mb-4">🎬</div>
+                  <p>This is where the actual video would play.</p>
+                  <p className="text-sm text-gray-400 mt-2">For this demo, we're simulating video playback.</p>
+                  <Progress 
+                    value={watchProgress} 
+                    className="mt-6 bg-primary-600" 
+                  />
+                  <p className="text-sm mt-2">Progress: {watchProgress}%</p>
+                </div>
+              </div>
+            )}
           </div>
           <div className="mt-2">
             <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Video Description</h3>
