@@ -56,7 +56,10 @@ export function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 dark:border-b dark:border-gray-700 shadow">
+    <header className="bg-[#1a2127] border-b border-gray-800">
+      <div className="flex items-center gap-4">
+        <h1 className="text-2xl font-bold text-emerald-400">LifeTrek Compass</h1>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center md:hidden">
@@ -189,7 +192,7 @@ export function Header() {
             </DropdownMenu>
           </div>
 
-          
+
           <div className="flex items-center space-x-1">
             <ThemeToggle />
             <LanguageSwitcher />

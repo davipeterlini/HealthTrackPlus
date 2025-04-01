@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,16 +9,14 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased;
+    background-color: #0a1015;
+    color: #ffffff;
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-  }
-
-  .dark {
-    --background: 220 14% 10%;
-    --foreground: 0 0% 98%;
+    --background: 20 20 20;
+    --foreground: 255 255 255;
+    --primary: 20 215 169;
   }
 }
