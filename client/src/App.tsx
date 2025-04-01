@@ -11,6 +11,8 @@ import NutritionPage from "@/pages/nutrition-page";
 import VideosPage from "@/pages/videos-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
+import { DevModeProvider } from "./hooks/use-dev-mode";
+import { DevModeToggle } from "./components/dev-mode-toggle";
 
 function Router() {
   return (
@@ -30,10 +32,13 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Router />
-        <Toaster />
-      </AuthProvider>
+      <DevModeProvider>
+        <AuthProvider>
+          <Router />
+          <DevModeToggle />
+          <Toaster />
+        </AuthProvider>
+      </DevModeProvider>
     </QueryClientProvider>
   );
 }
