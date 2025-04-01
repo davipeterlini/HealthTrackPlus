@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { useAuth } from "@/hooks/use-auth";
