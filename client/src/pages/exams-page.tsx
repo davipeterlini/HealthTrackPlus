@@ -16,7 +16,7 @@ export default function ExamsPage() {
   
   return (
     <MainLayout title="Medical Exams">
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden dark:bg-gray-800 dark:border-gray-700">
         <ExamUploader />
         <ExamList 
           exams={exams || []} 

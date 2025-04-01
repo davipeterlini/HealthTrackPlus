@@ -24,13 +24,13 @@ export default function NutritionPage() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="lg:col-span-1 space-y-6">
           {waterLoading ? (
-            <Skeleton className="h-64 w-full" />
+            <Skeleton className="h-64 w-full dark:bg-gray-700" />
           ) : (
             <WaterTracker waterRecords={waterRecords || []} />
           )}
           
           {sleepLoading ? (
-            <Skeleton className="h-96 w-full" />
+            <Skeleton className="h-96 w-full dark:bg-gray-700" />
           ) : (
             <SleepTracker sleepRecords={sleepRecords || []} />
           )}
@@ -38,7 +38,7 @@ export default function NutritionPage() {
         
         <div className="lg:col-span-2">
           {mealsLoading ? (
-            <Skeleton className="h-[600px] w-full" />
+            <Skeleton className="h-[600px] w-full dark:bg-gray-700" />
           ) : (
             <MealTracker meals={meals || []} />
           )}

@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useLocation } from "wouter";
 import Draggable from "react-draggable";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ChevronDown, ChevronUp, GripHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,6 +11,7 @@ export function DevModeToggle() {
   const { skipAuth, toggleSkipAuth } = useDevMode();
   const [location, setLocation] = useLocation();
   const [isMinimized, setIsMinimized] = useState(false);
+  const nodeRef = useRef(null); // Referência para o elemento que será arrastado
 
   const handleToggle = () => {
     const newSkipAuthValue = !skipAuth;
@@ -28,12 +29,12 @@ export function DevModeToggle() {
   };
 
   return (
-    <Draggable handle=".drag-handle">
-      <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg border z-50 flex flex-col">
-        <div className="drag-handle flex items-center justify-between p-2 cursor-move border-b">
+    <Draggable handle=".drag-handle" nodeRef={nodeRef}>
+      <div ref={nodeRef} className="fixed bottom-4 right-4 bg-white dark:bg-gray-900 shadow-lg rounded-lg border dark:border-gray-700 z-50 flex flex-col">
+        <div className="drag-handle flex items-center justify-between p-2 cursor-move border-b dark:border-gray-700">
           <div className="flex items-center">
-            <GripHorizontal className="h-4 w-4 mr-2 text-gray-500" />
-            <span className="text-xs font-medium">Dev Mode</span>
+            <GripHorizontal className="h-4 w-4 mr-2 text-gray-500 dark:text-gray-400" />
+            <span className="text-xs font-medium dark:text-gray-100">Dev Mode</span>
           </div>
           <Button 
             variant="ghost" 
@@ -52,7 +53,7 @@ export function DevModeToggle() {
               checked={skipAuth}
               onCheckedChange={handleToggle}
             />
-            <Label htmlFor="dev-mode" className="text-sm font-medium cursor-pointer">
+            <Label htmlFor="dev-mode" className="text-sm font-medium cursor-pointer dark:text-gray-100">
               Pular autenticação
             </Label>
           </div>

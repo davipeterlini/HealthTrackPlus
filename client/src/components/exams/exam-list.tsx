@@ -32,20 +32,20 @@ export function ExamList({ exams, isLoading, onSelectExam }: ExamListProps) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "analyzed":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300";
       case "processing":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300";
       case "uploaded":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300";
     }
   };
   
   if (isLoading) {
     return (
       <div className="px-4 py-5 sm:p-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Exams</h3>
+        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Exams</h3>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -77,10 +77,10 @@ export function ExamList({ exams, isLoading, onSelectExam }: ExamListProps) {
   if (exams.length === 0) {
     return (
       <div className="px-4 py-5 sm:p-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Exams</h3>
+        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Exams</h3>
         <div className="text-center py-8">
-          <p className="text-gray-500">No medical exams uploaded yet.</p>
-          <p className="text-sm text-gray-400 mt-2">Upload your first exam to get started.</p>
+          <p className="text-gray-500 dark:text-gray-400">No medical exams uploaded yet.</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">Upload your first exam to get started.</p>
         </div>
       </div>
     );
@@ -88,7 +88,7 @@ export function ExamList({ exams, isLoading, onSelectExam }: ExamListProps) {
   
   return (
     <div className="px-4 py-5 sm:p-6">
-      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Exams</h3>
+      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Exams</h3>
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -102,8 +102,8 @@ export function ExamList({ exams, isLoading, onSelectExam }: ExamListProps) {
           </TableHeader>
           <TableBody>
             {exams.map((exam) => (
-              <TableRow key={exam.id} className="hover:bg-gray-50">
-                <TableCell className="font-medium">{exam.name}</TableCell>
+              <TableRow key={exam.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                <TableCell className="font-medium dark:text-gray-100">{exam.name}</TableCell>
                 <TableCell>{formatDate(exam.date)}</TableCell>
                 <TableCell>
                   {exam.type.charAt(0).toUpperCase() + exam.type.slice(1)}

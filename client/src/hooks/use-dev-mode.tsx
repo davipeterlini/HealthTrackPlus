@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 type DevModeContextType = {
   skipAuth: boolean;
@@ -8,10 +8,23 @@ type DevModeContextType = {
 const DevModeContext = createContext<DevModeContextType | null>(null);
 
 export function DevModeProvider({ children }: { children: ReactNode }) {
-  const [skipAuth, setSkipAuth] = useState(false);
+  // Definir valor inicial como true temporariamente para facilitar o desenvolvimento
+  const [skipAuth, setSkipAuth] = useState(true);
+
+  // Efeito para salvar a preferência do modo de desenvolvedor no localStorage
+  useEffect(() => {
+    const savedDevMode = localStorage.getItem('dev_mode_skip_auth');
+    if (savedDevMode !== null) {
+      setSkipAuth(savedDevMode === 'true');
+    }
+  }, []);
 
   const toggleSkipAuth = () => {
-    setSkipAuth(prev => !prev);
+    setSkipAuth(prev => {
+      const newValue = !prev;
+      localStorage.setItem('dev_mode_skip_auth', String(newValue));
+      return newValue;
+    });
   };
 
   return (

@@ -31,10 +31,10 @@ export default function VideosPage() {
   
   return (
     <MainLayout title="Integrative Medicine Videos">
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden dark:bg-gray-800 dark:border-gray-700">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-3 sm:mb-0">Educational Content</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-3 sm:mb-0">Educational Content</h3>
             <div>
               <Select 
                 value={selectedCategory} 
@@ -69,14 +69,14 @@ export default function VideosPage() {
               
               {filteredVideos?.length === 0 && (
                 <div className="col-span-full text-center py-12">
-                  <p className="text-gray-500">No videos found in this category</p>
+                  <p className="text-gray-500 dark:text-gray-400">No videos found in this category</p>
                 </div>
               )}
             </div>
           )}
           
           <div className="mt-12">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-6">Course Tracks</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-6">Course Tracks</h3>
             
             {tracksLoading ? (
               <div className="space-y-6">
@@ -92,7 +92,7 @@ export default function VideosPage() {
                 
                 {courseTracks?.length === 0 && (
                   <div className="text-center py-12">
-                    <p className="text-gray-500">No course tracks available</p>
+                    <p className="text-gray-500 dark:text-gray-400">No course tracks available</p>
                   </div>
                 )}
               </div>

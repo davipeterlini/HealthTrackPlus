@@ -63,48 +63,48 @@ export default function DashboardPage() {
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <HealthInsights className="lg:col-span-2" />
         
-        <Card>
+        <Card className="dark:bg-gray-800 dark:border-gray-700">
           <CardContent className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Upcoming</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Upcoming</h3>
             <div className="mt-5 space-y-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary-100">
-                    <Calendar className="h-4 w-4 text-primary-600" />
+                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900 dark:bg-opacity-30">
+                    <Calendar className="h-4 w-4 text-primary-600 dark:text-primary-400" />
                   </span>
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-gray-900">Annual Physical Checkup</h4>
-                  <p className="text-xs text-gray-500">Oct 25, 2023 - 10:30 AM</p>
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">Annual Physical Checkup</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Oct 25, 2023 - 10:30 AM</p>
                 </div>
               </div>
               
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-green-100">
-                    <Thermometer className="h-4 w-4 text-green-600" />
+                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 dark:bg-opacity-30">
+                    <Thermometer className="h-4 w-4 text-green-600 dark:text-green-400" />
                   </span>
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-gray-900">Lab Tests (Fasting Required)</h4>
-                  <p className="text-xs text-gray-500">Nov 05, 2023 - 08:00 AM</p>
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">Lab Tests (Fasting Required)</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Nov 05, 2023 - 08:00 AM</p>
                 </div>
               </div>
               
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-purple-100">
-                    <Video className="h-4 w-4 text-purple-600" />
+                  <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 dark:bg-opacity-30">
+                    <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                   </span>
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-gray-900">Wellness Webinar</h4>
-                  <p className="text-xs text-gray-500">Oct 30, 2023 - 06:00 PM</p>
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">Wellness Webinar</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Oct 30, 2023 - 06:00 PM</p>
                 </div>
               </div>
             </div>
             <div className="mt-6">
-              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80">
+              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 dark:text-primary-400 dark:hover:text-primary-300">
                 View all upcoming events
               </a>
             </div>
@@ -114,25 +114,25 @@ export default function DashboardPage() {
       
       {/* Recent Activity */}
       <div className="mt-6">
-        <Card>
+        <Card className="dark:bg-gray-800 dark:border-gray-700">
           <CardContent className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Recent Activity</h3>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Recent Activity</h3>
             <div className="mt-5 flow-root">
               <ul role="list" className="-mb-8">
                 <li>
                   <div className="relative pb-8">
-                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true"></span>
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-green-100">
-                          <Calendar className="h-4 w-4 text-green-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-green-100 dark:bg-green-900 dark:bg-opacity-30">
+                          <Calendar className="h-4 w-4 text-green-600 dark:text-green-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p className="text-sm text-gray-900">Completed sleep diary for <span className="font-medium">Oct 20, 2023</span></p>
+                          <p className="text-sm text-gray-900 dark:text-gray-100">Completed sleep diary for <span className="font-medium">Oct 20, 2023</span></p>
                         </div>
-                        <div className="text-right text-xs whitespace-nowrap text-gray-500">
+                        <div className="text-right text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
                           2 hours ago
                         </div>
                       </div>
@@ -142,18 +142,18 @@ export default function DashboardPage() {
                 
                 <li>
                   <div className="relative pb-8">
-                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true"></span>
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-primary-100">
-                          <Heart className="h-4 w-4 text-primary-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-primary-100 dark:bg-primary-900 dark:bg-opacity-30">
+                          <Heart className="h-4 w-4 text-primary-600 dark:text-primary-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p className="text-sm text-gray-900">Uploaded <span className="font-medium">Blood Test Results</span></p>
+                          <p className="text-sm text-gray-900 dark:text-gray-100">Uploaded <span className="font-medium">Blood Test Results</span></p>
                         </div>
-                        <div className="text-right text-xs whitespace-nowrap text-gray-500">
+                        <div className="text-right text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
                           Yesterday
                         </div>
                       </div>
@@ -163,18 +163,18 @@ export default function DashboardPage() {
                 
                 <li>
                   <div className="relative pb-8">
-                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true"></span>
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-purple-100">
-                          <Video className="h-4 w-4 text-purple-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-purple-100 dark:bg-purple-900 dark:bg-opacity-30">
+                          <Video className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p className="text-sm text-gray-900">Watched <span className="font-medium">Stress Reduction Techniques</span> video</p>
+                          <p className="text-sm text-gray-900 dark:text-gray-100">Watched <span className="font-medium">Stress Reduction Techniques</span> video</p>
                         </div>
-                        <div className="text-right text-xs whitespace-nowrap text-gray-500">
+                        <div className="text-right text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
                           2 days ago
                         </div>
                       </div>
@@ -186,15 +186,15 @@ export default function DashboardPage() {
                   <div className="relative pb-0">
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-blue-100">
-                          <Footprints className="h-4 w-4 text-blue-600" />
+                        <span className="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-gray-800 bg-blue-100 dark:bg-blue-900 dark:bg-opacity-30">
+                          <Footprints className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p className="text-sm text-gray-900">Completed <span className="font-medium">30 minutes of aerobic exercise</span></p>
+                          <p className="text-sm text-gray-900 dark:text-gray-100">Completed <span className="font-medium">30 minutes of aerobic exercise</span></p>
                         </div>
-                        <div className="text-right text-xs whitespace-nowrap text-gray-500">
+                        <div className="text-right text-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
                           3 days ago
                         </div>
                       </div>
@@ -204,7 +204,7 @@ export default function DashboardPage() {
               </ul>
             </div>
             <div className="mt-6">
-              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80">
+              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 dark:text-primary-400 dark:hover:text-primary-300">
                 View all activity
               </a>
             </div>

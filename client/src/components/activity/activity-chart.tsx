@@ -51,8 +51,8 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
   
   return (
     <CardContent className="px-6 pb-6">
-      <h4 className="text-sm font-medium text-gray-500 mb-3">Weekly Activity</h4>
-      <div className="h-64 bg-gray-50 rounded-md p-4">
+      <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Weekly Activity</h4>
+      <div className="h-64 bg-gray-50 dark:bg-gray-900 rounded-md p-4">
         <div className="h-full flex items-end space-x-2">
           {chartData.map((activity, index) => {
             // Calculate height based on steps (max 14000 steps)
@@ -68,12 +68,14 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
               >
                 <div 
                   className={`w-full rounded-t-sm transition-all duration-200 ${
-                    isHighestActivity ? 'bg-primary-600' : 'bg-primary-400 hover:bg-primary-500'
+                    isHighestActivity 
+                      ? 'bg-primary-600 dark:bg-primary-500' 
+                      : 'bg-primary-400 hover:bg-primary-500 dark:bg-primary-700 dark:hover:bg-primary-600'
                   }`}
                   style={{ height: `${heightPercentage}%` }}
                   title={`${activity.steps.toLocaleString()} steps`}
                 />
-                <span className="text-xs text-gray-500">{formatDate(activity.date)}</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(activity.date)}</span>
               </div>
             );
           })}

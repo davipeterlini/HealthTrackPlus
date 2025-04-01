@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Meal } from "@shared/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { PlusCircle, Utensils, Coffee, Sun, Cloud, Moon, Snack } from "lucide-react";
+import { PlusCircle, Utensils, Coffee, Sun, Cloud, Moon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -153,8 +153,8 @@ export function MealTracker({ meals }: MealTrackerProps) {
     }
   };
   
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = (dateString: string | Date) => {
+    const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
     return date.toLocaleDateString("en-US", {
       weekday: "long",
       month: "long",
@@ -162,8 +162,8 @@ export function MealTracker({ meals }: MealTrackerProps) {
     });
   };
   
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatTime = (dateString: string | Date) => {
+    const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
     return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
@@ -172,7 +172,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
   };
   
   return (
-    <Card>
+    <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Meal Tracking</CardTitle>
         <Dialog open={open} onOpenChange={setOpen}>
@@ -301,40 +301,40 @@ export function MealTracker({ meals }: MealTrackerProps) {
           {Object.entries(mealsByDate).length > 0 ? (
             Object.entries(mealsByDate).map(([date, mealList]) => (
               <div key={date} className="mb-8">
-                <h4 className="text-sm font-medium text-gray-500 mb-4">{formatDate(date)}</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">{formatDate(date)}</h4>
                 
                 <div className="space-y-6">
                   {mealList.map((meal, idx) => (
-                    <div key={idx} className="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
+                    <div key={idx} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0 last:pb-0">
                       <div className="flex items-start">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gray-100 flex items-center justify-center">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                           {getMealIcon(meal.mealType)}
                         </div>
                         <div className="ml-4 flex-1">
                           <div className="flex items-center justify-between">
-                            <h5 className="text-sm font-medium text-gray-900 capitalize">{meal.mealType}</h5>
-                            <span className="text-xs text-gray-500">{formatTime(meal.date)}</span>
+                            <h5 className="text-sm font-medium text-gray-900 dark:text-gray-100 capitalize">{meal.mealType}</h5>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{formatTime(meal.date)}</span>
                           </div>
-                          <p className="mt-1 text-sm text-gray-600">{meal.description}</p>
+                          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{meal.description}</p>
                           {(meal.calories || meal.carbs || meal.protein || meal.fat) && (
                             <div className="mt-2 flex flex-wrap gap-2">
                               {meal.calories && (
-                                <Badge variant="outline" className="bg-green-100 text-green-800 border-0">
+                                <Badge variant="outline" className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 border-0">
                                   {meal.calories} kcal
                                 </Badge>
                               )}
                               {meal.carbs && (
-                                <Badge variant="outline" className="bg-blue-100 text-blue-800 border-0">
+                                <Badge variant="outline" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 border-0">
                                   {meal.carbs}g carbs
                                 </Badge>
                               )}
                               {meal.protein && (
-                                <Badge variant="outline" className="bg-red-100 text-red-800 border-0">
+                                <Badge variant="outline" className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-0">
                                   {meal.protein}g protein
                                 </Badge>
                               )}
                               {meal.fat && (
-                                <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-0">
+                                <Badge variant="outline" className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300 border-0">
                                   {meal.fat}g fat
                                 </Badge>
                               )}
@@ -349,9 +349,9 @@ export function MealTracker({ meals }: MealTrackerProps) {
             ))
           ) : (
             <div className="text-center py-12">
-              <Utensils className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No meals recorded</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <Utensils className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No meals recorded</h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Start by adding your meals to track your nutrition.
               </p>
             </div>
@@ -360,45 +360,45 @@ export function MealTracker({ meals }: MealTrackerProps) {
           {/* Nutrition Summary */}
           {todayMeals.length > 0 && (
             <div className="mt-8">
-              <h4 className="text-sm font-medium text-gray-500 mb-4">Nutrition Summary</h4>
+              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Nutrition Summary</h4>
               
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Calorie chart */}
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                   <div className="flex items-center justify-between">
-                    <h5 className="text-sm font-medium text-gray-700">Calories</h5>
-                    <span className="text-sm font-medium text-gray-900">{dailyTotals.calories} / {dailyGoals.calories}</span>
+                    <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">Calories</h5>
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.calories} / {dailyGoals.calories}</span>
                   </div>
                   <div className="mt-3 relative pt-1">
                     <div className="flex mb-2 items-center justify-between">
                       <div>
-                        <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary-600 bg-primary-200">
+                        <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary-600 dark:text-primary-300 bg-primary-200 dark:bg-primary-800">
                           {Math.round((dailyTotals.calories / dailyGoals.calories) * 100)}%
                         </span>
                       </div>
                     </div>
-                    <Progress value={(dailyTotals.calories / dailyGoals.calories) * 100} className="bg-primary-600" />
+                    <Progress value={(dailyTotals.calories / dailyGoals.calories) * 100} className="bg-primary-600 dark:bg-primary-500" />
                   </div>
                   
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                    <div className="bg-blue-50 p-2 rounded">
-                      <span className="block text-xs text-blue-700">Carbs</span>
-                      <span className="block text-sm font-medium text-gray-900">{dailyTotals.carbs}g</span>
-                      <span className="text-xs text-gray-500">
+                    <div className="bg-blue-50 dark:bg-blue-900 p-2 rounded">
+                      <span className="block text-xs text-blue-700 dark:text-blue-300">Carbs</span>
+                      <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.carbs}g</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.carbs * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="bg-red-50 p-2 rounded">
-                      <span className="block text-xs text-red-700">Protein</span>
-                      <span className="block text-sm font-medium text-gray-900">{dailyTotals.protein}g</span>
-                      <span className="text-xs text-gray-500">
+                    <div className="bg-red-50 dark:bg-red-900 p-2 rounded">
+                      <span className="block text-xs text-red-700 dark:text-red-300">Protein</span>
+                      <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.protein}g</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.protein * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="bg-yellow-50 p-2 rounded">
-                      <span className="block text-xs text-yellow-700">Fat</span>
-                      <span className="block text-sm font-medium text-gray-900">{dailyTotals.fat}g</span>
-                      <span className="text-xs text-gray-500">
+                    <div className="bg-yellow-50 dark:bg-yellow-900 p-2 rounded">
+                      <span className="block text-xs text-yellow-700 dark:text-yellow-300">Fat</span>
+                      <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.fat}g</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.fat * 9 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
@@ -406,40 +406,40 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 </div>
                 
                 {/* Nutritional info */}
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h5 className="text-sm font-medium text-gray-700">Nutrients</h5>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                  <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">Nutrients</h5>
                   
                   <div className="mt-3 space-y-3">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700">Carbs</span>
-                        <span className="text-xs font-medium text-gray-700">{dailyTotals.carbs}g / {dailyGoals.carbs}g</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Carbs</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.carbs}g / {dailyGoals.carbs}g</span>
                       </div>
                       <Progress 
                         value={(dailyTotals.carbs / dailyGoals.carbs) * 100} 
-                        className="bg-blue-500 h-1.5" 
+                        className="bg-blue-500 dark:bg-blue-400 h-1.5" 
                       />
                     </div>
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700">Protein</span>
-                        <span className="text-xs font-medium text-gray-700">{dailyTotals.protein}g / {dailyGoals.protein}g</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Protein</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.protein}g / {dailyGoals.protein}g</span>
                       </div>
                       <Progress 
                         value={(dailyTotals.protein / dailyGoals.protein) * 100} 
-                        className="bg-red-500 h-1.5" 
+                        className="bg-red-500 dark:bg-red-400 h-1.5" 
                       />
                     </div>
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700">Fat</span>
-                        <span className="text-xs font-medium text-gray-700">{dailyTotals.fat}g / {dailyGoals.fat}g</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Fat</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.fat}g / {dailyGoals.fat}g</span>
                       </div>
                       <Progress 
                         value={(dailyTotals.fat / dailyGoals.fat) * 100} 
-                        className="bg-yellow-500 h-1.5" 
+                        className="bg-yellow-500 dark:bg-yellow-400 h-1.5" 
                       />
                     </div>
                   </div>
