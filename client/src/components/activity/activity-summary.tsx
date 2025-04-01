@@ -22,6 +22,14 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   const steps = todayActivity?.steps || 0;
   const calories = todayActivity?.calories || 0;
   const activeMinutes = todayActivity?.minutes || 0;
+  const distance = todayActivity?.distance || 0;
+  const source = todayActivity?.source || 'manual';
+  
+  // Goals
+  const stepsGoal = 10000;
+  const caloriesGoal = 600;
+  const minutesGoal = 60;
+  const distanceGoal = 5; // 5km per day
   
   // Goals
   const stepsGoal = 10000;

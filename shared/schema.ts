@@ -383,6 +383,21 @@ export type VideoProgress = typeof videoProgress.$inferSelect;
 export type CourseTrack = typeof courseTracks.$inferSelect;
 export type TrackVideo = typeof trackVideos.$inferSelect;
 
+
+export interface Activity {
+  id: number;
+  userId: number;
+  date: Date;
+  steps: number;
+  distance: number;
+  calories: number;
+  minutes: number;
+  activityType: 'walking' | 'running' | 'cycling' | 'other';
+  heartRate?: number;
+  source?: 'manual' | 'googleFit' | 'appleHealth' | 'fitbit';
+  customActivityName?: string;
+}
+
 // Login schema
 export const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
