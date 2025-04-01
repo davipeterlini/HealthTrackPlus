@@ -56,18 +56,18 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   
   return (
     <CardContent className="p-6">
-      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-5">Activity Summary</h3>
+      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-5">Activity Summary</h3>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <div className="bg-gray-50 overflow-hidden shadow rounded-md">
+        <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-green-100 rounded-full p-3">
-                <Footprints className="h-5 w-5 text-green-600" />
+              <div className="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-full p-3">
+                <Footprints className="h-5 w-5 text-green-600 dark:text-green-400" />
               </div>
               <div className="ml-5">
-                <h4 className="text-sm font-medium text-gray-500">Steps</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Steps</h4>
                 <div className="mt-1 flex items-baseline">
-                  <div className="text-2xl font-semibold text-gray-900">{steps.toLocaleString()}</div>
+                  <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{steps.toLocaleString()}</div>
                   {stepsChange !== 0 && (
                     <div className={`ml-2 text-sm font-medium ${stepsChange > 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {stepsChange > 0 ? '+' : ''}{stepsChange}%
@@ -78,72 +78,72 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
             </div>
             <div className="mt-4">
               <div className="relative pt-1">
-                <div className="overflow-hidden h-2 text-xs flex rounded bg-green-200">
+                <div className="overflow-hidden h-2 text-xs flex rounded bg-green-200 dark:bg-green-800">
                   <div 
-                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-600" 
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-600 dark:bg-green-500" 
                     style={{ width: `${stepsPercentage}%` }}
                   ></div>
                 </div>
               </div>
-              <p className="mt-2 text-xs text-gray-500">
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 {Math.round(stepsPercentage)}% of daily goal ({stepsGoal.toLocaleString()} steps)
               </p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gray-50 overflow-hidden shadow rounded-md">
+        <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-primary-100 rounded-full p-3">
-                <Flame className="h-5 w-5 text-primary-600" />
+              <div className="flex-shrink-0 bg-primary-100 dark:bg-primary-900 rounded-full p-3">
+                <Flame className="h-5 w-5 text-primary-600 dark:text-primary-400" />
               </div>
               <div className="ml-5">
-                <h4 className="text-sm font-medium text-gray-500">Calories</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Calories</h4>
                 <div className="mt-1 flex items-baseline">
-                  <div className="text-2xl font-semibold text-gray-900">{calories}</div>
+                  <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{calories}</div>
                 </div>
               </div>
             </div>
             <div className="mt-4">
               <div className="relative pt-1">
-                <div className="overflow-hidden h-2 text-xs flex rounded bg-primary-200">
+                <div className="overflow-hidden h-2 text-xs flex rounded bg-primary-200 dark:bg-primary-800">
                   <div 
-                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-600" 
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-600 dark:bg-primary-500" 
                     style={{ width: `${caloriesPercentage}%` }}
                   ></div>
                 </div>
               </div>
-              <p className="mt-2 text-xs text-gray-500">
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 {Math.round(caloriesPercentage)}% of daily goal ({caloriesGoal} kcal)
               </p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gray-50 overflow-hidden shadow rounded-md">
+        <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-purple-100 rounded-full p-3">
-                <Clock className="h-5 w-5 text-purple-600" />
+              <div className="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-full p-3">
+                <Clock className="h-5 w-5 text-purple-600 dark:text-purple-400" />
               </div>
               <div className="ml-5">
-                <h4 className="text-sm font-medium text-gray-500">Active Minutes</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Minutes</h4>
                 <div className="mt-1 flex items-baseline">
-                  <div className="text-2xl font-semibold text-gray-900">{activeMinutes}</div>
+                  <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{activeMinutes}</div>
                 </div>
               </div>
             </div>
             <div className="mt-4">
               <div className="relative pt-1">
-                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200 dark:bg-purple-800">
                   <div 
-                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-600" 
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-600 dark:bg-purple-500" 
                     style={{ width: `${minutesPercentage}%` }}
                   ></div>
                 </div>
               </div>
-              <p className="mt-2 text-xs text-gray-500">
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 {Math.round(minutesPercentage)}% of daily goal ({minutesGoal} min)
               </p>
             </div>
