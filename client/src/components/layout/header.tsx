@@ -63,7 +63,7 @@ export function Header() {
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-gray-500 -ml-3">
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-4 w-4" />
                   <span className="sr-only">Open main menu</span>
                 </Button>
               </SheetTrigger>
@@ -154,7 +154,7 @@ export function Header() {
               size="icon" 
               className="relative text-gray-400 hover:text-gray-500"
             >
-              <BellIcon className="h-5 w-5" />
+              <BellIcon className="h-4 w-4" />
               <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
             </Button>
 
