@@ -66,17 +66,19 @@ export function Header() {
             </div>
             <nav className="hidden md:ml-10 md:flex md:space-x-8">
               {navItems.map((item) => (
-                <Link key={item.path} href={item.path}>
-                  <a
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                      location === item.path
-                        ? "border-primary text-primary"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                </Link>
+                <div key={item.path}>
+                  <Link href={item.path}>
+                    <div
+                      className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${
+                        location === item.path
+                          ? "border-primary text-primary"
+                          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                      }`}
+                    >
+                      {item.label}
+                    </div>
+                  </Link>
+                </div>
               ))}
             </nav>
           </div>
@@ -95,7 +97,7 @@ export function Header() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="ml-3 relative flex items-center">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.avatar} alt={user?.name || user?.username} />
+                    <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
                     <AvatarFallback>{user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </Button>
@@ -136,25 +138,27 @@ export function Header() {
                 </SheetHeader>
                 <nav className="mt-6 flex flex-col space-y-1">
                   {navItems.map((item) => (
-                    <Link key={item.path} href={item.path}>
-                      <a 
-                        className={`px-3 py-2 text-base font-medium rounded-md ${
-                          location === item.path
-                            ? "bg-primary-50 text-primary"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                        }`}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </a>
-                    </Link>
+                    <div key={item.path}>
+                      <Link href={item.path}>
+                        <div 
+                          className={`px-3 py-2 text-base font-medium rounded-md cursor-pointer ${
+                            location === item.path
+                              ? "bg-primary-50 text-primary"
+                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                          }`}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </div>
+                      </Link>
+                    </div>
                   ))}
                 </nav>
 
                 <div className="mt-auto pt-6 border-t border-gray-200">
                   <div className="flex items-center px-3 py-2">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src={user?.avatar} alt={user?.name || user?.username} />
+                      <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
                       <AvatarFallback>{user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div className="ml-3">
