@@ -1,9 +1,15 @@
 import { 
   users, activities, medicalExams, sleepRecords, 
   waterIntake, meals, videos, videoProgress, courseTracks, trackVideos,
+  foodItems, recipes, stressLevels, medications, medicationLogs,
+  meditationSessions, menstrualCycles, menstrualCycleSymptoms,
+  fertilityTracking, pregnancyTracking,
   type User, type InsertUser, type MedicalExam, type Activity,
   type SleepRecord, type WaterIntakeRecord, type Meal, type Video,
-  type VideoProgress, type CourseTrack, type TrackVideo
+  type VideoProgress, type CourseTrack, type TrackVideo,
+  type FoodItem, type Recipe, type StressLevel, type Medication,
+  type MedicationLog, type MeditationSession, type MenstrualCycle,
+  type MenstrualCycleSymptom, type FertilityTracking, type PregnancyTracking
 } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
@@ -25,18 +31,82 @@ export interface IStorage {
   // Activity methods
   getActivities(userId: number): Promise<Activity[]>;
   createActivity(activity: Omit<Activity, 'id'>): Promise<Activity>;
+  getActivityById(id: number): Promise<Activity | undefined>;
+  getActivityByDate(userId: number, date: Date): Promise<Activity[]>;
+  getActivityStats(userId: number, startDate: Date, endDate: Date): Promise<any>;
   
   // Sleep methods
   getSleepRecords(userId: number): Promise<SleepRecord[]>;
   createSleepRecord(sleepRecord: Omit<SleepRecord, 'id'>): Promise<SleepRecord>;
+  getSleepRecordById(id: number): Promise<SleepRecord | undefined>;
+  getSleepRecordsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<SleepRecord[]>;
+  getSleepStats(userId: number, startDate: Date, endDate: Date): Promise<any>;
   
   // Water intake methods
   getWaterIntake(userId: number): Promise<WaterIntakeRecord[]>;
   createWaterIntake(waterIntake: Omit<WaterIntakeRecord, 'id'>): Promise<WaterIntakeRecord>;
+  getWaterIntakeByDate(userId: number, date: Date): Promise<WaterIntakeRecord[]>;
+  getWaterIntakeStats(userId: number, startDate: Date, endDate: Date): Promise<any>;
   
-  // Meal methods
+  // Nutrition methods
   getMeals(userId: number): Promise<Meal[]>;
   createMeal(meal: Omit<Meal, 'id'>): Promise<Meal>;
+  getMealById(id: number): Promise<Meal | undefined>;
+  getMealsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<Meal[]>;
+  getNutritionStats(userId: number, startDate: Date, endDate: Date): Promise<any>;
+  
+  // Food item methods
+  getFoodItems(): Promise<FoodItem[]>;
+  getFoodItemsByCategory(category: string): Promise<FoodItem[]>;
+  getFoodItem(id: number): Promise<FoodItem | undefined>;
+  createFoodItem(foodItem: Omit<FoodItem, 'id'>): Promise<FoodItem>;
+  
+  // Recipe methods
+  getRecipes(userId: number): Promise<Recipe[]>;
+  getRecipesByCategory(category: string): Promise<Recipe[]>;
+  getRecipe(id: number): Promise<Recipe | undefined>;
+  createRecipe(recipe: Omit<Recipe, 'id'>): Promise<Recipe>;
+  
+  // Stress level methods
+  getStressLevels(userId: number): Promise<StressLevel[]>;
+  getStressLevelById(id: number): Promise<StressLevel | undefined>;
+  getStressLevelsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<StressLevel[]>;
+  createStressLevel(stressLevel: Omit<StressLevel, 'id'>): Promise<StressLevel>;
+  
+  // Medication methods
+  getMedications(userId: number): Promise<Medication[]>;
+  getMedication(id: number): Promise<Medication | undefined>;
+  createMedication(medication: Omit<Medication, 'id'>): Promise<Medication>;
+  updateMedication(id: number, medication: Partial<Omit<Medication, 'id'>>): Promise<Medication>;
+  
+  // Medication log methods
+  getMedicationLogs(userId: number, medicationId?: number): Promise<MedicationLog[]>;
+  getMedicationLogsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<MedicationLog[]>;
+  createMedicationLog(medicationLog: Omit<MedicationLog, 'id'>): Promise<MedicationLog>;
+  
+  // Meditation methods
+  getMeditationSessions(userId: number): Promise<MeditationSession[]>;
+  getMeditationSessionById(id: number): Promise<MeditationSession | undefined>;
+  createMeditationSession(session: Omit<MeditationSession, 'id'>): Promise<MeditationSession>;
+  
+  // Women's health methods
+  getMenstrualCycles(userId: number): Promise<MenstrualCycle[]>;
+  getMenstrualCycleById(id: number): Promise<MenstrualCycle | undefined>;
+  createMenstrualCycle(cycle: Omit<MenstrualCycle, 'id'>): Promise<MenstrualCycle>;
+  
+  getMenstrualCycleSymptoms(userId: number): Promise<MenstrualCycleSymptom[]>;
+  getMenstrualCycleSymptomsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<MenstrualCycleSymptom[]>;
+  createMenstrualCycleSymptom(symptom: Omit<MenstrualCycleSymptom, 'id'>): Promise<MenstrualCycleSymptom>;
+  
+  // Fertility tracking methods
+  getFertilityTracking(userId: number): Promise<FertilityTracking[]>;
+  getFertilityTrackingByDateRange(userId: number, startDate: Date, endDate: Date): Promise<FertilityTracking[]>;
+  createFertilityTracking(tracking: Omit<FertilityTracking, 'id'>): Promise<FertilityTracking>;
+  
+  // Pregnancy tracking methods
+  getPregnancyTracking(userId: number): Promise<PregnancyTracking | undefined>;
+  createPregnancyTracking(tracking: Omit<PregnancyTracking, 'id'>): Promise<PregnancyTracking>;
+  updatePregnancyTracking(id: number, tracking: Partial<Omit<PregnancyTracking, 'id'>>): Promise<PregnancyTracking>;
   
   // Video methods
   getVideos(): Promise<Video[]>;
@@ -54,7 +124,7 @@ export interface IStorage {
   getTrackVideos(trackId: number): Promise<TrackVideo[]>;
   
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 }
 
 export class MemStorage implements IStorage {
@@ -64,6 +134,16 @@ export class MemStorage implements IStorage {
   private sleepRecords: Map<number, SleepRecord>;
   private waterIntakeRecords: Map<number, WaterIntakeRecord>;
   private mealRecords: Map<number, Meal>;
+  private foodItems: Map<number, FoodItem>;
+  private recipes: Map<number, Recipe>;
+  private stressLevels: Map<number, StressLevel>;
+  private medications: Map<number, Medication>;
+  private medicationLogs: Map<number, MedicationLog>;
+  private meditationSessions: Map<number, MeditationSession>;
+  private menstrualCycles: Map<number, MenstrualCycle>;
+  private menstrualCycleSymptoms: Map<number, MenstrualCycleSymptom>;
+  private fertilityTrackings: Map<number, FertilityTracking>;
+  private pregnancyTrackings: Map<number, PregnancyTracking>;
   private videos: Map<number, Video>;
   private videoProgressRecords: Map<number, VideoProgress>;
   private courseTracks: Map<number, CourseTrack>;
@@ -75,11 +155,21 @@ export class MemStorage implements IStorage {
   currentSleepRecordId: number;
   currentWaterIntakeId: number;
   currentMealId: number;
+  currentFoodItemId: number;
+  currentRecipeId: number;
+  currentStressLevelId: number;
+  currentMedicationId: number;
+  currentMedicationLogId: number;
+  currentMeditationSessionId: number;
+  currentMenstrualCycleId: number;
+  currentMenstrualCycleSymptomId: number;
+  currentFertilityTrackingId: number;
+  currentPregnancyTrackingId: number;
   currentVideoId: number;
   currentVideoProgressId: number;
   currentCourseTrackId: number;
   currentTrackVideoId: number;
-  sessionStore: session.SessionStore;
+  sessionStore: any; // Fix para error do LSP
 
   constructor() {
     this.users = new Map();
@@ -88,6 +178,16 @@ export class MemStorage implements IStorage {
     this.sleepRecords = new Map();
     this.waterIntakeRecords = new Map();
     this.mealRecords = new Map();
+    this.foodItems = new Map();
+    this.recipes = new Map();
+    this.stressLevels = new Map();
+    this.medications = new Map();
+    this.medicationLogs = new Map();
+    this.meditationSessions = new Map();
+    this.menstrualCycles = new Map();
+    this.menstrualCycleSymptoms = new Map();
+    this.fertilityTrackings = new Map();
+    this.pregnancyTrackings = new Map();
     this.videos = new Map();
     this.videoProgressRecords = new Map();
     this.courseTracks = new Map();
@@ -99,6 +199,16 @@ export class MemStorage implements IStorage {
     this.currentSleepRecordId = 1;
     this.currentWaterIntakeId = 1;
     this.currentMealId = 1;
+    this.currentFoodItemId = 1;
+    this.currentRecipeId = 1;
+    this.currentStressLevelId = 1;
+    this.currentMedicationId = 1;
+    this.currentMedicationLogId = 1;
+    this.currentMeditationSessionId = 1;
+    this.currentMenstrualCycleId = 1;
+    this.currentMenstrualCycleSymptomId = 1;
+    this.currentFertilityTrackingId = 1;
+    this.currentPregnancyTrackingId = 1;
     this.currentVideoId = 1;
     this.currentVideoProgressId = 1;
     this.currentCourseTrackId = 1;
@@ -214,10 +324,14 @@ export class MemStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentUserId++;
     const now = new Date();
+    // Criando explicitamente um objeto que corresponde à interface User
     const user: User = { 
-      ...insertUser, 
-      id, 
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(insertUser.username)}&background=random`, 
+      id,
+      username: insertUser.username,
+      email: insertUser.email,
+      password: insertUser.password,
+      name: insertUser.name || null,
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(insertUser.username)}&background=random` || null, 
       createdAt: now 
     };
     this.users.set(id, user);
@@ -256,6 +370,85 @@ export class MemStorage implements IStorage {
     return newActivity;
   }
   
+  async getActivityById(id: number): Promise<Activity | undefined> {
+    return this.activities.get(id);
+  }
+  
+  async getActivityByDate(userId: number, date: Date): Promise<Activity[]> {
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+    
+    return Array.from(this.activities.values())
+      .filter((activity) => {
+        const activityDate = new Date(activity.date);
+        return activity.userId === userId &&
+               activityDate >= startOfDay &&
+               activityDate <= endOfDay;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async getActivityStats(userId: number, startDate: Date, endDate: Date): Promise<any> {
+    const activities = Array.from(this.activities.values())
+      .filter((activity) => {
+        const activityDate = new Date(activity.date);
+        return activity.userId === userId &&
+               activityDate >= startDate &&
+               activityDate <= endDate;
+      });
+    
+    // Calcular estatísticas
+    let totalSteps = 0;
+    let totalCalories = 0;
+    let totalDistance = 0;
+    let totalDuration = 0;
+    const activityTypes: Record<string, number> = {};
+    
+    activities.forEach(activity => {
+      totalSteps += activity.steps || 0;
+      totalCalories += activity.calories || 0;
+      totalDistance += activity.distance || 0;
+      totalDuration += activity.minutes || 0;
+      
+      const type = activity.activityType || 'unknown';
+      activityTypes[type] = (activityTypes[type] || 0) + 1;
+    });
+    
+    // Estatísticas diárias
+    const dailyStats: Record<string, any> = {};
+    activities.forEach(activity => {
+      const dateStr = new Date(activity.date).toISOString().split('T')[0];
+      if (!dailyStats[dateStr]) {
+        dailyStats[dateStr] = {
+          steps: 0,
+          calories: 0,
+          distance: 0,
+          duration: 0
+        };
+      }
+      
+      dailyStats[dateStr].steps += activity.steps || 0;
+      dailyStats[dateStr].calories += activity.calories || 0;
+      dailyStats[dateStr].distance += activity.distance || 0;
+      dailyStats[dateStr].duration += activity.minutes || 0;
+    });
+    
+    return {
+      summary: {
+        totalActivities: activities.length,
+        totalSteps,
+        totalCalories,
+        totalDistance,
+        totalDuration,
+        activityTypes
+      },
+      dailyStats
+    };
+  }
+  
   // Sleep methods
   async getSleepRecords(userId: number): Promise<SleepRecord[]> {
     return Array.from(this.sleepRecords.values())
@@ -268,6 +461,95 @@ export class MemStorage implements IStorage {
     const newSleepRecord: SleepRecord = { ...sleepRecord, id };
     this.sleepRecords.set(id, newSleepRecord);
     return newSleepRecord;
+  }
+  
+  async getSleepRecordById(id: number): Promise<SleepRecord | undefined> {
+    return this.sleepRecords.get(id);
+  }
+  
+  async getSleepRecordsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<SleepRecord[]> {
+    return Array.from(this.sleepRecords.values())
+      .filter((record) => {
+        const recordDate = new Date(record.date);
+        return record.userId === userId &&
+               recordDate >= startDate &&
+               recordDate <= endDate;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async getSleepStats(userId: number, startDate: Date, endDate: Date): Promise<any> {
+    const sleepRecords = await this.getSleepRecordsByDateRange(userId, startDate, endDate);
+    
+    if (sleepRecords.length === 0) {
+      return {
+        totalRecords: 0,
+        averageHours: 0,
+        averageQuality: null,
+        sleepStageAverage: {
+          deep: 0,
+          light: 0,
+          rem: 0,
+          awake: 0
+        },
+        dailyStats: {}
+      };
+    }
+    
+    let totalHours = 0;
+    let totalDeepSleep = 0;
+    let totalLightSleep = 0;
+    let totalRem = 0;
+    let totalAwake = 0;
+    
+    const qualityCount: Record<string, number> = {};
+    const dailyStats: Record<string, any> = {};
+    
+    sleepRecords.forEach(record => {
+      totalHours += record.hours || 0;
+      totalDeepSleep += record.deepSleep || 0;
+      totalLightSleep += record.lightSleep || 0;
+      totalRem += record.rem || 0;
+      totalAwake += record.awakeTime || 0;
+      
+      const quality = record.quality || 'unknown';
+      qualityCount[quality] = (qualityCount[quality] || 0) + 1;
+      
+      const dateStr = new Date(record.date).toISOString().split('T')[0];
+      dailyStats[dateStr] = {
+        hours: record.hours,
+        quality: record.quality,
+        deepSleep: record.deepSleep,
+        lightSleep: record.lightSleep,
+        rem: record.rem,
+        awakeTime: record.awakeTime,
+        bedTime: record.bedTime,
+        wakeTime: record.wakeTime
+      };
+    });
+    
+    // Calcular qualidade média
+    let mostCommonQuality = 'unknown';
+    let maxCount = 0;
+    Object.entries(qualityCount).forEach(([quality, count]) => {
+      if (count > maxCount) {
+        mostCommonQuality = quality;
+        maxCount = count;
+      }
+    });
+    
+    return {
+      totalRecords: sleepRecords.length,
+      averageHours: totalHours / sleepRecords.length,
+      averageQuality: mostCommonQuality,
+      sleepStageAverage: {
+        deep: totalDeepSleep / sleepRecords.length,
+        light: totalLightSleep / sleepRecords.length,
+        rem: totalRem / sleepRecords.length,
+        awake: totalAwake / sleepRecords.length
+      },
+      dailyStats
+    };
   }
   
   // Water intake methods
@@ -284,6 +566,88 @@ export class MemStorage implements IStorage {
     return newWaterIntakeRecord;
   }
   
+  async getWaterIntakeByDate(userId: number, date: Date): Promise<WaterIntakeRecord[]> {
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+    
+    return Array.from(this.waterIntakeRecords.values())
+      .filter((record) => {
+        const recordDate = new Date(record.date);
+        return record.userId === userId &&
+               recordDate >= startOfDay &&
+               recordDate <= endOfDay;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async getWaterIntakeStats(userId: number, startDate: Date, endDate: Date): Promise<any> {
+    const waterRecords = Array.from(this.waterIntakeRecords.values())
+      .filter((record) => {
+        const recordDate = new Date(record.date);
+        return record.userId === userId &&
+               recordDate >= startDate &&
+               recordDate <= endDate;
+      });
+    
+    if (waterRecords.length === 0) {
+      return {
+        totalRecords: 0,
+        totalIntake: 0,
+        averageIntake: 0,
+        unitDistribution: {},
+        dailyStats: {}
+      };
+    }
+    
+    let totalIntake = 0;
+    const unitDistribution: Record<string, number> = {};
+    const dailyStats: Record<string, any> = {};
+    
+    waterRecords.forEach(record => {
+      totalIntake += record.amount || 0;
+      
+      const unit = record.unit || 'ml';
+      unitDistribution[unit] = (unitDistribution[unit] || 0) + (record.amount || 0);
+      
+      const dateStr = new Date(record.date).toISOString().split('T')[0];
+      if (!dailyStats[dateStr]) {
+        dailyStats[dateStr] = {
+          totalAmount: 0,
+          count: 0,
+          details: []
+        };
+      }
+      
+      dailyStats[dateStr].totalAmount += record.amount || 0;
+      dailyStats[dateStr].count += 1;
+      dailyStats[dateStr].details.push({
+        id: record.id,
+        time: record.time,
+        amount: record.amount,
+        unit: record.unit,
+        containerType: record.containerType
+      });
+    });
+    
+    // Calcular médias diárias
+    Object.keys(dailyStats).forEach(dateStr => {
+      dailyStats[dateStr].averageAmount = dailyStats[dateStr].totalAmount / dailyStats[dateStr].count;
+    });
+    
+    const daysCount = Object.keys(dailyStats).length;
+    
+    return {
+      totalRecords: waterRecords.length,
+      totalIntake,
+      averageIntake: daysCount > 0 ? totalIntake / daysCount : 0,
+      unitDistribution,
+      dailyStats
+    };
+  }
+  
   // Meal methods
   async getMeals(userId: number): Promise<Meal[]> {
     return Array.from(this.mealRecords.values())
@@ -296,6 +660,367 @@ export class MemStorage implements IStorage {
     const newMeal: Meal = { ...meal, id };
     this.mealRecords.set(id, newMeal);
     return newMeal;
+  }
+  
+  async getMealById(id: number): Promise<Meal | undefined> {
+    return this.mealRecords.get(id);
+  }
+  
+  async getMealsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<Meal[]> {
+    return Array.from(this.mealRecords.values())
+      .filter((record) => {
+        const recordDate = new Date(record.date);
+        return record.userId === userId &&
+               recordDate >= startDate &&
+               recordDate <= endDate;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async getNutritionStats(userId: number, startDate: Date, endDate: Date): Promise<any> {
+    const meals = await this.getMealsByDateRange(userId, startDate, endDate);
+    
+    if (meals.length === 0) {
+      return {
+        totalMeals: 0,
+        nutritionSummary: {
+          calories: 0,
+          carbs: 0,
+          protein: 0,
+          fat: 0,
+          fiber: 0,
+          sugar: 0
+        },
+        mealTypeCounts: {},
+        dailyStats: {}
+      };
+    }
+    
+    let totalCalories = 0;
+    let totalCarbs = 0;
+    let totalProtein = 0;
+    let totalFat = 0;
+    let totalFiber = 0;
+    let totalSugar = 0;
+    
+    const mealTypeCounts: Record<string, number> = {};
+    const dailyStats: Record<string, any> = {};
+    const moodAfterEating: Record<string, number> = {};
+    
+    meals.forEach(meal => {
+      totalCalories += meal.calories || 0;
+      totalCarbs += meal.carbs || 0;
+      totalProtein += meal.protein || 0;
+      totalFat += meal.fat || 0;
+      totalFiber += meal.fiber || 0;
+      totalSugar += meal.sugar || 0;
+      
+      const mealType = meal.mealType || 'unknown';
+      mealTypeCounts[mealType] = (mealTypeCounts[mealType] || 0) + 1;
+      
+      if (meal.moodAfterEating) {
+        moodAfterEating[meal.moodAfterEating] = (moodAfterEating[meal.moodAfterEating] || 0) + 1;
+      }
+      
+      const dateStr = new Date(meal.date).toISOString().split('T')[0];
+      if (!dailyStats[dateStr]) {
+        dailyStats[dateStr] = {
+          totalCalories: 0,
+          meals: []
+        };
+      }
+      
+      dailyStats[dateStr].totalCalories += meal.calories || 0;
+      dailyStats[dateStr].meals.push({
+        id: meal.id,
+        mealType: meal.mealType,
+        description: meal.description,
+        calories: meal.calories,
+        carbs: meal.carbs,
+        protein: meal.protein,
+        fat: meal.fat,
+        time: meal.time
+      });
+    });
+    
+    // Calcular macronutrientes em porcentagens
+    const totalMacros = totalCarbs + totalProtein + totalFat;
+    const carbsPercentage = totalMacros > 0 ? (totalCarbs / totalMacros) * 100 : 0;
+    const proteinPercentage = totalMacros > 0 ? (totalProtein / totalMacros) * 100 : 0;
+    const fatPercentage = totalMacros > 0 ? (totalFat / totalMacros) * 100 : 0;
+    
+    // Determinar o humor mais comum após comer
+    let mostCommonMood = null;
+    let maxMoodCount = 0;
+    Object.entries(moodAfterEating).forEach(([mood, count]) => {
+      if (count > maxMoodCount) {
+        mostCommonMood = mood;
+        maxMoodCount = count;
+      }
+    });
+    
+    return {
+      totalMeals: meals.length,
+      nutritionSummary: {
+        calories: totalCalories,
+        carbs: totalCarbs,
+        protein: totalProtein,
+        fat: totalFat,
+        fiber: totalFiber,
+        sugar: totalSugar
+      },
+      macroPercentages: {
+        carbs: carbsPercentage,
+        protein: proteinPercentage,
+        fat: fatPercentage
+      },
+      mealTypeCounts,
+      commonMood: mostCommonMood,
+      dailyStats
+    };
+  }
+  
+  // Food item methods
+  async getFoodItems(): Promise<FoodItem[]> {
+    return Array.from(this.foodItems.values());
+  }
+  
+  async getFoodItemsByCategory(category: string): Promise<FoodItem[]> {
+    return Array.from(this.foodItems.values())
+      .filter(item => item.category === category);
+  }
+  
+  async getFoodItem(id: number): Promise<FoodItem | undefined> {
+    return this.foodItems.get(id);
+  }
+  
+  async createFoodItem(foodItem: Omit<FoodItem, 'id'>): Promise<FoodItem> {
+    const id = this.currentFoodItemId++;
+    const newFoodItem: FoodItem = { ...foodItem, id };
+    this.foodItems.set(id, newFoodItem);
+    return newFoodItem;
+  }
+  
+  // Recipe methods
+  async getRecipes(userId: number): Promise<Recipe[]> {
+    return Array.from(this.recipes.values())
+      .filter(recipe => recipe.userId === userId || recipe.userId === undefined);
+  }
+  
+  async getRecipesByCategory(category: string): Promise<Recipe[]> {
+    return Array.from(this.recipes.values())
+      .filter(recipe => recipe.category === category);
+  }
+  
+  async getRecipe(id: number): Promise<Recipe | undefined> {
+    return this.recipes.get(id);
+  }
+  
+  async createRecipe(recipe: Omit<Recipe, 'id'>): Promise<Recipe> {
+    const id = this.currentRecipeId++;
+    const newRecipe: Recipe = { ...recipe, id };
+    this.recipes.set(id, newRecipe);
+    return newRecipe;
+  }
+  
+  // Stress level methods
+  async getStressLevels(userId: number): Promise<StressLevel[]> {
+    return Array.from(this.stressLevels.values())
+      .filter(level => level.userId === userId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async getStressLevelById(id: number): Promise<StressLevel | undefined> {
+    return this.stressLevels.get(id);
+  }
+  
+  async getStressLevelsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<StressLevel[]> {
+    return Array.from(this.stressLevels.values())
+      .filter(level => {
+        const levelDate = new Date(level.date);
+        return level.userId === userId &&
+               levelDate >= startDate &&
+               levelDate <= endDate;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async createStressLevel(stressLevel: Omit<StressLevel, 'id'>): Promise<StressLevel> {
+    const id = this.currentStressLevelId++;
+    const newStressLevel: StressLevel = { ...stressLevel, id };
+    this.stressLevels.set(id, newStressLevel);
+    return newStressLevel;
+  }
+  
+  // Medication methods
+  async getMedications(userId: number): Promise<Medication[]> {
+    return Array.from(this.medications.values())
+      .filter(medication => medication.userId === userId)
+      .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+  }
+  
+  async getMedication(id: number): Promise<Medication | undefined> {
+    return this.medications.get(id);
+  }
+  
+  async createMedication(medication: Omit<Medication, 'id'>): Promise<Medication> {
+    const id = this.currentMedicationId++;
+    const newMedication: Medication = { ...medication, id };
+    this.medications.set(id, newMedication);
+    return newMedication;
+  }
+  
+  async updateMedication(id: number, medication: Partial<Omit<Medication, 'id'>>): Promise<Medication> {
+    const existingMedication = this.medications.get(id);
+    
+    if (!existingMedication) {
+      throw new Error(`Medication with id ${id} not found`);
+    }
+    
+    const updatedMedication: Medication = { ...existingMedication, ...medication };
+    this.medications.set(id, updatedMedication);
+    return updatedMedication;
+  }
+  
+  // Medication log methods
+  async getMedicationLogs(userId: number, medicationId?: number): Promise<MedicationLog[]> {
+    return Array.from(this.medicationLogs.values())
+      .filter(log => {
+        if (medicationId) {
+          return log.userId === userId && log.medicationId === medicationId;
+        }
+        return log.userId === userId;
+      })
+      .sort((a, b) => new Date(b.timeTaken).getTime() - new Date(a.timeTaken).getTime());
+  }
+  
+  async getMedicationLogsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<MedicationLog[]> {
+    return Array.from(this.medicationLogs.values())
+      .filter(log => {
+        const logDate = new Date(log.timeTaken);
+        return log.userId === userId &&
+               logDate >= startDate &&
+               logDate <= endDate;
+      })
+      .sort((a, b) => new Date(a.timeTaken).getTime() - new Date(b.timeTaken).getTime());
+  }
+  
+  async createMedicationLog(medicationLog: Omit<MedicationLog, 'id'>): Promise<MedicationLog> {
+    const id = this.currentMedicationLogId++;
+    const newMedicationLog: MedicationLog = { ...medicationLog, id };
+    this.medicationLogs.set(id, newMedicationLog);
+    return newMedicationLog;
+  }
+  
+  // Meditation methods
+  async getMeditationSessions(userId: number): Promise<MeditationSession[]> {
+    return Array.from(this.meditationSessions.values())
+      .filter(session => session.userId === userId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async getMeditationSessionById(id: number): Promise<MeditationSession | undefined> {
+    return this.meditationSessions.get(id);
+  }
+  
+  async createMeditationSession(session: Omit<MeditationSession, 'id'>): Promise<MeditationSession> {
+    const id = this.currentMeditationSessionId++;
+    const newSession: MeditationSession = { ...session, id };
+    this.meditationSessions.set(id, newSession);
+    return newSession;
+  }
+  
+  // Women's health methods - Menstrual Cycles
+  async getMenstrualCycles(userId: number): Promise<MenstrualCycle[]> {
+    return Array.from(this.menstrualCycles.values())
+      .filter(cycle => cycle.userId === userId)
+      .sort((a, b) => new Date(b.cycleStartDate).getTime() - new Date(a.cycleStartDate).getTime());
+  }
+  
+  async getMenstrualCycleById(id: number): Promise<MenstrualCycle | undefined> {
+    return this.menstrualCycles.get(id);
+  }
+  
+  async createMenstrualCycle(cycle: Omit<MenstrualCycle, 'id'>): Promise<MenstrualCycle> {
+    const id = this.currentMenstrualCycleId++;
+    const newCycle: MenstrualCycle = { ...cycle, id };
+    this.menstrualCycles.set(id, newCycle);
+    return newCycle;
+  }
+  
+  // Menstrual Cycle Symptoms
+  async getMenstrualCycleSymptoms(userId: number): Promise<MenstrualCycleSymptom[]> {
+    return Array.from(this.menstrualCycleSymptoms.values())
+      .filter(symptom => symptom.userId === userId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async getMenstrualCycleSymptomsByDateRange(userId: number, startDate: Date, endDate: Date): Promise<MenstrualCycleSymptom[]> {
+    return Array.from(this.menstrualCycleSymptoms.values())
+      .filter(symptom => {
+        const symptomDate = new Date(symptom.date);
+        return symptom.userId === userId &&
+               symptomDate >= startDate &&
+               symptomDate <= endDate;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async createMenstrualCycleSymptom(symptom: Omit<MenstrualCycleSymptom, 'id'>): Promise<MenstrualCycleSymptom> {
+    const id = this.currentMenstrualCycleSymptomId++;
+    const newSymptom: MenstrualCycleSymptom = { ...symptom, id };
+    this.menstrualCycleSymptoms.set(id, newSymptom);
+    return newSymptom;
+  }
+  
+  // Fertility tracking methods
+  async getFertilityTracking(userId: number): Promise<FertilityTracking[]> {
+    return Array.from(this.fertilityTrackings.values())
+      .filter(tracking => tracking.userId === userId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async getFertilityTrackingByDateRange(userId: number, startDate: Date, endDate: Date): Promise<FertilityTracking[]> {
+    return Array.from(this.fertilityTrackings.values())
+      .filter(tracking => {
+        const trackingDate = new Date(tracking.date);
+        return tracking.userId === userId &&
+               trackingDate >= startDate &&
+               trackingDate <= endDate;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+  
+  async createFertilityTracking(tracking: Omit<FertilityTracking, 'id'>): Promise<FertilityTracking> {
+    const id = this.currentFertilityTrackingId++;
+    const newTracking: FertilityTracking = { ...tracking, id };
+    this.fertilityTrackings.set(id, newTracking);
+    return newTracking;
+  }
+  
+  // Pregnancy tracking methods
+  async getPregnancyTracking(userId: number): Promise<PregnancyTracking | undefined> {
+    return Array.from(this.pregnancyTrackings.values())
+      .find(tracking => tracking.userId === userId);
+  }
+  
+  async createPregnancyTracking(tracking: Omit<PregnancyTracking, 'id'>): Promise<PregnancyTracking> {
+    const id = this.currentPregnancyTrackingId++;
+    const newTracking: PregnancyTracking = { ...tracking, id };
+    this.pregnancyTrackings.set(id, newTracking);
+    return newTracking;
+  }
+  
+  async updatePregnancyTracking(id: number, tracking: Partial<Omit<PregnancyTracking, 'id'>>): Promise<PregnancyTracking> {
+    const existingTracking = this.pregnancyTrackings.get(id);
+    
+    if (!existingTracking) {
+      throw new Error(`Pregnancy tracking with id ${id} not found`);
+    }
+    
+    const updatedTracking: PregnancyTracking = { ...existingTracking, ...tracking };
+    this.pregnancyTrackings.set(id, updatedTracking);
+    return updatedTracking;
   }
   
   // Video methods
