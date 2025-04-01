@@ -95,7 +95,7 @@ export function VideoCard({ video }: VideoCardProps) {
   return (
     <Card className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 dark:border-gray-700">
       <div className="relative pb-[56.25%] bg-gray-200 dark:bg-gray-700">
-        <div className={`absolute inset-0 flex items-center justify-center ${bgColor}`}>
+        <div className={`absolute inset-0 flex items-center justify-center ${video.thumbnailUrl ? '' : bgColor}`} style={video.thumbnailUrl ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
           <button 
             className="w-16 h-16 rounded-full bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 flex items-center justify-center z-10 hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-all duration-200"
             onClick={handleWatchVideo}

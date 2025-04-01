@@ -235,7 +235,7 @@ export class MemStorage implements IStorage {
         duration: '18:32',
         category: 'Mental Health',
         description: 'Uma meditação guiada para reduzir ansiedade e estresse, com foco em respiração e relaxamento profundo',
-        thumbnailUrl: '',
+        thumbnailUrl: `https://img.youtube.com/vi/0F9szTYowN0/maxresdefault.jpg`,
         videoUrl: 'https://www.youtube.com/embed/0F9szTYowN0'
       },
       {
