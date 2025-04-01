@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
+import { useDevMode } from "@/hooks/use-dev-mode";
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { LoginForm } from "@/components/auth/login-form";
@@ -9,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AuthPage() {
   const { user, refetchUser } = useAuth();
+  const { skipAuth } = useDevMode();
   const [, navigate] = useLocation();
   const [showTwoFactor, setShowTwoFactor] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
@@ -28,6 +30,13 @@ export default function AuthPage() {
       refetchUser().catch(err => console.error("Failed to refresh user data:", err));
     }
   }, [refetchUser]);
+  
+  // Redireciona automaticamente se o modo de desenvolvimento estiver ativado
+  useEffect(() => {
+    if (skipAuth) {
+      navigate("/dashboard");
+    }
+  }, [skipAuth, navigate]);
   
   useEffect(() => {
     if (user) {
