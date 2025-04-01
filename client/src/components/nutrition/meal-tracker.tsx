@@ -377,7 +377,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                         </span>
                       </div>
                     </div>
-                    <Progress value={(dailyTotals.calories / dailyGoals.calories) * 100} className="bg-primary-600" />
+                    <Progress value={(dailyTotals.calories / dailyGoals.calories) * 100} className="bg-primary-600 dark:bg-primary-500" />
                   </div>
                   
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
@@ -417,7 +417,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.carbs / dailyGoals.carbs) * 100} 
-                        className="bg-blue-500 h-1.5" 
+                        className="bg-blue-500 dark:bg-blue-400 h-1.5" 
                       />
                     </div>
                     
@@ -428,7 +428,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.protein / dailyGoals.protein) * 100} 
-                        className="bg-red-500 h-1.5" 
+                        className="bg-red-500 dark:bg-red-400 h-1.5" 
                       />
                     </div>
                     
@@ -439,7 +439,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.fat / dailyGoals.fat) * 100} 
-                        className="bg-yellow-500 h-1.5" 
+                        className="bg-yellow-500 dark:bg-yellow-400 h-1.5" 
                       />
                     </div>
                   </div>

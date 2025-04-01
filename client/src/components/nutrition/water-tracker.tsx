@@ -77,31 +77,31 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   };
   
   return (
-    <Card>
+    <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader>
-        <CardTitle>Water Intake</CardTitle>
+        <CardTitle className="dark:text-gray-100">Water Intake</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
-          <div className="relative w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+          <div className="relative w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
             <div 
-              className="absolute bottom-0 left-0 right-0 bg-blue-500 rounded-b-full" 
+              className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400 rounded-b-full" 
               style={{
                 height: `${waterPercentage}%`, 
                 borderRadius: waterPercentage === 100 ? '9999px' : '0 0 9999px 9999px'
               }}
             ></div>
-            <div className="relative text-sm font-semibold">{Math.round(waterPercentage)}%</div>
+            <div className="relative text-sm font-semibold dark:text-white">{Math.round(waterPercentage)}%</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-gray-900">{todayWaterIntake} ml</div>
-            <div className="text-sm text-gray-500">of {dailyGoal} ml goal</div>
+            <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{todayWaterIntake} ml</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">of {dailyGoal} ml goal</div>
             <div className="mt-2 flex space-x-2">
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(250)}
-                className={amount === 250 ? "bg-blue-50" : ""}
+                className={amount === 250 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
               >
                 250ml
               </Button>
@@ -109,7 +109,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(500)}
-                className={amount === 500 ? "bg-blue-50" : ""}
+                className={amount === 500 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
               >
                 500ml
               </Button>
@@ -117,7 +117,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(1000)}
-                className={amount === 1000 ? "bg-blue-50" : ""}
+                className={amount === 1000 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
               >
                 1000ml
               </Button>
@@ -134,17 +134,17 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
         </div>
         
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-500 mb-3">7-Day History</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">7-Day History</h4>
           <div className="grid grid-cols-7 gap-2">
             {waterHistory.map((day, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark:bg-gray-700 rounded-t-sm overflow-hidden">
                   <div 
-                    className="absolute bottom-0 left-0 right-0 bg-blue-500" 
+                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400" 
                     style={{height: `${(day.amount / dailyGoal) * 100}%`}}
                   ></div>
                 </div>
-                <span className="text-xs text-gray-500 mt-1">{formatDate(day.date).split(' ')[0]}</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">{formatDate(day.date).split(' ')[0]}</span>
               </div>
             ))}
           </div>
