@@ -224,10 +224,14 @@ export class MemStorage implements IStorage {
   }
 
   // Initialize some sample videos for the application
-  private initSampleVideos() {
+  private async initSampleVideos() {
+    const videoId = '0F9szTYowN0';
+    const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+    const data = await response.json();
+    
     const sampleVideos: Omit<Video, 'id'>[] = [
       {
-        title: 'Meditação Guiada para Ansiedade e Stress',
+        title: data.title,
         duration: '18:32',
         category: 'Mental Health',
         description: 'Uma meditação guiada para reduzir ansiedade e estresse, com foco em respiração e relaxamento profundo',
