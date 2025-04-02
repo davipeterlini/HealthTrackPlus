@@ -1,5 +1,5 @@
 
-# HealthTrack - Monitoramento Integrado de Saúde
+# LifeTrek - Monitoramento Integrado de Saúde
 
 ## 📋 Sobre
 
