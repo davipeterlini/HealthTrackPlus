@@ -133,10 +133,20 @@ export function VideoCard({ video }: VideoCardProps) {
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{video.description}</p>
         <div className="mt-4">
           <button 
-            className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+            className={`text-sm font-medium ${
+              currentProgress === 100 
+                ? "text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300" 
+                : currentProgress > 0 
+                ? "text-yellow-600 hover:text-yellow-500 dark:text-yellow-400 dark:hover:text-yellow-300"
+                : "text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+            }`}
             onClick={handleWatchVideo}
           >
-            {currentProgress === 100 ? "Rewatch video" : "Watch video"}
+            {currentProgress === 100 
+              ? "Rewatch video" 
+              : currentProgress > 0 
+              ? "Continue video" 
+              : "Start video"}
           </button>
         </div>
       </CardContent>
