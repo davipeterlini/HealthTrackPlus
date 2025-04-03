@@ -56,11 +56,11 @@ export function Header() {
   };
 
   return (
-    <header className="bg-[#1a2127] border-b border-gray-800">
+    <header className="bg-white dark:bg-[#1a2127] border-b border-gray-200 dark:border-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-emerald-400">LifeTrek</h1>
+            <h1 className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">LifeTrek</h1>
           </div>
 
           <nav className="hidden md:flex md:space-x-8">
@@ -72,8 +72,8 @@ export function Header() {
                   href={item.path}
                   className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                     location === item.path
-                      ? "text-emerald-400"
-                      : "text-gray-300 hover:text-emerald-400"
+                      ? "text-emerald-500 dark:text-emerald-400"
+                      : "text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400"
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -87,7 +87,7 @@ export function Header() {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="relative text-gray-400 hover:text-gray-300"
+              className="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
             >
               <BellIcon className="h-5 w-5" />
               <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
@@ -115,8 +115,8 @@ export function Header() {
                         href={item.path}
                         className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                           location === item.path
-                            ? "text-emerald-400"
-                            : "text-gray-300 hover:text-emerald-400"
+                            ? "text-emerald-500 dark:text-emerald-400"
+                            : "text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
