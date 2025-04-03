@@ -25,13 +25,13 @@ export function VideoCard({ video }: VideoCardProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  
+
   // Get video progress
   const { data: videoProgress } = useQuery<VideoProgress>({
     queryKey: [`/api/video-progress/${video.id}`],
     enabled: !!user && !!video.id,
   });
-  
+
   // Update progress mutation
   const updateProgressMutation = useMutation({
     mutationFn: async (progress: number) => {
@@ -51,36 +51,43 @@ export function VideoCard({ video }: VideoCardProps) {
       });
     },
   });
-  
+
   // Store current progress value
   const currentProgress = videoProgress?.progress ?? 0;
-  
+
   const handleWatchVideo = () => {
     setVideoOpen(true);
     // Simulate progress update when video is watched
     if (currentProgress < 100) {
       const newProgress = Math.min(currentProgress + 25, 100);
       setWatchProgress(newProgress);
-      
+
       // Only update in the backend if the user is logged in
       if (user) {
         updateProgressMutation.mutate(newProgress);
       }
     }
   };
-  
+
+  const handleVideoEnd = () => {
+    // Add logic to handle video completion here.  This is a placeholder.
+    setWatchProgress(100);
+    setVideoOpen(false);
+  };
+
+
   const getProgressLabel = (progress: number): string => {
     if (progress === 0) return "Not Started";
     if (progress === 100) return "Completed";
     return "In Progress";
   };
-  
+
   const getProgressColor = (progress: number): string => {
     if (progress === 0) return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300";
     if (progress === 100) return "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300";
     return "bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300";
   };
-  
+
   // For video thumbnail, we'll use a color background since we can't load images
   const colorMap: Record<string, string> = {
     "Mental Health": "bg-blue-600",
@@ -89,9 +96,9 @@ export function VideoCard({ video }: VideoCardProps) {
     "Medical": "bg-red-600",
     "Sleep": "bg-purple-600"
   };
-  
+
   const bgColor = colorMap[video.category] || "bg-gray-600";
-  
+
   return (
     <Card className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 dark:border-gray-700">
       <div className="relative pb-[56.25%] bg-gray-200 dark:bg-gray-700">
@@ -133,7 +140,7 @@ export function VideoCard({ video }: VideoCardProps) {
           </button>
         </div>
       </CardContent>
-      
+
       {/* Video Player Dialog */}
       <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
         <DialogContent className="sm:max-w-3xl">
@@ -163,6 +170,12 @@ export function VideoCard({ video }: VideoCardProps) {
                     className="mt-6 bg-primary-600" 
                   />
                   <p className="text-sm mt-2">Progress: {watchProgress}%</p>
+                  <button
+                    className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+                    onClick={handleVideoEnd}
+                  >
+                    Complete Video
+                  </button>
                 </div>
               </div>
             )}
