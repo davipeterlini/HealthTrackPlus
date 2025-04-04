@@ -60,7 +60,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">LifeTrek</h1>
+            <h1 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">LifeTrek</h1>
           </div>
 
           <nav className="hidden md:flex md:space-x-8">
@@ -72,8 +72,8 @@ export function Header() {
                   href={item.path}
                   className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                     location === item.path
-                      ? "text-emerald-500 dark:text-emerald-400"
-                      : "text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400"
+                      ? "text-emerald-700 dark:text-emerald-400"
+                      : "text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400"
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -115,8 +115,8 @@ export function Header() {
                         href={item.path}
                         className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                           location === item.path
-                            ? "text-emerald-500 dark:text-emerald-400"
-                            : "text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400"
+                            ? "text-emerald-700 dark:text-emerald-400"
+                            : "text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
