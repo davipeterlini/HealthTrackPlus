@@ -22,7 +22,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-blue-50 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
-              <Activity className="text-blue-500 dark:text-[#ff9f7d] h-6 w-6" />
+              <Activity className="text-blue-600 dark:text-[#ff9f7d] h-6 w-6" />
             </div>
           </div>
         </Card>
@@ -38,7 +38,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-blue-50 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
-              <Apple className="text-blue-500 dark:text-emerald-400 h-6 w-6" />
+              <Apple className="text-blue-600 dark:text-emerald-400 h-6 w-6" />
             </div>
           </div>
         </Card>
@@ -67,10 +67,10 @@ export default function DashboardPage() {
             <Progress value={48} className="h-2 bg-blue-100 dark:bg-gray-700" />
             <div className="flex gap-2">
               <Button variant="outline" size="sm" className="border-blue-200 dark:border-gray-700 text-slate-700 dark:text-gray-100">
-                <Droplet className="h-4 w-4 mr-1 text-blue-500 dark:text-blue-400" /> 150ml
+                <Droplet className="h-4 w-4 mr-1 text-blue-600 dark:text-blue-400" /> 150ml
               </Button>
               <Button variant="outline" size="sm" className="border-blue-200 dark:border-gray-700 text-slate-700 dark:text-gray-100">
-                <Droplet className="h-4 w-4 mr-1 text-blue-500 dark:text-blue-400" /> 250ml
+                <Droplet className="h-4 w-4 mr-1 text-blue-600 dark:text-blue-400" /> 250ml
               </Button>
             </div>
           </div>

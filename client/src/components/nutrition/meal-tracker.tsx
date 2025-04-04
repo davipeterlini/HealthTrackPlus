@@ -141,13 +141,13 @@ export function MealTracker({ meals }: MealTrackerProps) {
   const getMealIcon = (mealType: string) => {
     switch (mealType.toLowerCase()) {
       case "breakfast":
-        return <Sun className="text-yellow-600" />;
+        return <Sun className="text-amber-600" />;
       case "lunch":
         return <Cloud className="text-blue-600" />;
       case "dinner":
         return <Moon className="text-indigo-600" />;
       case "snack":
-        return <Coffee className="text-orange-600" />;
+        return <Coffee className="text-amber-700" />;
       default:
         return <Utensils className="text-gray-600" />;
     }
@@ -329,12 +329,12 @@ export function MealTracker({ meals }: MealTrackerProps) {
                                 </Badge>
                               )}
                               {meal.protein && (
-                                <Badge variant="outline" className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-0">
+                                <Badge variant="outline" className="bg-rose-100 dark:bg-red-900 text-rose-800 dark:text-red-300 border-0">
                                   {meal.protein}g protein
                                 </Badge>
                               )}
                               {meal.fat && (
-                                <Badge variant="outline" className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300 border-0">
+                                <Badge variant="outline" className="bg-amber-100 dark:bg-yellow-900 text-amber-800 dark:text-yellow-300 border-0">
                                   {meal.fat}g fat
                                 </Badge>
                               )}
@@ -388,15 +388,15 @@ export function MealTracker({ meals }: MealTrackerProps) {
                         {Math.round((dailyTotals.carbs * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="bg-red-50 dark:bg-red-900 p-2 rounded">
-                      <span className="block text-xs text-red-700 dark:text-red-300">Protein</span>
+                    <div className="bg-rose-50 dark:bg-red-900 p-2 rounded">
+                      <span className="block text-xs text-rose-700 dark:text-red-300">Protein</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.protein}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.protein * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="bg-yellow-50 dark:bg-yellow-900 p-2 rounded">
-                      <span className="block text-xs text-yellow-700 dark:text-yellow-300">Fat</span>
+                    <div className="bg-amber-50 dark:bg-yellow-900 p-2 rounded">
+                      <span className="block text-xs text-amber-700 dark:text-yellow-300">Fat</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.fat}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.fat * 9 / dailyTotals.calories) * 100) || 0}%
@@ -428,7 +428,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.protein / dailyGoals.protein) * 100} 
-                        className="bg-red-500 dark:bg-red-400 h-1.5" 
+                        className="bg-rose-500 dark:bg-red-400 h-1.5" 
                       />
                     </div>
                     
@@ -439,7 +439,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.fat / dailyGoals.fat) * 100} 
-                        className="bg-yellow-500 dark:bg-yellow-400 h-1.5" 
+                        className="bg-amber-500 dark:bg-yellow-400 h-1.5" 
                       />
                     </div>
                   </div>
