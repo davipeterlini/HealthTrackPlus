@@ -16,13 +16,13 @@ export default function DashboardPage() {
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-2">Passos</p>
               <h2 className="text-4xl font-bold mb-2">7,842</h2>
-              <p className="text-blue-600 dark:text-emerald-400 flex items-center">
+              <p className="text-teal-700 dark:text-emerald-400 flex items-center">
                 <span className="mr-1">↑</span>
                 12% em relação a ontem
               </p>
             </div>
-            <div className="bg-blue-50 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
-              <Activity className="text-blue-600 dark:text-[#ff9f7d] h-6 w-6" />
+            <div className="bg-slate-100 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
+              <Activity className="text-teal-700 dark:text-[#ff9f7d] h-6 w-6" />
             </div>
           </div>
         </Card>
@@ -32,13 +32,13 @@ export default function DashboardPage() {
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-2">Calorias</p>
               <h2 className="text-4xl font-bold mb-2">1,450</h2>
-              <p className="text-indigo-600 dark:text-red-400">
+              <p className="text-slate-600 dark:text-red-400">
                 <span className="mr-1">↓</span>
                 320 kcal a consumir
               </p>
             </div>
-            <div className="bg-blue-50 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
-              <Apple className="text-blue-600 dark:text-emerald-400 h-6 w-6" />
+            <div className="bg-slate-100 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
+              <Apple className="text-slate-600 dark:text-emerald-400 h-6 w-6" />
             </div>
           </div>
         </Card>
@@ -49,7 +49,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-7 gap-2 h-40">
           {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day, i) => (
             <div key={i} className="flex flex-col items-center">
-              <div className="flex-grow w-full bg-blue-400/20 dark:bg-emerald-500/20 rounded-md" style={{height: `${Math.random() * 100}%`}} />
+              <div className="flex-grow w-full bg-teal-400/20 dark:bg-emerald-500/20 rounded-md" style={{height: `${Math.random() * 100}%`}} />
               <span className="text-sm text-slate-600 dark:text-gray-400 mt-2">{day}</span>
             </div>
           ))}
@@ -64,13 +64,13 @@ export default function DashboardPage() {
               <span className="text-slate-800">1200 ml</span>
               <span className="text-slate-600 dark:text-gray-400">Meta: 2500 ml</span>
             </div>
-            <Progress value={48} className="h-2 bg-blue-100 dark:bg-gray-700" />
+            <Progress value={48} className="h-2 bg-slate-200 dark:bg-gray-700" />
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="border-blue-200 dark:border-gray-700 text-slate-700 dark:text-gray-100">
-                <Droplet className="h-4 w-4 mr-1 text-blue-600 dark:text-blue-400" /> 150ml
+              <Button variant="outline" size="sm" className="border-slate-200 dark:border-gray-700 text-slate-700 dark:text-gray-100">
+                <Droplet className="h-4 w-4 mr-1 text-slate-600 dark:text-blue-400" /> 150ml
               </Button>
-              <Button variant="outline" size="sm" className="border-blue-200 dark:border-gray-700 text-slate-700 dark:text-gray-100">
-                <Droplet className="h-4 w-4 mr-1 text-blue-600 dark:text-blue-400" /> 250ml
+              <Button variant="outline" size="sm" className="border-slate-200 dark:border-gray-700 text-slate-700 dark:text-gray-100">
+                <Droplet className="h-4 w-4 mr-1 text-slate-600 dark:text-blue-400" /> 250ml
               </Button>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function DashboardPage() {
               <span className="text-slate-600 dark:text-gray-400">07:00</span>
             </div>
             <h2 className="text-3xl font-bold">7.5h</h2>
-            <p className="text-blue-600 dark:text-emerald-400">Bom</p>
+            <p className="text-teal-700 dark:text-emerald-400">Bom</p>
             <p className="text-slate-600 dark:text-gray-400">Total de sono</p>
           </div>
         </Card>
@@ -93,26 +93,26 @@ export default function DashboardPage() {
       <Card className="bg-white dark:bg-[#1a2127] border border-blue-100 dark:border-0 p-6 shadow-md">
         <h3 className="text-lg font-semibold mb-4">Próximos Lembretes</h3>
         <div className="space-y-3">
-          <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-[#2a3137] rounded-lg border border-blue-100 dark:border-0 shadow-sm">
+          <div className="flex justify-between items-center p-3 bg-slate-100 dark:bg-[#2a3137] rounded-lg border border-slate-200 dark:border-0 shadow-sm">
             <div>
               <p className="font-medium text-slate-800 dark:text-white">Tomar Vitamina D</p>
               <p className="text-sm text-slate-600 dark:text-gray-400">1 cápsula com café da manhã</p>
             </div>
-            <span className="text-blue-600 dark:text-emerald-400">08:00</span>
+            <span className="text-slate-600 dark:text-emerald-400">08:00</span>
           </div>
-          <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-[#2a3137] rounded-lg border border-blue-100 dark:border-0 shadow-sm">
+          <div className="flex justify-between items-center p-3 bg-slate-100 dark:bg-[#2a3137] rounded-lg border border-slate-200 dark:border-0 shadow-sm">
             <div>
               <p className="font-medium text-slate-800 dark:text-white">Exercícios</p>
               <p className="text-sm text-slate-600 dark:text-gray-400">30 minutos de caminhada</p>
             </div>
-            <span className="text-blue-600 dark:text-emerald-400">18:30</span>
+            <span className="text-slate-600 dark:text-emerald-400">18:30</span>
           </div>
-          <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-[#2a3137] rounded-lg border border-blue-100 dark:border-0 shadow-sm">
+          <div className="flex justify-between items-center p-3 bg-slate-100 dark:bg-[#2a3137] rounded-lg border border-slate-200 dark:border-0 shadow-sm">
             <div>
               <p className="font-medium text-slate-800 dark:text-white">Meditação Noturna</p>
               <p className="text-sm text-slate-600 dark:text-gray-400">Rotina de relaxamento</p>
             </div>
-            <span className="text-blue-600 dark:text-emerald-400">22:00</span>
+            <span className="text-slate-600 dark:text-emerald-400">22:00</span>
           </div>
         </div>
       </Card>
