@@ -20,9 +20,35 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
           id: i + 1,
           userId: 1,
           date,
+          startTime: null,
+          endTime: null,
+          activityType: "walking",
           steps: 0,
+          distance: null,
           calories: 0,
-          minutes: 0
+          minutes: 0,
+          heartRate: null,
+          heartRateZones: null,
+          elevationGain: null,
+          elevationLoss: null,
+          avgPace: null,
+          maxPace: null,
+          intensity: null,
+          cadence: null,
+          strideLength: null,
+          routeData: null,
+          gpsPoints: null,
+          activityImage: null,
+          feeling: null,
+          weatherCondition: null,
+          temperature: null,
+          humidity: null,
+          terrainType: null,
+          equipmentUsed: null,
+          notes: null,
+          source: "manual",
+          isRealTime: false,
+          achievements: null
         };
       }).reverse();
       
@@ -69,8 +95,8 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
                 <div 
                   className={`w-full rounded-t-sm transition-all duration-200 ${
                     isHighestActivity 
-                      ? 'bg-primary-600 dark:bg-primary-500' 
-                      : 'bg-primary-400 hover:bg-primary-500 dark:bg-primary-700 dark:hover:bg-primary-600'
+                      ? 'bg-blue-600 dark:bg-primary-500' 
+                      : 'bg-blue-400 hover:bg-blue-500 dark:bg-primary-700 dark:hover:bg-primary-600'
                   }`}
                   style={{ height: `${heightPercentage}%` }}
                   title={`${activity.steps.toLocaleString()} steps`}

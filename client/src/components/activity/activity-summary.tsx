@@ -98,8 +98,8 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
         <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-primary-100 dark:bg-primary-900 rounded-full p-3">
-                <Flame className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+              <div className="flex-shrink-0 bg-blue-100 dark:bg-primary-900 rounded-full p-3">
+                <Flame className="h-5 w-5 text-blue-600 dark:text-primary-400" />
               </div>
               <div className="ml-5">
                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Calories</h4>
@@ -110,9 +110,9 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
             </div>
             <div className="mt-4">
               <div className="relative pt-1">
-                <div className="overflow-hidden h-2 text-xs flex rounded bg-primary-200 dark:bg-primary-800">
+                <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200 dark:bg-primary-800">
                   <div 
-                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-600 dark:bg-primary-500" 
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600 dark:bg-primary-500" 
                     style={{ width: `${caloriesPercentage}%` }}
                   ></div>
                 </div>
@@ -127,8 +127,8 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
         <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-full p-3">
-                <Clock className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+              <div className="flex-shrink-0 bg-blue-100 dark:bg-purple-900 rounded-full p-3">
+                <Clock className="h-5 w-5 text-blue-600 dark:text-purple-400" />
               </div>
               <div className="ml-5">
                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Minutes</h4>
@@ -139,9 +139,9 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
             </div>
             <div className="mt-4">
               <div className="relative pt-1">
-                <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-200 dark:bg-purple-800">
+                <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200 dark:bg-purple-800">
                   <div 
-                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-600 dark:bg-purple-500" 
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600 dark:bg-purple-500" 
                     style={{ width: `${minutesPercentage}%` }}
                   ></div>
                 </div>
