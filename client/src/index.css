@@ -13,9 +13,9 @@
   }
 
   :root {
-    --background: 250 250 252;
-    --foreground: 30 41 59;
-    --primary: 4 120 87;
+    --background: 245 247 251;
+    --foreground: 51 65 85;
+    --primary: 79 129 189;
   }
 
   .dark {

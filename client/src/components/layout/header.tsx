@@ -56,11 +56,11 @@ export function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-[#1a2127] border-b border-gray-200 dark:border-gray-800 shadow-sm">
+    <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">LifeTrek</h1>
+            <h1 className="text-2xl font-bold text-blue-600 dark:text-emerald-400">LifeTrek</h1>
           </div>
 
           <nav className="hidden md:flex md:space-x-8">
@@ -72,8 +72,8 @@ export function Header() {
                   href={item.path}
                   className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                     location === item.path
-                      ? "text-emerald-700 dark:text-emerald-400"
-                      : "text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400"
+                      ? "text-blue-600 dark:text-emerald-400"
+                      : "text-slate-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-emerald-400"
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -87,10 +87,10 @@ export function Header() {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+              className="relative text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300"
             >
               <BellIcon className="h-5 w-5" />
-              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
             </Button>
 
             <ThemeToggle />
@@ -98,13 +98,13 @@ export function Header() {
 
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
+              <SheetContent side="left" className="border-r border-blue-50 dark:border-gray-800">
                 <SheetHeader>
-                  <SheetTitle>Menu</SheetTitle>
+                  <SheetTitle className="text-blue-600 dark:text-white">Menu</SheetTitle>
                 </SheetHeader>
                 <nav className="mt-4">
                   {navItems.map((item) => {
@@ -115,8 +115,8 @@ export function Header() {
                         href={item.path}
                         className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                           location === item.path
-                            ? "text-emerald-700 dark:text-emerald-400"
-                            : "text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400"
+                            ? "text-blue-600 dark:text-emerald-400"
+                            : "text-slate-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-emerald-400"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -132,24 +132,26 @@ export function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative flex items-center">
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
                     <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                    <AvatarFallback>{user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200">
+                      {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
-                    <span>{user?.name || user?.username}</span>
-                    <span className="text-xs text-gray-500">{user?.email}</span>
+                    <span className="text-slate-800 dark:text-white">{user?.name || user?.username}</span>
+                    <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile Settings</DropdownMenuItem>
-                <DropdownMenuItem>Preferences</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>Sign out</DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
+                <DropdownMenuItem className="text-slate-700 dark:text-gray-200 focus:bg-blue-50 dark:focus:bg-gray-700">Profile Settings</DropdownMenuItem>
+                <DropdownMenuItem className="text-slate-700 dark:text-gray-200 focus:bg-blue-50 dark:focus:bg-gray-700">Preferences</DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
+                <DropdownMenuItem onClick={handleLogout} className="text-blue-600 dark:text-red-400 focus:bg-blue-50 dark:focus:bg-gray-700">Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
