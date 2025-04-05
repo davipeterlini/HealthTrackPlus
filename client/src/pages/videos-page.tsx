@@ -30,7 +30,7 @@ export default function VideosPage() {
   );
   
   return (
-    <MainLayout title="Integrative Medicine Videos">
+    <MainLayout title="Medicine Subscription Club">
       <Card className="overflow-hidden dark:bg-gray-800 dark:border-gray-700">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">

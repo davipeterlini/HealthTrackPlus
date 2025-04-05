@@ -14,13 +14,25 @@ interface ActivityBreakdownProps {
 }
 
 export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
-  // Activity type distribution (for demo purposes)
-  const activityTypes = [
-    { type: "Walking", percentage: 58, color: "bg-primary-600 dark:bg-primary-500" },
-    { type: "Running", percentage: 22, color: "bg-green-500 dark:bg-green-400" },
-    { type: "Cycling", percentage: 12, color: "bg-purple-500 dark:bg-purple-400" },
-    { type: "Other", percentage: 8, color: "bg-blue-500 dark:bg-blue-400" }
-  ];
+  const calculateActivityDistribution = (activity?: Activity) => {
+    if (!activity) return [];
+    
+    const types = {
+      walking: { type: "Walking", percentage: 0, color: "bg-primary-600 dark:bg-primary-500" },
+      running: { type: "Running", percentage: 0, color: "bg-green-500 dark:bg-green-400" },
+      cycling: { type: "Cycling", percentage: 0, color: "bg-purple-500 dark:bg-purple-400" },
+      other: { type: "Other", percentage: 0, color: "bg-blue-500 dark:bg-blue-400" }
+    };
+    
+    const total = activity.minutes || 0;
+    if (total > 0) {
+      types[activity.activityType].percentage = 100;
+    }
+    
+    return Object.values(types).filter(t => t.percentage > 0);
+  };
+
+  const activityTypes = calculateActivityDistribution(activity);
   
   // Heart rate zones (for demo purposes)
   const heartRateZones = [

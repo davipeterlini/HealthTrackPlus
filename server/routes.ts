@@ -345,7 +345,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(videos);
   });
 
-  const httpServer = createServer(app);
+  // Add test route
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Server is running!' });
+});
+
+const httpServer = createServer(app);
 
   return httpServer;
 }
