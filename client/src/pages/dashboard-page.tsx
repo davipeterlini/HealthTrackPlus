@@ -206,48 +206,60 @@ export default function DashboardPage() {
       </Card>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
-          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Hidratação</h3>
+        <Card className="bg-gray-900 border-0 p-4 sm:p-5 shadow-md">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-base sm:text-lg font-semibold text-white">Hidratação</h3>
+            <Droplet className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
+          </div>
           <div className="space-y-3 sm:space-y-4">
             <div className="flex justify-between items-center text-sm sm:text-base">
-              <span className="text-slate-800 dark:text-slate-300 font-medium">1200 ml</span>
-              <span className="text-slate-600 dark:text-gray-400">Meta: 2500 ml</span>
+              <span className="text-white font-medium">1300 ml</span>
+              <span className="text-gray-400">Meta: 2500 ml</span>
             </div>
-            <Progress value={48} className="h-2 bg-emerald-100 dark:bg-gray-700" />
-            <div className="flex flex-wrap gap-2">
-              <Button variant="outline" size="sm" className="text-xs sm:text-sm border-emerald-200 dark:border-gray-700 text-slate-700 dark:text-gray-100 h-8">
-                <Droplet className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-emerald-500 dark:text-blue-400" /> 150ml
+            <div className="h-2 w-full bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-full bg-teal-500 rounded-full" style={{ width: "52%" }}></div>
+            </div>
+            <div className="flex flex-wrap gap-3 justify-center mt-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="border-blue-700 bg-transparent hover:bg-blue-900/40 text-blue-400 h-9 px-4 rounded-full"
+              >
+                <span className="text-blue-400 mr-2">⊕</span>150ml
               </Button>
-              <Button variant="outline" size="sm" className="text-xs sm:text-sm border-emerald-200 dark:border-gray-700 text-slate-700 dark:text-gray-100 h-8">
-                <Droplet className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-emerald-500 dark:text-blue-400" /> 250ml
-              </Button>
-              <Button variant="outline" size="sm" className="text-xs sm:text-sm border-emerald-200 dark:border-gray-700 text-slate-700 dark:text-gray-100 h-8 hidden sm:flex">
-                <Droplet className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-emerald-500 dark:text-blue-400" /> 350ml
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="border-blue-700 bg-transparent hover:bg-blue-900/40 text-blue-400 h-9 px-4 rounded-full"
+              >
+                <span className="text-blue-400 mr-2">⊕</span>250ml
               </Button>
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
-          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Qualidade do Sono</h3>
+        <Card className="bg-gray-900 border-0 p-4 sm:p-5 shadow-md">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-base sm:text-lg font-semibold text-white">Quality</h3>
+            <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-300" />
+          </div>
           <div className="space-y-2">
-            <div className="flex justify-between text-xs sm:text-sm">
-              <span className="text-slate-600 dark:text-gray-400">23:30</span>
-              <span className="text-slate-600 dark:text-gray-400">07:00</span>
-            </div>
-            <div className="flex items-baseline">
-              <h2 className="text-2xl sm:text-3xl font-bold">7.5h</h2>
-              <span className="ml-2 text-sm text-emerald-500 dark:text-emerald-400">Bom</span>
-            </div>
-            <div className="flex justify-between mt-2">
-              <div className="space-y-1">
-                <p className="text-xs text-slate-600 dark:text-gray-400">Sono profundo</p>
-                <p className="text-sm sm:text-base font-medium">3.2h</p>
+            <div className="flex justify-between text-sm">
+              <div className="flex items-center">
+                <Moon className="h-4 w-4 text-gray-400 mr-1.5" />
+                <span className="text-gray-400">23:30</span>
               </div>
-              <div className="space-y-1">
-                <p className="text-xs text-slate-600 dark:text-gray-400">Sono leve</p>
-                <p className="text-sm sm:text-base font-medium">4.3h</p>
+              <div className="flex items-center">
+                <span className="text-gray-400">07:00</span>
+                <span className="h-4 w-4 text-yellow-400 ml-1.5">☀</span>
               </div>
+            </div>
+            <div className="mt-4">
+              <div className="flex items-start">
+                <h2 className="text-4xl font-bold text-white">7.5h</h2>
+                <span className="ml-auto text-green-400 text-lg">Good</span>
+              </div>
+              <p className="text-sm text-gray-400 mt-1">Total Time</p>
             </div>
           </div>
         </Card>
