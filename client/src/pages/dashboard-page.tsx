@@ -1,13 +1,17 @@
 
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
-import { Activity, Heart, Moon, Apple, Droplet, AlertCircle, FileText } from "lucide-react";
+import { 
+  Activity, Heart, Moon, Apple, Droplet, AlertCircle, 
+  FileText, Brain, Pill, Calculator 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useQuery } from "@tanstack/react-query";
 import { MedicalExam } from "@shared/schema";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+import { Link, useLocation } from "wouter";
 
 export default function DashboardPage() {
   const { data: exams = [] } = useQuery<MedicalExam[]>({
@@ -249,6 +253,82 @@ export default function DashboardPage() {
             </div>
           )}
         </Card>
+      </div>
+      
+      {/* Atalhos para Módulos */}
+      <h3 className="text-xl font-semibold mb-4">Acesso Rápido</h3>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        <Link href="/activity">
+          <Card className="p-5 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/30 dark:to-rose-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-3 mb-3 rounded-full bg-rose-500/10 dark:bg-rose-500/20">
+                <Activity className="h-8 w-8 text-rose-500 dark:text-rose-400" />
+              </div>
+              <h3 className="font-semibold text-slate-800 dark:text-white">Atividades</h3>
+              <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Rastreie seus exercícios</p>
+            </div>
+          </Card>
+        </Link>
+        
+        <Link href="/nutrition">
+          <Card className="p-5 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-3 mb-3 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20">
+                <Apple className="h-8 w-8 text-emerald-500 dark:text-emerald-400" />
+              </div>
+              <h3 className="font-semibold text-slate-800 dark:text-white">Nutrição</h3>
+              <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Registre refeições</p>
+            </div>
+          </Card>
+        </Link>
+        
+        <Link href="/sleep">
+          <Card className="p-5 bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-3 mb-3 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20">
+                <Moon className="h-8 w-8 text-indigo-500 dark:text-indigo-400" />
+              </div>
+              <h3 className="font-semibold text-slate-800 dark:text-white">Sono</h3>
+              <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Analise seu descanso</p>
+            </div>
+          </Card>
+        </Link>
+        
+        <Link href="/mental">
+          <Card className="p-5 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-3 mb-3 rounded-full bg-purple-500/10 dark:bg-purple-500/20">
+                <Brain className="h-8 w-8 text-purple-500 dark:text-purple-400" />
+              </div>
+              <h3 className="font-semibold text-slate-800 dark:text-white">Mental</h3>
+              <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Meditação e bem-estar</p>
+            </div>
+          </Card>
+        </Link>
+        
+        <Link href="/hydration">
+          <Card className="p-5 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-3 mb-3 rounded-full bg-blue-500/10 dark:bg-blue-500/20">
+                <Droplet className="h-8 w-8 text-blue-500 dark:text-blue-400" />
+              </div>
+              <h3 className="font-semibold text-slate-800 dark:text-white">Hidratação</h3>
+              <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Controle de água</p>
+            </div>
+          </Card>
+        </Link>
+        
+        <Link href="/medication">
+          <Card className="p-5 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-3 mb-3 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
+                <Pill className="h-8 w-8 text-pink-500 dark:text-pink-400" />
+              </div>
+              <h3 className="font-semibold text-slate-800 dark:text-white">Medicação</h3>
+              <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Gerenciamento de remédios</p>
+            </div>
+          </Card>
+        </Link>
       </div>
     </MainLayout>
   );
