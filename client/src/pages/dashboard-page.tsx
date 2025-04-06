@@ -10,7 +10,7 @@ export default function DashboardPage() {
     <MainLayout title="Olá, Usuário!">
       <p className="text-gray-600 dark:text-gray-400 mb-8">Aqui está seu resumo de saúde de hoje</p>
 
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
@@ -39,6 +39,38 @@ export default function DashboardPage() {
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
               <Apple className="text-emerald-500 dark:text-emerald-400 h-6 w-6" />
+            </div>
+          </div>
+        </Card>
+
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-slate-600 dark:text-gray-400 mb-2">Sono</p>
+              <h2 className="text-4xl font-bold mb-2">7.5h</h2>
+              <p className="text-emerald-500 dark:text-emerald-400 flex items-center">
+                <span className="mr-1">↑</span>
+                30min a mais que ontem
+              </p>
+            </div>
+            <div className="bg-emerald-100 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
+              <Moon className="text-emerald-500 dark:text-emerald-400 h-6 w-6" />
+            </div>
+          </div>
+        </Card>
+
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-slate-600 dark:text-gray-400 mb-2">BPM Médio</p>
+              <h2 className="text-4xl font-bold mb-2">72</h2>
+              <p className="text-emerald-500 dark:text-emerald-400 flex items-center">
+                <span className="mr-1">↓</span>
+                Ritmo saudável
+              </p>
+            </div>
+            <div className="bg-emerald-100 dark:bg-[#2a3137] p-2 rounded-full shadow-sm">
+              <Heart className="text-emerald-500 dark:text-emerald-400 h-6 w-6" />
             </div>
           </div>
         </Card>
