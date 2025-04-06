@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
-import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu } from "lucide-react";
+import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut } from "lucide-react";
+import { Link } from "wouter";
 import {
   Avatar,
   AvatarFallback,
@@ -129,17 +130,51 @@ export function Header() {
               </SheetContent>
             </Sheet>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative flex items-center">
-                  <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
-                    <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200">
-                      {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
+            <div className="flex items-center gap-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300">
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700">
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="flex items-center">
+                      <FileText className="mr-2 h-4 w-4" />
+                      Perfil
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/settings" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Configurações
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/help" className="flex items-center">
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      Ajuda
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sair
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative flex items-center">
+                    <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
+                      <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
+                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200">
+                        {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
