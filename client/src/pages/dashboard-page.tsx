@@ -108,14 +108,91 @@ export default function DashboardPage() {
       </div>
 
       <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 mb-8 shadow-md">
-        <h3 className="text-xl font-semibold mb-4">Atividades da Semana</h3>
-        <div className="grid grid-cols-7 gap-2 h-40">
-          {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day, i) => (
-            <div key={i} className="flex flex-col items-center">
-              <div className="flex-grow w-full bg-emerald-500/20 dark:bg-emerald-500/20 rounded-md" style={{height: `${Math.random() * 100}%`}} />
-              <span className="text-sm text-slate-600 dark:text-gray-400 mt-2">{day}</span>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">Atividades da Semana</h3>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
+              <span className="text-xs text-slate-600 dark:text-gray-400">Passos</span>
             </div>
-          ))}
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
+              <span className="text-xs text-slate-600 dark:text-gray-400">Calorias</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="relative h-52">
+          {/* Linhas de grade horizontais */}
+          <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col justify-between">
+            {[0, 1, 2, 3, 4].map((_, i) => (
+              <div 
+                key={i} 
+                className="border-t border-gray-100 dark:border-gray-800 w-full h-0"
+                style={{ top: `${i * 25}%` }}
+              />
+            ))}
+          </div>
+          
+          <div className="grid grid-cols-7 gap-2 h-full relative z-10">
+            {[
+              { day: 'Dom', steps: 5240, cals: 1250, active: 25 },
+              { day: 'Seg', steps: 7890, cals: 1540, active: 48 },
+              { day: 'Ter', steps: 9450, cals: 1780, active: 62 },
+              { day: 'Qua', steps: 10200, cals: 1820, active: 75 },
+              { day: 'Qui', steps: 8750, cals: 1650, active: 53 },
+              { day: 'Sex', steps: 12100, cals: 2100, active: 85 },
+              { day: 'Sáb', steps: 6800, cals: 1420, active: 40 }
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center h-full justify-end">
+                <div className="w-full relative flex items-end justify-center h-[85%]">
+                  {/* Barra de passos */}
+                  <div 
+                    className="w-full bg-emerald-500/80 dark:bg-emerald-500/70 rounded-t-md z-20 relative group cursor-pointer"
+                    style={{ height: `${item.active}%` }}
+                  >
+                    {/* Tooltip ao passar o mouse */}
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[120px]">
+                        <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
+                        <div className="flex justify-between text-slate-600 dark:text-gray-300">
+                          <span>Passos:</span>
+                          <span>{item.steps.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-600 dark:text-gray-300">
+                          <span>Calorias:</span>
+                          <span>{item.cals}</span>
+                        </div>
+                      </div>
+                      <div className="border-t-8 border-t-white dark:border-t-slate-800 border-l-8 border-l-transparent border-r-8 border-r-transparent h-0 w-0 absolute left-1/2 transform -translate-x-1/2"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Linha de calorias */}
+                  <div 
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 z-10"
+                    style={{ bottom: `${(item.cals / 2500) * 100}%` }}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-blue-500 absolute right-0 top-1/2 transform -translate-y-1/2"></div>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col items-center mt-2">
+                  <span className="text-sm text-slate-600 dark:text-gray-400">{item.day}</span>
+                  <span className="text-xs text-slate-500 dark:text-gray-500 mt-0.5">{item.steps.toLocaleString().substring(0, 2)}k</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Escala vertical */}
+          <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between">
+            {[10000, 7500, 5000, 2500, 0].map((value, i) => (
+              <div key={i} className="text-xs text-slate-400 dark:text-gray-500 -translate-x-6">
+                {value.toLocaleString()}
+              </div>
+            ))}
+          </div>
         </div>
       </Card>
 
