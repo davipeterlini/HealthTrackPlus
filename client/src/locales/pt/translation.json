@@ -5,7 +5,13 @@
     "exams": "Exames",
     "activity": "Atividade",
     "nutrition": "Nutrição",
-    "videos": "Vídeos"
+    "videos": "Vídeos",
+    "home": "Início",
+    "sleep": "Sono",
+    "mental": "Mental",
+    "water": "Água",
+    "hydration": "Hidratação",
+    "medication": "Medicação"
   },
   "auth": {
     "login": "Entrar",
@@ -17,6 +23,36 @@
   "health": {
     "summary": "Resumo da Saúde",
     "insights": "Insights de Saúde",
-    "activity": "Visão Geral da Atividade"
+    "activity": "Visão Geral da Atividade",
+    "greeting": "Olá, Usuário!",
+    "todayOverview": "Aqui está seu resumo de saúde de hoje",
+    "steps": "Passos",
+    "calories": "Calorias",
+    "sleep": "Sono",
+    "avgBPM": "BPM Médio",
+    "stepsUp": "vs ontem",
+    "remaining": "a consumir",
+    "moreMinutes": "a mais",
+    "healthy": "Saudável",
+    "weeklyActivities": "Atividades da Semana",
+    "hydration": "Hidratação",
+    "goal": "Meta",
+    "quality": "Qualidade",
+    "totalTime": "Tempo Total",
+    "goodQuality": "Bom",
+    "upcomingReminders": "Próximos Lembretes",
+    "examAlerts": "Alertas de Exames",
+    "noExamAlerts": "Sem alertas de exames",
+    "allExamsNormal": "Todos os seus exames estão normais",
+    "quickAccess": "Acesso Rápido",
+    "viewAll": "Ver todos",
+    "trackActivities": "Rastreie seus exercícios",
+    "trackMeals": "Registre refeições",
+    "analyzeSleep": "Analise seu descanso",
+    "meditationWellness": "Meditação e bem-estar",
+    "waterControl": "Controle de água",
+    "medicationManagement": "Gerenciamento de remédios",
+    "attention": "Atenção",
+    "critical": "Crítico"
   }
 }

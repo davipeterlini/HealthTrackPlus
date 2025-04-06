@@ -5,7 +5,13 @@
     "exams": "Exams",
     "activity": "Activity",
     "nutrition": "Nutrition",
-    "videos": "Videos"
+    "videos": "Videos",
+    "home": "Home",
+    "sleep": "Sleep",
+    "mental": "Mental",
+    "water": "Water",
+    "hydration": "Hydration",
+    "medication": "Medication"
   },
   "auth": {
     "login": "Login",
@@ -17,6 +23,36 @@
   "health": {
     "summary": "Health Summary",
     "insights": "Health Insights",
-    "activity": "Activity Overview"
+    "activity": "Activity Overview",
+    "greeting": "Hello, User!",
+    "todayOverview": "Here's your health summary for today",
+    "steps": "Steps",
+    "calories": "Calories",
+    "sleep": "Sleep",
+    "avgBPM": "Avg BPM",
+    "stepsUp": "up from yesterday",
+    "remaining": "remaining",
+    "moreMinutes": "more minutes",
+    "healthy": "Healthy",
+    "weeklyActivities": "Weekly Activities",
+    "hydration": "Hydration",
+    "goal": "Goal",
+    "quality": "Quality",
+    "totalTime": "Total Time",
+    "goodQuality": "Good",
+    "upcomingReminders": "Upcoming Reminders",
+    "examAlerts": "Exam Alerts",
+    "noExamAlerts": "No exam alerts",
+    "allExamsNormal": "All your exams are normal",
+    "quickAccess": "Quick Access",
+    "viewAll": "View all",
+    "trackActivities": "Track exercises",
+    "trackMeals": "Record meals",
+    "analyzeSleep": "Analyze rest",
+    "meditationWellness": "Meditation & wellness",
+    "waterControl": "Water control",
+    "medicationManagement": "Medication management",
+    "attention": "Attention",
+    "critical": "Critical"
   }
 }

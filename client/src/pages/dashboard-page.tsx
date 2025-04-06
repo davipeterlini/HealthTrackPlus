@@ -13,8 +13,10 @@ import { MedicalExam } from "@shared/schema";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const { data: exams = [] } = useQuery<MedicalExam[]>({
     queryKey: ["/api/exams"],
   });
@@ -39,18 +41,18 @@ export default function DashboardPage() {
     }
   };
   return (
-    <MainLayout title="Olá, Usuário!">
-      <p className="text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">Aqui está seu resumo de saúde de hoje</p>
+    <MainLayout title={t('health.greeting')}>
+      <p className="text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">{t('health.todayOverview')}</p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">Passos</p>
+              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.steps')}</p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">7,842</h2>
               <p className="text-emerald-500 dark:text-emerald-400 flex items-center text-xs sm:text-sm">
                 <span className="mr-1">↑</span>
-                12% vs ontem
+                12% {t('health.stepsUp')}
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
@@ -62,11 +64,11 @@ export default function DashboardPage() {
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">Calorias</p>
+              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.calories')}</p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">1,450</h2>
               <p className="text-red-500 dark:text-red-400 text-xs sm:text-sm">
                 <span className="mr-1">↓</span>
-                320 a consumir
+                320 {t('health.remaining')}
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
@@ -78,11 +80,11 @@ export default function DashboardPage() {
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">Sono</p>
+              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.sleep')}</p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">7.5h</h2>
               <p className="text-emerald-500 dark:text-emerald-400 flex items-center text-xs sm:text-sm">
                 <span className="mr-1">↑</span>
-                30min a mais
+                30min {t('health.moreMinutes')}
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
@@ -94,11 +96,11 @@ export default function DashboardPage() {
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">BPM Médio</p>
+              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.avgBPM')}</p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">72</h2>
               <p className="text-emerald-500 dark:text-emerald-400 flex items-center text-xs sm:text-sm">
                 <span className="mr-1">↓</span>
-                Saudável
+                {t('health.healthy')}
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
@@ -110,15 +112,15 @@ export default function DashboardPage() {
 
       <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 mb-8 shadow-md overflow-hidden">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-          <h3 className="text-lg sm:text-xl font-semibold">Atividades da Semana</h3>
+          <h3 className="text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
-              <span className="text-xs text-slate-600 dark:text-gray-400">Passos</span>
+              <span className="text-xs text-slate-600 dark:text-gray-400">{t('health.steps')}</span>
             </div>
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
-              <span className="text-xs text-slate-600 dark:text-gray-400">Calorias</span>
+              <span className="text-xs text-slate-600 dark:text-gray-400">{t('health.calories')}</span>
             </div>
           </div>
         </div>
@@ -157,11 +159,11 @@ export default function DashboardPage() {
                       <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
                         <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
                         <div className="flex justify-between text-slate-600 dark:text-gray-300">
-                          <span>Passos:</span>
+                          <span>{t('health.stepsLabel')}:</span>
                           <span>{item.steps.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between text-slate-600 dark:text-gray-300">
-                          <span>Calorias:</span>
+                          <span>{t('health.caloriesLabel')}:</span>
                           <span>{item.cals}</span>
                         </div>
                       </div>
@@ -202,7 +204,7 @@ export default function DashboardPage() {
         
         {/* Informações responsivas para telas menores */}
         <div className="mt-2 text-xs text-center text-slate-500 dark:text-gray-400 sm:hidden">
-          <p>Toque nas barras para ver detalhes</p>
+          <p>{t('health.touchBars')}</p>
         </div>
       </Card>
 
@@ -227,7 +229,7 @@ export default function DashboardPage() {
             return (
               <>
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-2xl font-semibold text-white">Hidratação</h3>
+                  <h3 className="text-2xl font-semibold text-white">{t('health.hydration')}</h3>
                   <div className="relative w-10 h-6">
                     <Droplet className="absolute h-6 w-6 text-blue-400 right-0" />
                     <Droplet className="absolute h-5 w-5 text-teal-300 left-0 top-0.5" />
@@ -236,7 +238,7 @@ export default function DashboardPage() {
                 <div className="space-y-5">
                   <div className="flex justify-between items-center">
                     <span className="text-white text-xl font-medium">{waterAmount} ml</span>
-                    <span className="text-gray-400">Meta: {waterGoal} ml</span>
+                    <span className="text-gray-400">{t('health.goal')}: {waterGoal} ml</span>
                   </div>
                   <div className="h-3 w-full bg-gray-700 rounded-full overflow-hidden">
                     <div 
@@ -272,7 +274,7 @@ export default function DashboardPage() {
 
         <Card className="bg-[#1a2127] border-0 p-4 sm:p-5 shadow-md rounded-xl">
           <div className="flex justify-between items-center mb-3">
-            <h3 className="text-base sm:text-lg font-semibold text-white">Quality</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-white">{t('health.sleepQuality')}</h3>
             <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-300" />
           </div>
           <div className="space-y-2">
@@ -289,9 +291,9 @@ export default function DashboardPage() {
             <div className="mt-4">
               <div className="flex items-start">
                 <h2 className="text-4xl font-bold text-white">7.5h</h2>
-                <span className="ml-auto text-green-400 text-lg">Good</span>
+                <span className="ml-auto text-green-400 text-lg">{t('health.goodQuality')}</span>
               </div>
-              <p className="text-sm text-gray-400 mt-1">Total Time</p>
+              <p className="text-sm text-gray-400 mt-1">{t('health.totalTime')}</p>
             </div>
           </div>
         </Card>
@@ -300,9 +302,9 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
           <div className="flex justify-between items-center mb-3 sm:mb-4">
-            <h3 className="text-base sm:text-lg font-semibold">Próximos Lembretes</h3>
+            <h3 className="text-base sm:text-lg font-semibold">{t('health.upcomingReminders')}</h3>
             <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
-              Ver todos
+              {t("health.viewAll")}
             </Button>
           </div>
           <div className="space-y-2 sm:space-y-3">
@@ -347,9 +349,9 @@ export default function DashboardPage() {
         
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
           <div className="flex justify-between items-center mb-3 sm:mb-4">
-            <h3 className="text-base sm:text-lg font-semibold">Alertas de Exames</h3>
+            <h3 className="text-base sm:text-lg font-semibold">{t('health.examAlerts')}</h3>
             <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
-              Ver todos
+              {t("health.viewAll")}
             </Button>
           </div>
           
@@ -377,8 +379,8 @@ export default function DashboardPage() {
               <div className="bg-emerald-50 dark:bg-[#2a3137] p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
                 <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-500 dark:text-emerald-400" />
               </div>
-              <p className="text-sm sm:text-base text-slate-700 dark:text-gray-300 mb-1">Sem alertas de exames</p>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">Todos os seus exames estão normais</p>
+              <p className="text-sm sm:text-base text-slate-700 dark:text-gray-300 mb-1">{t('health.noExamAlerts')}</p>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">{t('health.allExamsNormal')}</p>
             </div>
           )}
           
@@ -396,7 +398,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <Badge variant="outline" className="text-xs border-amber-200 text-amber-500">
-                  Attention
+                  {t('health.attention')}
                 </Badge>
               </div>
               
@@ -411,7 +413,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <Badge variant="outline" className="text-xs border-red-200 text-red-500">
-                  Critical
+                  {t('health.critical')}
                 </Badge>
               </div>
             </div>
@@ -421,9 +423,9 @@ export default function DashboardPage() {
       
       {/* Atalhos para Módulos */}
       <div className="flex items-center justify-between mb-3 sm:mb-4">
-        <h3 className="text-lg sm:text-xl font-semibold">Acesso Rápido</h3>
+        <h3 className="text-lg sm:text-xl font-semibold">{t('health.quickAccess')}</h3>
         <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
-          Ver todos
+          {t("health.viewAll")}
         </Button>
       </div>
       
@@ -434,8 +436,8 @@ export default function DashboardPage() {
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-rose-500/10 dark:bg-rose-500/20">
                 <Activity className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-rose-500 dark:text-rose-400" />
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">Atividades</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">Rastreie seus exercícios</p>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.activity')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.trackActivities')}</p>
             </div>
           </Card>
         </Link>
@@ -446,8 +448,8 @@ export default function DashboardPage() {
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20">
                 <Apple className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-emerald-500 dark:text-emerald-400" />
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">Nutrição</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">Registre refeições</p>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.nutrition')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.trackMeals')}</p>
             </div>
           </Card>
         </Link>
@@ -458,8 +460,8 @@ export default function DashboardPage() {
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20">
                 <Moon className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-indigo-500 dark:text-indigo-400" />
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">Sono</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">Analise seu descanso</p>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.sleep')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.analyzeSleep')}</p>
             </div>
           </Card>
         </Link>
@@ -470,8 +472,8 @@ export default function DashboardPage() {
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-purple-500/10 dark:bg-purple-500/20">
                 <Brain className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-purple-500 dark:text-purple-400" />
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">Mental</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">Meditação e bem-estar</p>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.mental')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.meditationWellness')}</p>
             </div>
           </Card>
         </Link>
@@ -482,8 +484,8 @@ export default function DashboardPage() {
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-blue-500/10 dark:bg-blue-500/20">
                 <Droplet className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-blue-500 dark:text-blue-400" />
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">Hidratação</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">Controle de água</p>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.hydration')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.waterControl')}</p>
             </div>
           </Card>
         </Link>
@@ -494,8 +496,8 @@ export default function DashboardPage() {
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
                 <Pill className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-pink-500 dark:text-pink-400" />
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">Medicação</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">Gerenciamento de remédios</p>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.medication')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.medicationManagement')}</p>
             </div>
           </Card>
         </Link>
