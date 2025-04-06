@@ -1,4 +1,5 @@
 
+import React, { useState } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
 import { 
@@ -206,36 +207,68 @@ export default function DashboardPage() {
       </Card>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        <Card className="bg-gray-900 border-0 p-4 sm:p-5 shadow-md">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-base sm:text-lg font-semibold text-white">Hidratação</h3>
-            <Droplet className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
-          </div>
-          <div className="space-y-3 sm:space-y-4">
-            <div className="flex justify-between items-center text-sm sm:text-base">
-              <span className="text-white font-medium">1300 ml</span>
-              <span className="text-gray-400">Meta: 2500 ml</span>
-            </div>
-            <div className="h-2 w-full bg-gray-700 rounded-full overflow-hidden">
-              <div className="h-full bg-teal-500 rounded-full" style={{ width: "52%" }}></div>
-            </div>
-            <div className="flex flex-wrap gap-3 justify-center mt-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="border-blue-700 bg-transparent hover:bg-blue-900/40 text-blue-400 h-9 px-4 rounded-full"
-              >
-                <span className="text-blue-400 mr-2">⊕</span>150ml
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="border-blue-700 bg-transparent hover:bg-blue-900/40 text-blue-400 h-9 px-4 rounded-full"
-              >
-                <span className="text-blue-400 mr-2">⊕</span>250ml
-              </Button>
-            </div>
-          </div>
+        <Card className="bg-gray-900 border-0 p-6 shadow-md rounded-xl">
+          {/* Utilizando useState para controlar o valor da hidratação */}
+          {(() => {
+            // Estado local para o componente
+            const [waterAmount, setWaterAmount] = useState(1300);
+            const waterGoal = 2500;
+            const percentage = Math.min(100, Math.round((waterAmount / waterGoal) * 100));
+            
+            // Funções para adicionar/remover água
+            const addWater = (amount: number) => {
+              setWaterAmount(prev => Math.min(waterGoal, prev + amount));
+            };
+            
+            const removeWater = (amount: number) => {
+              setWaterAmount(prev => Math.max(0, prev - amount));
+            };
+            
+            return (
+              <>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-2xl font-semibold text-white">Hidratação</h3>
+                  <Droplet className="h-6 w-6 text-blue-400" />
+                </div>
+                <div className="space-y-5">
+                  <div className="flex justify-between items-center">
+                    <span className="text-white text-xl font-medium">{waterAmount} ml</span>
+                    <span className="text-gray-400">Meta: {waterGoal} ml</span>
+                  </div>
+                  <div className="h-3 w-full bg-gray-700 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-teal-500 rounded-full transition-all duration-300" 
+                      style={{ width: `${percentage}%` }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-between mt-6 w-full">
+                    <div className="w-[48%]">
+                      <Button 
+                        variant="outline" 
+                        size="lg"
+                        onClick={() => removeWater(150)}
+                        className="w-full border-teal-500 border-2 bg-transparent hover:bg-teal-900/20 text-blue-400 rounded-lg flex items-center justify-center gap-2"
+                      >
+                        <span className="text-blue-400 text-xl">−</span>
+                        <span className="text-blue-400 text-lg">150ml</span>
+                      </Button>
+                    </div>
+                    <div className="w-[48%]">
+                      <Button 
+                        variant="outline" 
+                        size="lg"
+                        onClick={() => addWater(250)}
+                        className="w-full border-blue-500 border-2 bg-transparent hover:bg-blue-900/20 text-blue-400 rounded-lg flex items-center justify-center gap-2"
+                      >
+                        <span className="text-blue-400 text-xl">+</span>
+                        <span className="text-blue-400 text-lg">250ml</span>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </Card>
 
         <Card className="bg-gray-900 border-0 p-4 sm:p-5 shadow-md">
