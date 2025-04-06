@@ -228,7 +228,10 @@ export default function DashboardPage() {
               <>
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-2xl font-semibold text-white">Hidratação</h3>
-                  <Droplet className="h-6 w-6 text-blue-400" />
+                  <div className="flex">
+                    <Droplet className="h-5 w-5 text-blue-400 mr-0.5" />
+                    <Droplet className="h-5 w-5 text-blue-400" />
+                  </div>
                 </div>
                 <div className="space-y-5">
                   <div className="flex justify-between items-center">
@@ -241,29 +244,25 @@ export default function DashboardPage() {
                       style={{ width: `${percentage}%` }}
                     ></div>
                   </div>
-                  <div className="flex justify-between mt-6 w-full">
-                    <div className="w-[48%]">
-                      <Button 
-                        variant="outline" 
-                        size="lg"
-                        onClick={() => removeWater(150)}
-                        className="w-full border-teal-500 border-2 bg-transparent hover:bg-teal-900/20 text-blue-400 rounded-lg flex items-center justify-center gap-2"
-                      >
-                        <span className="text-blue-400 text-xl">−</span>
-                        <span className="text-blue-400 text-lg">150ml</span>
-                      </Button>
-                    </div>
-                    <div className="w-[48%]">
-                      <Button 
-                        variant="outline" 
-                        size="lg"
-                        onClick={() => addWater(250)}
-                        className="w-full border-blue-500 border-2 bg-transparent hover:bg-blue-900/20 text-blue-400 rounded-lg flex items-center justify-center gap-2"
-                      >
-                        <span className="text-blue-400 text-xl">+</span>
-                        <span className="text-blue-400 text-lg">250ml</span>
-                      </Button>
-                    </div>
+                  <div className="flex justify-center gap-4 mt-6">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => removeWater(150)}
+                      className="border-teal-500 border bg-transparent hover:bg-teal-900/20 text-blue-400 rounded-full h-9 px-3"
+                    >
+                      <span className="text-blue-400 mr-1">−</span>
+                      <span className="text-blue-400 text-sm">150ml</span>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => addWater(250)}
+                      className="border-blue-500 border bg-transparent hover:bg-blue-900/20 text-blue-400 rounded-full h-9 px-3"
+                    >
+                      <span className="text-blue-400 mr-1">+</span>
+                      <span className="text-blue-400 text-sm">250ml</span>
+                    </Button>
                   </div>
                 </div>
               </>
