@@ -228,9 +228,9 @@ export default function DashboardPage() {
               <>
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-2xl font-semibold text-white">Hidratação</h3>
-                  <div className="relative w-6 h-6">
-                    <Droplet className="absolute h-6 w-6 text-blue-400" />
-                    <Droplet className="absolute h-4 w-4 text-teal-300 left-1.5 top-1" />
+                  <div className="relative w-10 h-6">
+                    <Droplet className="absolute h-6 w-6 text-blue-400 right-0" />
+                    <Droplet className="absolute h-5 w-5 text-teal-300 left-0 top-0.5" />
                   </div>
                 </div>
                 <div className="space-y-5">
