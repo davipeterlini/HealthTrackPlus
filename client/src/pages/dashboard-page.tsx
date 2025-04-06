@@ -207,7 +207,7 @@ export default function DashboardPage() {
       </Card>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        <Card className="bg-gray-900 border-0 p-6 shadow-md rounded-xl">
+        <Card className="bg-[#1a2127] border-0 p-6 shadow-md rounded-xl">
           {/* Utilizando useState para controlar o valor da hidratação */}
           {(() => {
             // Estado local para o componente
@@ -270,7 +270,7 @@ export default function DashboardPage() {
           })()}
         </Card>
 
-        <Card className="bg-gray-900 border-0 p-4 sm:p-5 shadow-md">
+        <Card className="bg-[#1a2127] border-0 p-4 sm:p-5 shadow-md rounded-xl">
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-base sm:text-lg font-semibold text-white">Quality</h3>
             <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-300" />
