@@ -64,11 +64,9 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
   };
   
   return (
-    <Card className="w-full max-w-md">
-      <CardContent className="pt-6">
+    <div className="w-full">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Two-Factor Authentication</h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
             Enter the 6-digit code sent to your email
           </p>
         </div>
@@ -104,7 +102,7 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
             
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white dark:bg-emerald-600 dark:hover:bg-emerald-700" 
               disabled={verifyTwoFactorMutation.isPending || digits.join("").length !== 6}
             >
               {verifyTwoFactorMutation.isPending ? (
@@ -118,9 +116,9 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
             </Button>
             
             <div className="text-center space-y-4">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Didn't receive a code?{" "}
-                <a href="#" className="font-medium text-primary hover:text-primary/80">
+                <a href="#" className="font-medium text-blue-500 hover:text-blue-600 dark:text-emerald-500 dark:hover:text-emerald-400">
                   Resend code
                 </a>
               </p>
@@ -128,6 +126,7 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
               <Button
                 type="button"
                 variant="ghost"
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-50 dark:hover:bg-gray-800"
                 onClick={onBack}
               >
                 Back to login
@@ -135,7 +134,6 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
             </div>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

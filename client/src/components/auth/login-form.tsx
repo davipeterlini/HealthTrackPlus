@@ -133,9 +133,9 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.usernameOrEmail')}</FormLabel>
+              <FormLabel className="text-gray-700 dark:text-gray-300">{t('auth.usernameOrEmail')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.usernameOrEmail')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" placeholder={t('auth.usernameOrEmail')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,9 +147,9 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.password')}</FormLabel>
+              <FormLabel className="text-gray-700 dark:text-gray-300">{t('auth.password')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder={t('auth.password')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" type="password" placeholder={t('auth.password')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -168,14 +168,14 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
             </label>
           </div>
           
-          <a href="#" className="text-sm font-medium text-primary hover:text-primary/80">
+          <a href="#" className="text-sm font-medium text-blue-500 hover:text-blue-600 dark:text-emerald-500 dark:hover:text-emerald-400">
             {t('auth.forgotPassword')}
           </a>
         </div>
         
         <Button 
           type="submit" 
-          className="w-full" 
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white dark:bg-emerald-600 dark:hover:bg-emerald-700"
           disabled={loginMutation.isPending}
         >
           {loginMutation.isPending ? (
@@ -201,23 +201,25 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           <Button
             type="button"
             variant="outline"
+            className="border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500"
             onClick={() => handleOAuthLogin("Google")}
             disabled={isLoadingGoogleConfig || loginMutation.isPending || checkingAuth}
           >
             {isLoadingGoogleConfig || checkingAuth ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <FaGoogle className="mr-2 h-4 w-4" />
+              <FaGoogle className="mr-2 h-4 w-4 text-red-500" />
             )}
             {checkingAuth ? t('auth.verifying') : t('auth.google')}
           </Button>
           <Button
             type="button"
             variant="outline"
+            className="border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500"
             onClick={() => handleOAuthLogin("Facebook")}
             disabled={loginMutation.isPending || checkingAuth}
           >
-            <FaFacebook className="mr-2 h-4 w-4" />
+            <FaFacebook className="mr-2 h-4 w-4 text-blue-600" />
             {t('auth.facebook')}
           </Button>
         </div>
