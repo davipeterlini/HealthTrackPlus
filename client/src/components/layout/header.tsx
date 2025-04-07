@@ -214,7 +214,7 @@ export function Header() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
-                    <Settings className="h-5 w-5" />
+                    <Menu className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
