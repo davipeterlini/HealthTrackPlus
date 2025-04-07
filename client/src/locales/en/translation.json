@@ -11,7 +11,16 @@
     "mental": "Mental",
     "water": "Water",
     "hydration": "Hydration",
-    "medication": "Medication"
+    "medication": "Medication",
+    "menu": "Menu",
+    "account": "Account",
+    "profile": "Profile",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Sign out"
+  },
+  "common": {
+    "theme": "Theme"
   },
   "auth": {
     "login": "Login",
