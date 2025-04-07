@@ -9,7 +9,10 @@ const DevModeContext = createContext<DevModeContextType | null>(null);
 
 export function DevModeProvider({ children }: { children: ReactNode }) {
   // Definir valor inicial como true temporariamente para facilitar o desenvolvimento
-  const [skipAuth, setSkipAuth] = useState(true);
+  const [skipAuth, setSkipAuth] = useState(() => {
+    const savedDevMode = localStorage.getItem('dev_mode_skip_auth');
+    return savedDevMode !== null ? savedDevMode === 'true' : true;
+  });
 
   // Efeito para salvar a preferência do modo de desenvolvedor no localStorage
   useEffect(() => {

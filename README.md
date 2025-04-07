@@ -1,5 +1,5 @@
 
-# HealthTrack - Monitoramento Integrado de Saúde
+# LifeTrek - Monitoramento Integrado de Saúde
 
 ## 📋 Sobre
 
@@ -53,6 +53,24 @@ Para contribuir com o projeto:
 3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
 4. Push para a branch (`git push origin feature/NovaFeature`)
 5. Abra um Pull Request
+
+## 📱 Gerando Aplicativos Móveis
+
+### Android
+
+1. Instale o aplicativo Replit Mobile em seu dispositivo Android através da [Google Play Store](https://play.google.com/store/apps/details?id=com.replit.mobile)
+2. Faça login com sua conta Replit
+3. Navegue até este projeto
+4. Toque no botão "Run" para iniciar o aplicativo
+5. O app será executado diretamente no seu dispositivo Android
+
+### iOS
+
+1. Instale o aplicativo Replit Mobile em seu dispositivo iOS através da [App Store](https://apps.apple.com/us/app/replit-mobile/id1614022293)
+2. Faça login com sua conta Replit
+3. Navegue até este projeto
+4. Toque no botão "Run" para iniciar o aplicativo
+5. O app será executado diretamente no seu dispositivo iOS
 
 ## 📄 Licença
 

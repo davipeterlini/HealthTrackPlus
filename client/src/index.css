@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,16 +9,18 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-white text-gray-900 dark:bg-[#0a1015] dark:text-white;
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 245 247 251;
+    --foreground: 51 65 85;
+    --primary: 79 129 189;
   }
 
   .dark {
-    --background: 220 14% 10%;
-    --foreground: 0 0% 98%;
+    --background: 20 20 20;
+    --foreground: 255 255 255;
+    --primary: 20 215 169;
   }
 }

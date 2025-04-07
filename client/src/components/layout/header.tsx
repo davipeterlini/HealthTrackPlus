@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
+import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -18,21 +19,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { BellIcon, Menu } from "lucide-react";
 import { 
   Sheet, 
   SheetContent, 
   SheetHeader, 
   SheetTitle, 
-  SheetTrigger 
+  SheetTrigger,
+  SheetClose
 } from "@/components/ui/sheet";
 
 const navItems = [
-  { path: "/", label: "Dashboard" },
-  { path: "/exams", label: "Medical Exams" },
-  { path: "/activity", label: "Activity" },
-  { path: "/nutrition", label: "Nutrition & Sleep" },
-  { path: "/videos", label: "Videos" }
+  { path: "/", label: "Início", icon: Home },
+  { path: "/activity", label: "Atividades", icon: Activity },
+  { path: "/nutrition", label: "Água", icon: Droplets },
+  { path: "/sleep", label: "Sono", icon: Moon },
+  { path: "/mental", label: "Mental", icon: Brain },
+  { path: "/exams", label: "Exames", icon: FileText }
 ];
 
 export function Header() {
@@ -40,7 +42,6 @@ export function Header() {
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
-
 
   const getInitials = (name: string) => {
     return name
@@ -55,144 +56,245 @@ export function Header() {
     logoutMutation.mutate();
   };
 
+  // Função para determinar se a tela é menor que determinado tamanho
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <header className="bg-white dark:bg-gray-800 dark:border-b dark:border-gray-700 shadow">
+    <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/">
-                <h1 className="text-xl font-bold text-primary dark:text-primary-400 cursor-pointer">HealthTrack</h1>
-              </Link>
-            </div>
-            <nav className="hidden md:ml-10 md:flex md:space-x-8">
-              {navItems.map((item) => (
-                <div key={item.path}>
-                  <Link 
-                    href={item.path}
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${
-                      location === item.path
-                        ? "border-primary text-primary dark:text-primary-foreground"
-                        : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                </div>
-              ))}
-            </nav>
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            {/* Logo - mais compacto em telas pequenas */}
+            <Link href="/" className="flex items-center">
+              <h1 className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+            </Link>
           </div>
 
-          <div className="hidden md:ml-4 md:flex md:items-center">
+          {/* Menu de navegação para telas médias e grandes */}
+          <nav className="hidden md:flex md:items-center md:space-x-4 lg:space-x-6">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link 
+                  key={item.path}
+                  href={item.path}
+                  className={`flex items-center gap-1.5 px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium rounded-md transition-colors ${
+                    location === item.path
+                      ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                      : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  <Icon className="h-4 w-4 lg:h-5 lg:w-5 flex-shrink-0" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Ações e controles para todos os tamanhos de tela */}
+          <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
+            {/* Notificações */}
             <Button 
               variant="ghost" 
               size="icon" 
-              className="relative text-gray-400 hover:text-gray-500"
+              className="relative text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 h-8 w-8"
             >
               <BellIcon className="h-5 w-5" />
-              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
             </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="ml-3 relative flex items-center">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                    <AvatarFallback>{user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>
-                  <div className="flex flex-col">
-                    <span>{user?.name || user?.username}</span>
-                    <span className="text-xs text-gray-500">{user?.email}</span>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  Profile Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  Preferences
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  Sign out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+            {/* Toggle de tema - esconder em telas muito pequenas */}
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
+            
+            {/* Alternador de idioma */}
+            <LanguageSwitcher />
 
-          <div className="flex items-center md:hidden">
+            {/* Menu de navegação móvel */}
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-gray-500">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Open main menu</span>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
+                  <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="dark:bg-gray-800 dark:border-gray-700">
-                <SheetHeader>
-                  <SheetTitle className="text-left text-primary dark:text-primary-400 text-xl font-bold">HealthTrack</SheetTitle>
-                </SheetHeader>
-                <nav className="mt-6 flex flex-col space-y-1">
-                  {navItems.map((item) => (
-                    <div key={item.path}>
+              <SheetContent side="left" className="border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
+                <div className="flex items-center justify-between mb-6">
+                  <SheetTitle className="text-xl text-blue-600 dark:text-white">
+                    {t('navigation.menu')}
+                  </SheetTitle>
+                  <SheetClose asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </SheetClose>
+                </div>
+                
+                {/* Alternador de tema em telas muito pequenas (dentro do menu) */}
+                <div className="sm:hidden mb-4 px-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-600 dark:text-gray-300">{t('common.theme')}</span>
+                    <ThemeToggle />
+                  </div>
+                </div>
+                
+                <nav className="flex flex-col space-y-1">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
                       <Link 
+                        key={item.path}
                         href={item.path}
-                        className={`block px-3 py-2 text-base font-medium rounded-md cursor-pointer ${
+                        className={`flex items-center gap-2 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                           location === item.path
-                            ? "bg-primary-50 dark:bg-primary-900/20 text-primary dark:text-primary-foreground"
-                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
+                            ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                            : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
+                        <Icon className="h-5 w-5" />
                         {item.label}
                       </Link>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </nav>
-
-                <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center px-3 py-2">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                      <AvatarFallback>{user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    <div className="ml-3">
-                      <p className="text-base font-medium text-gray-800 dark:text-gray-100">{user?.name || user?.username}</p>
-                      <p className="text-sm font-medium text-gray-500 dark:text-gray-300">{user?.email}</p>
-                    </div>
-                  </div>
-                  <div className="mt-3 space-y-1">
-                    <Button variant="ghost" className="w-full justify-start px-3">
-                      Profile Settings
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start px-3">
-                      Preferences
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start px-3"
-                      onClick={handleLogout}
-                    >
-                      Sign out
-                    </Button>
-                    <div className="mt-2 px-3 pt-2 border-t border-gray-200 dark:border-gray-700">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium dark:text-gray-300">Tema</span>
-                        <ThemeToggle />
-                      </div>
+                
+                <div className="mt-8 space-y-1">
+                  <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
+                    <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
+                      {t('navigation.account')}
+                    </h3>
+                    <div className="mt-3 space-y-1">
+                      {/* Links de usuário no menu móvel */}
+                      <Link 
+                        href="/profile" 
+                        className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <FileText className="mr-3 h-4 w-4" />
+                        {t('navigation.profile')}
+                      </Link>
+                      <Link 
+                        href="/settings" 
+                        className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Settings className="mr-3 h-4 w-4" />
+                        {t('navigation.settings')}
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          handleLogout();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                      >
+                        <LogOut className="mr-3 h-4 w-4" />
+                        {t('navigation.logout')}
+                      </button>
                     </div>
                   </div>
                 </div>
               </SheetContent>
             </Sheet>
-          </div>
-          <div className="flex items-center space-x-1">
-            <ThemeToggle />
-            <LanguageSwitcher />
+
+            {/* Menu de configurações para telas médias e grandes */}
+            <div className="hidden md:block">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="flex items-center w-full">
+                      <FileText className="mr-2 h-4 w-4" />
+                      {t('navigation.profile')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/settings" className="flex items-center w-full">
+                      <Settings className="mr-2 h-4 w-4" />
+                      {t('navigation.settings')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/help" className="flex items-center w-full">
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      {t('navigation.help')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    {t('navigation.logout')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            {/* Avatar do usuário */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5">
+                  <Avatar className="h-7 w-7 sm:h-8 sm:w-8 border border-blue-100 dark:border-gray-700">
+                    <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
+                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs sm:text-sm">
+                      {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-56">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
+                    <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
+                
+                {/* Mostrar apenas em desktop, pois no mobile já está no menu lateral */}
+                <div className="md:hidden">
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="flex items-center w-full">
+                      <FileText className="mr-2 h-4 w-4" />
+                      {t('navigation.profile')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/settings" className="flex items-center w-full">
+                      <Settings className="mr-2 h-4 w-4" />
+                      {t('navigation.settings')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/help" className="flex items-center w-full">
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      {t('navigation.help')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
+                </div>
+                
+                <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  {t('navigation.logout')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

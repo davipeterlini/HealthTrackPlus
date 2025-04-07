@@ -141,13 +141,13 @@ export function MealTracker({ meals }: MealTrackerProps) {
   const getMealIcon = (mealType: string) => {
     switch (mealType.toLowerCase()) {
       case "breakfast":
-        return <Sun className="text-yellow-600" />;
+        return <Sun className="text-emerald-500" />;
       case "lunch":
-        return <Cloud className="text-blue-600" />;
+        return <Cloud className="text-emerald-500" />;
       case "dinner":
-        return <Moon className="text-indigo-600" />;
+        return <Moon className="text-emerald-500" />;
       case "snack":
-        return <Coffee className="text-orange-600" />;
+        return <Coffee className="text-emerald-500" />;
       default:
         return <Utensils className="text-gray-600" />;
     }
@@ -319,22 +319,22 @@ export function MealTracker({ meals }: MealTrackerProps) {
                           {(meal.calories || meal.carbs || meal.protein || meal.fat) && (
                             <div className="mt-2 flex flex-wrap gap-2">
                               {meal.calories && (
-                                <Badge variant="outline" className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 border-0">
+                                <Badge variant="outline" className="bg-emerald-100 dark:bg-green-900 text-emerald-800 dark:text-green-300 border-0">
                                   {meal.calories} kcal
                                 </Badge>
                               )}
                               {meal.carbs && (
-                                <Badge variant="outline" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 border-0">
+                                <Badge variant="outline" className="bg-emerald-100 dark:bg-blue-900 text-emerald-700 dark:text-blue-300 border-0">
                                   {meal.carbs}g carbs
                                 </Badge>
                               )}
                               {meal.protein && (
-                                <Badge variant="outline" className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300 border-0">
+                                <Badge variant="outline" className="bg-emerald-100 dark:bg-red-900 text-emerald-700 dark:text-red-300 border-0">
                                   {meal.protein}g protein
                                 </Badge>
                               )}
                               {meal.fat && (
-                                <Badge variant="outline" className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300 border-0">
+                                <Badge variant="outline" className="bg-emerald-100 dark:bg-yellow-900 text-emerald-700 dark:text-yellow-300 border-0">
                                   {meal.fat}g fat
                                 </Badge>
                               )}
@@ -381,22 +381,22 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   </div>
                   
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                    <div className="bg-blue-50 dark:bg-blue-900 p-2 rounded">
-                      <span className="block text-xs text-blue-700 dark:text-blue-300">Carbs</span>
+                    <div className="bg-emerald-50 dark:bg-blue-900 p-2 rounded">
+                      <span className="block text-xs text-emerald-700 dark:text-blue-300">Carbs</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.carbs}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.carbs * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="bg-red-50 dark:bg-red-900 p-2 rounded">
-                      <span className="block text-xs text-red-700 dark:text-red-300">Protein</span>
+                    <div className="bg-emerald-50 dark:bg-red-900 p-2 rounded">
+                      <span className="block text-xs text-emerald-700 dark:text-red-300">Protein</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.protein}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.protein * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="bg-yellow-50 dark:bg-yellow-900 p-2 rounded">
-                      <span className="block text-xs text-yellow-700 dark:text-yellow-300">Fat</span>
+                    <div className="bg-emerald-50 dark:bg-yellow-900 p-2 rounded">
+                      <span className="block text-xs text-emerald-700 dark:text-yellow-300">Fat</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.fat}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.fat * 9 / dailyTotals.calories) * 100) || 0}%
@@ -417,7 +417,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.carbs / dailyGoals.carbs) * 100} 
-                        className="bg-blue-500 dark:bg-blue-400 h-1.5" 
+                        className="bg-emerald-500 dark:bg-blue-400 h-1.5" 
                       />
                     </div>
                     
@@ -428,7 +428,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.protein / dailyGoals.protein) * 100} 
-                        className="bg-red-500 dark:bg-red-400 h-1.5" 
+                        className="bg-emerald-500 dark:bg-red-400 h-1.5" 
                       />
                     </div>
                     
@@ -439,7 +439,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                       </div>
                       <Progress 
                         value={(dailyTotals.fat / dailyGoals.fat) * 100} 
-                        className="bg-yellow-500 dark:bg-yellow-400 h-1.5" 
+                        className="bg-emerald-500 dark:bg-yellow-400 h-1.5" 
                       />
                     </div>
                   </div>

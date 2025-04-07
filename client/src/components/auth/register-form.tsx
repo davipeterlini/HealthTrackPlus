@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { insertUserSchema } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -35,6 +36,7 @@ type RegisterData = z.infer<typeof registerSchema>;
 export function RegisterForm() {
   const { registerMutation } = useAuth();
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const { t } = useTranslation();
   
   const form = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
@@ -67,9 +69,9 @@ export function RegisterForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>{t('auth.fullName')}</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your full name" {...field} />
+                <Input placeholder={t('auth.fullName')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,9 +83,9 @@ export function RegisterForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t('auth.username')}</FormLabel>
               <FormControl>
-                <Input placeholder="Choose a username" {...field} />
+                <Input placeholder={t('auth.username')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -95,9 +97,9 @@ export function RegisterForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('auth.email')}</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="Enter your email" {...field} />
+                <Input type="email" placeholder={t('auth.email')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,9 +111,9 @@ export function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('auth.password')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Create a password" {...field} />
+                <Input type="password" placeholder={t('auth.password')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,9 +125,9 @@ export function RegisterForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>{t('auth.confirmPassword')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Confirm your password" {...field} />
+                <Input type="password" placeholder={t('auth.confirmPassword')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,7 +147,7 @@ export function RegisterForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I agree to the <a href="#" className="text-primary hover:text-primary/80">Terms of Service</a> and <a href="#" className="text-primary hover:text-primary/80">Privacy Policy</a>
+                  {t('auth.agreeToTerms')} <a href="#" className="text-primary hover:text-primary/80">{t('auth.termsOfService')}</a> {t('auth.and')} <a href="#" className="text-primary hover:text-primary/80">{t('auth.privacyPolicy')}</a>
                 </FormLabel>
                 <FormMessage />
               </div>
@@ -161,19 +163,19 @@ export function RegisterForm() {
           {registerMutation.isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating account...
+              {t('auth.creatingAccount')}
             </>
           ) : (
-            "Create account"
+            t('auth.createAccount')
           )}
         </Button>
         
         <div className="relative my-4">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-300" />
+            <span className="w-full border-t border-gray-300 dark:border-gray-600" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-500">or register with</span>
+            <span className="bg-white dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">{t('auth.orRegisterWith')}</span>
           </div>
         </div>
         
@@ -184,7 +186,7 @@ export function RegisterForm() {
             onClick={() => handleOAuthRegister("Google")}
           >
             <FaGoogle className="mr-2 h-4 w-4" />
-            Google
+            {t('auth.google')}
           </Button>
           <Button
             type="button"
@@ -192,7 +194,7 @@ export function RegisterForm() {
             onClick={() => handleOAuthRegister("Facebook")}
           >
             <FaFacebook className="mr-2 h-4 w-4" />
-            Facebook
+            {t('auth.facebook')}
           </Button>
         </div>
       </form>
