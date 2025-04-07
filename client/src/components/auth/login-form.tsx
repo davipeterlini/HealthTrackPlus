@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginData } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
 import { useOAuthConfig } from "@/hooks/use-oauth-config";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -31,6 +32,7 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
   const [location, setLocation] = useLocation();
   const { toast } = useToast();
   const [checkingAuth, setCheckingAuth] = useState(false);
+  const { t } = useTranslation();
 
   // Check for authentication after redirect from OAuth
   useEffect(() => {
@@ -41,7 +43,7 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
     // If there's an error parameter, show it
     if (error) {
       toast({
-        title: "Authentication Error",
+        title: t('auth.authenticationError'),
         description: `Error during authentication: ${error.replace(/_/g, " ")}`,
         variant: "destructive"
       });
@@ -66,8 +68,8 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
             if (refetchUser) {
               refetchUser().then(() => {
                 toast({
-                  title: "Login Successful",
-                  description: "You have been successfully logged in via Google."
+                  title: t('auth.loginSuccessful'),
+                  description: t('auth.loginWithGoogle')
                 });
                 // Redirect to dashboard
                 setLocation('/dashboard');
@@ -76,8 +78,8 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           } else {
             console.log("Not authenticated after OAuth redirect");
             toast({
-              title: "Authentication Failed",
-              description: "Failed to authenticate with Google. Please try again.",
+              title: t('auth.authenticationError'),
+              description: t('auth.authenticationFailed'),
               variant: "destructive"
             });
           }
@@ -85,8 +87,8 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
         .catch(err => {
           console.error("Error checking auth status:", err);
           toast({
-            title: "Authentication Error",
-            description: "An error occurred while verifying your authentication.",
+            title: t('auth.authenticationError'),
+            description: t('auth.authenticationFailed'),
             variant: "destructive"
           });
         })
@@ -131,9 +133,9 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username or Email</FormLabel>
+              <FormLabel>{t('auth.usernameOrEmail')}</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your username or email" {...field} />
+                <Input placeholder={t('auth.usernameOrEmail')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,9 +147,9 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('auth.password')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Enter your password" {...field} />
+                <Input type="password" placeholder={t('auth.password')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -161,13 +163,13 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
               checked={rememberMe} 
               onCheckedChange={(checked) => setRememberMe(checked as boolean)} 
             />
-            <label htmlFor="remember-me" className="text-sm text-gray-600">
-              Remember me
+            <label htmlFor="remember-me" className="text-sm text-gray-600 dark:text-gray-400">
+              {t('auth.rememberMe')}
             </label>
           </div>
           
           <a href="#" className="text-sm font-medium text-primary hover:text-primary/80">
-            Forgot password?
+            {t('auth.forgotPassword')}
           </a>
         </div>
         
@@ -179,19 +181,19 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
           {loginMutation.isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Signing in...
+              {t('auth.signingIn')}
             </>
           ) : (
-            "Sign in"
+            t('auth.signIn')
           )}
         </Button>
         
         <div className="relative my-4">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-300" />
+            <span className="w-full border-t border-gray-300 dark:border-gray-600" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-500">or continue with</span>
+            <span className="bg-white dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">{t('auth.orContinueWith')}</span>
           </div>
         </div>
         
@@ -207,7 +209,7 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
             ) : (
               <FaGoogle className="mr-2 h-4 w-4" />
             )}
-            {checkingAuth ? "Verifying..." : "Google"}
+            {checkingAuth ? t('auth.verifying') : t('auth.google')}
           </Button>
           <Button
             type="button"
@@ -216,7 +218,7 @@ export function LoginForm({ onRequestTwoFactor }: LoginFormProps) {
             disabled={loginMutation.isPending || checkingAuth}
           >
             <FaFacebook className="mr-2 h-4 w-4" />
-            Facebook
+            {t('auth.facebook')}
           </Button>
         </div>
       </form>
