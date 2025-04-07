@@ -11,7 +11,9 @@ import NutritionPage from "@/pages/nutrition-page";
 import VideosPage from "@/pages/videos-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
+import { DevModeProvider } from "./hooks/use-dev-mode";
 import { ThemeProvider } from "./hooks/use-theme";
+import { DevModeToggle } from "./components/dev-mode-toggle";
 
 function Router() {
   return (
@@ -32,12 +34,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
+        <DevModeProvider>
           <AuthProvider>
             <WouterRouter>
               <Router />
+              <DevModeToggle />
               <Toaster />
             </WouterRouter>
           </AuthProvider>
+        </DevModeProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

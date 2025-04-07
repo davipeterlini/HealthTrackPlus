@@ -139,13 +139,13 @@ export default function DashboardPage() {
           
           <div className="grid grid-cols-7 gap-1 sm:gap-2 h-full relative z-10">
             {[
-              { day: 'Dom', steps: 5240, cals: 1250, active: 25, shortDay: 'D' },
-              { day: 'Seg', steps: 7890, cals: 1540, active: 48, shortDay: 'S' },
-              { day: 'Ter', steps: 9450, cals: 1780, active: 62, shortDay: 'T' },
-              { day: 'Qua', steps: 10200, cals: 1820, active: 75, shortDay: 'Q' },
-              { day: 'Qui', steps: 8750, cals: 1650, active: 53, shortDay: 'Q' },
-              { day: 'Sex', steps: 12100, cals: 2100, active: 85, shortDay: 'S' },
-              { day: 'Sáb', steps: 6800, cals: 1420, active: 40, shortDay: 'S' }
+              { day: 'Sun', steps: 5240, cals: 1250, active: 25, shortDay: 'S' },
+              { day: 'Mon', steps: 7890, cals: 1540, active: 48, shortDay: 'M' },
+              { day: 'Tue', steps: 9450, cals: 1780, active: 62, shortDay: 'T' },
+              { day: 'Wed', steps: 10200, cals: 1820, active: 75, shortDay: 'W' },
+              { day: 'Thu', steps: 8750, cals: 1650, active: 53, shortDay: 'T' },
+              { day: 'Fri', steps: 12100, cals: 2100, active: 85, shortDay: 'F' },
+              { day: 'Sat', steps: 6800, cals: 1420, active: 40, shortDay: 'S' }
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center h-full justify-end">
                 <div className="w-full relative flex items-end justify-center h-[85%]">
@@ -281,10 +281,10 @@ export default function DashboardPage() {
             <div className="flex justify-between text-sm">
               <div className="flex items-center">
                 <Moon className="h-4 w-4 text-gray-400 mr-1.5" />
-                <span className="text-gray-400">23:30</span>
+                <span className="text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
               </div>
               <div className="flex items-center">
-                <span className="text-gray-400">07:00</span>
+                <span className="text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
                 <span className="h-4 w-4 text-yellow-400 ml-1.5">☀</span>
               </div>
             </div>
@@ -314,11 +314,17 @@ export default function DashboardPage() {
                   <Pill className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
                 </div>
                 <div>
-                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">Tomar Vitamina D</p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">1 cápsula com café da manhã</p>
+                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Take Vitamin D' : 'Tomar Vitamina D'}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? '1 capsule with breakfast' : '1 cápsula com café da manhã'}
+                  </p>
                 </div>
               </div>
-              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">08:00</span>
+              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                {localStorage.getItem('i18nextLng')?.startsWith('en') ? '8:00 AM' : '08:00'}
+              </span>
             </div>
             <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
               <div className="flex items-center gap-2">
@@ -326,11 +332,17 @@ export default function DashboardPage() {
                   <Activity className="h-3 w-3 sm:h-4 sm:w-4 text-rose-500" />
                 </div>
                 <div>
-                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">Exercícios</p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">30 minutos de caminhada</p>
+                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Exercise' : 'Exercícios'}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? '30 minutes of walking' : '30 minutos de caminhada'}
+                  </p>
                 </div>
               </div>
-              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">18:30</span>
+              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                {localStorage.getItem('i18nextLng')?.startsWith('en') ? '6:30 PM' : '18:30'}
+              </span>
             </div>
             <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
               <div className="flex items-center gap-2">
@@ -338,11 +350,17 @@ export default function DashboardPage() {
                   <Brain className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500" />
                 </div>
                 <div>
-                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">Meditação Noturna</p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">Rotina de relaxamento</p>
+                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Evening Meditation' : 'Meditação Noturna'}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Relaxation routine' : 'Rotina de relaxamento'}
+                  </p>
                 </div>
               </div>
-              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">22:00</span>
+              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                {localStorage.getItem('i18nextLng')?.startsWith('en') ? '10:00 PM' : '22:00'}
+              </span>
             </div>
           </div>
         </Card>
@@ -393,8 +411,12 @@ export default function DashboardPage() {
                     <FileText className="h-3 w-3 sm:h-4 sm:w-4 text-amber-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">Hemograma</p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">15 de março, 2023</p>
+                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Complete Blood Count' : 'Hemograma'}
+                    </p>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'March 15, 2023' : '15 de março, 2023'}
+                    </p>
                   </div>
                 </div>
                 <Badge variant="outline" className="text-xs border-amber-200 text-amber-500">
@@ -408,8 +430,12 @@ export default function DashboardPage() {
                     <FileText className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">Glicemia</p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">02 de abril, 2023</p>
+                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Blood Glucose' : 'Glicemia'}
+                    </p>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'April 2, 2023' : '02 de abril, 2023'}
+                    </p>
                   </div>
                 </div>
                 <Badge variant="outline" className="text-xs border-red-200 text-red-500">
