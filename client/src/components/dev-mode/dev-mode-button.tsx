@@ -19,7 +19,7 @@ const DevModeButton: React.FC = () => {
         className="bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center gap-2 px-4 shadow-md"
       >
         <Code className="h-4 w-4" />
-        <span>{t(`devMode.${isEnabled ? 'on' : 'off'}`)}</span>
+        <span>devMode.{isEnabled ? 'on' : 'off'}</span>
       </Button>
 
       <DevModeDialog
