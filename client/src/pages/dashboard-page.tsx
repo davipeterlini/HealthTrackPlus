@@ -139,13 +139,55 @@ export default function DashboardPage() {
           
           <div className="grid grid-cols-7 gap-1 sm:gap-2 h-full relative z-10">
             {[
-              { day: 'Sun', steps: 5240, cals: 1250, active: 25, shortDay: 'S' },
-              { day: 'Mon', steps: 7890, cals: 1540, active: 48, shortDay: 'M' },
-              { day: 'Tue', steps: 9450, cals: 1780, active: 62, shortDay: 'T' },
-              { day: 'Wed', steps: 10200, cals: 1820, active: 75, shortDay: 'W' },
-              { day: 'Thu', steps: 8750, cals: 1650, active: 53, shortDay: 'T' },
-              { day: 'Fri', steps: 12100, cals: 2100, active: 85, shortDay: 'F' },
-              { day: 'Sat', steps: 6800, cals: 1420, active: 40, shortDay: 'S' }
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sun' : 'Dom', 
+                steps: 5240, 
+                cals: 1250, 
+                active: 25, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'D' 
+              },
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Mon' : 'Seg', 
+                steps: 7890, 
+                cals: 1540, 
+                active: 48, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'M' : 'S' 
+              },
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Tue' : 'Ter', 
+                steps: 9450, 
+                cals: 1780, 
+                active: 62, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'T' : 'T' 
+              },
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Wed' : 'Qua', 
+                steps: 10200, 
+                cals: 1820, 
+                active: 75, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'W' : 'Q' 
+              },
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Thu' : 'Qui', 
+                steps: 8750, 
+                cals: 1650, 
+                active: 53, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'T' : 'Q' 
+              },
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Fri' : 'Sex', 
+                steps: 12100, 
+                cals: 2100, 
+                active: 85, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'F' : 'S' 
+              },
+              { 
+                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sat' : 'Sáb', 
+                steps: 6800, 
+                cals: 1420, 
+                active: 40, 
+                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'S' 
+              }
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center h-full justify-end">
                 <div className="w-full relative flex items-end justify-center h-[85%]">
