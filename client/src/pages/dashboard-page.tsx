@@ -251,7 +251,7 @@ export default function DashboardPage() {
       </Card>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        <Card className="bg-[#1a2127] border-0 p-6 shadow-md rounded-xl">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
           {/* Utilizando useState para controlar o valor da hidratação */}
           {(() => {
             // Estado local para o componente
@@ -271,20 +271,20 @@ export default function DashboardPage() {
             return (
               <>
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-2xl font-semibold text-white">{t('health.hydration')}</h3>
+                  <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white">{t('health.hydration')}</h3>
                   <div className="relative w-10 h-6">
-                    <Droplet className="absolute h-6 w-6 text-blue-400 right-0" />
-                    <Droplet className="absolute h-5 w-5 text-teal-300 left-0 top-0.5" />
+                    <Droplet className="absolute h-6 w-6 text-blue-500 dark:text-blue-400 right-0" />
+                    <Droplet className="absolute h-5 w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
                   </div>
                 </div>
                 <div className="space-y-5">
                   <div className="flex justify-between items-center">
-                    <span className="text-white text-xl font-medium">{waterAmount} ml</span>
-                    <span className="text-gray-400">{t('health.goal')}: {waterGoal} ml</span>
+                    <span className="text-slate-800 dark:text-white text-xl font-medium">{waterAmount} ml</span>
+                    <span className="text-slate-500 dark:text-gray-400">{t('health.goal')}: {waterGoal} ml</span>
                   </div>
-                  <div className="h-3 w-full bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-teal-500 rounded-full transition-all duration-300" 
+                      className="h-full bg-teal-400 dark:bg-teal-500 rounded-full transition-all duration-300" 
                       style={{ width: `${percentage}%` }}
                     ></div>
                   </div>
@@ -293,19 +293,19 @@ export default function DashboardPage() {
                       variant="outline" 
                       size="sm"
                       onClick={() => removeWater(150)}
-                      className="border-teal-500 border bg-transparent hover:bg-teal-900/20 text-blue-400 rounded-full h-9 px-3"
+                      className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-9 px-3"
                     >
-                      <span className="text-blue-400 mr-1">−</span>
-                      <span className="text-blue-400 text-sm">150ml</span>
+                      <span className="text-teal-500 dark:text-blue-400 mr-1">−</span>
+                      <span className="text-teal-500 dark:text-blue-400 text-sm">150ml</span>
                     </Button>
                     <Button 
                       variant="outline" 
                       size="sm"
                       onClick={() => addWater(250)}
-                      className="border-blue-500 border bg-transparent hover:bg-blue-900/20 text-blue-400 rounded-full h-9 px-3"
+                      className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-9 px-3"
                     >
-                      <span className="text-blue-400 mr-1">+</span>
-                      <span className="text-blue-400 text-sm">250ml</span>
+                      <span className="text-blue-500 dark:text-blue-400 mr-1">+</span>
+                      <span className="text-blue-500 dark:text-blue-400 text-sm">250ml</span>
                     </Button>
                   </div>
                 </div>
@@ -314,28 +314,28 @@ export default function DashboardPage() {
           })()}
         </Card>
 
-        <Card className="bg-[#1a2127] border-0 p-4 sm:p-5 shadow-md rounded-xl">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-5 shadow-md rounded-xl">
           <div className="flex justify-between items-center mb-3">
-            <h3 className="text-base sm:text-lg font-semibold text-white">{t('health.sleepQuality')}</h3>
-            <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-300" />
+            <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
+            <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-500 dark:text-indigo-300" />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <div className="flex items-center">
-                <Moon className="h-4 w-4 text-gray-400 mr-1.5" />
-                <span className="text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
+                <Moon className="h-4 w-4 text-slate-500 dark:text-gray-400 mr-1.5" />
+                <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
               </div>
               <div className="flex items-center">
-                <span className="text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
-                <span className="h-4 w-4 text-yellow-400 ml-1.5">☀</span>
+                <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
+                <span className="h-4 w-4 text-yellow-500 dark:text-yellow-400 ml-1.5">☀</span>
               </div>
             </div>
             <div className="mt-4">
               <div className="flex items-start">
-                <h2 className="text-4xl font-bold text-white">7.5h</h2>
-                <span className="ml-auto text-green-400 text-lg">{t('health.goodQuality')}</span>
+                <h2 className="text-4xl font-bold text-slate-800 dark:text-white">7.5h</h2>
+                <span className="ml-auto text-green-500 dark:text-green-400 text-lg">{t('health.goodQuality')}</span>
               </div>
-              <p className="text-sm text-gray-400 mt-1">{t('health.totalTime')}</p>
+              <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
             </div>
           </div>
         </Card>
