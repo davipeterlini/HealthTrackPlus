@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
+import DevModeButton from '../dev-mode/dev-mode-button';
 import { useAuth } from "@/hooks/use-auth";
 import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut } from "lucide-react";
 import {
@@ -28,12 +29,12 @@ import {
 } from "@/components/ui/sheet";
 
 const navItems = [
-  { path: "/", label: "Início", icon: Home },
-  { path: "/activity", label: "Atividades", icon: Activity },
-  { path: "/nutrition", label: "Água", icon: Droplets },
-  { path: "/sleep", label: "Sono", icon: Moon },
-  { path: "/mental", label: "Mental", icon: Brain },
-  { path: "/exams", label: "Exames", icon: FileText }
+  { path: "/", label: "navigation.dashboard", icon: Home },
+  { path: "/activity", label: "navigation.activity", icon: Activity },
+  { path: "/nutrition", label: "navigation.nutrition", icon: Droplets },
+  { path: "/sleep", label: "navigation.sleep", icon: Moon },
+  { path: "/mental", label: "navigation.mental", icon: Brain },
+  { path: "/exams", label: "navigation.exams", icon: FileText }
 ];
 
 export function Header() {
@@ -77,7 +78,7 @@ export function Header() {
                   }`}
                 >
                   <Icon className="h-5 w-5" />
-                  {item.label}
+                  {t(item.label)}
                 </Link>
               );
             })}
@@ -95,6 +96,7 @@ export function Header() {
 
             <ThemeToggle />
             <LanguageSwitcher />
+            <DevModeButton />
 
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild className="md:hidden">
@@ -121,7 +123,7 @@ export function Header() {
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <Icon className="h-5 w-5" />
-                        {item.label}
+                        {t(item.label)}
                       </Link>
                     );
                   })}

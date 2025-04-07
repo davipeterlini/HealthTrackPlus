@@ -13,6 +13,19 @@
     "hydration": "Hidratação",
     "medication": "Medicação"
   },
+  "devMode": {
+    "on": "ATIVADO",
+    "off": "DESATIVADO",
+    "title": "Modo Desenvolvedor",
+    "description": "Este modo é apenas para fins de desenvolvimento.",
+    "toggleLabel": "Modo Desenvolvedor",
+    "bypassAuthLabel": "Ignorar Autenticação",
+    "close": "Fechar",
+    "warning": "Aviso:",
+    "warningMessage": "Usar o modo desenvolvedor em produção pode causar comportamento inesperado.",
+    "bypassAuth": "Ignorar Autenticação",
+    "disable": "Desativar"
+  },
   "auth": {
     "login": "Entrar",
     "register": "Cadastrar",

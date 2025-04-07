@@ -20,6 +20,19 @@
     "password": "Password",
     "username": "Username"
   },
+  "devMode": {
+    "on": "ON",
+    "off": "OFF",
+    "title": "Developer Mode",
+    "description": "This mode is for development purposes only.",
+    "toggleLabel": "Developer Mode",
+    "bypassAuthLabel": "Bypass Authentication",
+    "close": "Close", 
+    "warning": "Warning:",
+    "warningMessage": "Using developer mode in production may cause unexpected behavior.",
+    "bypassAuth": "Bypass Authentication",
+    "disable": "Disable"
+  },
   "health": {
     "summary": "Health Summary",
     "insights": "Health Insights",
