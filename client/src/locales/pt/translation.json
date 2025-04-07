@@ -53,6 +53,7 @@
     "waterControl": "Controle de água",
     "medicationManagement": "Gerenciamento de remédios",
     "attention": "Atenção",
-    "critical": "Crítico"
+    "critical": "Crítico",
+    "sleepQuality": "Qualidade do Sono"
   }
 }

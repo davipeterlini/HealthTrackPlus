@@ -53,6 +53,7 @@
     "waterControl": "Water control",
     "medicationManagement": "Medication management",
     "attention": "Attention",
-    "critical": "Critical"
+    "critical": "Critical",
+    "sleepQuality": "Sleep Quality"
   }
 }
