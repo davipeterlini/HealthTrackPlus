@@ -114,19 +114,19 @@ export default function AuthPage() {
           <h2 className="text-3xl font-bold mb-6">{t('auth.heroTitle')}</h2>
           <ul className="space-y-4">
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-blue-200 dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
               <span>{t('auth.heroFeature1')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-blue-200 dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
               <span>{t('auth.heroFeature2')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-blue-200 dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
               <span>{t('auth.heroFeature3')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-blue-200 dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
               <span>{t('auth.heroFeature4')}</span>
             </li>
           </ul>
