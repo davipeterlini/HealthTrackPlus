@@ -28,13 +28,13 @@ import {
   SheetClose
 } from "@/components/ui/sheet";
 
-const navItems = [
-  { path: "/", label: "Início", icon: Home },
-  { path: "/activity", label: "Atividades", icon: Activity },
-  { path: "/nutrition", label: "Água", icon: Droplets },
-  { path: "/sleep", label: "Sono", icon: Moon },
-  { path: "/mental", label: "Mental", icon: Brain },
-  { path: "/exams", label: "Exames", icon: FileText }
+const getNavItems = (t: any) => [
+  { path: "/", label: t('navigation.home'), icon: Home },
+  { path: "/activity", label: t('navigation.activity'), icon: Activity },
+  { path: "/nutrition", label: t('navigation.water'), icon: Droplets },
+  { path: "/sleep", label: t('navigation.sleep'), icon: Moon },
+  { path: "/mental", label: t('navigation.mental'), icon: Brain },
+  { path: "/exams", label: t('navigation.exams'), icon: FileText }
 ];
 
 export function Header() {
@@ -42,6 +42,9 @@ export function Header() {
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
+  
+  // Get translated navigation items
+  const navItems = getNavItems(t);
 
   const getInitials = (name: string) => {
     return name
