@@ -77,7 +77,7 @@ export default function AuthPage() {
       <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-6 md:p-8">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold text-blue-600 dark:text-emerald-400 mb-2">{t('auth.appName')}</h1>
+            <h1 className="text-4xl font-bold text-blue-600 dark:text-white mb-2">{t('auth.appName')}</h1>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               {t('auth.appDescription')}
             </p>
@@ -87,13 +87,13 @@ export default function AuthPage() {
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger 
                 value="login" 
-                className="data-[state=active]:text-blue-500 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:shadow-none data-[state=active]:font-medium dark:data-[state=active]:text-emerald-500 dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:border-emerald-500"
+                className="data-[state=active]:text-blue-500 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:shadow-none data-[state=active]:font-medium dark:data-[state=active]:text-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:border-gray-500"
               >
                 {t('auth.login')}
               </TabsTrigger>
               <TabsTrigger 
                 value="register" 
-                className="data-[state=active]:text-blue-500 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:shadow-none data-[state=active]:font-medium dark:data-[state=active]:text-emerald-500 dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:border-emerald-500"
+                className="data-[state=active]:text-blue-500 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:shadow-none data-[state=active]:font-medium dark:data-[state=active]:text-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:border-gray-500"
               >
                 {t('auth.register')}
               </TabsTrigger>
@@ -109,24 +109,24 @@ export default function AuthPage() {
       </div>
       
       {/* Hero section */}
-      <div className="hidden md:w-1/2 md:flex bg-gradient-to-br from-blue-400 to-blue-600 items-center justify-center dark:bg-gradient-to-br dark:from-emerald-500 dark:to-emerald-700">
+      <div className="hidden md:w-1/2 md:flex bg-gradient-to-br from-blue-400 to-blue-600 items-center justify-center dark:bg-gradient-to-br dark:from-gray-700 dark:to-gray-900">
         <div className="max-w-lg px-8 py-12 text-white">
           <h2 className="text-3xl font-bold mb-6">{t('auth.heroTitle')}</h2>
           <ul className="space-y-4">
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature1')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature2')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature3')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-emerald-200" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature4')}</span>
             </li>
           </ul>
