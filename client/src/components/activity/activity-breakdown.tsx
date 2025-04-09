@@ -62,7 +62,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   ];
   
   return (
-    <Card className="dark:bg-gray-900 dark:border-gray-700">
+    <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.breakdown')}</CardTitle>
       </CardHeader>
@@ -76,7 +76,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
                   <span className="text-xs font-medium text-gray-700 dark:text-gray-200">{item.type}</span>
                   <span className="text-xs font-medium text-gray-700 dark:text-gray-200">{item.percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div className={`${item.color} h-2 rounded-full`} style={{ width: `${item.percentage}%` }}></div>
                 </div>
               </div>
@@ -89,7 +89,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
           
           <div className="mt-2 grid grid-cols-2 gap-4">
             {heartRateZones.map((zone, i) => (
-              <div key={i} className={`${zone.color} dark:bg-gray-900 dark:border dark:border-gray-700 rounded-md p-3`}>
+              <div key={i} className={`${zone.color} dark:bg-gray-800 dark:border dark:border-gray-700 rounded-md p-3`}>
                 <span className="text-xs font-medium">{zone.name}</span>
                 <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{zone.minutes} min</p>
               </div>

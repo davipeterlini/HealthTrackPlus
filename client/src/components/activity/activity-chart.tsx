@@ -81,7 +81,7 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
   return (
     <CardContent className="px-6 pb-6">
       <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('activity.weeklyActivity')}</h4>
-      <div className="h-64 bg-gray-50 dark:bg-gray-900 rounded-md p-4">
+      <div className="h-64 bg-gray-50 dark:bg-gray-800 rounded-md p-4">
         <div className="h-full flex items-end space-x-2">
           {chartData.map((activity, index) => {
             // Calculate height based on steps (max 14000 steps)
