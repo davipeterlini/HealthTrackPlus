@@ -62,7 +62,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   ];
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="dark:bg-[#1a2127] dark:border-gray-700">
       <CardHeader>
         <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.breakdown')}</CardTitle>
       </CardHeader>
@@ -89,7 +89,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
           
           <div className="mt-2 grid grid-cols-2 gap-4">
             {heartRateZones.map((zone, i) => (
-              <div key={i} className={`${zone.color} dark:bg-gray-800 dark:border dark:border-gray-700 rounded-md p-3`}>
+              <div key={i} className={`${zone.color} dark:bg-[#1a2127] dark:border dark:border-gray-700 rounded-md p-3`}>
                 <span className="text-xs font-medium">{zone.name}</span>
                 <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{zone.minutes} min</p>
               </div>
@@ -104,7 +104,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
             {connectedDevices.map((device, i) => (
               <div key={i} className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-[#1a2127] flex items-center justify-center">
                     {device.type === 'watch' ? (
                       <Watch className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                     ) : (

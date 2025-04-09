@@ -34,7 +34,7 @@ export default function ActivityPage() {
         ) : (
           <>
             <div className="lg:col-span-2">
-              <Card className="dark:bg-gray-800 dark:border-gray-700">
+              <Card className="dark:bg-[#1a2127] dark:border-gray-700">
                 <ActivitySummary 
                   activities={activities || []} 
                   selectedDate={selectedDate}
