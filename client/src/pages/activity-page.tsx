@@ -7,16 +7,18 @@ import { Activity } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ActivityPage() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const { t } = useTranslation();
   
   const { data: activities, isLoading } = useQuery<Activity[]>({
     queryKey: ["/api/activities"],
   });
   
   return (
-    <MainLayout title="Physical Activity">
+    <MainLayout title={t('activity.title')}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {isLoading ? (
           <>

@@ -1,6 +1,7 @@
 import { Activity } from "@shared/schema";
 import { CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ActivityChartProps {
   activities: Activity[];
@@ -9,6 +10,7 @@ interface ActivityChartProps {
 
 export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) {
   const [chartData, setChartData] = useState<Activity[]>([]);
+  const { t, i18n } = useTranslation();
   
   useEffect(() => {
     if (activities.length === 0) {
@@ -68,7 +70,8 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
   
   const formatDate = (dateString: string | Date) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
+    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
+    return date.toLocaleDateString(locale, { weekday: 'short', day: 'numeric' });
   };
   
   const handleBarClick = (date: Date) => {
@@ -77,7 +80,7 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
   
   return (
     <CardContent className="px-6 pb-6">
-      <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Weekly Activity</h4>
+      <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('activity.weeklyActivity')}</h4>
       <div className="h-64 bg-gray-50 dark:bg-gray-900 rounded-md p-4">
         <div className="h-full flex items-end space-x-2">
           {chartData.map((activity, index) => {
@@ -99,7 +102,7 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
                       : 'bg-blue-400 hover:bg-blue-500 dark:bg-primary-700 dark:hover:bg-primary-600'
                   }`}
                   style={{ height: `${heightPercentage}%` }}
-                  title={`${activity.steps.toLocaleString()} steps`}
+                  title={`${activity.steps.toLocaleString()} ${t('activity.steps')}`}
                 />
                 <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(activity.date)}</span>
               </div>

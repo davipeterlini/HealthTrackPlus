@@ -6,6 +6,7 @@ import {
   Flame,
   Clock
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface ActivitySummaryProps {
   activities: Activity[];
@@ -13,6 +14,8 @@ interface ActivitySummaryProps {
 }
 
 export function ActivitySummary({ activities, selectedDate }: ActivitySummaryProps) {
+  const { t } = useTranslation();
+  
   // Find activity for the selected date
   const todayActivity = activities.find(
     activity => new Date(activity.date).toDateString() === selectedDate.toDateString()
@@ -59,7 +62,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   
   return (
     <CardContent className="p-6">
-      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-5">Activity Summary</h3>
+      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-5">{t('activity.summary')}</h3>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
         <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
@@ -68,7 +71,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
                 <Footprints className="h-5 w-5 text-green-600 dark:text-green-400" />
               </div>
               <div className="ml-5">
-                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Steps</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.steps')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{steps.toLocaleString()}</div>
                   {stepsChange !== 0 && (
@@ -89,7 +92,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
                 </div>
               </div>
               <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                {Math.round(stepsPercentage)}% of daily goal ({stepsGoal.toLocaleString()} steps)
+                {Math.round(stepsPercentage)}% {t('activity.dailyGoal')} ({stepsGoal.toLocaleString()} {t('activity.steps')})
               </p>
             </div>
           </div>
@@ -102,7 +105,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
                 <Flame className="h-5 w-5 text-blue-600 dark:text-primary-400" />
               </div>
               <div className="ml-5">
-                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Calories</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.calories')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{calories}</div>
                 </div>
@@ -118,7 +121,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
                 </div>
               </div>
               <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                {Math.round(caloriesPercentage)}% of daily goal ({caloriesGoal} kcal)
+                {Math.round(caloriesPercentage)}% {t('activity.dailyGoal')} ({caloriesGoal} kcal)
               </p>
             </div>
           </div>
@@ -131,7 +134,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
                 <Clock className="h-5 w-5 text-blue-600 dark:text-purple-400" />
               </div>
               <div className="ml-5">
-                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Minutes</h4>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.activeMinutes')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{activeMinutes}</div>
                 </div>
@@ -147,7 +150,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
                 </div>
               </div>
               <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                {Math.round(minutesPercentage)}% of daily goal ({minutesGoal} min)
+                {Math.round(minutesPercentage)}% {t('activity.dailyGoal')} ({minutesGoal} min)
               </p>
             </div>
           </div>
