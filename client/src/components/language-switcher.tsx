@@ -18,9 +18,9 @@ export function LanguageSwitcher() {
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9 border-blue-200 dark:border-gray-600"
+          className="h-9 w-9 border-blue-200 dark:border-gray-600 bg-blue-600 hover:bg-blue-700 dark:bg-gray-800 dark:hover:bg-gray-700"
         >
-          <Languages className="h-4 w-4 text-blue-600" />
+          <Languages className="h-4 w-4 text-white" />
           <span className="sr-only">
             {i18n.language === 'pt' ? 'Mudar idioma' : 'Change language'}
           </span>
