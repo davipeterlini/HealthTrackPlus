@@ -26,6 +26,7 @@
     "types": "Tipos de Atividade",
     "details": "Detalhes da Atividade",
     "weeklyActivity": "Atividade Semanal",
+    "dailyActivities": "Atividades Diárias",
     "recentActivities": "Atividades Recentes",
     "addActivity": "Adicionar Atividade",
     "recordActivity": "Registrar Atividade",
@@ -68,7 +69,9 @@
     "high": "Alta",
     "cardio": "Cardio",
     "fatBurn": "Queima de Gordura",
-    "warmUp": "Aquecimento"
+    "warmUp": "Aquecimento",
+    "stepsLabel": "Passos",
+    "caloriesLabel": "Calorias"
   },
   "common": {
     "theme": "Tema"
