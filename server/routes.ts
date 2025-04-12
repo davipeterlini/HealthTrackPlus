@@ -67,17 +67,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(400).json({ message: "Invalid exam ID" });
     }
     
-    const exam = await storage.getMedicalExam(examId);
-    if (!exam) {
-      return res.status(404).json({ message: "Exam not found" });
+    try {
+      const exam = await storage.getMedicalExam(examId);
+      if (!exam) {
+        return res.status(404).json({ message: "Exam not found" });
+      }
+      
+      const userId = (req.user as Express.User).id;
+      if (exam.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+      
+      // Buscar insights relacionados a este exame
+      const insights = await storage.getHealthInsightsByExam(examId);
+      
+      // Buscar detalhes específicos do exame
+      const examDetails = await storage.getExamDetails(examId);
+      
+      res.json({ exam, insights, examDetails });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to get exam details" });
+    }
+  });
+  
+  // Rota para obter apenas os detalhes específicos de um exame
+  app.get("/api/exams/:id/details", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    const examId = parseInt(req.params.id);
+    if (isNaN(examId)) {
+      return res.status(400).json({ message: "Invalid exam ID" });
     }
     
-    const userId = (req.user as Express.User).id;
-    if (exam.userId !== userId) {
-      return res.status(403).json({ message: "Unauthorized" });
+    try {
+      const exam = await storage.getMedicalExam(examId);
+      if (!exam) {
+        return res.status(404).json({ message: "Exam not found" });
+      }
+      
+      const userId = (req.user as Express.User).id;
+      if (exam.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+      
+      // Buscar detalhes específicos do exame
+      const examDetails = await storage.getExamDetails(examId);
+      
+      res.json(examDetails);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to get exam details" });
     }
-    
-    res.json(exam);
   });
   
   app.post("/api/exams", upload.single("file"), async (req, res) => {
@@ -291,6 +332,155 @@ export async function registerRoutes(app: Express): Promise<Server> {
             riskLevel: examRiskLevel,
             aiProcessed: true
           });
+          
+          // Extrair e salvar detalhes do exame
+          if (aiAnalysis && aiAnalysis.details) {
+            // Processar detalhes de exame de sangue
+            if (type.toLowerCase().includes('blood') || type.toLowerCase().includes('sangue')) {
+              if (aiAnalysis.details.bloodGlucose) {
+                await storage.createExamDetail({
+                  examId: exam.id,
+                  category: 'Glicose',
+                  name: 'Glicose',
+                  value: String(aiAnalysis.details.bloodGlucose.value),
+                  unit: 'mg/dL',
+                  referenceRange: aiAnalysis.details.bloodGlucose.reference,
+                  status: aiAnalysis.details.bloodGlucose.status,
+                  observation: aiAnalysis.details.bloodGlucose.attention || null
+                });
+              }
+              
+              if (aiAnalysis.details.cholesterol) {
+                // Colesterol total
+                if (aiAnalysis.details.cholesterol.total) {
+                  await storage.createExamDetail({
+                    examId: exam.id,
+                    category: 'Lipídios',
+                    name: 'Colesterol Total',
+                    value: String(aiAnalysis.details.cholesterol.total.value),
+                    unit: 'mg/dL',
+                    referenceRange: aiAnalysis.details.cholesterol.total.reference,
+                    status: aiAnalysis.details.cholesterol.total.status,
+                    observation: null
+                  });
+                }
+                
+                // HDL
+                if (aiAnalysis.details.cholesterol.hdl) {
+                  await storage.createExamDetail({
+                    examId: exam.id,
+                    category: 'Lipídios',
+                    name: 'HDL',
+                    value: aiAnalysis.details.cholesterol.hdl.value,
+                    unit: 'mg/dL',
+                    referenceRange: aiAnalysis.details.cholesterol.hdl.reference,
+                    status: aiAnalysis.details.cholesterol.hdl.status,
+                    observation: null
+                  });
+                }
+                
+                // LDL
+                if (aiAnalysis.details.cholesterol.ldl) {
+                  await storage.createExamDetail({
+                    examId: exam.id,
+                    category: 'Lipídios',
+                    name: 'LDL',
+                    value: aiAnalysis.details.cholesterol.ldl.value,
+                    unit: 'mg/dL',
+                    referenceRange: aiAnalysis.details.cholesterol.ldl.reference,
+                    status: aiAnalysis.details.cholesterol.ldl.status,
+                    observation: null
+                  });
+                }
+                
+                // Triglicerídeos
+                if (aiAnalysis.details.cholesterol.triglycerides) {
+                  await storage.createExamDetail({
+                    examId: exam.id,
+                    category: 'Lipídios',
+                    name: 'Triglicerídeos',
+                    value: aiAnalysis.details.cholesterol.triglycerides.value,
+                    unit: 'mg/dL',
+                    referenceRange: aiAnalysis.details.cholesterol.triglycerides.reference,
+                    status: aiAnalysis.details.cholesterol.triglycerides.status,
+                    observation: aiAnalysis.details.cholesterol.triglycerides.note || null
+                  });
+                }
+              }
+              
+              // Hemoglobina
+              if (aiAnalysis.details.hemoglobin) {
+                await storage.createExamDetail({
+                  examId: exam.id,
+                  category: 'Hemograma',
+                  name: 'Hemoglobina',
+                  value: aiAnalysis.details.hemoglobin.value,
+                  unit: 'g/dL',
+                  referenceRange: aiAnalysis.details.hemoglobin.reference,
+                  status: aiAnalysis.details.hemoglobin.status,
+                  observation: null
+                });
+              }
+            } 
+            // Processar detalhes de exame cardíaco
+            else if (type.toLowerCase().includes('cardiac') || type.toLowerCase().includes('cardio')) {
+              // Pressão arterial - sistólica
+              if (aiAnalysis.details.bloodPressure && aiAnalysis.details.bloodPressure.systolic) {
+                await storage.createExamDetail({
+                  examId: exam.id,
+                  category: 'Pressão Arterial',
+                  name: 'Pressão Sistólica',
+                  value: aiAnalysis.details.bloodPressure.systolic.value,
+                  unit: 'mmHg',
+                  referenceRange: aiAnalysis.details.bloodPressure.systolic.reference,
+                  status: aiAnalysis.details.bloodPressure.systolic.status,
+                  observation: null
+                });
+              }
+              
+              // Pressão arterial - diastólica
+              if (aiAnalysis.details.bloodPressure && aiAnalysis.details.bloodPressure.diastolic) {
+                await storage.createExamDetail({
+                  examId: exam.id,
+                  category: 'Pressão Arterial',
+                  name: 'Pressão Diastólica',
+                  value: aiAnalysis.details.bloodPressure.diastolic.value,
+                  unit: 'mmHg',
+                  referenceRange: aiAnalysis.details.bloodPressure.diastolic.reference,
+                  status: aiAnalysis.details.bloodPressure.diastolic.status,
+                  observation: null
+                });
+              }
+              
+              // Frequência cardíaca
+              if (aiAnalysis.details.heartRate) {
+                await storage.createExamDetail({
+                  examId: exam.id,
+                  category: 'Cardíaco',
+                  name: 'Frequência Cardíaca',
+                  value: aiAnalysis.details.heartRate.value,
+                  unit: 'bpm',
+                  referenceRange: aiAnalysis.details.heartRate.reference,
+                  status: aiAnalysis.details.heartRate.status,
+                  observation: null
+                });
+              }
+              
+              // ECG
+              if (aiAnalysis.details.ecg) {
+                await storage.createExamDetail({
+                  examId: exam.id,
+                  category: 'Cardíaco',
+                  name: 'ECG',
+                  value: 0, // Valor numérico não aplicável
+                  unit: '',
+                  referenceRange: '',
+                  status: aiAnalysis.details.ecg.status,
+                  observation: aiAnalysis.details.ecg.finding
+                });
+              }
+            }
+          }
           
           // Gerar insights de saúde baseados na análise
           const categories = ["Cardiovascular", "Nutrition", "Metabolism"];

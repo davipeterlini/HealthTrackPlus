@@ -30,14 +30,13 @@ export const medicalExams = pgTable("medical_exams", {
 export const examDetails = pgTable("exam_details", {
   id: serial("id").primaryKey(),
   examId: integer("exam_id").notNull().references(() => medicalExams.id),
-  parameter: text("parameter").notNull(),
+  category: text("category").notNull(),
+  name: text("name").notNull(),
   value: text("value").notNull(),
   unit: text("unit"),
   referenceRange: text("reference_range"),
   status: text("status").default("normal"),
-  notes: text("notes"),
-  category: text("category").notNull(),
-  date: timestamp("date").notNull(),
+  observation: text("observation"),
 });
 
 export const activities = pgTable("activities", {
