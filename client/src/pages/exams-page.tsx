@@ -333,16 +333,16 @@ export default function ExamsPage() {
                       <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
                         <h4 className="text-sm font-medium mb-2">AI Analysis</h4>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                          {(selectedExam.aiAnalysis as any).summary}
+                          {(selectedExam.aiAnalysis as Record<string, any>).summary}
                         </p>
                         
-                        {(selectedExam.aiAnalysis as any).recommendations && (
+                        {(selectedExam.aiAnalysis as Record<string, any>).recommendations && (
                           <div>
                             <h5 className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                               Recommendations:
                             </h5>
                             <ul className="text-sm space-y-1">
-                              {((selectedExam.aiAnalysis as any).recommendations as string[]).map((rec: string, i: number) => (
+                              {((selectedExam.aiAnalysis as Record<string, any>).recommendations as string[]).map((rec: string, i: number) => (
                                 <li key={i} className="flex items-start">
                                   <CircleCheck className="h-4 w-4 text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
                                   <span className="text-gray-700 dark:text-gray-300">{rec}</span>
@@ -364,7 +364,7 @@ export default function ExamsPage() {
                                 {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
                               </p>
                               <p className="text-sm font-medium">
-                                {typeof value === 'object' ? JSON.stringify(value) : value}
+                                {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                               </p>
                             </div>
                           ))}
