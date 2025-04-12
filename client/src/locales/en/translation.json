@@ -184,7 +184,13 @@
     "correlationExplanation": "This chart explores relationships between different factors that may be influencing your health metrics.",
     "factor1": "Factor 1",
     "factor2": "Factor 2",
-    "intensity": "Intensity"
+    "intensity": "Intensity",
+    "insightVisualization": "Insight Visualization",
+    "healthChartsDescription": "Charts showing health analysis based on exam results",
+    "overview": "Overview",
+    "detailedRecommendations": "Detailed Recommendations",
+    "recommendation": "Recommendation",
+    "details": "Details"
   },
   "sleep": {
     "recordSleep": "Record Sleep",

@@ -396,9 +396,31 @@ export default function ExamsPage() {
                       )}
                     </div>
                   ) : (
-                    <div className="space-y-4">
-                      <ExamInsightsChart insights={examInsights} />
+                    <div className="space-y-5">
+                      <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg pt-3">
+                        <h3 className="text-base font-medium px-4 mb-1">{t('health.insightVisualization')}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 px-4 mb-2">
+                          {t('health.healthChartsDescription')}
+                        </p>
+                        <Tabs defaultValue="overview" className="px-4 pb-3">
+                          <TabsList className="mb-3">
+                            <TabsTrigger value="overview">{t('health.overview')}</TabsTrigger>
+                            <TabsTrigger value="details">{t('health.details')}</TabsTrigger>
+                          </TabsList>
+                          <TabsContent value="overview">
+                            <div className="h-[300px]">
+                              <ExamInsightsChart insights={examInsights} />
+                            </div>
+                          </TabsContent>
+                          <TabsContent value="details">
+                            <div className="h-[300px]">
+                              {examInsights.length > 0 && <InsightDetailCharts insight={examInsights[0]} />}
+                            </div>
+                          </TabsContent>
+                        </Tabs>
+                      </div>
                       
+                      <h3 className="text-base font-medium mt-4">{t('health.detailedRecommendations')}</h3>
                       {examInsights.map((insight) => (
                         <div key={insight.id} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
                           <div className="flex justify-between items-start mb-2">
@@ -417,7 +439,7 @@ export default function ExamsPage() {
                           </p>
                           <div>
                             <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                              Recommendation:
+                              {t('health.recommendation')}:
                             </p>
                             <p className="text-sm text-emerald-600 dark:text-emerald-400">
                               {insight.recommendation}

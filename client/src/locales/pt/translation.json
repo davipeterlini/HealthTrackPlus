@@ -184,7 +184,11 @@
     "correlationExplanation": "Este gráfico explora relações entre diferentes fatores que podem estar influenciando suas métricas de saúde.",
     "factor1": "Fator 1",
     "factor2": "Fator 2",
-    "intensity": "Intensidade"
+    "intensity": "Intensidade",
+    "insightVisualization": "Visualização de Insights",
+    "healthChartsDescription": "Gráficos mostrando análise de saúde baseada nos resultados do exame",
+    "overview": "Visão Geral",
+    "detailedRecommendations": "Recomendações Detalhadas"
   },
   "water": {
     "waterIntake": "Consumo de Água",
