@@ -338,43 +338,84 @@ export default function ExamsPage() {
                     
                     {selectedExam.aiAnalysis && typeof selectedExam.aiAnalysis === 'object' && (
                       <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
-                        <h4 className="text-sm font-medium mb-2">AI Analysis</h4>
+                        <h4 className="text-sm font-medium mb-2">{t('exams.aiAnalysis')}</h4>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                          {JSON.parse(JSON.stringify(selectedExam.aiAnalysis)).summary}
+                          {(() => {
+                            try {
+                              // Manipular tanto strings JSON quanto objetos diretamente
+                              const analysis = typeof selectedExam.aiAnalysis === 'string' 
+                                ? JSON.parse(selectedExam.aiAnalysis) 
+                                : selectedExam.aiAnalysis;
+                              return analysis.summary || t('exams.noSummaryAvailable');
+                            } catch (e) {
+                              return t('exams.unableToParseAnalysis');
+                            }
+                          })()}
                         </p>
                         
-                        {JSON.parse(JSON.stringify(selectedExam.aiAnalysis)).recommendations && (
-                          <div>
-                            <h5 className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                              Recommendations:
-                            </h5>
-                            <ul className="text-sm space-y-1">
-                              {JSON.parse(JSON.stringify(selectedExam.aiAnalysis)).recommendations.map((rec: string, i: number) => (
-                                <li key={i} className="flex items-start">
-                                  <CircleCheck className="h-4 w-4 text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
-                                  <span className="text-gray-700 dark:text-gray-300">{rec}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                        {(() => {
+                          try {
+                            const analysis = typeof selectedExam.aiAnalysis === 'string' 
+                              ? JSON.parse(selectedExam.aiAnalysis) 
+                              : selectedExam.aiAnalysis;
+                            
+                            if (analysis.recommendations && Array.isArray(analysis.recommendations)) {
+                              return (
+                                <div>
+                                  <h5 className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                    {t('exams.recommendations')}:
+                                  </h5>
+                                  <ul className="text-sm space-y-1">
+                                    {analysis.recommendations.map((rec: string, i: number) => (
+                                      <li key={i} className="flex items-start">
+                                        <CircleCheck className="h-4 w-4 text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
+                                        <span className="text-gray-700 dark:text-gray-300">{rec}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              );
+                            }
+                            return null;
+                          } catch (e) {
+                            return null;
+                          }
+                        })()}
                       </div>
                     )}
                     
                     {selectedExam.results && typeof selectedExam.results === 'object' && (
                       <div>
-                        <h4 className="text-sm font-medium mb-2">Results</h4>
+                        <h4 className="text-sm font-medium mb-2">{t('exams.results')}</h4>
                         <div className="grid grid-cols-2 gap-3">
-                          {Object.entries(JSON.parse(JSON.stringify(selectedExam.results))).map(([key, value]) => (
-                            <div key={key} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-md p-3">
-                              <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                                {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
-                              </p>
-                              <p className="text-sm font-medium">
-                                {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                              </p>
-                            </div>
-                          ))}
+                          {(() => {
+                            try {
+                              const results = typeof selectedExam.results === 'string' 
+                                ? JSON.parse(selectedExam.results) 
+                                : selectedExam.results;
+                              
+                              return Object.entries(results).map(([key, value]) => (
+                                <div key={key} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-md p-3">
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                    {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+                                  </p>
+                                  <p className="text-sm font-medium">
+                                    {typeof value === 'object' 
+                                      ? JSON.stringify(value) 
+                                      : String(value)}
+                                  </p>
+                                </div>
+                              ));
+                            } catch (e) {
+                              return (
+                                <div className="col-span-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md">
+                                  <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                                    {t('exams.unableToParseResults')}
+                                  </p>
+                                </div>
+                              );
+                            }
+                          })()}
                         </div>
                       </div>
                     )}

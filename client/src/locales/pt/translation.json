@@ -254,7 +254,44 @@
     "theme": "Tema",
     "cancel": "Cancelar",
     "back": "Voltar",
-    "saveChanges": "Salvar Alterações"
+    "saveChanges": "Salvar Alterações",
+    "error": "Erro",
+    "notAvailable": "Não disponível"
+  },
+  
+  "exams": {
+    "noExamSelected": "Nenhum Exame Selecionado",
+    "selectExamForResults": "Selecione um exame médico da lista para ver os resultados.",
+    "results": "Resultados",
+    "resultsPending": "Resultados Pendentes",
+    "stillBeingAnalyzed": "Este exame ainda está sendo analisado. Os resultados estarão disponíveis em breve.",
+    "aiAnalysis": "Análise por IA",
+    "noSummaryAvailable": "Nenhum resumo disponível",
+    "unableToParseAnalysis": "Não foi possível processar os dados da análise",
+    "unableToParseResults": "Não foi possível processar os dados dos resultados",
+    "healthInsights": "Insights de Saúde",
+    "recommendations": "Recomendações",
+    "noAnalysisAvailable": "Análise Não Disponível",
+    "tryAnalyzeAgain": "Tente analisar este exame novamente ou faça upload de uma cópia mais clara.",
+    "referenceRange": "Valores de referência",
+    "parameterName": "Parâmetro",
+    "value": "Valor",
+    "reference": "Referência",
+    "status": {
+      "normal": "Normal",
+      "attention": "Atenção",
+      "critical": "Crítico"
+    },
+    "observations": "Observações",
+    "noDetailsAvailable": "Não há informações detalhadas disponíveis para este exame",
+    "overview": "Visão Geral",
+    "details": "Detalhes",
+    "recommendation": "Recomendação",
+    "severity": {
+      "normal": "Normal",
+      "attention": "Atenção",
+      "critical": "Crítico"
+    }
   },
   "settings": {
     "appearance": "Aparência",

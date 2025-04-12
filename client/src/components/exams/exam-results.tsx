@@ -146,7 +146,13 @@ export function ExamResults({ examId }: ExamResultsProps) {
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">{t('exams.aiAnalysis')}</h3>
                     <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-                      <p>{aiSummary}</p>
+                      <p>{(() => {
+                        try {
+                          return typeof aiSummary === 'string' ? aiSummary : JSON.stringify(aiSummary);
+                        } catch (e) {
+                          return t('exams.unableToParseAnalysis');
+                        }
+                      })()}</p>
                     </div>
                   </div>
                 </div>

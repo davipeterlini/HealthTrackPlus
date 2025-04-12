@@ -247,7 +247,44 @@
     "theme": "Theme",
     "cancel": "Cancel",
     "back": "Back",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+    "error": "Error",
+    "notAvailable": "Not Available"
+  },
+  
+  "exams": {
+    "noExamSelected": "No Exam Selected",
+    "selectExamForResults": "Select a medical exam from the list to view results.",
+    "results": "Results",
+    "resultsPending": "Results Pending",
+    "stillBeingAnalyzed": "This exam is still being analyzed. Results will be available soon.",
+    "aiAnalysis": "AI Analysis",
+    "noSummaryAvailable": "No summary available",
+    "unableToParseAnalysis": "Unable to parse analysis data",
+    "unableToParseResults": "Unable to parse results data",
+    "healthInsights": "Health Insights",
+    "recommendations": "Recommendations",
+    "noAnalysisAvailable": "No Analysis Available",
+    "tryAnalyzeAgain": "Try analyzing this exam again or upload a clearer copy.",
+    "referenceRange": "Reference range",
+    "parameterName": "Parameter",
+    "value": "Value",
+    "reference": "Reference",
+    "status": {
+      "normal": "Normal",
+      "attention": "Attention",
+      "critical": "Critical"
+    },
+    "observations": "Observations",
+    "noDetailsAvailable": "No detailed information available for this exam",
+    "overview": "Overview",
+    "details": "Details",
+    "recommendation": "Recommendation",
+    "severity": {
+      "normal": "Normal",
+      "attention": "Attention",
+      "critical": "Critical"
+    }
   },
   "settings": {
     "appearance": "Appearance",
