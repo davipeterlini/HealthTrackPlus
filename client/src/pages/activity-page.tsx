@@ -7,12 +7,32 @@ import { Activity } from "@shared/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Calendar, Clock, Footprints, Dumbbell } from "lucide-react";
+import { PlusCircle, Clock, Footprints, Dumbbell } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
@@ -20,7 +40,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { format } from "date-fns";
 
 // Schema para formulário de atividade
 const activityFormSchema = z.object({
@@ -101,16 +120,6 @@ export default function ActivityPage() {
     });
   };
   
-  const formatTime = (dateString: string | Date) => {
-    const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
-    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
-    return date.toLocaleTimeString(locale, {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: locale === 'en-US'
-    });
-  };
-  
   // Pegar as atividades mais recentes (últimas 3)
   const recentActivities = activities ? [...activities]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -118,7 +127,7 @@ export default function ActivityPage() {
   
   // Função para obter ícone de acordo com o tipo de atividade
   const getActivityIcon = (type: string) => {
-    switch (type.toLowerCase()) {
+    switch (type?.toLowerCase()) {
       case "walking":
         return <Footprints className="h-5 w-5 text-primary-600 dark:text-primary-400" />;
       case "running":
