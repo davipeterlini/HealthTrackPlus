@@ -9,6 +9,7 @@ import ExamsPage from "@/pages/exams-page";
 import ActivityPage from "@/pages/activity-page";
 import NutritionPage from "@/pages/nutrition-page";
 import VideosPage from "@/pages/videos-page";
+import SettingsPage from "@/pages/settings-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
@@ -24,6 +25,7 @@ function Router() {
       <ProtectedRoute path="/activity" component={ActivityPage} />
       <ProtectedRoute path="/nutrition" component={NutritionPage} />
       <ProtectedRoute path="/videos" component={VideosPage} />
+      <ProtectedRoute path="/settings" component={SettingsPage} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>
