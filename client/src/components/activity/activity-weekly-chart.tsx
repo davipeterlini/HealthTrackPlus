@@ -95,8 +95,7 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
   
   return (
     <CardContent className="px-6 pb-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-        <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.weeklyActivity')}</h4>
+      <div className="flex justify-end items-center mb-4">
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
           <div className="flex items-center">
             <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
