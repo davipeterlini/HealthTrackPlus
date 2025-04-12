@@ -1,4 +1,5 @@
 import { Activity } from "@shared/schema";
+import { DashboardStats } from "@shared/dashboard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { 
@@ -11,10 +12,11 @@ import { useTranslation } from "react-i18next";
 
 interface ActivitySummaryProps {
   activities: Activity[];
+  dashboardStats?: DashboardStats;
   selectedDate: Date;
 }
 
-export function ActivitySummary({ activities, selectedDate }: ActivitySummaryProps) {
+export function ActivitySummary({ activities, dashboardStats, selectedDate }: ActivitySummaryProps) {
   const { t } = useTranslation();
   
   // Find activity for the selected date
@@ -22,47 +24,32 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
     activity => new Date(activity.date).toDateString() === selectedDate.toDateString()
   );
   
-  // Default values
+  // Usar dados do dashboard se disponíveis, ou dados da atividade específica se não
+  // Default values from dashboard or activity
   const steps = todayActivity?.steps || 0;
-  const calories = todayActivity?.calories || 0;
-  const activeMinutes = todayActivity?.minutes || 0;
+  const calories = dashboardStats?.calories?.value || todayActivity?.calories || 0;
+  const activeMinutes = dashboardStats?.activeMinutes?.value || todayActivity?.minutes || 0;
   const distance = todayActivity?.distance || 0;
   const source = todayActivity?.source || 'manual';
-  const avgHeartRate = todayActivity?.heartRate || 72; // Adiciona BPM médio, com valor padrão 72
+  const avgHeartRate = dashboardStats?.heartRate?.value || todayActivity?.heartRate || 72;
   
-  // Goals
-  const stepsGoal = 10000;
-  const caloriesGoal = 600;
-  const minutesGoal = 60;
+  // Goals - use dashboard goals if available
+  const stepsGoal = 10000; // valor padrão fixo como na interface
+  const caloriesGoal = 600; // valor padrão fixo
+  const minutesGoal = 60; // valor padrão fixo
   const distanceGoal = 5; // 5km per day
-  const bpmGoal = 80; // Meta para BPM
+  const bpmGoal = 80; // valor padrão fixo
+  
+  // Trends from dashboard
+  const stepsChange = 0; // não temos essa informação no dashboard atual
+  const caloriesRemaining = dashboardStats?.calories?.remaining || 0;
+  const minutesChange = dashboardStats?.activeMinutes?.change || 0;
   
   // Calculate percentages
   const stepsPercentage = Math.min((steps / stepsGoal) * 100, 100);
   const caloriesPercentage = Math.min((calories / caloriesGoal) * 100, 100);
   const minutesPercentage = Math.min((activeMinutes / minutesGoal) * 100, 100);
   const bpmPercentage = Math.min((avgHeartRate / bpmGoal) * 100, 100);
-  
-  // Calculate week-over-week change (using the last 14 days of data)
-  const getLast7DaysTotal = (days: number[], startDaysAgo: number) => {
-    let total = 0;
-    for (let i = startDaysAgo; i < startDaysAgo + 7; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toDateString();
-      
-      const activity = activities.find(a => new Date(a.date).toDateString() === dateStr);
-      if (activity) total += activity.steps;
-    }
-    return total;
-  };
-  
-  const thisWeekSteps = getLast7DaysTotal(Array.from({ length: 7 }).map((_, i) => i), 0);
-  const lastWeekSteps = getLast7DaysTotal(Array.from({ length: 7 }).map((_, i) => i), 7);
-  
-  const stepsChange = lastWeekSteps > 0 
-    ? Math.round(((thisWeekSteps - lastWeekSteps) / lastWeekSteps) * 100) 
-    : 0;
   
   return (
     <CardContent className="p-6">

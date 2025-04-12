@@ -5,6 +5,7 @@ import { ActivityBreakdown } from "@/components/activity/activity-breakdown";
 import { ActivityWeeklyChart } from "@/components/activity/activity-weekly-chart";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity } from "@shared/schema";
+import { DashboardStats } from "@shared/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -73,9 +74,15 @@ export default function ActivityPage() {
     }
   });
   
-  const { data: activities, isLoading } = useQuery<Activity[]>({
+  const { data: activities, isLoading: isLoadingActivities } = useQuery<Activity[]>({
     queryKey: ["/api/activities"],
   });
+  
+  const { data: dashboardStats, isLoading: isLoadingStats } = useQuery<DashboardStats>({
+    queryKey: ["/api/dashboard"],
+  });
+  
+  const isLoading = isLoadingActivities || isLoadingStats;
   
   // Mutação para adicionar nova atividade
   const addActivityMutation = useMutation({
@@ -95,7 +102,9 @@ export default function ActivityPage() {
       });
       setDialogOpen(false);
       form.reset();
+      // Invalidate both activities and dashboard queries to refresh all data
       queryClient.invalidateQueries({ queryKey: ["/api/activities"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard"] });
     },
     onError: (error: Error) => {
       toast({
@@ -292,7 +301,8 @@ export default function ActivityPage() {
                   <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.summary')}</CardTitle>
                 </CardHeader>
                 <ActivitySummary 
-                  activities={activities || []} 
+                  activities={activities || []}
+                  dashboardStats={dashboardStats}
                   selectedDate={selectedDate}
                 />
               </Card>
