@@ -4,7 +4,7 @@ import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
 import { 
   Activity, Heart, Moon, Apple, Droplet, AlertCircle, 
-  FileText, Brain, Pill, Calculator 
+  FileText, Brain, Pill, Calculator, Clock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -56,7 +56,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-purple-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
-              <Activity className="text-purple-500 dark:text-purple-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+              <Clock className="text-purple-500 dark:text-purple-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
             </div>
           </div>
         </Card>
