@@ -101,8 +101,8 @@ export function MealTracker({ meals }: MealTrackerProps) {
     },
     onSuccess: () => {
       toast({
-        title: "Meal added successfully",
-        description: "Your meal has been recorded."
+        title: t('meal.mealAdded'),
+        description: t('meal.mealAddedMessage')
       });
       setOpen(false);
       form.reset();
@@ -110,7 +110,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
     },
     onError: (error: Error) => {
       toast({
-        title: "Failed to add meal",
+        title: t('meal.failedToAdd'),
         description: error.message,
         variant: "destructive"
       });
@@ -329,17 +329,17 @@ export function MealTracker({ meals }: MealTrackerProps) {
                               )}
                               {meal.carbs && (
                                 <Badge variant="outline" className="bg-emerald-100 dark:bg-blue-900 text-emerald-700 dark:text-blue-300 border-0">
-                                  {meal.carbs}g carbs
+                                  {meal.carbs}g {t('meal.carbs').toLowerCase()}
                                 </Badge>
                               )}
                               {meal.protein && (
                                 <Badge variant="outline" className="bg-emerald-100 dark:bg-red-900 text-emerald-700 dark:text-red-300 border-0">
-                                  {meal.protein}g protein
+                                  {meal.protein}g {t('meal.protein').toLowerCase()}
                                 </Badge>
                               )}
                               {meal.fat && (
                                 <Badge variant="outline" className="bg-emerald-100 dark:bg-yellow-900 text-emerald-700 dark:text-yellow-300 border-0">
-                                  {meal.fat}g fat
+                                  {meal.fat}g {t('meal.fat').toLowerCase()}
                                 </Badge>
                               )}
                             </div>
@@ -370,7 +370,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 {/* Calorie chart */}
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                   <div className="flex items-center justify-between">
-                    <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">Calories</h5>
+                    <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('meal.calories')}</h5>
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.calories} / {dailyGoals.calories}</span>
                   </div>
                   <div className="mt-3 relative pt-1">
@@ -386,21 +386,21 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                     <div className="bg-emerald-50 dark:bg-blue-900 p-2 rounded">
-                      <span className="block text-xs text-emerald-700 dark:text-blue-300">Carbs</span>
+                      <span className="block text-xs text-emerald-700 dark:text-blue-300">{t('meal.carbs')}</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.carbs}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.carbs * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
                     <div className="bg-emerald-50 dark:bg-red-900 p-2 rounded">
-                      <span className="block text-xs text-emerald-700 dark:text-red-300">Protein</span>
+                      <span className="block text-xs text-emerald-700 dark:text-red-300">{t('meal.protein')}</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.protein}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.protein * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
                     <div className="bg-emerald-50 dark:bg-yellow-900 p-2 rounded">
-                      <span className="block text-xs text-emerald-700 dark:text-yellow-300">Fat</span>
+                      <span className="block text-xs text-emerald-700 dark:text-yellow-300">{t('meal.fat')}</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.fat}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.fat * 9 / dailyTotals.calories) * 100) || 0}%
@@ -411,12 +411,12 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 
                 {/* Nutritional info */}
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">Nutrients</h5>
+                  <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('meal.nutrients')}</h5>
                   
                   <div className="mt-3 space-y-3">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Carbs</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('meal.carbs')}</span>
                         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.carbs}g / {dailyGoals.carbs}g</span>
                       </div>
                       <Progress 
@@ -427,7 +427,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Protein</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('meal.protein')}</span>
                         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.protein}g / {dailyGoals.protein}g</span>
                       </div>
                       <Progress 
@@ -438,7 +438,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Fat</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('meal.fat')}</span>
                         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.fat}g / {dailyGoals.fat}g</span>
                       </div>
                       <Progress 
