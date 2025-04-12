@@ -26,6 +26,18 @@ export default function DashboardPage() {
     queryKey: ["/api/dashboard"],
   });
   
+  // Estado para controle de hidratação
+  const [waterAmount, setWaterAmount] = useState(
+    isLoadingStats || !dashboardStats ? 1300 : dashboardStats.hydration.current
+  );
+  
+  // Atualizar waterAmount quando os dados da API chegarem
+  React.useEffect(() => {
+    if (!isLoadingStats && dashboardStats) {
+      setWaterAmount(dashboardStats.hydration.current);
+    }
+  }, [isLoadingStats, dashboardStats]);
+  
   // Filtrar exames que precisam de atenção (status não é "Normal")
   const alertExams = exams
     .filter(exam => exam.status === "Attention" || exam.status === "Critical" || exam.status === "High" || exam.status === "Low")
@@ -151,7 +163,7 @@ export default function DashboardPage() {
           </div>
           
           <div className="grid grid-cols-7 gap-1 sm:gap-2 h-full relative z-10">
-            {[
+            {(isLoadingStats || !dashboardStats?.weeklyActivity.days ? [
               { 
                 day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sun' : 'Dom', 
                 steps: 5240, 
@@ -201,7 +213,7 @@ export default function DashboardPage() {
                 active: 40, 
                 shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'S' 
               }
-            ].map((item, i) => (
+            ] : dashboardStats.weeklyActivity.days).map((item, i) => (
               <div key={i} className="flex flex-col items-center h-full justify-end">
                 <div className="w-full relative flex items-end justify-center h-[85%]">
                   {/* Barra de passos */}
@@ -265,11 +277,13 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
-          {/* Utilizando useState para controlar o valor da hidratação */}
+          {/* Utilizando estado waterAmount definido no componente principal */}
           {(() => {
-            // Estado local para o componente
-            const [waterAmount, setWaterAmount] = useState(1300);
-            const waterGoal = 2500;
+            // Usar dados da API ou fallback para a meta
+            const waterGoal = isLoadingStats || !dashboardStats 
+              ? 2500 
+              : dashboardStats.hydration.goal;
+            
             const percentage = Math.min(100, Math.round((waterAmount / waterGoal) * 100));
             
             // Funções para adicionar/remover água
@@ -345,7 +359,9 @@ export default function DashboardPage() {
             </div>
             <div className="mt-4">
               <div className="flex items-start">
-                <h2 className="text-4xl font-bold text-slate-800 dark:text-white">7.5h</h2>
+                <h2 className="text-4xl font-bold text-slate-800 dark:text-white">
+                  {isLoadingStats ? '...' : `${dashboardStats?.sleep.value || 7.5}h`}
+                </h2>
                 <span className="ml-auto text-green-500 dark:text-green-400 text-lg">{t('health.goodQuality')}</span>
               </div>
               <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
