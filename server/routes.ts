@@ -100,12 +100,157 @@ export async function registerRoutes(app: Express): Promise<Server> {
         type,
         status: "Uploaded",
         results: null,
+        aiAnalysis: null,
+        anomalies: null,
+        riskLevel: null,
+        aiProcessed: false
       });
       
       res.status(201).json(exam);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Failed to upload exam" });
+    }
+  });
+  
+  // Rota para análise de exame com IA
+  app.post("/api/exams/:id/analyze", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    const examId = parseInt(req.params.id);
+    if (isNaN(examId)) {
+      return res.status(400).json({ message: "Invalid exam ID" });
+    }
+    
+    try {
+      // Buscar o exame
+      const exam = await storage.getMedicalExam(examId);
+      if (!exam) {
+        return res.status(404).json({ message: "Exam not found" });
+      }
+      
+      const userId = (req.user as Express.User).id;
+      if (exam.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+      
+      // Simular análise de IA
+      // Na implementação real, aqui chamaria uma API de IA externa
+      const aiAnalysis = {
+        summary: "A análise do exame indica resultados dentro dos parâmetros normais, com algumas observações.",
+        details: {
+          bloodGlucose: {
+            value: 95,
+            status: "normal",
+            reference: "70-99 mg/dL"
+          },
+          cholesterol: {
+            total: {
+              value: 180,
+              status: "normal",
+              reference: "<200 mg/dL"
+            },
+            hdl: {
+              value: 55,
+              status: "normal",
+              reference: ">40 mg/dL"
+            },
+            ldl: {
+              value: 110,
+              status: "normal",
+              reference: "<130 mg/dL"
+            }
+          },
+          hemoglobin: {
+            value: 14.5,
+            status: "normal",
+            reference: "13.5-17.5 g/dL"
+          }
+        },
+        recommendations: [
+          "Manter alimentação balanceada e prática regular de exercícios",
+          "Reduzir o consumo de gorduras saturadas para melhorar os níveis de colesterol",
+          "Continuar com a rotina de exames periódicos"
+        ]
+      };
+      
+      const anomalies = false;
+      const riskLevel = "low";
+      
+      // Atualizar o exame com os resultados da análise
+      const updatedExam = await storage.updateMedicalExamWithAIAnalysis(
+        examId,
+        aiAnalysis,
+        anomalies,
+        riskLevel
+      );
+      
+      // Criar insights de saúde com base na análise
+      const categories = ["Cardiovascular", "Nutrition", "Metabolism"];
+      const insights = [];
+      
+      // Criar um insight para cada categoria relevante
+      for (const category of categories) {
+        let title, description, recommendation, severity, data;
+        
+        switch (category) {
+          case "Cardiovascular":
+            title = "Saúde Cardiovascular Ótima";
+            description = "Seus indicadores cardíacos estão em níveis ótimos, indicando boa função cardiovascular.";
+            recommendation = "Continue com exercícios regulares para manter a saúde cardíaca.";
+            severity = "normal";
+            data = {
+              cholesterol: aiAnalysis.details.cholesterol,
+              bloodPressure: "120/80"
+            };
+            break;
+          case "Nutrition":
+            title = "Perfil Nutricional Adequado";
+            description = "Seus marcadores nutricionais estão equilibrados.";
+            recommendation = "Mantenha uma dieta balanceada rica em nutrientes essenciais.";
+            severity = "normal";
+            data = {
+              cholesterol: aiAnalysis.details.cholesterol
+            };
+            break;
+          case "Metabolism":
+            title = "Gestão de Glicemia";
+            description = "Seus níveis de glicemia estão dentro da faixa normal, indicando metabolismo eficaz.";
+            recommendation = "Mantenha uma dieta balanceada com carboidratos complexos.";
+            severity = "normal";
+            data = {
+              glucose: aiAnalysis.details.bloodGlucose
+            };
+            break;
+        }
+        
+        // Criar o insight no banco
+        const insight = await storage.createHealthInsight({
+          userId,
+          examId,
+          date: new Date(),
+          category,
+          title,
+          description,
+          recommendation,
+          severity,
+          status: "active",
+          aiGenerated: true,
+          data
+        });
+        
+        insights.push(insight);
+      }
+      
+      // Retornar o exame atualizado e os insights gerados
+      res.json({
+        exam: updatedExam,
+        insights
+      });
+      
+    } catch (error) {
+      console.error("Erro ao analisar exame:", error);
+      res.status(500).json({ message: "Falha ao processar a análise do exame" });
     }
   });
   
@@ -362,10 +507,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(videos);
   });
 
+  // Health Insights routes
+  app.get("/api/health-insights", async (req, res) => {
+    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    let userId = 1;
+    
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
+    try {
+      const insights = await storage.getHealthInsights(userId);
+      res.json(insights);
+    } catch (error) {
+      console.error("Erro ao buscar health insights:", error);
+      res.status(500).json({ message: "Falha ao buscar insights de saúde" });
+    }
+  });
+  
+  app.get("/api/health-insights/category/:category", async (req, res) => {
+    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    let userId = 1;
+    
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
+    try {
+      const { category } = req.params;
+      if (!category) {
+        return res.status(400).json({ message: "Categoria é obrigatória" });
+      }
+      
+      const insights = await storage.getHealthInsightsByCategory(userId, category);
+      res.json(insights);
+    } catch (error) {
+      console.error("Erro ao buscar health insights por categoria:", error);
+      res.status(500).json({ message: "Falha ao buscar insights por categoria" });
+    }
+  });
+  
+  app.get("/api/health-insights/exam/:examId", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const examId = parseInt(req.params.examId);
+      if (isNaN(examId)) {
+        return res.status(400).json({ message: "ID de exame inválido" });
+      }
+      
+      // Verificar se o exame pertence ao usuário
+      const userId = (req.user as Express.User).id;
+      const exam = await storage.getMedicalExam(examId);
+      
+      if (!exam) {
+        return res.status(404).json({ message: "Exame não encontrado" });
+      }
+      
+      if (exam.userId !== userId) {
+        return res.status(403).json({ message: "Não autorizado" });
+      }
+      
+      const insights = await storage.getHealthInsightsByExam(examId);
+      res.json(insights);
+    } catch (error) {
+      console.error("Erro ao buscar health insights por exame:", error);
+      res.status(500).json({ message: "Falha ao buscar insights por exame" });
+    }
+  });
+  
   // Add test route
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'Server is running!' });
-});
+  app.get('/api/test', (req, res) => {
+    res.json({ message: 'Server is running!' });
+  });
 
 const httpServer = createServer(app);
 
