@@ -201,11 +201,11 @@ export default function DashboardPage() {
                       <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
                         <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
                         <div className="flex justify-between text-slate-600 dark:text-gray-300">
-                          <span>{t('health.stepsLabel')}:</span>
+                          <span>{t('activity.stepsLabel')}:</span>
                           <span>{item.steps.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between text-slate-600 dark:text-gray-300">
-                          <span>{t('health.caloriesLabel')}:</span>
+                          <span>{t('activity.caloriesLabel')}:</span>
                           <span>{item.cals}</span>
                         </div>
                       </div>
