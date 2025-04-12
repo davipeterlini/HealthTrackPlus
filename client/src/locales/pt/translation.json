@@ -122,5 +122,35 @@
     "attention": "Atenção",
     "critical": "Crítico",
     "sleepQuality": "Qualidade do Sono"
+  },
+  "water": {
+    "waterIntake": "Consumo de Água",
+    "ofGoal": "da meta de",
+    "addWater": "Adicionar Água",
+    "history": "Histórico de 7 Dias",
+    "recorded": "Consumo registrado",
+    "added": "Adicionado",
+    "failedToRecord": "Falha ao registrar consumo de água"
+  },
+  "sleep": {
+    "recordSleep": "Registrar Sono",
+    "totalSleepHours": "Total de Horas de Sono",
+    "enterSleepTime": "Digite seu tempo total de sono em horas",
+    "sleepQuality": "Qualidade do Sono",
+    "selectQuality": "Selecione a qualidade do sono",
+    "poor": "Ruim",
+    "fair": "Regular",
+    "good": "Bom",
+    "excellent": "Excelente",
+    "deepSleep": "Sono Profundo",
+    "lightSleep": "Sono Leve",
+    "rem": "REM",
+    "savingRecord": "Salvando...",
+    "saveRecord": "Salvar Registro de Sono",
+    "lastNight": "Noite Passada",
+    "hours": "horas",
+    "logSleep": "Registrar Sono",
+    "sleepComposition": "Composição do Sono",
+    "sleepHistory": "Histórico de Sono"
   }
 }
