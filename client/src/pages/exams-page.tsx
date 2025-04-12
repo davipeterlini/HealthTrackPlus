@@ -118,7 +118,7 @@ export default function ExamsPage() {
         <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
           {t('health.examsDescription')}
         </p>
-        <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
+        <Button className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
           <Upload className="h-4 w-4 mr-2" /> {t('health.uploadExam')}
         </Button>
       </div>
@@ -227,7 +227,7 @@ export default function ExamsPage() {
                           AI Analyzed
                         </Badge>
                       ) : (
-                        <Button onClick={handleAnalyzeExam} className="bg-blue-600 hover:bg-blue-700">
+                        <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
                           Analyze with AI
                         </Button>
                       )}
@@ -285,7 +285,7 @@ export default function ExamsPage() {
                         No insights available for this exam yet.
                       </p>
                       {!selectedExam.aiProcessed && (
-                        <Button onClick={handleAnalyzeExam} className="bg-blue-600 hover:bg-blue-700">
+                        <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
                           Generate Insights with AI
                         </Button>
                       )}
@@ -363,7 +363,7 @@ export default function ExamsPage() {
           </p>
           
           <div className="flex justify-center">
-            <Button onClick={() => setAnalysisDialogOpen(false)}>
+            <Button onClick={() => setAnalysisDialogOpen(false)} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
               View Results
             </Button>
           </div>
