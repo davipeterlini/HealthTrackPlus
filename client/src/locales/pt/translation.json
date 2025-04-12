@@ -158,6 +158,7 @@
     "examDate": "Data do Exame",
     "examFile": "Arquivo do Exame",
     "uploading": "Enviando...",
+    "upload": "Enviar",
     "dragDropOrClick": "Arraste e solte um arquivo ou clique para selecionar",
     "maxFileSize": "PDF, JPG, PNG (máx 10MB)",
     "removeFile": "Remover arquivo",
