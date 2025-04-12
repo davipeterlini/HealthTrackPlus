@@ -140,9 +140,9 @@ export default function ActivityPage() {
   };
   
   return (
-    <MainLayout title={t('activity.title')}>
+    <MainLayout title={t('activity.title')} hideTitle={true}>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('activity.title')}</h2>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{t('activity.title')}</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-emerald-600 hover:bg-emerald-700">
