@@ -133,7 +133,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
   };
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="dark:bg-[#1a2127] dark:border-gray-700">
       <CardHeader>
         <CardTitle className="dark:text-gray-100">Sleep</CardTitle>
       </CardHeader>
@@ -259,7 +259,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
         
         <div className="mt-6">
           <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Sleep Composition</h4>
-          <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
+          <div className="bg-gray-100 dark:bg-[#242c35] rounded-lg p-3">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Deep Sleep</span>
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -300,7 +300,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
           <div className="grid grid-cols-7 gap-2">
             {sleepHistory.map((sleep, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 dark:bg-gray-700 rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark:bg-[#242c35] rounded-t-sm overflow-hidden">
                   <div 
                     className="absolute bottom-0 left-0 right-0 bg-purple-500 dark:bg-purple-400" 
                     style={{height: `${(sleep.hours / 10) * 100}%`}}
