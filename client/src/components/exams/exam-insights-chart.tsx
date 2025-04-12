@@ -15,8 +15,10 @@ import {
   Cell
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { HealthInsight } from '@shared/schema';
+import { HealthInsight, MedicalExam } from '@shared/schema';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Loader } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Mapeamento de severidade para valores numéricos
 const severityToValue = {
@@ -41,12 +43,41 @@ const categoryColors = {
 
 interface ExamInsightsChartProps {
   insights: HealthInsight[];
+  isLoading?: boolean;
+  examStatus?: string;
 }
 
-export function ExamInsightsChart({ insights }: ExamInsightsChartProps) {
-  // Se não houver insights, retorna null
-  if (!insights || insights.length === 0) {
+export function ExamInsightsChart({ insights, isLoading = false, examStatus }: ExamInsightsChartProps) {
+  // Se não houver insights e não está carregando, retorna null
+  if (!isLoading && (!insights || insights.length === 0) && examStatus !== "Analyzing") {
     return null;
+  }
+  
+  // Se está carregando ou o exame está sendo analisado, mostra o skeleton
+  if (isLoading || examStatus === "Analyzing") {
+    return (
+      <Card className="w-full bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm mb-4">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base font-semibold">Health Metrics Analysis</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col items-center justify-center h-[300px]">
+            <Loader className="h-8 w-8 text-blue-500 animate-spin mb-3" />
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
+              {examStatus === "Analyzing" ? "AI is analyzing your exam data..." : "Loading health insights..."}
+            </p>
+            <div className="grid grid-cols-3 gap-4 w-full mt-6">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
   }
 
   // Dados para gráfico de barras

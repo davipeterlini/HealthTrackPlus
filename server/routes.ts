@@ -102,7 +102,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         date: date ? new Date(date) : new Date(),
         fileUrl: file ? `/uploads/${file.filename}` : null,
         type,
-        status: "Uploaded",
+        status: "Analyzing",
         results: null,
         aiAnalysis: null,
         anomalies: null,
@@ -110,7 +110,115 @@ export async function registerRoutes(app: Express): Promise<Server> {
         aiProcessed: false
       });
       
+      // Responder imediatamente com o exame criado
       res.status(201).json(exam);
+      
+      // Iniciar análise automática em background
+      setTimeout(async () => {
+        try {
+          // Simular análise de IA
+          // Na implementação real, aqui chamaria uma API de IA externa
+          const aiAnalysis = {
+            summary: "A análise do exame indica resultados dentro dos parâmetros normais, com algumas observações.",
+            details: {
+              bloodGlucose: {
+                value: 95,
+                status: "normal",
+                reference: "70-99 mg/dL"
+              },
+              cholesterol: {
+                total: {
+                  value: 180,
+                  status: "normal",
+                  reference: "<200 mg/dL"
+                },
+                hdl: {
+                  value: 55,
+                  status: "normal",
+                  reference: ">40 mg/dL"
+                },
+                ldl: {
+                  value: 105,
+                  status: "normal",
+                  reference: "<130 mg/dL"
+                }
+              }
+            },
+            recommendations: [
+              "Mantenha uma dieta balanceada rica em frutas e vegetais",
+              "Continue praticando exercícios físicos regularmente",
+              "Considere aumentar a ingestão de água diária"
+            ]
+          };
+          
+          // Atualizar o exame com os resultados da análise
+          const updatedExam = await storage.updateMedicalExam(exam.id, {
+            status: "Normal",
+            aiAnalysis,
+            riskLevel: "normal",
+            aiProcessed: true
+          });
+          
+          // Gerar insights de saúde baseados na análise
+          const categories = ["Cardiovascular", "Nutrition", "Metabolism"];
+          
+          for (const category of categories) {
+            let title = "";
+            let description = "";
+            let recommendation = "";
+            let severity = "normal";
+            let data = {};
+            
+            switch (category) {
+              case "Cardiovascular":
+                title = "Saúde Cardiovascular Ótima";
+                description = "Seus indicadores cardíacos estão em níveis ótimos, indicando boa função cardiovascular.";
+                recommendation = "Continue com exercícios regulares para manter a saúde cardíaca.";
+                severity = "normal";
+                data = {
+                  cholesterol: aiAnalysis.details.cholesterol,
+                  bloodPressure: "120/80"
+                };
+                break;
+              case "Nutrition":
+                title = "Perfil Nutricional Adequado";
+                description = "Seus marcadores nutricionais estão equilibrados.";
+                recommendation = "Mantenha uma dieta balanceada rica em nutrientes essenciais.";
+                severity = "normal";
+                data = {
+                  cholesterol: aiAnalysis.details.cholesterol
+                };
+                break;
+              case "Metabolism":
+                title = "Gestão de Glicemia";
+                description = "Seus níveis de glicemia estão dentro da faixa normal, indicando metabolismo eficaz.";
+                recommendation = "Mantenha uma dieta balanceada com carboidratos complexos.";
+                severity = "normal";
+                data = {
+                  glucose: aiAnalysis.details.bloodGlucose
+                };
+                break;
+            }
+            
+            // Criar o insight no banco
+            await storage.createHealthInsight({
+              userId,
+              examId: exam.id,
+              date: new Date(),
+              category,
+              title,
+              description,
+              recommendation,
+              severity,
+              data: JSON.stringify(data)
+            });
+          }
+          
+          console.log(`Auto-análise completa para o exame ${exam.id}`);
+        } catch (error) {
+          console.error(`Erro na auto-análise do exame ${exam.id}:`, error);
+        }
+      }, 3000); // Aguardar 3 segundos para simular processamento
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Failed to upload exam" });

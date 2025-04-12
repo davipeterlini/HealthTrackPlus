@@ -32,11 +32,19 @@ export function ExamList({ exams, isLoading, onSelectExam }: ExamListProps) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "analyzed":
+      case "normal":
         return "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300";
       case "processing":
+      case "analyzing":
         return "bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300";
       case "uploaded":
         return "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300";
+      case "attention":
+      case "high":
+        return "bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-300";
+      case "critical":
+      case "low":
+        return "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300";
       default:
         return "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300";
     }
