@@ -218,10 +218,10 @@ export default function ExamsPage() {
           {t('health.examsDescription')}
         </p>
         <Button 
-          className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+          className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white xs:text-xs sm:text-sm"
           onClick={() => setUploadDialogOpen(true)}
         >
-          <Upload className="h-4 w-4 mr-2" /> {t('health.uploadExam')}
+          <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" /> {t('health.uploadExam')}
         </Button>
       </div>
       
@@ -329,7 +329,7 @@ export default function ExamsPage() {
                           AI Analyzed
                         </Badge>
                       ) : (
-                        <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
+                        <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm">
                           Analyze with AI
                         </Button>
                       )}
