@@ -21,6 +21,10 @@ export const medicalExams = pgTable("medical_exams", {
   type: text("type").notNull(),
   status: text("status").notNull(),
   results: json("results"),
+  aiAnalysis: json("ai_analysis"),
+  anomalies: boolean("anomalies").default(false),
+  riskLevel: text("risk_level").default("normal"),
+  aiProcessed: boolean("ai_processed").default(false),
 });
 
 export const activities = pgTable("activities", {
@@ -319,6 +323,21 @@ export const pregnancyTracking = pgTable("pregnancy_tracking", {
   babyMovements: boolean("baby_movements"),
 });
 
+export const healthInsights = pgTable("health_insights", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  date: timestamp("date").notNull(),
+  examId: integer("exam_id").references(() => medicalExams.id),
+  category: text("category").notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  recommendation: text("recommendation"),
+  severity: text("severity").notNull().default("normal"),
+  status: text("status").notNull().default("active"),
+  aiGenerated: boolean("ai_generated").default(true),
+  data: json("data"),
+});
+
 // Esquemas de inserção para as novas tabelas
 export const insertFoodItemSchema = createInsertSchema(foodItems).omit({
   id: true,
@@ -360,6 +379,10 @@ export const insertPregnancyTrackingSchema = createInsertSchema(pregnancyTrackin
   id: true,
 });
 
+export const insertHealthInsightSchema = createInsertSchema(healthInsights).omit({
+  id: true,
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -382,15 +405,16 @@ export type Video = typeof videos.$inferSelect;
 export type VideoProgress = typeof videoProgress.$inferSelect;
 export type CourseTrack = typeof courseTracks.$inferSelect;
 export type TrackVideo = typeof trackVideos.$inferSelect;
+export type HealthInsight = typeof healthInsights.$inferSelect;
 
-
-export interface Video {
+// Interface estendida para vídeos com URL
+export interface VideoWithUrl {
   id: number;
   title: string;
   duration: string;
   category: string;
   description: string;
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
   videoUrl?: string;
 }
 

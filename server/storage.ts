@@ -31,6 +31,13 @@ export interface IStorage {
   getMedicalExams(userId: number): Promise<MedicalExam[]>;
   getMedicalExam(id: number): Promise<MedicalExam | undefined>;
   createMedicalExam(exam: Omit<MedicalExam, 'id'>): Promise<MedicalExam>;
+  updateMedicalExamWithAIAnalysis(id: number, aiAnalysis: any, anomalies: boolean, riskLevel: string): Promise<MedicalExam>;
+  
+  // Health insights methods
+  getHealthInsights(userId: number): Promise<HealthInsight[]>;
+  getHealthInsightsByCategory(userId: number, category: string): Promise<HealthInsight[]>;
+  getHealthInsightsByExam(examId: number): Promise<HealthInsight[]>;
+  createHealthInsight(insight: Omit<HealthInsight, 'id'>): Promise<HealthInsight>;
   
   // Activity methods
   getActivities(userId: number): Promise<Activity[]>;
