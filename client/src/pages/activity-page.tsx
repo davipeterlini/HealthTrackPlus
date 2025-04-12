@@ -347,15 +347,6 @@ export default function ActivityPage() {
                       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         {t('activity.startTracking')}
                       </p>
-                      <div className="mt-6">
-                        <Button 
-                          onClick={() => setDialogOpen(true)}
-                          className="bg-emerald-600 hover:bg-emerald-700"
-                        >
-                          <PlusCircle className="mr-2 h-4 w-4" />
-                          {t('activity.addActivity')}
-                        </Button>
-                      </div>
                     </div>
                   )}
                 </CardContent>
