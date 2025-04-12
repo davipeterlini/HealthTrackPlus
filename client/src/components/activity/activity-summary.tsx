@@ -66,7 +66,6 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   
   return (
     <CardContent className="p-6">
-      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-5">{t('activity.summary')}</h3>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
         <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
