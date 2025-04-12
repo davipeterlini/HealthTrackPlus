@@ -26,6 +26,7 @@
     "types": "Activity Types",
     "details": "Activity Details",
     "weeklyActivity": "Weekly Activity",
+    "dailyActivities": "Daily Activities",
     "recentActivities": "Recent Activities",
     "addActivity": "Add Activity",
     "recordActivity": "Record Activity",
@@ -68,7 +69,9 @@
     "high": "High",
     "cardio": "Cardio",
     "fatBurn": "Fat Burn",
-    "warmUp": "Warm Up"
+    "warmUp": "Warm Up",
+    "stepsLabel": "Steps",
+    "caloriesLabel": "Calories"
   },
   "common": {
     "theme": "Theme"

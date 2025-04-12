@@ -2,6 +2,7 @@ import { MainLayout } from "@/components/layout/main-layout";
 import { ActivitySummary } from "@/components/activity/activity-summary";
 import { ActivityChart } from "@/components/activity/activity-chart";
 import { ActivityBreakdown } from "@/components/activity/activity-breakdown";
+import { ActivityWeeklyChart } from "@/components/activity/activity-weekly-chart";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity } from "@shared/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -294,6 +295,24 @@ export default function ActivityPage() {
                   activities={activities || []} 
                   selectedDate={selectedDate}
                 />
+              </Card>
+              
+              {/* Weekly Activities Chart - igual ao da página inicial */}
+              <Card className="dark:bg-[#1a2127] dark:border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 dark:text-gray-100">{t('health.weeklyActivities')}</CardTitle>
+                </CardHeader>
+                <ActivityWeeklyChart 
+                  activities={activities || []} 
+                  onSelectDate={setSelectedDate}
+                />
+              </Card>
+              
+              {/* Gráfico de atividades por dia */}
+              <Card className="dark:bg-[#1a2127] dark:border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.dailyActivities')}</CardTitle>
+                </CardHeader>
                 <ActivityChart 
                   activities={activities || []} 
                   onSelectDate={setSelectedDate}
