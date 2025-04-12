@@ -150,7 +150,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
             </div>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="mt-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+                <Button variant="outline" size="sm" className="mt-2 border-indigo-400 dark:border-indigo-500 border bg-transparent hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-indigo-500 dark:text-indigo-400 rounded-full">
                   <Moon className="mr-1 h-4 w-4" /> Log Sleep
                 </Button>
               </DialogTrigger>
