@@ -165,17 +165,23 @@ export default function ExamsPage() {
         formData.append('file', newExam.file);
       }
       
-      const response = await fetch('/api/exams', {
-        method: 'POST',
-        body: formData,
-      });
-      
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(error || 'Falha ao enviar o exame');
+      try {
+        const response = await fetch('/api/exams', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Erro na resposta:", response.status, errorText);
+          throw new Error(errorText || 'Falha ao enviar o exame');
+        }
+        
+        return await response.json();
+      } catch (error) {
+        console.error("Erro ao fazer upload:", error);
+        throw error;
       }
-      
-      return await response.json();
     },
     onSuccess: () => {
       // Resetar o estado e atualizar a lista
