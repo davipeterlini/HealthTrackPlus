@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
 import { 
@@ -27,12 +27,10 @@ export default function DashboardPage() {
   });
   
   // Estado para controle de hidratação
-  const [waterAmount, setWaterAmount] = useState(
-    isLoadingStats || !dashboardStats ? 1300 : dashboardStats.hydration.current
-  );
+  const [waterAmount, setWaterAmount] = useState(1300);
   
   // Atualizar waterAmount quando os dados da API chegarem
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isLoadingStats && dashboardStats) {
       setWaterAmount(dashboardStats.hydration.current);
     }
@@ -277,23 +275,22 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
-          {/* Utilizando estado waterAmount definido no componente principal */}
+          {/* Componente de hidratação sem funções IIFE */}
+          {/* Usar dados da API ou fallback para a meta */}
           {(() => {
-            // Usar dados da API ou fallback para a meta
             const waterGoal = isLoadingStats || !dashboardStats 
               ? 2500 
               : dashboardStats.hydration.goal;
             
             const percentage = Math.min(100, Math.round((waterAmount / waterGoal) * 100));
             
-            // Funções para adicionar/remover água
-            const addWater = (amount: number) => {
+            function addWater(amount: number) {
               setWaterAmount(prev => Math.min(waterGoal, prev + amount));
-            };
+            }
             
-            const removeWater = (amount: number) => {
+            function removeWater(amount: number) {
               setWaterAmount(prev => Math.max(0, prev - amount));
-            };
+            }
             
             return (
               <>
