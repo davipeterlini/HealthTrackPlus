@@ -131,8 +131,8 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
               <div className="w-full relative flex items-end justify-center h-[85%]">
                 {/* Barra de passos */}
                 <div 
-                  className="w-full bg-emerald-500/80 dark:bg-emerald-500/70 rounded-t-md z-20 relative group"
-                  style={{ height: `${Math.max(item.active, 2)}%` }} // Mínimo de 2% para barras visíveis mesmo com 0
+                  className="w-[70%] mx-auto bg-emerald-500/80 dark:bg-emerald-500/70 rounded-t-md z-20 relative group"
+                  style={{ height: `${Math.max(item.active * 0.7, 2)}%` }} // Reduzindo o tamanho das barras para 70%
                 >
                   {/* Tooltip ao passar o mouse ou tocar */}
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
@@ -153,8 +153,8 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
                 
                 {/* Linha de calorias */}
                 <div 
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 z-10"
-                  style={{ bottom: `${Math.min((item.cals / 2500) * 100, 100)}%` }}
+                  className="absolute bottom-0 w-[70%] mx-auto left-0 right-0 h-0.5 bg-blue-500 z-10"
+                  style={{ bottom: `${Math.min((item.cals / 2500) * 100 * 0.7, 100)}%` }}
                 >
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500 absolute right-0 top-1/2 transform -translate-y-1/2"></div>
                 </div>
