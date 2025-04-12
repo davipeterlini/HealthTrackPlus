@@ -193,7 +193,9 @@
     "details": "Details"
   },
   "sleep": {
+    "sleepTracker": "Sleep Tracker",
     "recordSleep": "Record Sleep",
+    "recordSleepDescription": "Record your sleep duration and quality",
     "totalSleepHours": "Total Sleep Hours",
     "enterSleepTime": "Enter your total sleep time in hours",
     "sleepQuality": "Sleep Quality",
@@ -211,7 +213,26 @@
     "hours": "hours",
     "logSleep": "Log Sleep",
     "sleepComposition": "Sleep Composition",
-    "sleepHistory": "Sleep History"
+    "sleepHistory": "Sleep History",
+    "sleepHistoryDescription": "View your sleep patterns over time",
+    "sleepSummary": "Sleep Summary",
+    "sleepSummaryDescription": "An overview of your sleep patterns and quality",
+    "sleepRecorded": "Sleep Recorded",
+    "sleepRecordedSuccess": "Your sleep record has been saved successfully",
+    "failedToRecord": "Failed to record your sleep data. Please try again.",
+    "noSleepData": "No sleep data available",
+    "lastSleepCycles": "Your last sleep cycle breakdown",
+    "sleepCycles": "Sleep Cycles",
+    "averageQuality": "Average quality",
+    "deepSleepPercentage": "Deep Sleep %",
+    "ofTotalSleep": "of total sleep",
+    "sleepTips": "Sleep Tips",
+    "improveSleepQuality": "Tips to improve your sleep quality",
+    "tip1": "Maintain a consistent sleep schedule by going to bed and waking up at the same time every day.",
+    "tip2": "Create a relaxing bedtime routine to signal to your body that it's time to wind down.",
+    "tip3": "Regular physical activity can help you fall asleep faster and enjoy deeper sleep.",
+    "tip4": "Limit exposure to screens (phones, tablets, computers) 1-2 hours before bedtime.",
+    "tip5": "Keep your bedroom cool, quiet, and dark for optimal sleep conditions."
   },
   "meal": {
     "mealTracker": "Meal Tracker",

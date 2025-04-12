@@ -200,7 +200,9 @@
     "failedToRecord": "Falha ao registrar consumo de água"
   },
   "sleep": {
+    "sleepTracker": "Monitor de Sono",
     "recordSleep": "Registrar Sono",
+    "recordSleepDescription": "Registre a duração e qualidade do seu sono",
     "totalSleepHours": "Total de Horas de Sono",
     "enterSleepTime": "Digite seu tempo total de sono em horas",
     "sleepQuality": "Qualidade do Sono",
@@ -218,7 +220,26 @@
     "hours": "horas",
     "logSleep": "Registrar Sono",
     "sleepComposition": "Composição do Sono",
-    "sleepHistory": "Histórico de Sono"
+    "sleepHistory": "Histórico de Sono",
+    "sleepHistoryDescription": "Veja seus padrões de sono ao longo do tempo",
+    "sleepSummary": "Resumo do Sono",
+    "sleepSummaryDescription": "Uma visão geral dos seus padrões e qualidade de sono",
+    "sleepRecorded": "Sono Registrado",
+    "sleepRecordedSuccess": "Seu registro de sono foi salvo com sucesso",
+    "failedToRecord": "Falha ao registrar seus dados de sono. Por favor, tente novamente.",
+    "noSleepData": "Nenhum dado de sono disponível",
+    "lastSleepCycles": "Detalhamento do seu último ciclo de sono",
+    "sleepCycles": "Ciclos de Sono",
+    "averageQuality": "Qualidade média",
+    "deepSleepPercentage": "% de Sono Profundo",
+    "ofTotalSleep": "do sono total",
+    "sleepTips": "Dicas de Sono",
+    "improveSleepQuality": "Dicas para melhorar a qualidade do seu sono",
+    "tip1": "Mantenha um horário de sono consistente, indo para a cama e acordando no mesmo horário todos os dias.",
+    "tip2": "Crie uma rotina relaxante antes de dormir para sinalizar ao seu corpo que é hora de desacelerar.",
+    "tip3": "Atividade física regular pode ajudar você a adormecer mais rápido e desfrutar de um sono mais profundo.",
+    "tip4": "Limite a exposição a telas (celulares, tablets, computadores) 1-2 horas antes de dormir.",
+    "tip5": "Mantenha seu quarto fresco, quieto e escuro para condições ideais de sono."
   },
   "meal": {
     "mealTracker": "Registro de Refeições",

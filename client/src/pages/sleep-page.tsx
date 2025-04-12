@@ -196,7 +196,7 @@ export default function SleepPage() {
   // Dados para o gráfico de histórico de sono
   const sleepHistoryData = sleepData
     .slice(0, 7)
-    .map(record => ({
+    .map((record: SleepRecord) => ({
       date: format(new Date(record.date), 'dd/MM'),
       hours: record.hours,
       quality: record.quality,
