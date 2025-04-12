@@ -11,12 +11,16 @@ import {
   type MedicationLog, type MeditationSession, type MenstrualCycle,
   type MenstrualCycleSymptom, type FertilityTracking, type PregnancyTracking
 } from "@shared/schema";
+import { DashboardStats } from "@shared/dashboard";
 import session from "express-session";
 import createMemoryStore from "memorystore";
 
 const MemoryStore = createMemoryStore(session);
 
 export interface IStorage {
+  // Dashboard methods
+  getDashboardStats(userId: number): Promise<DashboardStats>;
+  
   // User methods
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -383,6 +387,131 @@ export class MemStorage implements IStorage {
       
       this.activities.set(newActivity.id, newActivity);
     }
+  }
+
+  // Dashboard methods
+  async getDashboardStats(userId: number): Promise<DashboardStats> {
+    // Dados para o dashboard
+    const today = new Date();
+    
+    // Obter atividades recentes para análise
+    const userActivities = Array.from(this.activities.values())
+      .filter(activity => activity.userId === userId)
+      .sort((a, b) => b.date.getTime() - a.date.getTime());
+
+    // Definir dias da semana conforme idioma do sistema (simulando)
+    const getDayNames = () => {
+      const isEnglish = true; // Poderia ser baseado na preferência do usuário
+      return {
+        full: isEnglish ? 
+          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] : 
+          ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        short: isEnglish ? 
+          ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] : 
+          ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        mini: isEnglish ? 
+          ['S', 'M', 'T', 'W', 'T', 'F', 'S'] : 
+          ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+      };
+    };
+    
+    // Gerar dados semanais para o gráfico de atividades
+    const weeklyActivityData = [];
+    const dayNames = getDayNames();
+    
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(today.getDate() - i);
+      date.setHours(0, 0, 0, 0);
+      
+      // Encontrar atividades para este dia
+      const dayActivities = userActivities.filter(activity => {
+        const activityDate = new Date(activity.date);
+        return activityDate.toDateString() === date.toDateString();
+      });
+      
+      // Calcular totais para o dia
+      const daySteps = dayActivities.reduce((sum, act) => sum + act.steps, 0);
+      const dayCals = dayActivities.reduce((sum, act) => sum + act.calories, 0);
+      const dayActive = dayActivities.reduce((sum, act) => sum + act.minutes, 0);
+      
+      const dayIndex = date.getDay();
+      weeklyActivityData.push({
+        day: dayNames.short[dayIndex],
+        shortDay: dayNames.mini[dayIndex],
+        steps: daySteps,
+        cals: dayCals,
+        active: dayActive
+      });
+    }
+    
+    // Calcular estatísticas de atividade
+    const todayActivities = userActivities.filter(act => {
+      const actDate = new Date(act.date);
+      return actDate.toDateString() === today.toDateString();
+    });
+    
+    const yesterdayActivities = userActivities.filter(act => {
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      const actDate = new Date(act.date);
+      return actDate.toDateString() === yesterday.toDateString();
+    });
+    
+    // Calcular minutos ativos total e comparar com ontem
+    const todayActiveMinutes = todayActivities.reduce((sum, act) => sum + act.minutes, 0);
+    const yesterdayActiveMinutes = yesterdayActivities.reduce((sum, act) => sum + act.minutes, 0);
+    
+    const activeMinutesChange = yesterdayActiveMinutes === 0 ? 0 :
+      Math.round(((todayActiveMinutes - yesterdayActiveMinutes) / yesterdayActiveMinutes) * 100);
+    
+    // Calorias hoje
+    const todayCalories = todayActivities.reduce((sum, act) => sum + act.calories, 0);
+    const caloriesGoal = 1750; // Meta diária de calorias
+    const remainingCalories = Math.max(0, caloriesGoal - todayCalories);
+    
+    // Dados de sono (mock)
+    const sleepHours = 7.5;
+    const sleepChangeMinutes = 30;
+    
+    // Dados de ritmo cardíaco (mock)
+    const avgHeartRate = 72;
+    const heartRateStatus = 'normal';
+    
+    // Dados de hidratação (mock)
+    const waterCurrent = 1300;
+    const waterGoal = 2500;
+    
+    // Montar o objeto de resposta
+    return {
+      activeMinutes: {
+        value: todayActiveMinutes,
+        change: Math.abs(activeMinutesChange),
+        trend: activeMinutesChange >= 0 ? 'up' : 'down'
+      },
+      calories: {
+        value: todayCalories,
+        remaining: remainingCalories,
+        trend: 'down' // Considerando que queremos consumir as calorias
+      },
+      sleep: {
+        value: sleepHours,
+        change: sleepChangeMinutes,
+        trend: 'up'
+      },
+      heartRate: {
+        value: avgHeartRate,
+        status: heartRateStatus,
+        trend: 'down'
+      },
+      weeklyActivity: {
+        days: weeklyActivityData
+      },
+      hydration: {
+        current: waterCurrent,
+        goal: waterGoal
+      }
+    };
   }
 
   // User methods

@@ -37,6 +37,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   setupAuth(app);
 
+  // Dashboard routes
+  app.get("/api/dashboard", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+      const stats = await storage.getDashboardStats(1);
+      return res.json(stats);
+    }
+    
+    const userId = (req.user as Express.User).id;
+    const stats = await storage.getDashboardStats(userId);
+    res.json(stats);
+  });
+
   // Medical exam routes
   app.get("/api/exams", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
