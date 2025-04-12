@@ -7,6 +7,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { WaterIntakeRecord } from "@shared/schema";
 import { Droplets, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface WaterTrackerProps {
   waterRecords: WaterIntakeRecord[];
@@ -16,6 +17,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   const [amount, setAmount] = useState(250); // Default amount: 250ml
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { t, i18n } = useTranslation();
   
   const dailyGoal = 2500; // ml
   
@@ -53,14 +55,14 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
     },
     onSuccess: () => {
       toast({
-        title: "Water intake recorded",
-        description: `Added ${amount}ml of water`,
+        title: t('water.recorded'),
+        description: `${t('water.added')} ${amount}ml`,
       });
       queryClient.invalidateQueries({ queryKey: ["/api/water"] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Failed to record water intake",
+        title: t('water.failedToRecord'),
         description: error.message,
         variant: "destructive",
       });
@@ -73,13 +75,13 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
+    return date.toLocaleDateString(i18n.language === 'pt' ? 'pt-BR' : 'en-US', { weekday: 'short', day: 'numeric' });
   };
   
   return (
     <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
       <CardHeader>
-        <CardTitle className="text-slate-800 dark:text-white">Water Intake</CardTitle>
+        <CardTitle className="text-slate-800 dark:text-white">{t('water.waterIntake')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
@@ -95,7 +97,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
           </div>
           <div>
             <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{todayWaterIntake} ml</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">of {dailyGoal} ml goal</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">{t('water.ofGoal')} {dailyGoal} ml</div>
             <div className="mt-2 flex space-x-2">
               <Button 
                 variant="outline" 
@@ -128,13 +130,13 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
               onClick={handleAddWater}
               disabled={addWaterMutation.isPending}
             >
-              <Droplets className="mr-1 h-4 w-4" /> Add Water
+              <Droplets className="mr-1 h-4 w-4" /> {t('water.addWater')}
             </Button>
           </div>
         </div>
         
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">7-Day History</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('water.history')}</h4>
           <div className="grid grid-cols-7 gap-2">
             {waterHistory.map((day, index) => (
               <div key={index} className="flex flex-col items-center">

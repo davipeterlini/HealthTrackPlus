@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { SleepRecord } from "@shared/schema";
 import { Moon, PlusCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -61,6 +62,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { t, i18n } = useTranslation();
   
   const recommendedHours = 8;
   
