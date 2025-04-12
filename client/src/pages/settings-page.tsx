@@ -106,7 +106,7 @@ export default function SettingsPage() {
                     </div>
                     <Switch 
                       checked={skipAuth}
-                      onCheckedChange={setSkipAuth}
+                      onCheckedChange={toggleSkipAuth}
                     />
                   </div>
                 </div>
