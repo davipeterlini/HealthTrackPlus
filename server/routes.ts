@@ -116,46 +116,179 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Iniciar análise automática em background
       setTimeout(async () => {
         try {
-          // Simular análise de IA
-          // Na implementação real, aqui chamaria uma API de IA externa
-          const aiAnalysis = {
-            summary: "A análise do exame indica resultados dentro dos parâmetros normais, com algumas observações.",
-            details: {
-              bloodGlucose: {
-                value: 95,
-                status: "normal",
-                reference: "70-99 mg/dL"
-              },
-              cholesterol: {
-                total: {
-                  value: 180,
-                  status: "normal",
-                  reference: "<200 mg/dL"
+          console.log(`Iniciando análise do exame ${exam.id}...`);
+          
+          // Preparar resultado da análise AI
+          let aiAnalysis = null;
+          let examStatus = "Normal";
+          let examRiskLevel = "normal";
+          
+          // Verificar se existe arquivo para análise
+          if (file && exam.fileUrl) {
+            console.log(`Analisando arquivo: ${exam.fileUrl}`);
+            
+            // Extrair texto do PDF/imagem (simulado aqui)
+            // Em uma implementação real, usaria OCR para imagens ou parser para PDFs
+            let extractedText = "";
+            
+            // Gerar resultados baseados no tipo de exame
+            if (type.toLowerCase().includes('blood') || type.toLowerCase().includes('sangue')) {
+              extractedText = "Hemoglobina: 14.2 g/dL (Ref: 13.5-17.5)\nGlicose: 98 mg/dL (Ref: 70-99)\nColesterol total: 185 mg/dL (Ref: <200)\nHDL: 52 mg/dL (Ref: >40)\nLDL: 115 mg/dL (Ref: <130)\nTriglicerídeos: 150 mg/dL (Ref: <150)";
+              
+              // Análise AI do conteúdo extraído
+              aiAnalysis = {
+                summary: "A análise do exame de sangue indica resultados próximos aos limites superiores normais, com alguns pontos de atenção.",
+                details: {
+                  bloodGlucose: {
+                    value: 98,
+                    status: "normal",
+                    reference: "70-99 mg/dL",
+                    attention: "Próximo ao limite superior"
+                  },
+                  cholesterol: {
+                    total: {
+                      value: 185,
+                      status: "normal",
+                      reference: "<200 mg/dL"
+                    },
+                    hdl: {
+                      value: 52,
+                      status: "normal",
+                      reference: ">40 mg/dL"
+                    },
+                    ldl: {
+                      value: 115,
+                      status: "normal",
+                      reference: "<130 mg/dL"
+                    },
+                    triglycerides: {
+                      value: 150,
+                      status: "attention",
+                      reference: "<150 mg/dL",
+                      note: "No limite superior da referência"
+                    }
+                  },
+                  hemoglobin: {
+                    value: 14.2,
+                    status: "normal",
+                    reference: "13.5-17.5 g/dL"
+                  }
                 },
-                hdl: {
-                  value: 55,
-                  status: "normal",
-                  reference: ">40 mg/dL"
+                timeSeriesData: Array.from({ length: 7 }, (_, i) => ({
+                  day: `Day ${i+1}`,
+                  value: 95 + Math.floor(Math.random() * 10 - 5)
+                })),
+                comparisonData: [
+                  { name: "Seu Valor", value: 98 },
+                  { name: "Média Pop.", value: 88 },
+                  { name: "Ref. Min", value: 70 },
+                  { name: "Ref. Max", value: 99 }
+                ],
+                distributionData: [
+                  { name: "Baixo", value: 15 },
+                  { name: "Normal", value: 70 },
+                  { name: "Alto", value: 15 }
+                ],
+                correlationData: Array.from({ length: 10 }, () => ({
+                  x: 80 + Math.floor(Math.random() * 40),
+                  y: 120 + Math.floor(Math.random() * 40),
+                  z: Math.floor(Math.random() * 100)
+                })),
+                recommendations: [
+                  "Considere reduzir a ingestão de carboidratos refinados",
+                  "Aumente a atividade física para pelo menos 30 minutos diários",
+                  "Monitore seus níveis de triglicerídeos em 3 meses"
+                ]
+              };
+              
+              examStatus = "Attention";
+              examRiskLevel = "attention";
+            } else if (type.toLowerCase().includes('cardiac') || type.toLowerCase().includes('cardio')) {
+              extractedText = "Pressão arterial: 135/85 mmHg\nFrequência cardíaca: 72 bpm\nECG: Ritmo sinusal normal";
+              
+              aiAnalysis = {
+                summary: "Avaliação cardíaca apresenta leve elevação da pressão arterial, mas demais parâmetros normais.",
+                details: {
+                  bloodPressure: {
+                    systolic: {
+                      value: 135,
+                      status: "attention",
+                      reference: "<120 mmHg",
+                    },
+                    diastolic: {
+                      value: 85,
+                      status: "attention",
+                      reference: "<80 mmHg",
+                    }
+                  },
+                  heartRate: {
+                    value: 72,
+                    status: "normal",
+                    reference: "60-100 bpm"
+                  },
+                  ecg: {
+                    finding: "Ritmo sinusal normal",
+                    status: "normal"
+                  }
                 },
-                ldl: {
-                  value: 105,
-                  status: "normal",
-                  reference: "<130 mg/dL"
+                timeSeriesData: Array.from({ length: 7 }, (_, i) => ({
+                  day: `Day ${i+1}`,
+                  value: 130 + Math.floor(Math.random() * 10 - 5)
+                })),
+                recommendations: [
+                  "Monitorar pressão arterial regularmente",
+                  "Reduzir a ingestão de sódio na dieta",
+                  "Praticar atividades físicas aeróbicas regularmente"
+                ]
+              };
+              
+              examStatus = "Attention";
+              examRiskLevel = "attention";
+            } else {
+              // Para outros tipos de exame
+              aiAnalysis = {
+                summary: "A análise do exame indica resultados dentro dos parâmetros normais, com algumas observações.",
+                details: {
+                  general: {
+                    status: "normal",
+                    findings: "Sem alterações significativas"
+                  }
+                },
+                recommendations: [
+                  "Mantenha uma dieta balanceada rica em frutas e vegetais",
+                  "Continue praticando exercícios físicos regularmente",
+                  "Considere aumentar a ingestão de água diária"
+                ]
+              };
+              
+              examStatus = "Normal";
+              examRiskLevel = "normal";
+            }
+          } else {
+            // Sem arquivo para análise, fornecer análise genérica
+            aiAnalysis = {
+              summary: "Não foi possível realizar análise detalhada por falta de arquivo anexo.",
+              details: {
+                notice: {
+                  status: "attention",
+                  message: "Recomendamos anexar os resultados do exame para uma análise completa."
                 }
-              }
-            },
-            recommendations: [
-              "Mantenha uma dieta balanceada rica em frutas e vegetais",
-              "Continue praticando exercícios físicos regularmente",
-              "Considere aumentar a ingestão de água diária"
-            ]
-          };
+              },
+              recommendations: [
+                "Anexar arquivo do exame para análise completa",
+                "Agendar consulta com seu médico para revisão dos resultados"
+              ]
+            };
+            
+            examStatus = "Incomplete";
+            examRiskLevel = "attention";
+          }
           
           // Atualizar o exame com os resultados da análise
           const updatedExam = await storage.updateMedicalExam(exam.id, {
-            status: "Normal",
+            status: examStatus,
             aiAnalysis,
-            riskLevel: "normal",
+            riskLevel: examRiskLevel,
             aiProcessed: true
           });
           
@@ -166,37 +299,136 @@ export async function registerRoutes(app: Express): Promise<Server> {
             let title = "";
             let description = "";
             let recommendation = "";
-            let severity = "normal";
+            let severity = examRiskLevel; // Usar o risco global do exame como base
             let data = {};
             
             switch (category) {
               case "Cardiovascular":
-                title = "Saúde Cardiovascular Ótima";
-                description = "Seus indicadores cardíacos estão em níveis ótimos, indicando boa função cardiovascular.";
-                recommendation = "Continue com exercícios regulares para manter a saúde cardíaca.";
-                severity = "normal";
-                data = {
-                  cholesterol: aiAnalysis.details.cholesterol,
-                  bloodPressure: "120/80"
-                };
+                if (type.toLowerCase().includes('cardiac') || type.toLowerCase().includes('cardio')) {
+                  // Para exames cardíacos
+                  if (aiAnalysis?.details?.bloodPressure) {
+                    const systolic = aiAnalysis.details.bloodPressure.systolic;
+                    const diastolic = aiAnalysis.details.bloodPressure.diastolic;
+                    
+                    if (systolic.status === "attention" || diastolic.status === "attention") {
+                      title = "Atenção à Pressão Arterial";
+                      description = "Sua pressão arterial está levemente elevada, requerendo monitoramento.";
+                      recommendation = "Reduza o consumo de sal e pratique atividades físicas regularmente.";
+                      severity = "attention";
+                    } else {
+                      title = "Saúde Cardiovascular Adequada";
+                      description = "Seus parâmetros cardíacos estão em níveis adequados.";
+                      recommendation = "Continue com bons hábitos para manter a saúde cardíaca.";
+                      severity = "normal";
+                    }
+                    
+                    data = {
+                      bloodPressure: {
+                        systolic: aiAnalysis.details.bloodPressure.systolic.value,
+                        diastolic: aiAnalysis.details.bloodPressure.diastolic.value,
+                        status: severity
+                      }
+                    };
+                  } else {
+                    title = "Monitoramento Cardíaco";
+                    description = "Acompanhamento regular de seus indicadores cardiovasculares.";
+                    recommendation = "Mantenha o controle regular da pressão arterial e frequência cardíaca.";
+                    severity = "normal";
+                    data = {};
+                  }
+                } else if (aiAnalysis?.details?.cholesterol) {
+                  // Para exames de sangue com colesterol
+                  const cholesterol = aiAnalysis.details.cholesterol;
+                  
+                  if (cholesterol.total?.status === "attention" || 
+                      cholesterol.ldl?.status === "attention" ||
+                      cholesterol.triglycerides?.status === "attention") {
+                    title = "Monitoramento de Lipídios";
+                    description = "Seus níveis de colesterol estão próximos dos limites recomendados.";
+                    recommendation = "Considere reduzir alimentos processados e aumentar o consumo de fibras.";
+                    severity = "attention";
+                  } else {
+                    title = "Perfil Lipídico Saudável";
+                    description = "Seus níveis de colesterol estão dentro dos parâmetros recomendados.";
+                    recommendation = "Continue com uma alimentação balanceada e exercícios regulares.";
+                    severity = "normal";
+                  }
+                  
+                  data = {
+                    cholesterol: aiAnalysis.details.cholesterol
+                  };
+                } else {
+                  title = "Saúde Cardiovascular";
+                  description = "Monitore regularmente seus indicadores cardíacos.";
+                  recommendation = "Pratique exercícios físicos e mantenha uma alimentação balanceada.";
+                  severity = "normal";
+                  data = {};
+                }
                 break;
               case "Nutrition":
-                title = "Perfil Nutricional Adequado";
-                description = "Seus marcadores nutricionais estão equilibrados.";
-                recommendation = "Mantenha uma dieta balanceada rica em nutrientes essenciais.";
-                severity = "normal";
-                data = {
-                  cholesterol: aiAnalysis.details.cholesterol
-                };
+                if (aiAnalysis?.details?.cholesterol || aiAnalysis?.details?.bloodGlucose) {
+                  let nutritionalIssues = [];
+                  
+                  if (aiAnalysis.details.cholesterol?.triglycerides?.status === "attention") {
+                    nutritionalIssues.push("triglicerídeos");
+                  }
+                  
+                  if (aiAnalysis.details.bloodGlucose?.status === "attention") {
+                    nutritionalIssues.push("glicemia");
+                  }
+                  
+                  if (nutritionalIssues.length > 0) {
+                    title = "Atenção Nutricional";
+                    description = `Seus marcadores de ${nutritionalIssues.join(" e ")} merecem atenção.`;
+                    recommendation = "Reduza o consumo de carboidratos refinados e aumente o consumo de vegetais.";
+                    severity = "attention";
+                  } else {
+                    title = "Nutrição Adequada";
+                    description = "Seus marcadores nutricionais apresentam bom equilíbrio.";
+                    recommendation = "Mantenha uma dieta variada e rica em nutrientes essenciais.";
+                    severity = "normal";
+                  }
+                  
+                  data = {
+                    markers: {
+                      cholesterol: aiAnalysis.details.cholesterol?.total?.value,
+                      glucose: aiAnalysis.details.bloodGlucose?.value
+                    }
+                  };
+                } else {
+                  title = "Acompanhamento Nutricional";
+                  description = "Acompanhamento contínuo do seu perfil nutricional.";
+                  recommendation = "Mantenha uma dieta equilibrada com todos os grupos alimentares.";
+                  severity = "normal";
+                  data = {};
+                }
                 break;
               case "Metabolism":
-                title = "Gestão de Glicemia";
-                description = "Seus níveis de glicemia estão dentro da faixa normal, indicando metabolismo eficaz.";
-                recommendation = "Mantenha uma dieta balanceada com carboidratos complexos.";
-                severity = "normal";
-                data = {
-                  glucose: aiAnalysis.details.bloodGlucose
-                };
+                if (aiAnalysis?.details?.bloodGlucose) {
+                  const glucose = aiAnalysis.details.bloodGlucose;
+                  
+                  if (glucose.status === "attention" || glucose.attention) {
+                    title = "Atenção ao Metabolismo da Glicose";
+                    description = "Seus níveis de glicose estão próximos dos limites superiores.";
+                    recommendation = "Considere reduzir o consumo de açúcares e carboidratos refinados.";
+                    severity = "attention";
+                  } else {
+                    title = "Metabolismo Saudável";
+                    description = "Seus níveis de glicose estão dentro dos parâmetros normais.";
+                    recommendation = "Mantenha hábitos saudáveis para conservar seu equilíbrio metabólico.";
+                    severity = "normal";
+                  }
+                  
+                  data = {
+                    glucose: aiAnalysis.details.bloodGlucose
+                  };
+                } else {
+                  title = "Acompanhamento Metabólico";
+                  description = "Monitoramento regular do seu equilíbrio metabólico.";
+                  recommendation = "Mantenha uma rotina de atividades físicas e alimentação balanceada.";
+                  severity = "normal";
+                  data = {};
+                }
                 break;
             }
             

@@ -340,16 +340,16 @@ export default function ExamsPage() {
                       <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
                         <h4 className="text-sm font-medium mb-2">AI Analysis</h4>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                          {(selectedExam.aiAnalysis as Record<string, any>).summary}
+                          {JSON.parse(JSON.stringify(selectedExam.aiAnalysis)).summary}
                         </p>
                         
-                        {(selectedExam.aiAnalysis as Record<string, any>).recommendations && (
+                        {JSON.parse(JSON.stringify(selectedExam.aiAnalysis)).recommendations && (
                           <div>
                             <h5 className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                               Recommendations:
                             </h5>
                             <ul className="text-sm space-y-1">
-                              {((selectedExam.aiAnalysis as Record<string, any>).recommendations as string[]).map((rec: string, i: number) => (
+                              {JSON.parse(JSON.stringify(selectedExam.aiAnalysis)).recommendations.map((rec: string, i: number) => (
                                 <li key={i} className="flex items-start">
                                   <CircleCheck className="h-4 w-4 text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
                                   <span className="text-gray-700 dark:text-gray-300">{rec}</span>
@@ -365,7 +365,7 @@ export default function ExamsPage() {
                       <div>
                         <h4 className="text-sm font-medium mb-2">Results</h4>
                         <div className="grid grid-cols-2 gap-3">
-                          {Object.entries(selectedExam.results as Record<string, any>).map(([key, value]) => (
+                          {Object.entries(JSON.parse(JSON.stringify(selectedExam.results))).map(([key, value]) => (
                             <div key={key} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-md p-3">
                               <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
