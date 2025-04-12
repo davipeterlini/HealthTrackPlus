@@ -4,7 +4,8 @@ import { Progress } from "@/components/ui/progress";
 import { 
   Footprints,
   Flame,
-  Clock
+  Clock,
+  Heart
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -27,17 +28,20 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   const activeMinutes = todayActivity?.minutes || 0;
   const distance = todayActivity?.distance || 0;
   const source = todayActivity?.source || 'manual';
+  const avgHeartRate = todayActivity?.heartRate || 72; // Adiciona BPM médio, com valor padrão 72
   
   // Goals
   const stepsGoal = 10000;
   const caloriesGoal = 600;
   const minutesGoal = 60;
   const distanceGoal = 5; // 5km per day
+  const bpmGoal = 80; // Meta para BPM
   
   // Calculate percentages
   const stepsPercentage = Math.min((steps / stepsGoal) * 100, 100);
   const caloriesPercentage = Math.min((calories / caloriesGoal) * 100, 100);
   const minutesPercentage = Math.min((activeMinutes / minutesGoal) * 100, 100);
+  const bpmPercentage = Math.min((avgHeartRate / bpmGoal) * 100, 100);
   
   // Calculate week-over-week change (using the last 14 days of data)
   const getLast7DaysTotal = (days: number[], startDaysAgo: number) => {
@@ -63,7 +67,7 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
   return (
     <CardContent className="p-6">
       <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100 mb-5">{t('activity.summary')}</h3>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
         <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center">
@@ -151,6 +155,38 @@ export function ActivitySummary({ activities, selectedDate }: ActivitySummaryPro
               </div>
               <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 {Math.round(minutesPercentage)}% {t('activity.dailyGoal')} ({minutesGoal} min)
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-gray-50 dark:bg-gray-800 overflow-hidden shadow rounded-md">
+          <div className="px-4 py-5 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0 bg-red-100 dark:bg-red-900 rounded-full p-3">
+                <Heart className="h-5 w-5 text-red-600 dark:text-red-400" />
+              </div>
+              <div className="ml-5">
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('health.avgBPM')}</h4>
+                <div className="mt-1 flex items-baseline">
+                  <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{avgHeartRate}</div>
+                  <div className="ml-2 text-sm font-medium text-emerald-500 dark:text-emerald-400">
+                    {t('health.healthy')}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="relative pt-1">
+                <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200 dark:bg-red-800">
+                  <div 
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600 dark:bg-red-500" 
+                    style={{ width: `${bpmPercentage}%` }}
+                  ></div>
+                </div>
+              </div>
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                {Math.round(bpmPercentage)}% {t('activity.dailyGoal')} ({bpmGoal} BPM)
               </p>
             </div>
           </div>
