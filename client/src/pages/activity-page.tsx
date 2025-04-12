@@ -141,6 +141,135 @@ export default function ActivityPage() {
   
   return (
     <MainLayout title={t('activity.title')}>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('activity.title')}</h2>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-emerald-600 hover:bg-emerald-700">
+              <PlusCircle className="mr-2 h-4 w-4" /> {t('activity.addActivity')}
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t('activity.recordActivity')}</DialogTitle>
+            </DialogHeader>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="activityType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('activity.activityType')}</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={t('activity.selectActivityType')} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="walking">{t('activity.walking')}</SelectItem>
+                          <SelectItem value="running">{t('activity.running')}</SelectItem>
+                          <SelectItem value="cycling">{t('activity.cycling')}</SelectItem>
+                          <SelectItem value="swimming">{t('activity.swimming')}</SelectItem>
+                          <SelectItem value="yoga">{t('activity.yoga')}</SelectItem>
+                          <SelectItem value="gym">{t('activity.gym')}</SelectItem>
+                          <SelectItem value="hiking">{t('activity.hiking')}</SelectItem>
+                          <SelectItem value="other">{t('activity.other')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="steps"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('activity.steps')}</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="calories"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('activity.calories')}</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="minutes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('activity.duration')} ({t('activity.minutes')})</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="distance"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('activity.distance')} (km)</FormLabel>
+                        <FormControl>
+                          <Input type="number" step="0.1" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                
+                <FormField
+                  control={form.control}
+                  name="notes"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('activity.notes')}</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <DialogFooter>
+                  <Button 
+                    type="submit" 
+                    disabled={addActivityMutation.isPending} 
+                    className="bg-emerald-600 hover:bg-emerald-700"
+                  >
+                    {addActivityMutation.isPending ? t('activity.savingActivity') : t('activity.saveActivity')}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      </div>
+      
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {isLoading ? (
           <>
@@ -157,129 +286,8 @@ export default function ActivityPage() {
           <>
             <div className="lg:col-span-2 space-y-6">
               <Card className="dark:bg-[#1a2127] dark:border-gray-700">
-                <CardHeader className="flex flex-row items-center justify-between">
+                <CardHeader>
                   <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.summary')}</CardTitle>
-                  <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button>
-                        <PlusCircle className="mr-2 h-4 w-4" /> {t('activity.addActivity')}
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>{t('activity.recordActivity')}</DialogTitle>
-                      </DialogHeader>
-                      <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                          <FormField
-                            control={form.control}
-                            name="activityType"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t('activity.activityType')}</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder={t('activity.selectActivityType')} />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="walking">{t('activity.walking')}</SelectItem>
-                                    <SelectItem value="running">{t('activity.running')}</SelectItem>
-                                    <SelectItem value="cycling">{t('activity.cycling')}</SelectItem>
-                                    <SelectItem value="swimming">{t('activity.swimming')}</SelectItem>
-                                    <SelectItem value="yoga">{t('activity.yoga')}</SelectItem>
-                                    <SelectItem value="gym">{t('activity.gym')}</SelectItem>
-                                    <SelectItem value="hiking">{t('activity.hiking')}</SelectItem>
-                                    <SelectItem value="other">{t('activity.other')}</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          
-                          <div className="grid grid-cols-2 gap-4">
-                            <FormField
-                              control={form.control}
-                              name="steps"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>{t('activity.steps')}</FormLabel>
-                                  <FormControl>
-                                    <Input type="number" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            
-                            <FormField
-                              control={form.control}
-                              name="calories"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>{t('activity.calories')}</FormLabel>
-                                  <FormControl>
-                                    <Input type="number" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            
-                            <FormField
-                              control={form.control}
-                              name="minutes"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>{t('activity.duration')} ({t('activity.minutes')})</FormLabel>
-                                  <FormControl>
-                                    <Input type="number" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            
-                            <FormField
-                              control={form.control}
-                              name="distance"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>{t('activity.distance')} (km)</FormLabel>
-                                  <FormControl>
-                                    <Input type="number" step="0.1" {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                          
-                          <FormField
-                            control={form.control}
-                            name="notes"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t('activity.notes')}</FormLabel>
-                                <FormControl>
-                                  <Textarea placeholder="" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          
-                          <DialogFooter>
-                            <Button type="submit" disabled={addActivityMutation.isPending}>
-                              {addActivityMutation.isPending ? t('activity.savingActivity') : t('activity.saveActivity')}
-                            </Button>
-                          </DialogFooter>
-                        </form>
-                      </Form>
-                    </DialogContent>
-                  </Dialog>
                 </CardHeader>
                 <ActivitySummary 
                   activities={activities || []} 
@@ -340,7 +348,10 @@ export default function ActivityPage() {
                         {t('activity.startTracking')}
                       </p>
                       <div className="mt-6">
-                        <Button onClick={() => setDialogOpen(true)}>
+                        <Button 
+                          onClick={() => setDialogOpen(true)}
+                          className="bg-emerald-600 hover:bg-emerald-700"
+                        >
                           <PlusCircle className="mr-2 h-4 w-4" />
                           {t('activity.addActivity')}
                         </Button>
