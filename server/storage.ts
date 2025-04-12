@@ -1,10 +1,10 @@
 import { 
-  users, activities, medicalExams, sleepRecords, 
+  users, activities, medicalExams, examDetails, sleepRecords, 
   waterIntake, meals, videos, videoProgress, courseTracks, trackVideos,
   foodItems, recipes, stressLevels, medications, medicationLogs,
   meditationSessions, menstrualCycles, menstrualCycleSymptoms,
   fertilityTracking, pregnancyTracking, healthInsights,
-  type User, type InsertUser, type MedicalExam, type Activity,
+  type User, type InsertUser, type MedicalExam, type ExamDetail, type Activity,
   type SleepRecord, type WaterIntakeRecord, type Meal, type Video,
   type VideoProgress, type CourseTrack, type TrackVideo,
   type FoodItem, type Recipe, type StressLevel, type Medication,
@@ -34,6 +34,12 @@ export interface IStorage {
   createMedicalExam(exam: Omit<MedicalExam, 'id'>): Promise<MedicalExam>;
   updateMedicalExam(id: number, data: Partial<Omit<MedicalExam, 'id'>>): Promise<MedicalExam>;
   updateMedicalExamWithAIAnalysis(id: number, aiAnalysis: any, anomalies: boolean, riskLevel: string): Promise<MedicalExam>;
+  
+  // Exam details methods
+  getExamDetails(examId: number): Promise<ExamDetail[]>;
+  getExamDetail(id: number): Promise<ExamDetail | undefined>;
+  createExamDetail(detail: Omit<ExamDetail, 'id'>): Promise<ExamDetail>;
+  updateExamDetail(id: number, data: Partial<Omit<ExamDetail, 'id'>>): Promise<ExamDetail>;
   
   // Health insights methods
   getHealthInsights(userId: number): Promise<HealthInsight[]>;

@@ -27,6 +27,19 @@ export const medicalExams = pgTable("medical_exams", {
   aiProcessed: boolean("ai_processed").default(false),
 });
 
+export const examDetails = pgTable("exam_details", {
+  id: serial("id").primaryKey(),
+  examId: integer("exam_id").notNull().references(() => medicalExams.id),
+  parameter: text("parameter").notNull(),
+  value: text("value").notNull(),
+  unit: text("unit"),
+  referenceRange: text("reference_range"),
+  status: text("status").default("normal"),
+  notes: text("notes"),
+  category: text("category").notNull(),
+  date: timestamp("date").notNull(),
+});
+
 export const activities = pgTable("activities", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
@@ -191,6 +204,10 @@ export const insertUserSchema = createInsertSchema(users).pick({
 });
 
 export const insertMedicalExamSchema = createInsertSchema(medicalExams).omit({
+  id: true,
+});
+
+export const insertExamDetailSchema = createInsertSchema(examDetails).omit({
   id: true,
 });
 
@@ -387,6 +404,7 @@ export const insertHealthInsightSchema = createInsertSchema(healthInsights).omit
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type MedicalExam = typeof medicalExams.$inferSelect;
+export type ExamDetail = typeof examDetails.$inferSelect;
 export type Activity = typeof activities.$inferSelect;
 export type SleepRecord = typeof sleepRecords.$inferSelect;
 export type WaterIntakeRecord = typeof waterIntake.$inferSelect;
