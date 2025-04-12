@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ExamList } from "@/components/exams/exam-list";
+import { ExamInsightsChart } from "@/components/exams/exam-insights-chart";
 import { 
   BarChart3, 
   Upload, 
@@ -387,6 +388,8 @@ export default function ExamsPage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
+                      <ExamInsightsChart insights={examInsights} />
+                      
                       {examInsights.map((insight) => (
                         <div key={insight.id} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
                           <div className="flex justify-between items-start mb-2">
