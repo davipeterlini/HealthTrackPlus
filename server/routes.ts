@@ -766,13 +766,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           examId,
           date: new Date(),
           category,
-          title,
-          description,
-          recommendation,
-          severity,
+          title: title || "",
+          description: description || "",
+          recommendation: recommendation || "",
+          severity: severity || "normal",
           status: "active",
           aiGenerated: true,
-          data
+          data: JSON.stringify(data || {})
         });
         
         insights.push(insight);

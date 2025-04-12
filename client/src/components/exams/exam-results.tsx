@@ -1,37 +1,42 @@
 import { useQuery } from "@tanstack/react-query";
-import { MedicalExam } from "@shared/schema";
+import { MedicalExam, ExamDetail, HealthInsight } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, FileText, Activity } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useTranslation } from "react-i18next";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ExamDetailsTable from "./exam-details-table";
 
 interface ExamResultsProps {
   examId?: number;
 }
 
-// Sample blood test result structure for demo purposes
-interface BloodTestResult {
-  name: string;
-  value: number;
-  unit: string;
-  referenceRange: string;
-  status: "Normal" | "High" | "Low";
+// Interface for data returned from API
+interface ExamResultsData {
+  exam: MedicalExam;
+  insights: HealthInsight[];
+  examDetails: ExamDetail[];
 }
 
 export function ExamResults({ examId }: ExamResultsProps) {
-  const { data: exam, isLoading } = useQuery<MedicalExam>({
+  const { t } = useTranslation();
+  
+  const { data, isLoading, error } = useQuery<ExamResultsData>({
     queryKey: ["/api/exams", examId],
     enabled: !!examId,
   });
   
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Normal":
+    switch (status.toLowerCase()) {
+      case "normal":
         return "text-green-600 dark:text-green-400";
-      case "High":
+      case "high":
+      case "attention":
+        return "text-yellow-600 dark:text-yellow-400";
+      case "low":
+      case "critical":
         return "text-red-600 dark:text-red-400";
-      case "Low":
-        return "text-amber-600 dark:text-amber-400";
       default:
         return "text-gray-600 dark:text-gray-400";
     }
@@ -45,9 +50,9 @@ export function ExamResults({ examId }: ExamResultsProps) {
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 dark:bg-gray-700">
             <AlertCircle className="h-6 w-6 text-gray-600 dark:text-gray-400" />
           </div>
-          <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No Exam Selected</h3>
+          <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{t('exams.noExamSelected')}</h3>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Select a medical exam from the list above to view results.
+            {t('exams.selectExamForResults')}
           </p>
         </div>
       </div>
@@ -68,67 +73,163 @@ export function ExamResults({ examId }: ExamResultsProps) {
     );
   }
   
-  // Display "No results" state if exam doesn't have results
-  if (!exam?.results) {
+  // Handle error state
+  if (error) {
     return (
       <div className="px-4 py-5 sm:p-6 border-t border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">{exam?.name}</h3>
-        <Alert className="mt-5">
+        <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Results Pending</AlertTitle>
+          <AlertTitle>{t('common.error')}</AlertTitle>
           <AlertDescription>
-            This exam is still being analyzed. Results will be available soon.
+            {t('exams.failedToLoadResults')}
           </AlertDescription>
         </Alert>
       </div>
     );
   }
   
-  // For demonstration, use sample blood test results
-  // In a real app, we would use exam.results
-  const sampleResults: BloodTestResult[] = [
-    { name: "Hemoglobin", value: 14.2, unit: "g/dL", referenceRange: "12.0 - 15.5", status: "Normal" },
-    { name: "White Blood Cells", value: 6.2, unit: "K/μL", referenceRange: "4.5 - 11.0", status: "Normal" },
-    { name: "Platelets", value: 210, unit: "K/μL", referenceRange: "150 - 450", status: "Normal" },
-    { name: "Hematocrit", value: 42.1, unit: "%", referenceRange: "35.5 - 44.9", status: "Normal" },
-    { name: "Red Blood Cells", value: 4.7, unit: "M/μL", referenceRange: "4.2 - 5.4", status: "Normal" },
-    { name: "MCV", value: 89.6, unit: "fL", referenceRange: "80.0 - 100.0", status: "Normal" }
-  ];
+  const { exam, insights, examDetails } = data || { exam: null, insights: [], examDetails: [] };
+  
+  // Display "No results" state if exam doesn't have results
+  if (!exam || exam.status === "Analyzing") {
+    return (
+      <div className="px-4 py-5 sm:p-6 border-t border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">{exam?.name}</h3>
+        <Alert className="mt-5">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>{t('exams.resultsPending')}</AlertTitle>
+          <AlertDescription>
+            {t('exams.stillBeingAnalyzed')}
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
+  }
+  
+  // Check if AI analysis is available
+  const hasAiAnalysis = exam.aiAnalysis && typeof exam.aiAnalysis === 'object';
+  const aiSummary = hasAiAnalysis && (exam.aiAnalysis as any).summary;
+  
+  // Check if we have details to display
+  const hasExamDetails = examDetails && examDetails.length > 0;
   
   return (
     <div className="px-4 py-5 sm:p-6 border-t border-gray-200 dark:border-gray-700">
-      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">{exam.name} (Results)</h3>
+      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+        {exam.name} ({t('exams.results')})
+      </h3>
       
-      <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {sampleResults.map((result, index) => (
-          <Card key={index} className="bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <CardContent className="px-4 py-5">
-              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{result.name}</h4>
-              <div className="mt-1 flex items-baseline justify-between">
-                <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-                  {result.value} {result.unit}
+      <Tabs defaultValue="overview" className="mt-6">
+        <TabsList>
+          <TabsTrigger value="overview">
+            <Activity className="h-4 w-4 mr-2" />
+            {t('exams.overview')}
+          </TabsTrigger>
+          {hasExamDetails && (
+            <TabsTrigger value="details">
+              <FileText className="h-4 w-4 mr-2" />
+              {t('exams.details')}
+            </TabsTrigger>
+          )}
+        </TabsList>
+        
+        <TabsContent value="overview">
+          {/* Overview tab content */}
+          {hasAiAnalysis && (
+            <>
+              {/* AI summary */}
+              <div className="mb-6 bg-blue-50 dark:bg-blue-900 rounded-md p-4">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <AlertCircle className="h-5 w-5 text-blue-400 dark:text-blue-300" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">{t('exams.aiAnalysis')}</h3>
+                    <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
+                      <p>{aiSummary}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className={`text-sm font-medium ${getStatusColor(result.status)}`}>{result.status}</div>
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Reference range: {result.referenceRange} {result.unit}</div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      
-      <div className="mt-6 bg-blue-50 dark:bg-blue-900 rounded-md p-4">
-        <div className="flex">
-          <div className="flex-shrink-0">
-            <AlertCircle className="h-5 w-5 text-blue-400 dark:text-blue-300" />
-          </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">AI Analysis</h3>
-            <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-              <p>All values are within normal range, indicating good overall blood health. Your hemoglobin and red blood cell count are excellent, suggesting good oxygen-carrying capacity. Continue with your current nutrition plan and regular exercise routine.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+              
+              {/* Parameter summary cards */}
+              {hasExamDetails && (
+                <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {examDetails.slice(0, 6).map((detail) => (
+                    <Card key={detail.id} className="bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                      <CardContent className="px-4 py-5">
+                        <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{detail.name}</h4>
+                        <div className="mt-1 flex items-baseline justify-between">
+                          <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                            {detail.value} {detail.unit}
+                          </div>
+                          <div className={`text-sm font-medium ${getStatusColor(detail.status || 'normal')}`}>
+                            {t(`exams.status.${(detail.status || 'normal').toLowerCase()}`)}
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {t('exams.referenceRange')}: {detail.referenceRange || t('common.notAvailable')}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+              
+              {/* Health insights based on the exam */}
+              {insights && insights.length > 0 && (
+                <div className="mt-8">
+                  <h4 className="text-md font-medium text-gray-900 dark:text-gray-100 mb-4">
+                    {t('exams.healthInsights')}
+                  </h4>
+                  <div className="space-y-4">
+                    {insights.map((insight) => (
+                      <Card key={insight.id} className="bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                        <CardContent className="px-4 py-4">
+                          <div className="flex justify-between items-start">
+                            <h5 className="text-sm font-medium text-gray-900 dark:text-gray-100">{insight.title}</h5>
+                            <div className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                              insight.severity === 'normal' 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' 
+                                : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
+                            }`}>
+                              {t(`exams.severity.${insight.severity}`)}
+                            </div>
+                          </div>
+                          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{insight.description}</p>
+                          {insight.recommendation && (
+                            <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                              <span className="font-medium">{t('exams.recommendation')}:</span> {insight.recommendation}
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+          
+          {/* If no AI analysis is available, show a message */}
+          {!hasAiAnalysis && (
+            <Alert className="mt-5">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>{t('exams.noAnalysisAvailable')}</AlertTitle>
+              <AlertDescription>
+                {t('exams.tryAnalyzeAgain')}
+              </AlertDescription>
+            </Alert>
+          )}
+        </TabsContent>
+        
+        {hasExamDetails && (
+          <TabsContent value="details">
+            {/* Details tab content */}
+            <ExamDetailsTable details={examDetails} />
+          </TabsContent>
+        )}
+      </Tabs>
     </div>
   );
 }
