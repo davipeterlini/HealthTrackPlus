@@ -17,7 +17,7 @@ export const medicalExams = pgTable("medical_exams", {
   userId: integer("user_id").notNull().references(() => users.id),
   name: text("name").notNull(),
   date: timestamp("date").notNull(),
-  fileUrl: text("file_url").notNull(),
+  fileUrl: text("file_url"),
   type: text("type").notNull(),
   status: text("status").notNull(),
   results: json("results"),
