@@ -77,7 +77,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   };
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="dark:bg-[#1a2127] dark:border-gray-700">
       <CardHeader>
         <CardTitle className="dark:text-gray-100">Water Intake</CardTitle>
       </CardHeader>
@@ -138,7 +138,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
           <div className="grid grid-cols-7 gap-2">
             {waterHistory.map((day, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 dark:bg-gray-700 rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark:bg-[#242c35] rounded-t-sm overflow-hidden">
                   <div 
                     className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400" 
                     style={{height: `${(day.amount / dailyGoal) * 100}%`}}
