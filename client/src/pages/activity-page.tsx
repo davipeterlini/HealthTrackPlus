@@ -140,7 +140,7 @@ export default function ActivityPage() {
   };
   
   return (
-    <MainLayout title={t('activity.title')}>
+    <MainLayout>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('activity.title')}</h2>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
