@@ -120,10 +120,11 @@ export default function ActivityPage() {
     });
   };
   
-  // Pegar as atividades mais recentes (últimas 3)
+  // Pegar as atividades mais recentes
+  // Obter atividades recentes - as 5 mais recentes
   const recentActivities = activities ? [...activities]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3) : [];
+    .slice(0, 5) : [];
   
   // Função para obter ícone de acordo com o tipo de atividade
   const getActivityIcon = (type: string) => {

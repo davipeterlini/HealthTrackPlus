@@ -13,34 +13,120 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
   const { t, i18n } = useTranslation();
   
   useEffect(() => {
-    if (activities.length === 0) {
-      // If no data, create sample data for the last 7 days with random values
-      const sampleData: Activity[] = Array.from({ length: 7 }).map((_, i) => {
+    if (activities && activities.length > 0) {
+      // Agrupar atividades por dia (para caso de múltiplas atividades no mesmo dia)
+      const activityMap = new Map<string, Activity>();
+      
+      // Para cada atividade, soma os steps, calories, etc. do mesmo dia
+      activities.forEach(activity => {
+        const dateKey = new Date(activity.date).toDateString();
+        
+        if (activityMap.has(dateKey)) {
+          const existingActivity = activityMap.get(dateKey)!;
+          existingActivity.steps += activity.steps;
+          existingActivity.calories += activity.calories;
+          existingActivity.minutes += activity.minutes;
+          if (activity.distance && existingActivity.distance) {
+            existingActivity.distance += activity.distance;
+          }
+        } else {
+          activityMap.set(dateKey, { ...activity });
+        }
+      });
+      
+      // Converte o mapa para array e ordena por data
+      const aggregatedActivities = Array.from(activityMap.values());
+      const sortedActivities = [...aggregatedActivities].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+      
+      // Pegar os últimos 7 dias de atividades
+      const latestActivities = sortedActivities.slice(-7);
+      
+      // Garantir que temos exatamente 7 dias (preencher com dias vazios se necessário)
+      const today = new Date();
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(today.getDate() - 6);
+      
+      const completeWeekData: Activity[] = [];
+      
+      // Criar array com os últimos 7 dias
+      for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(sevenDaysAgo);
+        currentDate.setDate(sevenDaysAgo.getDate() + i);
+        const dateString = currentDate.toDateString();
+        
+        // Verificar se temos atividade para este dia
+        const activityForDay = latestActivities.find(
+          a => new Date(a.date).toDateString() === dateString
+        );
+        
+        if (activityForDay) {
+          completeWeekData.push(activityForDay);
+        } else {
+          // Se não tiver atividade para este dia, criar um dia vazio
+          completeWeekData.push({
+            id: -1 * i, // ID negativo para indicar que é um placeholder
+            userId: 1,
+            date: currentDate,
+            startTime: null,
+            endTime: null,
+            activityType: "walking",
+            steps: 0,
+            distance: 0,
+            calories: 0,
+            minutes: 0,
+            heartRate: null,
+            heartRateZones: null,
+            elevationGain: null,
+            elevationLoss: null,
+            avgPace: null,
+            maxPace: null,
+            intensity: null,
+            cadence: null,
+            strideLength: null,
+            routeData: null,
+            gpsPoints: null,
+            activityImage: null,
+            feeling: null,
+            weatherCondition: null,
+            temperature: null,
+            humidity: null,
+            terrainType: null,
+            equipmentUsed: null,
+            notes: null,
+            source: "manual",
+            isRealTime: false,
+            achievements: null
+          });
+        }
+      }
+      
+      setChartData(completeWeekData);
+    } else {
+      // Se não tivermos atividades, exibir uma semana vazia
+      const emptyWeekData: Activity[] = [];
+      const today = new Date();
+      
+      for (let i = 0; i < 7; i++) {
         const date = new Date();
-        date.setDate(date.getDate() - i);
+        date.setDate(today.getDate() - 6 + i);
         
-        // Generate a random number of steps between 5000 and 12000
-        const randomSteps = Math.floor(Math.random() * 7000) + 5000;
-        // Calculate calories based on steps (roughly 0.04 calories per step)
-        const randomCalories = Math.floor(randomSteps * 0.04);
-        // Calculate minutes based on steps (roughly 1 minute per 100 steps)
-        const randomMinutes = Math.floor(randomSteps / 100);
-        
-        return {
-          id: i + 1,
+        emptyWeekData.push({
+          id: -1 * i,
           userId: 1,
           date,
           startTime: null,
           endTime: null,
           activityType: "walking",
-          steps: randomSteps,
-          distance: Math.round(randomSteps * 0.0008 * 10) / 10, // Approximate distance in km
-          calories: randomCalories,
-          minutes: randomMinutes,
-          heartRate: Math.floor(Math.random() * 40) + 70, // Random heart rate between 70-110
+          steps: 0,
+          distance: 0,
+          calories: 0,
+          minutes: 0,
+          heartRate: null,
           heartRateZones: null,
-          elevationGain: Math.floor(Math.random() * 100),
-          elevationLoss: Math.floor(Math.random() * 100),
+          elevationGain: null,
+          elevationLoss: null,
           avgPace: null,
           maxPace: null,
           intensity: null,
@@ -59,20 +145,10 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
           source: "manual",
           isRealTime: false,
           achievements: null
-        };
-      }).reverse(); // Reverse so the most recent day is last (rightmost in the chart)
+        });
+      }
       
-      setChartData(sampleData);
-    } else {
-      // Sort activities by date (earliest first)
-      const sortedActivities = [...activities].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
-      
-      // Get the latest 7 days of data
-      const latestActivities = sortedActivities.slice(-7);
-      
-      setChartData(latestActivities);
+      setChartData(emptyWeekData);
     }
   }, [activities]);
   
