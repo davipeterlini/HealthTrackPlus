@@ -19,31 +19,30 @@ interface ActivitySummaryProps {
 export function ActivitySummary({ activities, dashboardStats, selectedDate }: ActivitySummaryProps) {
   const { t } = useTranslation();
   
-  // Find activity for the selected date
+  // Obter atividade para a data selecionada
   const todayActivity = activities.find(
     activity => new Date(activity.date).toDateString() === selectedDate.toDateString()
   );
   
-  // Usar dados do dashboard se disponíveis, ou dados da atividade específica se não
-  // Default values from dashboard or activity
+  // Valores das estatísticas - priorizar dados do dashboard quando disponíveis
   const steps = todayActivity?.steps || 0;
   const calories = dashboardStats?.calories?.value || todayActivity?.calories || 0;
   const activeMinutes = dashboardStats?.activeMinutes?.value || todayActivity?.minutes || 0;
   const distance = todayActivity?.distance || 0;
-  const source = todayActivity?.source || 'manual';
   const avgHeartRate = dashboardStats?.heartRate?.value || todayActivity?.heartRate || 72;
   
-  // Goals - use dashboard goals if available
-  const stepsGoal = 10000; // valor padrão fixo como na interface
-  const caloriesGoal = 600; // valor padrão fixo
-  const minutesGoal = 60; // valor padrão fixo
-  const distanceGoal = 5; // 5km per day
-  const bpmGoal = 80; // valor padrão fixo
+  // Metas fixas - usadas para calcular porcentagens
+  const stepsGoal = 10000;
+  const caloriesGoal = 600;
+  const minutesGoal = 60;
+  const distanceGoal = 5;
+  const bpmGoal = 80;
   
-  // Trends from dashboard
-  const stepsChange = 0; // não temos essa informação no dashboard atual
+  // Tendências do dashboard para mostrar no UI
+  const activeMinutesTrend = dashboardStats?.activeMinutes?.trend || 'up';
+  const activeMinutesChange = dashboardStats?.activeMinutes?.change || 0;
   const caloriesRemaining = dashboardStats?.calories?.remaining || 0;
-  const minutesChange = dashboardStats?.activeMinutes?.change || 0;
+  const heartRateStatus = dashboardStats?.heartRate?.status || 'normal';
   
   // Calculate percentages
   const stepsPercentage = Math.min((steps / stepsGoal) * 100, 100);
@@ -64,11 +63,6 @@ export function ActivitySummary({ activities, dashboardStats, selectedDate }: Ac
                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.steps')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{steps.toLocaleString()}</div>
-                  {stepsChange !== 0 && (
-                    <div className={`ml-2 text-sm font-medium ${stepsChange > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {stepsChange > 0 ? '+' : ''}{stepsChange}%
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -98,6 +92,11 @@ export function ActivitySummary({ activities, dashboardStats, selectedDate }: Ac
                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.calories')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{calories}</div>
+                  {caloriesRemaining > 0 && (
+                    <div className="ml-2 text-sm font-medium text-amber-600 dark:text-amber-400">
+                      {caloriesRemaining} {t('activity.remaining')}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -127,6 +126,11 @@ export function ActivitySummary({ activities, dashboardStats, selectedDate }: Ac
                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('activity.activeMinutes')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{activeMinutes}</div>
+                  {activeMinutesChange !== 0 && (
+                    <div className={`ml-2 text-sm font-medium ${activeMinutesChange > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                      {activeMinutesChange > 0 ? '+' : ''}{activeMinutesChange}%
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -156,8 +160,14 @@ export function ActivitySummary({ activities, dashboardStats, selectedDate }: Ac
                 <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('health.avgBPM')}</h4>
                 <div className="mt-1 flex items-baseline">
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{avgHeartRate}</div>
-                  <div className="ml-2 text-sm font-medium text-emerald-500 dark:text-emerald-400">
-                    {t('health.healthy')}
+                  <div className={`ml-2 text-sm font-medium 
+                    ${heartRateStatus === 'normal' ? 'text-emerald-500 dark:text-emerald-400' : 
+                      heartRateStatus === 'high' ? 'text-amber-500 dark:text-amber-400' : 
+                      'text-red-500 dark:text-red-400'}`}
+                  >
+                    {heartRateStatus === 'normal' ? t('health.healthy') : 
+                     heartRateStatus === 'high' ? t('health.elevated') : 
+                     t('health.low')}
                   </div>
                 </div>
               </div>
