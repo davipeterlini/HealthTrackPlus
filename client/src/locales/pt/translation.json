@@ -147,7 +147,17 @@
     "medicationManagement": "Gerenciamento de remédios",
     "attention": "Atenção",
     "critical": "Crítico",
-    "sleepQuality": "Qualidade do Sono"
+    "sleepQuality": "Qualidade do Sono",
+    "exams": "Exames Médicos",
+    "examsDescription": "Acompanhe e monitore seus exames de saúde, obtenha insights e recomendações.",
+    "uploadExam": "Enviar Exame",
+    "healthInsights": "Insights de Saúde",
+    "noInsightsYet": "Nenhum insight de saúde ainda",
+    "uploadExamToGetInsights": "Envie seus exames médicos para obter insights personalizados de saúde",
+    "recommendation": "Recomendação",
+    "details": "Detalhes",
+    "insights": "Insights",
+    "file": "Arquivo"
   },
   "water": {
     "waterIntake": "Consumo de Água",

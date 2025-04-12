@@ -147,7 +147,17 @@
     "medicationManagement": "Medication management",
     "attention": "Attention",
     "critical": "Critical",
-    "sleepQuality": "Sleep Quality"
+    "sleepQuality": "Sleep Quality",
+    "exams": "Medical Exams",
+    "examsDescription": "Track and monitor your health exams, get insights and recommendations.",
+    "uploadExam": "Upload Exam",
+    "healthInsights": "Health Insights",
+    "noInsightsYet": "No health insights yet",
+    "uploadExamToGetInsights": "Upload your medical exams to get personalized health insights",
+    "recommendation": "Recommendation",
+    "details": "Details",
+    "insights": "Insights",
+    "file": "File"
   },
   "sleep": {
     "recordSleep": "Record Sleep",
