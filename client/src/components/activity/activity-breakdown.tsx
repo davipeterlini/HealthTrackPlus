@@ -35,7 +35,13 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
       const total = activity.minutes || 0;
       if (total > 0) {
         // If we have real activity, use its type
-        types[activity.activityType || 'walking'].percentage = 100;
+        const activityType = activity.activityType || 'walking';
+        // Verificar se o tipo existe em nosso objeto, caso contrário, usar "other"
+        if (types[activityType]) {
+          types[activityType].percentage = 100;
+        } else {
+          types.other.percentage = 100;
+        }
       } else {
         // Fallback for activity with no minutes
         types.walking.percentage = 65;
