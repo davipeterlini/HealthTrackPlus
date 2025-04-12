@@ -107,6 +107,116 @@ export function Header() {
 
           {/* Ações e controles para todos os tamanhos de tela */}
           <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
+            {/* Menu de navegação móvel - movido para primeira posição em telas pequenas */}
+            <div className="md:hidden order-first">
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
+                  <div className="flex items-center justify-between mb-6">
+                    <SheetTitle className="text-xl text-blue-600 dark:text-white">
+                      {t('navigation.menu')}
+                    </SheetTitle>
+                    <SheetClose asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </SheetClose>
+                  </div>
+                  
+                  {/* Alternador de tema em telas muito pequenas (dentro do menu) */}
+                  <div className="sm:hidden mb-4 px-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-600 dark:text-gray-300">{t('common.theme')}</span>
+                      <ThemeToggle />
+                    </div>
+                  </div>
+                  
+                  <nav className="flex flex-col space-y-1">
+                    {navItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link 
+                          key={item.path}
+                          href={item.path}
+                          className={`flex items-center gap-2 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                            location === item.path
+                              ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                              : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
+                          }`}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <Icon className="h-5 w-5" />
+                          {item.label}
+                        </Link>
+                      );
+                    })}
+                  </nav>
+                  
+                  <div className="mt-8 space-y-1">
+                    <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
+                      <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
+                        {t('navigation.account')}
+                      </h3>
+                      <div className="mt-3 space-y-1">
+                        {/* Links de usuário no menu móvel */}
+                        <Link 
+                          href="/profile" 
+                          className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <FileText className="mr-3 h-4 w-4" />
+                          {t('navigation.profile')}
+                        </Link>
+                        <Link 
+                          href="/settings" 
+                          className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <Settings className="mr-3 h-4 w-4" />
+                          {t('navigation.settings')}
+                        </Link>
+                        <button 
+                          onClick={() => {
+                            handleLogout();
+                            setMobileMenuOpen(false);
+                          }}
+                          className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                        >
+                          <LogOut className="mr-3 h-4 w-4" />
+                          {t('navigation.logout')}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+
+            {/* Barra de navegação rápida (apenas em telas pequenas) que segue a mesma ordem das páginas */}
+            <div className="md:hidden flex items-center gap-1 mx-2">
+              {navItems.slice(0, 3).map((item) => {
+                const Icon = item.icon;
+                const isActive = location === item.path;
+                return (
+                  <Link 
+                    key={item.path}
+                    href={item.path}
+                    className={`p-1.5 rounded-full ${
+                      isActive
+                        ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                        : "text-slate-600 dark:text-gray-300"
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </Link>
+                );
+              })}
+            </div>
+
             {/* Notificações */}
             <Button 
               variant="ghost" 
@@ -124,93 +234,6 @@ export function Header() {
             
             {/* Alternador de idioma */}
             <LanguageSwitcher />
-
-            {/* Menu de navegação móvel */}
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
-                <div className="flex items-center justify-between mb-6">
-                  <SheetTitle className="text-xl text-blue-600 dark:text-white">
-                    {t('navigation.menu')}
-                  </SheetTitle>
-                  <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </SheetClose>
-                </div>
-                
-                {/* Alternador de tema em telas muito pequenas (dentro do menu) */}
-                <div className="sm:hidden mb-4 px-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600 dark:text-gray-300">{t('common.theme')}</span>
-                    <ThemeToggle />
-                  </div>
-                </div>
-                
-                <nav className="flex flex-col space-y-1">
-                  {navItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link 
-                        key={item.path}
-                        href={item.path}
-                        className={`flex items-center gap-2 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                          location === item.path
-                            ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
-                            : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
-                        }`}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <Icon className="h-5 w-5" />
-                        {item.label}
-                      </Link>
-                    );
-                  })}
-                </nav>
-                
-                <div className="mt-8 space-y-1">
-                  <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
-                    <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
-                      {t('navigation.account')}
-                    </h3>
-                    <div className="mt-3 space-y-1">
-                      {/* Links de usuário no menu móvel */}
-                      <Link 
-                        href="/profile" 
-                        className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <FileText className="mr-3 h-4 w-4" />
-                        {t('navigation.profile')}
-                      </Link>
-                      <Link 
-                        href="/settings" 
-                        className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <Settings className="mr-3 h-4 w-4" />
-                        {t('navigation.settings')}
-                      </Link>
-                      <button 
-                        onClick={() => {
-                          handleLogout();
-                          setMobileMenuOpen(false);
-                        }}
-                        className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
-                      >
-                        <LogOut className="mr-3 h-4 w-4" />
-                        {t('navigation.logout')}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
 
             {/* Menu de configurações para telas médias e grandes */}
             <div className="hidden md:block">
