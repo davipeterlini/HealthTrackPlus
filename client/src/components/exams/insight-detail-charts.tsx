@@ -141,7 +141,7 @@ export function InsightDetailCharts({ insight }: InsightDetailChartsProps) {
           {t('health.viewDetailedCharts')}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-4xl">
+      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center">
             {getCategoryIcon(insight.category)}

@@ -402,19 +402,23 @@ export default function ExamsPage() {
                         <p className="text-sm text-gray-500 dark:text-gray-400 px-4 mb-2">
                           {t('health.healthChartsDescription')}
                         </p>
-                        <Tabs defaultValue="overview" className="px-4 pb-3">
-                          <TabsList className="mb-3">
-                            <TabsTrigger value="overview">{t('health.overview')}</TabsTrigger>
-                            <TabsTrigger value="details">{t('health.details')}</TabsTrigger>
+                        <Tabs defaultValue="overview" className="px-2 sm:px-4 pb-3">
+                          <TabsList className="mb-3 w-full flex">
+                            <TabsTrigger value="overview" className="flex-1">{t('health.overview')}</TabsTrigger>
+                            <TabsTrigger value="details" className="flex-1">{t('health.details')}</TabsTrigger>
                           </TabsList>
                           <TabsContent value="overview">
-                            <div className="h-[300px]">
+                            <div className="h-[350px] min-w-[200px]">
                               <ExamInsightsChart insights={examInsights} />
                             </div>
                           </TabsContent>
                           <TabsContent value="details">
-                            <div className="h-[300px]">
-                              {examInsights.length > 0 && <InsightDetailCharts insight={examInsights[0]} />}
+                            <div className="h-[350px]">
+                              {examInsights.length > 0 && (
+                                <div className="grid grid-cols-1">
+                                  <InsightDetailCharts insight={examInsights[0]} />
+                                </div>
+                              )}
                             </div>
                           </TabsContent>
                         </Tabs>

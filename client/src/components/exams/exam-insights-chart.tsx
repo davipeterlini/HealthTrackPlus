@@ -105,9 +105,9 @@ export function ExamInsightsChart({ insights, isLoading = false, examStatus }: E
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="bar">
-          <TabsList className="mb-4">
-            <TabsTrigger value="bar">Bar Chart</TabsTrigger>
-            <TabsTrigger value="radar">Radar Chart</TabsTrigger>
+          <TabsList className="mb-4 w-full flex">
+            <TabsTrigger value="bar" className="flex-1">Bar Chart</TabsTrigger>
+            <TabsTrigger value="radar" className="flex-1">Radar Chart</TabsTrigger>
           </TabsList>
           
           <TabsContent value="bar">
@@ -117,7 +117,14 @@ export function ExamInsightsChart({ insights, isLoading = false, examStatus }: E
                   data={barChartData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
                 >
-                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={70} />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45} 
+                    textAnchor="end" 
+                    height={70} 
+                    tick={{ fontSize: 12 }}
+                    tickMargin={8}
+                  />
                   <YAxis
                     domain={[0, 100]}
                     tickFormatter={(value) => {
@@ -128,6 +135,7 @@ export function ExamInsightsChart({ insights, isLoading = false, examStatus }: E
                       if (value === 100) return "Normal";
                       return "";
                     }}
+                    width={70}
                   />
                   <Tooltip
                     formatter={(value, name, props) => {
@@ -138,12 +146,13 @@ export function ExamInsightsChart({ insights, isLoading = false, examStatus }: E
                       if (value === 0) return ["Critical Risk", "Health Level"];
                       return [value, "Health Level"];
                     }}
+                    wrapperStyle={{ zIndex: 1000 }}
                   />
                   <Bar 
                     dataKey="value" 
                     radius={[4, 4, 0, 0]}
                     minPointSize={3}
-                    label={{ position: 'top' }}
+                    barSize={30}
                   >
                     {barChartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -164,10 +173,14 @@ export function ExamInsightsChart({ insights, isLoading = false, examStatus }: E
                   data={radarChartData}
                 >
                   <PolarGrid />
-                  <PolarAngleAxis dataKey="subject" />
+                  <PolarAngleAxis 
+                    dataKey="subject" 
+                    tick={{ fill: 'currentColor', fontSize: 12 }}
+                  />
                   <PolarRadiusAxis
                     angle={90}
                     domain={[0, 100]}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
                     tickFormatter={(value) => {
                       if (value === 0) return "Critical";
                       if (value === 25) return "High";
@@ -187,7 +200,7 @@ export function ExamInsightsChart({ insights, isLoading = false, examStatus }: E
                       fillOpacity={0.6}
                     />
                   ))}
-                  <Legend />
+                  <Legend wrapperStyle={{ fontSize: 12, paddingTop: 10 }} />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
