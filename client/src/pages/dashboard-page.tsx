@@ -116,11 +116,11 @@ export default function DashboardPage() {
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
-              <span className="text-xs text-slate-600 dark:text-gray-400">{t('health.steps')}</span>
+              <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
             </div>
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
-              <span className="text-xs text-slate-600 dark:text-gray-400">{t('health.calories')}</span>
+              <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
             </div>
           </div>
         </div>
