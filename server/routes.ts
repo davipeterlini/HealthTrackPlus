@@ -210,6 +210,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               description,
               recommendation,
               severity,
+              status: "active",
+              aiGenerated: true,
               data: JSON.stringify(data)
             });
           }

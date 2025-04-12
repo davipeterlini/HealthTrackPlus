@@ -381,7 +381,9 @@ export default function ExamsPage() {
                 </TabsContent>
                 
                 <TabsContent value="insights">
-                  {examInsights.length === 0 ? (
+                  {selectedExam?.status === "Analyzing" ? (
+                    <ExamInsightsChart insights={[]} examStatus={selectedExam.status} />
+                  ) : examInsights.length === 0 ? (
                     <div className="text-center py-8">
                       <p className="text-gray-500 dark:text-gray-400 mb-2">
                         No insights available for this exam yet.

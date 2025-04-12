@@ -32,6 +32,7 @@ export interface IStorage {
   getMedicalExams(userId: number): Promise<MedicalExam[]>;
   getMedicalExam(id: number): Promise<MedicalExam | undefined>;
   createMedicalExam(exam: Omit<MedicalExam, 'id'>): Promise<MedicalExam>;
+  updateMedicalExam(id: number, data: Partial<Omit<MedicalExam, 'id'>>): Promise<MedicalExam>;
   updateMedicalExamWithAIAnalysis(id: number, aiAnalysis: any, anomalies: boolean, riskLevel: string): Promise<MedicalExam>;
   
   // Health insights methods
@@ -576,6 +577,21 @@ export class MemStorage implements IStorage {
     const medicalExam: MedicalExam = { ...exam, id };
     this.medicalExams.set(id, medicalExam);
     return medicalExam;
+  }
+  
+  async updateMedicalExam(id: number, data: Partial<Omit<MedicalExam, 'id'>>): Promise<MedicalExam> {
+    const exam = this.medicalExams.get(id);
+    if (!exam) {
+      throw new Error(`Medical exam with id ${id} not found`);
+    }
+    
+    const updatedExam: MedicalExam = {
+      ...exam,
+      ...data,
+    };
+    
+    this.medicalExams.set(id, updatedExam);
+    return updatedExam;
   }
   
   async updateMedicalExamWithAIAnalysis(id: number, aiAnalysis: any, anomalies: boolean, riskLevel: string): Promise<MedicalExam> {
