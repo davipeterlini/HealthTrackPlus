@@ -94,7 +94,7 @@ export function ActivitySummary({ activities, dashboardStats, selectedDate }: Ac
                   <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{calories}</div>
                   {caloriesRemaining > 0 && (
                     <div className="ml-2 text-sm font-medium text-amber-600 dark:text-amber-400">
-                      {caloriesRemaining} {t('activity.remaining')}
+                      {caloriesRemaining} {t('health.remaining')}
                     </div>
                   )}
                 </div>
