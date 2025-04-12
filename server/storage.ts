@@ -149,6 +149,7 @@ export interface IStorage {
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private medicalExams: Map<number, MedicalExam>;
+  private examDetails: Map<number, ExamDetail>;
   private activities: Map<number, Activity>;
   private sleepRecords: Map<number, SleepRecord>;
   private waterIntakeRecords: Map<number, WaterIntakeRecord>;
@@ -171,6 +172,7 @@ export class MemStorage implements IStorage {
   
   currentUserId: number;
   currentMedicalExamId: number;
+  currentExamDetailId: number;
   currentActivityId: number;
   currentSleepRecordId: number;
   currentWaterIntakeId: number;
@@ -195,6 +197,7 @@ export class MemStorage implements IStorage {
   constructor() {
     this.users = new Map();
     this.medicalExams = new Map();
+    this.examDetails = new Map();
     this.activities = new Map();
     this.sleepRecords = new Map();
     this.waterIntakeRecords = new Map();
@@ -217,6 +220,7 @@ export class MemStorage implements IStorage {
     
     this.currentUserId = 1;
     this.currentMedicalExamId = 1;
+    this.currentExamDetailId = 1;
     this.currentActivityId = 1;
     this.currentSleepRecordId = 1;
     this.currentWaterIntakeId = 1;
@@ -616,6 +620,39 @@ export class MemStorage implements IStorage {
     
     this.medicalExams.set(id, updatedExam);
     return updatedExam;
+  }
+  
+  // Exam details methods
+  async getExamDetails(examId: number): Promise<ExamDetail[]> {
+    return Array.from(this.examDetails.values()).filter(
+      (detail) => detail.examId === examId,
+    );
+  }
+  
+  async getExamDetail(id: number): Promise<ExamDetail | undefined> {
+    return this.examDetails.get(id);
+  }
+  
+  async createExamDetail(detail: Omit<ExamDetail, 'id'>): Promise<ExamDetail> {
+    const id = this.currentExamDetailId++;
+    const examDetail: ExamDetail = { ...detail, id };
+    this.examDetails.set(id, examDetail);
+    return examDetail;
+  }
+  
+  async updateExamDetail(id: number, data: Partial<Omit<ExamDetail, 'id'>>): Promise<ExamDetail> {
+    const detail = this.examDetails.get(id);
+    if (!detail) {
+      throw new Error(`Exam detail with id ${id} not found`);
+    }
+    
+    const updatedDetail: ExamDetail = {
+      ...detail,
+      ...data,
+    };
+    
+    this.examDetails.set(id, updatedDetail);
+    return updatedDetail;
   }
   
   // Initialize sample health insights
