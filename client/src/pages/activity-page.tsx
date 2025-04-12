@@ -308,17 +308,6 @@ export default function ActivityPage() {
                 />
               </Card>
               
-              {/* Gráfico de atividades por dia */}
-              <Card className="dark:bg-[#1a2127] dark:border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.dailyActivities')}</CardTitle>
-                </CardHeader>
-                <ActivityChart 
-                  activities={activities || []} 
-                  onSelectDate={setSelectedDate}
-                />
-              </Card>
-              
               {/* Recent Activities Section */}
               <Card className="dark:bg-[#1a2127] dark:border-gray-700">
                 <CardHeader>
