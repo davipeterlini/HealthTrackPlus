@@ -215,7 +215,7 @@ export function InsightDetailCharts({ insight }: InsightDetailChartsProps) {
                         <YAxis />
                         <Tooltip />
                         <Bar dataKey="value">
-                          {comparisonData.map((entry, index) => (
+                          {comparisonData.map((entry: { name: string, value: number }, index: number) => (
                             <Cell 
                               key={`cell-${index}`} 
                               fill={index === 0 ? color : '#64748b'}

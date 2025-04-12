@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ExamList } from "@/components/exams/exam-list";
 import { ExamInsightsChart } from "@/components/exams/exam-insights-chart";
+import { InsightDetailCharts } from "@/components/exams/insight-detail-charts";
 import { 
   BarChart3, 
   Upload, 
