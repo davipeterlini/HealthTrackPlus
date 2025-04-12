@@ -387,7 +387,7 @@ export default function ExamsPage() {
                         No insights available for this exam yet.
                       </p>
                       {!selectedExam.aiProcessed && (
-                        <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
+                        <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm">
                           Generate Insights with AI
                         </Button>
                       )}
@@ -467,7 +467,7 @@ export default function ExamsPage() {
           </p>
           
           <div className="flex justify-center">
-            <Button onClick={() => setAnalysisDialogOpen(false)} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
+            <Button onClick={() => setAnalysisDialogOpen(false)} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm">
               View Results
             </Button>
           </div>
@@ -591,7 +591,7 @@ export default function ExamsPage() {
               {t('common.cancel')}
             </Button>
             <Button 
-              className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+              className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm"
               onClick={() => uploadExamMutation.mutate()}
               disabled={uploadingExam || !newExam.name || !newExam.type || !newExam.date}
             >
