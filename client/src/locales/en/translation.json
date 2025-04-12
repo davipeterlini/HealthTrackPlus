@@ -74,7 +74,8 @@
     "caloriesLabel": "Calories"
   },
   "common": {
-    "theme": "Theme"
+    "theme": "Theme",
+    "cancel": "Cancel"
   },
   "auth": {
     "login": "Login",
@@ -151,6 +152,15 @@
     "exams": "Medical Exams",
     "examsDescription": "Track and monitor your health exams, get insights and recommendations.",
     "uploadExam": "Upload Exam",
+    "uploadExamDescription": "Upload your medical exam files for AI analysis and personalized insights.",
+    "examName": "Exam Name",
+    "examType": "Exam Type",
+    "examDate": "Exam Date",
+    "examFile": "Exam File",
+    "uploading": "Uploading...",
+    "dragDropOrClick": "Drag and drop a file or click to select",
+    "maxFileSize": "PDF, JPG, PNG (max 10MB)",
+    "removeFile": "Remove file",
     "healthInsights": "Health Insights",
     "noInsightsYet": "No health insights yet",
     "uploadExamToGetInsights": "Upload your medical exams to get personalized health insights",

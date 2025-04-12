@@ -74,7 +74,8 @@
     "caloriesLabel": "Calorias"
   },
   "common": {
-    "theme": "Tema"
+    "theme": "Tema",
+    "cancel": "Cancelar"
   },
   "auth": {
     "login": "Entrar",
@@ -151,6 +152,15 @@
     "exams": "Exames Médicos",
     "examsDescription": "Acompanhe e monitore seus exames de saúde, obtenha insights e recomendações.",
     "uploadExam": "Enviar Exame",
+    "uploadExamDescription": "Envie seus arquivos de exames médicos para análise com IA e insights personalizados.",
+    "examName": "Nome do Exame",
+    "examType": "Tipo de Exame",
+    "examDate": "Data do Exame",
+    "examFile": "Arquivo do Exame",
+    "uploading": "Enviando...",
+    "dragDropOrClick": "Arraste e solte um arquivo ou clique para selecionar",
+    "maxFileSize": "PDF, JPG, PNG (máx 10MB)",
+    "removeFile": "Remover arquivo",
     "healthInsights": "Insights de Saúde",
     "noInsightsYet": "Nenhum insight de saúde ainda",
     "uploadExamToGetInsights": "Envie seus exames médicos para obter insights personalizados de saúde",
