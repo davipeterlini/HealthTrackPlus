@@ -98,9 +98,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Activity routes
   app.get("/api/activities", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    // Para permitir dados de exemplo sem autenticação
+    let userId = 1; // ID padrão para acessar os dados de exemplo
     
-    const userId = (req.user as Express.User).id;
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
     const activities = await storage.getActivities(userId);
     res.json(activities);
   });
