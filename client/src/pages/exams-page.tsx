@@ -422,6 +422,7 @@ export default function ExamsPage() {
                             <p className="text-sm text-emerald-600 dark:text-emerald-400">
                               {insight.recommendation}
                             </p>
+                            <InsightDetailCharts insight={insight} />
                           </div>
                         </div>
                       ))}
