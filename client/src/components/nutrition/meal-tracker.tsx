@@ -8,6 +8,7 @@ import { Meal } from "@shared/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { PlusCircle, Utensils, Coffee, Sun, Cloud, Moon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -57,6 +58,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { t, i18n } = useTranslation();
   
   // Sort by date (latest first) and meal type
   const mealTypeOrder = { "breakfast": 1, "lunch": 2, "snack": 3, "dinner": 4 };
@@ -155,7 +157,8 @@ export function MealTracker({ meals }: MealTrackerProps) {
   
   const formatDate = (dateString: string | Date) => {
     const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
-    return date.toLocaleDateString("en-US", {
+    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
+    return date.toLocaleDateString(locale, {
       weekday: "long",
       month: "long",
       day: "numeric"
@@ -164,26 +167,27 @@ export function MealTracker({ meals }: MealTrackerProps) {
   
   const formatTime = (dateString: string | Date) => {
     const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
-    return date.toLocaleTimeString("en-US", {
+    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
+    return date.toLocaleTimeString(locale, {
       hour: "numeric",
       minute: "2-digit",
-      hour12: true
+      hour12: locale === 'en-US'
     });
   };
   
   return (
     <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Meal Tracking</CardTitle>
+        <CardTitle>{t('meal.mealTracker')}</CardTitle>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button>
-              <PlusCircle className="mr-2 h-4 w-4" /> Add Meal
+              <PlusCircle className="mr-2 h-4 w-4" /> {t('meal.addMeal')}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add a Meal</DialogTitle>
+              <DialogTitle>{t('meal.recordMeal')}</DialogTitle>
             </DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -192,18 +196,18 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   name="mealType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Meal Type</FormLabel>
+                      <FormLabel>{t('meal.mealType')}</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select meal type" />
+                            <SelectValue placeholder={t('meal.selectMealType')} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="breakfast">Breakfast</SelectItem>
-                          <SelectItem value="lunch">Lunch</SelectItem>
-                          <SelectItem value="dinner">Dinner</SelectItem>
-                          <SelectItem value="snack">Snack</SelectItem>
+                          <SelectItem value="breakfast">{t('meal.breakfast')}</SelectItem>
+                          <SelectItem value="lunch">{t('meal.lunch')}</SelectItem>
+                          <SelectItem value="dinner">{t('meal.dinner')}</SelectItem>
+                          <SelectItem value="snack">{t('meal.snack')}</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -216,9 +220,9 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>{t('meal.description')}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Describe what you ate" {...field} />
+                        <Textarea placeholder={t('meal.descriptionPlaceholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -231,7 +235,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="calories"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Calories (kcal)</FormLabel>
+                        <FormLabel>{t('meal.calories')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -247,7 +251,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="carbs"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Carbs (g)</FormLabel>
+                        <FormLabel>{t('meal.carbs')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -261,7 +265,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="protein"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Protein (g)</FormLabel>
+                        <FormLabel>{t('meal.protein')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -275,7 +279,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="fat"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Fat (g)</FormLabel>
+                        <FormLabel>{t('meal.fat')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -287,7 +291,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 
                 <DialogFooter>
                   <Button type="submit" disabled={addMealMutation.isPending}>
-                    {addMealMutation.isPending ? "Saving..." : "Save Meal"}
+                    {addMealMutation.isPending ? t('meal.savingMeal') : t('meal.saveMeal')}
                   </Button>
                 </DialogFooter>
               </form>
@@ -350,9 +354,9 @@ export function MealTracker({ meals }: MealTrackerProps) {
           ) : (
             <div className="text-center py-12">
               <Utensils className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No meals recorded</h3>
+              <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{t('meal.noMeals')}</h3>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Start by adding your meals to track your nutrition.
+                {t('meal.startTracking')}
               </p>
             </div>
           )}
@@ -360,7 +364,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
           {/* Nutrition Summary */}
           {todayMeals.length > 0 && (
             <div className="mt-8">
-              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Nutrition Summary</h4>
+              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">{t('meal.nutritionSummary')}</h4>
               
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Calorie chart */}
