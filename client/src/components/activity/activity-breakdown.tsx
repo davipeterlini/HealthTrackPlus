@@ -18,8 +18,6 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   const { t } = useTranslation();
   
   const calculateActivityDistribution = (activity?: Activity) => {
-    if (!activity) return [];
-    
     const types = {
       walking: { type: t('activity.walking'), percentage: 0, color: "bg-primary-600 dark:bg-primary-500" },
       running: { type: t('activity.running'), percentage: 0, color: "bg-green-500 dark:bg-green-400" },
@@ -27,9 +25,24 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
       other: { type: t('activity.other'), percentage: 0, color: "bg-blue-500 dark:bg-blue-400" }
     } as Record<string, { type: string; percentage: number; color: string }>;
     
-    const total = activity.minutes || 0;
-    if (total > 0) {
-      types[activity.activityType].percentage = 100;
+    if (!activity) {
+      // If no activity, use reasonable defaults for demo
+      types.walking.percentage = 65;
+      types.running.percentage = 20;
+      types.cycling.percentage = 10;
+      types.other.percentage = 5;
+    } else {
+      const total = activity.minutes || 0;
+      if (total > 0) {
+        // If we have real activity, use its type
+        types[activity.activityType || 'walking'].percentage = 100;
+      } else {
+        // Fallback for activity with no minutes
+        types.walking.percentage = 65;
+        types.running.percentage = 20;
+        types.cycling.percentage = 10;
+        types.other.percentage = 5;
+      }
     }
     
     return Object.values(types).filter(t => t.percentage > 0);
@@ -132,50 +145,54 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
           </div>
         </div>
         
-        {activity && activity.steps > 0 && (
-          <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-            <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">{t('activity.details')}</h4>
+        <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">{t('activity.details')}</h4>
+          
+          <div className="mt-3 space-y-2">
+            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
+              <div className="flex items-center">
+                <Heart className="h-5 w-5 text-red-500 dark:text-red-400 mr-3" />
+                <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.avgHeartRate')}</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-sm font-medium dark:text-gray-100">
+                  {activity?.heartRate || 76} bpm
+                </span>
+                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
+              </div>
+            </div>
             
-            <div className="mt-3 space-y-2">
-              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
-                <div className="flex items-center">
-                  <Heart className="h-5 w-5 text-red-500 dark:text-red-400 mr-3" />
-                  <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.averageHeartRate')}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-sm font-medium dark:text-gray-100">76 bpm</span>
-                  <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
-                </div>
+            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 dark:text-primary-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+                <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.elevationGain')}</span>
               </div>
-              
-              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 dark:text-primary-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                  <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.elevationGain')}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-sm font-medium dark:text-gray-100">48 m</span>
-                  <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
-                </div>
+              <div className="flex items-center">
+                <span className="text-sm font-medium dark:text-gray-100">
+                  {activity?.elevationGain || 48} m
+                </span>
+                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
               </div>
-              
-              <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 dark:text-green-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                  <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.pace')}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-sm font-medium dark:text-gray-100">9:24 /km</span>
-                  <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
-                </div>
+            </div>
+            
+            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 dark:text-green-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.pace')}</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-sm font-medium dark:text-gray-100">
+                  {activity?.avgPace || '9:24'} /km
+                </span>
+                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
               </div>
             </div>
           </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );

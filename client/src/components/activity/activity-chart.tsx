@@ -14,10 +14,18 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
   
   useEffect(() => {
     if (activities.length === 0) {
-      // If no data, create sample data for the last 7 days
+      // If no data, create sample data for the last 7 days with random values
       const sampleData: Activity[] = Array.from({ length: 7 }).map((_, i) => {
         const date = new Date();
         date.setDate(date.getDate() - i);
+        
+        // Generate a random number of steps between 5000 and 12000
+        const randomSteps = Math.floor(Math.random() * 7000) + 5000;
+        // Calculate calories based on steps (roughly 0.04 calories per step)
+        const randomCalories = Math.floor(randomSteps * 0.04);
+        // Calculate minutes based on steps (roughly 1 minute per 100 steps)
+        const randomMinutes = Math.floor(randomSteps / 100);
+        
         return {
           id: i + 1,
           userId: 1,
@@ -25,14 +33,14 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
           startTime: null,
           endTime: null,
           activityType: "walking",
-          steps: 0,
-          distance: null,
-          calories: 0,
-          minutes: 0,
-          heartRate: null,
+          steps: randomSteps,
+          distance: Math.round(randomSteps * 0.0008 * 10) / 10, // Approximate distance in km
+          calories: randomCalories,
+          minutes: randomMinutes,
+          heartRate: Math.floor(Math.random() * 40) + 70, // Random heart rate between 70-110
           heartRateZones: null,
-          elevationGain: null,
-          elevationLoss: null,
+          elevationGain: Math.floor(Math.random() * 100),
+          elevationLoss: Math.floor(Math.random() * 100),
           avgPace: null,
           maxPace: null,
           intensity: null,
@@ -52,7 +60,7 @@ export function ActivityChart({ activities, onSelectDate }: ActivityChartProps) 
           isRealTime: false,
           achievements: null
         };
-      }).reverse();
+      }).reverse(); // Reverse so the most recent day is last (rightmost in the chart)
       
       setChartData(sampleData);
     } else {
