@@ -124,7 +124,7 @@ export default function ExamsPage() {
       </div>
       
       {/* Lista de exames */}
-      <Card className="mb-8">
+      <Card className="mb-8 bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
         <ExamList 
           exams={exams} 
           isLoading={isLoadingExams} 
@@ -143,7 +143,7 @@ export default function ExamsPage() {
       {isLoadingInsights ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="p-4 animate-pulse">
+            <Card key={i} className="p-4 animate-pulse bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
               <div className="h-4 bg-gray-200 dark:bg-gray-700 w-1/2 rounded mb-3"></div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 w-3/4 rounded mb-2"></div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 w-full rounded mb-2"></div>
@@ -153,7 +153,7 @@ export default function ExamsPage() {
           ))}
         </div>
       ) : healthInsights.length === 0 ? (
-        <Card className="p-6 text-center">
+        <Card className="p-6 text-center bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
           <div className="mx-auto w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="h-6 w-6 text-gray-500 dark:text-gray-400" />
           </div>
@@ -165,7 +165,7 @@ export default function ExamsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {healthInsights.map((insight) => (
-            <Card key={insight.id} className="p-5 flex flex-col h-full">
+            <Card key={insight.id} className="p-5 flex flex-col h-full bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
               <div className="flex justify-between items-start mb-3">
                 <div className="flex items-center">
                   <div className={`p-2 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-3`}>
@@ -234,7 +234,7 @@ export default function ExamsPage() {
                     </div>
                     
                     {selectedExam.aiAnalysis && typeof selectedExam.aiAnalysis === 'object' && (
-                      <div className="border rounded-lg p-4 dark:border-gray-700">
+                      <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
                         <h4 className="text-sm font-medium mb-2">AI Analysis</h4>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
                           {(selectedExam.aiAnalysis as any).summary}
@@ -263,7 +263,7 @@ export default function ExamsPage() {
                         <h4 className="text-sm font-medium mb-2">Results</h4>
                         <div className="grid grid-cols-2 gap-3">
                           {Object.entries(selectedExam.results as Record<string, any>).map(([key, value]) => (
-                            <div key={key} className="border rounded-md p-3 dark:border-gray-700">
+                            <div key={key} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-md p-3">
                               <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                                 {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
                               </p>
@@ -293,7 +293,7 @@ export default function ExamsPage() {
                   ) : (
                     <div className="space-y-4">
                       {examInsights.map((insight) => (
-                        <div key={insight.id} className="border rounded-lg p-4 dark:border-gray-700">
+                        <div key={insight.id} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
                           <div className="flex justify-between items-start mb-2">
                             <div className="flex items-center">
                               <div className={`p-1.5 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-2`}>
