@@ -77,9 +77,9 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   };
   
   return (
-    <Card className="dark:bg-[#1a2127] dark:border-gray-700">
+    <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
       <CardHeader>
-        <CardTitle className="dark:text-gray-100">Water Intake</CardTitle>
+        <CardTitle className="text-slate-800 dark:text-white">Water Intake</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
@@ -101,7 +101,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(250)}
-                className={amount === 250 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 250 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400" : "dark:text-gray-300 dark:border-gray-600"}
               >
                 250ml
               </Button>
@@ -109,7 +109,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(500)}
-                className={amount === 500 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 500 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400" : "dark:text-gray-300 dark:border-gray-600"}
               >
                 500ml
               </Button>
@@ -117,14 +117,14 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(1000)}
-                className={amount === 1000 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 1000 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400" : "dark:text-gray-300 dark:border-gray-600"}
               >
                 1000ml
               </Button>
             </div>
             <Button 
               size="sm" 
-              className="mt-2" 
+              className="mt-2 border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full" 
               onClick={handleAddWater}
               disabled={addWaterMutation.isPending}
             >

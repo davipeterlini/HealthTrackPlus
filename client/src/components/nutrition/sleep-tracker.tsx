@@ -133,9 +133,9 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
   };
   
   return (
-    <Card className="dark:bg-[#1a2127] dark:border-gray-700">
+    <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
       <CardHeader>
-        <CardTitle className="dark:text-gray-100">Sleep</CardTitle>
+        <CardTitle className="text-slate-800 dark:text-white">Sleep</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
