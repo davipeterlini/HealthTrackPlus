@@ -48,15 +48,15 @@ export default function DashboardPage() {
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.steps')}</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">7,842</h2>
+              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('activity.activeMinutes')}</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">45</h2>
               <p className="text-emerald-500 dark:text-emerald-400 flex items-center text-xs sm:text-sm">
                 <span className="mr-1">↑</span>
-                12% {t('health.stepsUp')}
+                15% {t('health.stepsUp')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
-              <Activity className="text-emerald-500 dark:text-[#ff9f7d] h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+            <div className="bg-purple-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
+              <Activity className="text-purple-500 dark:text-purple-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
             </div>
           </div>
         </Card>
