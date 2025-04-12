@@ -3,13 +3,14 @@ import {
   waterIntake, meals, videos, videoProgress, courseTracks, trackVideos,
   foodItems, recipes, stressLevels, medications, medicationLogs,
   meditationSessions, menstrualCycles, menstrualCycleSymptoms,
-  fertilityTracking, pregnancyTracking,
+  fertilityTracking, pregnancyTracking, healthInsights,
   type User, type InsertUser, type MedicalExam, type Activity,
   type SleepRecord, type WaterIntakeRecord, type Meal, type Video,
   type VideoProgress, type CourseTrack, type TrackVideo,
   type FoodItem, type Recipe, type StressLevel, type Medication,
   type MedicationLog, type MeditationSession, type MenstrualCycle,
-  type MenstrualCycleSymptom, type FertilityTracking, type PregnancyTracking
+  type MenstrualCycleSymptom, type FertilityTracking, type PregnancyTracking,
+  type HealthInsight
 } from "@shared/schema";
 import { DashboardStats } from "@shared/dashboard";
 import session from "express-session";
@@ -159,6 +160,7 @@ export class MemStorage implements IStorage {
   private videoProgressRecords: Map<number, VideoProgress>;
   private courseTracks: Map<number, CourseTrack>;
   private trackVideos: Map<number, TrackVideo>;
+  private healthInsights: Map<number, HealthInsight>;
   
   currentUserId: number;
   currentMedicalExamId: number;
@@ -180,6 +182,7 @@ export class MemStorage implements IStorage {
   currentVideoProgressId: number;
   currentCourseTrackId: number;
   currentTrackVideoId: number;
+  currentHealthInsightId: number;
   sessionStore: any; // Fix para error do LSP
 
   constructor() {
@@ -203,6 +206,7 @@ export class MemStorage implements IStorage {
     this.videoProgressRecords = new Map();
     this.courseTracks = new Map();
     this.trackVideos = new Map();
+    this.healthInsights = new Map();
     
     this.currentUserId = 1;
     this.currentMedicalExamId = 1;
@@ -224,11 +228,13 @@ export class MemStorage implements IStorage {
     this.currentVideoProgressId = 1;
     this.currentCourseTrackId = 1;
     this.currentTrackVideoId = 1;
+    this.currentHealthInsightId = 1;
     
     // Initialize sample videos and data
     this.initSampleVideos();
     this.initSampleCourseTracks();
     this.initSampleActivities();
+    this.initSampleHealthInsights();
     
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000 // prune expired entries every 24h
@@ -247,8 +253,7 @@ export class MemStorage implements IStorage {
         duration: '18:32',
         category: 'Mental Health',
         description: 'Uma meditação guiada para reduzir ansiedade e estresse, com foco em respiração e relaxamento profundo',
-        thumbnailUrl: `https://img.youtube.com/vi/0F9szTYowN0/maxresdefault.jpg`,
-        videoUrl: 'https://www.youtube.com/embed/0F9szTYowN0'
+        thumbnailUrl: `https://img.youtube.com/vi/0F9szTYowN0/maxresdefault.jpg`
       },
       {
         title: 'Nutrition Basics for Wellness',
@@ -571,6 +576,137 @@ export class MemStorage implements IStorage {
     const medicalExam: MedicalExam = { ...exam, id };
     this.medicalExams.set(id, medicalExam);
     return medicalExam;
+  }
+  
+  async updateMedicalExamWithAIAnalysis(id: number, aiAnalysis: any, anomalies: boolean, riskLevel: string): Promise<MedicalExam> {
+    const exam = this.medicalExams.get(id);
+    if (!exam) {
+      throw new Error(`Medical exam with id ${id} not found`);
+    }
+    
+    const updatedExam: MedicalExam = {
+      ...exam,
+      aiAnalysis,
+      anomalies,
+      riskLevel,
+      aiProcessed: true
+    };
+    
+    this.medicalExams.set(id, updatedExam);
+    return updatedExam;
+  }
+  
+  // Initialize sample health insights
+  private initSampleHealthInsights() {
+    // Make sure we have a dummy medical exam for the sample insights
+    if (!this.medicalExams.has(1)) {
+      const now = new Date();
+      this.medicalExams.set(1, {
+        id: 1,
+        userId: 1,
+        name: "Annual Checkup",
+        date: now,
+        fileUrl: "/sample/exam1.pdf",
+        type: "Blood Work",
+        status: "Completed",
+        results: {
+          bloodGlucose: 95,
+          cholesterol: 180,
+          hemoglobin: 14.5
+        },
+        aiAnalysis: {
+          summary: "Normal blood work results with cholesterol slightly elevated.",
+          recommendations: "Consider dietary changes to reduce cholesterol."
+        },
+        anomalies: false,
+        riskLevel: "low",
+        aiProcessed: true
+      });
+    }
+    
+    const sampleInsights: Omit<HealthInsight, 'id'>[] = [
+      {
+        userId: 1,
+        date: new Date(),
+        examId: 1,
+        category: "Cardiovascular",
+        title: "Optimal Heart Health",
+        description: "Your heart health indicators are within optimal ranges, indicating good cardiovascular function.",
+        recommendation: "Continue with regular exercise to maintain heart health.",
+        severity: "normal",
+        status: "active",
+        aiGenerated: true,
+        data: {
+          heartRate: 68,
+          bloodPressure: "120/80",
+          cholesterol: 180
+        }
+      },
+      {
+        userId: 1,
+        date: new Date(),
+        examId: 1,
+        category: "Nutrition",
+        title: "Vitamin D Improvement",
+        description: "Your vitamin D levels have improved since the last test but are still slightly below optimal range.",
+        recommendation: "Consider increasing sun exposure and vitamin D-rich foods in your diet.",
+        severity: "attention",
+        status: "active",
+        aiGenerated: true,
+        data: {
+          currentLevel: 28,
+          previousLevel: 22,
+          optimalRange: "30-50"
+        }
+      },
+      {
+        userId: 1,
+        date: new Date(),
+        examId: 1,
+        category: "Metabolism",
+        title: "Blood Glucose Management",
+        description: "Your blood glucose levels are within normal range, indicating effective metabolism.",
+        recommendation: "Maintain a balanced diet with complex carbohydrates.",
+        severity: "normal",
+        status: "active",
+        aiGenerated: true,
+        data: {
+          fastingGlucose: 95,
+          hba1c: 5.4
+        }
+      }
+    ];
+    
+    sampleInsights.forEach(insight => {
+      const id = this.currentHealthInsightId++;
+      this.healthInsights.set(id, { ...insight, id });
+    });
+  }
+  
+  // Health insights methods
+  async getHealthInsights(userId: number): Promise<HealthInsight[]> {
+    return Array.from(this.healthInsights.values())
+      .filter(insight => insight.userId === userId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async getHealthInsightsByCategory(userId: number, category: string): Promise<HealthInsight[]> {
+    return Array.from(this.healthInsights.values())
+      .filter(insight => insight.userId === userId && insight.category === category)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async getHealthInsightsByExam(examId: number): Promise<HealthInsight[]> {
+    return Array.from(this.healthInsights.values())
+      .filter(insight => insight.examId === examId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  
+  async createHealthInsight(insight: Omit<HealthInsight, 'id'>): Promise<HealthInsight> {
+    const id = this.currentHealthInsightId++;
+    const newInsight: HealthInsight = { ...insight, id };
+    this.healthInsights.set(id, newInsight);
+    return newInsight;
   }
   
   // Activity methods
