@@ -107,11 +107,22 @@ export function Header() {
 
           {/* Ações e controles para todos os tamanhos de tela */}
           <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
-            {/* Menu de navegação móvel - movido para primeira posição em telas pequenas */}
-            <div className="md:hidden order-first">
+            {/* Controles de tema, idioma e menu para dispositivos móveis */}
+            <div className="md:hidden flex items-center gap-2">
+              {/* Toggle de tema - visível em telas pequenas */}
+              <Button variant="primary" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
+                <ThemeToggle />
+              </Button>
+              
+              {/* Alternador de idioma */}
+              <Button variant="primary" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
+                <LanguageSwitcher />
+              </Button>
+              
+              {/* Menu de navegação móvel - agora ultimo na ordem em telas pequenas */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
+                  <Button variant="primary" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
@@ -125,14 +136,6 @@ export function Header() {
                         <X className="h-4 w-4" />
                       </Button>
                     </SheetClose>
-                  </div>
-                  
-                  {/* Alternador de tema em telas muito pequenas (dentro do menu) */}
-                  <div className="sm:hidden mb-4 px-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-gray-300">{t('common.theme')}</span>
-                      <ThemeToggle />
-                    </div>
                   </div>
                   
                   <nav className="flex flex-col space-y-1">
@@ -196,44 +199,25 @@ export function Header() {
               </Sheet>
             </div>
 
-            {/* Barra de navegação rápida (apenas em telas pequenas) que segue a mesma ordem das páginas */}
-            <div className="md:hidden flex items-center gap-1 mx-2">
-              {navItems.slice(0, 3).map((item) => {
-                const Icon = item.icon;
-                const isActive = location === item.path;
-                return (
-                  <Link 
-                    key={item.path}
-                    href={item.path}
-                    className={`p-1.5 rounded-full ${
-                      isActive
-                        ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
-                        : "text-slate-600 dark:text-gray-300"
-                    }`}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Notificações */}
+            {/* Notificações, visível em todas as telas */}
             <Button 
               variant="ghost" 
               size="icon" 
-              className="relative text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 h-8 w-8"
+              className="relative hidden md:flex text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 h-8 w-8"
             >
               <BellIcon className="h-5 w-5" />
               <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
             </Button>
 
-            {/* Toggle de tema - esconder em telas muito pequenas */}
-            <div className="hidden sm:block">
+            {/* Toggle de tema - apenas para desktop */}
+            <div className="hidden md:block">
               <ThemeToggle />
             </div>
             
-            {/* Alternador de idioma */}
-            <LanguageSwitcher />
+            {/* Alternador de idioma - apenas para desktop */}
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
 
             {/* Menu de configurações para telas médias e grandes */}
             <div className="hidden md:block">
@@ -271,56 +255,35 @@ export function Header() {
               </DropdownMenu>
             </div>
 
-            {/* Avatar do usuário */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5">
-                  <Avatar className="h-7 w-7 sm:h-8 sm:w-8 border border-blue-100 dark:border-gray-700">
-                    <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs sm:text-sm">
-                      {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-56">
-                <DropdownMenuLabel>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
-                    <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
-                
-                {/* Mostrar apenas em desktop, pois no mobile já está no menu lateral */}
-                <div className="md:hidden">
-                  <DropdownMenuItem>
-                    <Link href="/profile" className="flex items-center w-full">
-                      <FileText className="mr-2 h-4 w-4" />
-                      {t('navigation.profile')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/settings" className="flex items-center w-full">
-                      <Settings className="mr-2 h-4 w-4" />
-                      {t('navigation.settings')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/help" className="flex items-center w-full">
-                      <HelpCircle className="mr-2 h-4 w-4" />
-                      {t('navigation.help')}
-                    </Link>
-                  </DropdownMenuItem>
+            {/* Avatar do usuário - apenas para desktop */}
+            <div className="hidden md:block">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5">
+                    <Avatar className="h-7 w-7 sm:h-8 sm:w-8 border border-blue-100 dark:border-gray-700">
+                      <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
+                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs sm:text-sm">
+                        {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-56">
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
+                      <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
+                    </div>
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
-                </div>
-                
-                <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  {t('navigation.logout')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  
+                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    {t('navigation.logout')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </div>
