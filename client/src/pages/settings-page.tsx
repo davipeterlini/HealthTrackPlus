@@ -50,10 +50,15 @@ export default function SettingsPage() {
   const [notifyActivityReminders, setNotifyActivityReminders] = useState(true);
   const [notifyMedicationReminders, setNotifyMedicationReminders] = useState(true);
   
+  // Estados para controle de widgets no painel
   const [showWaterTracker, setShowWaterTracker] = useState(true);
   const [showSleepTracker, setShowSleepTracker] = useState(true);
   const [showActivityTracker, setShowActivityTracker] = useState(true);
   const [showNutritionTracker, setShowNutritionTracker] = useState(true);
+  const [showMentalHealthTracker, setShowMentalHealthTracker] = useState(true);
+  const [showMedicationTracker, setShowMedicationTracker] = useState(true);
+  const [showWomensHealthTracker, setShowWomensHealthTracker] = useState(true);
+  const [showVideoSubscription, setShowVideoSubscription] = useState(true);
   
   const [measurementUnit, setMeasurementUnit] = useState('metric');
   const [timeFormat, setTimeFormat] = useState('24h');
