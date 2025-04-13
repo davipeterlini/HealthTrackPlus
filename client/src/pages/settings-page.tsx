@@ -9,6 +9,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useDevMode } from '@/hooks/use-dev-mode';
+import { useDashboardSettings } from '@/hooks/use-dashboard-settings';
 import { 
   ArrowLeft, 
   Bell, 
@@ -50,15 +51,8 @@ export default function SettingsPage() {
   const [notifyActivityReminders, setNotifyActivityReminders] = useState(true);
   const [notifyMedicationReminders, setNotifyMedicationReminders] = useState(true);
   
-  // Estados para controle de widgets no painel
-  const [showWaterTracker, setShowWaterTracker] = useState(true);
-  const [showSleepTracker, setShowSleepTracker] = useState(true);
-  const [showActivityTracker, setShowActivityTracker] = useState(true);
-  const [showNutritionTracker, setShowNutritionTracker] = useState(true);
-  const [showMentalHealthTracker, setShowMentalHealthTracker] = useState(true);
-  const [showMedicationTracker, setShowMedicationTracker] = useState(true);
-  const [showWomensHealthTracker, setShowWomensHealthTracker] = useState(true);
-  const [showVideoSubscription, setShowVideoSubscription] = useState(true);
+  // Usando o contexto de configurações do dashboard
+  const { settings, updateSettings, resetSettings } = useDashboardSettings();
   
   const [measurementUnit, setMeasurementUnit] = useState('metric');
   const [timeFormat, setTimeFormat] = useState('24h');
@@ -467,8 +461,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showWaterTracker}
-                            onCheckedChange={setShowWaterTracker}
+                            checked={settings.showWaterTracker}
+                            onCheckedChange={(checked) => updateSettings({ showWaterTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -477,8 +471,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showSleepTracker}
-                            onCheckedChange={setShowSleepTracker}
+                            checked={settings.showSleepTracker}
+                            onCheckedChange={(checked) => updateSettings({ showSleepTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
