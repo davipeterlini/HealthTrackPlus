@@ -501,6 +501,46 @@ export default function SettingsPage() {
                             onCheckedChange={setShowNutritionTracker}
                           />
                         </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium">{t('settings.mentalHealthTracker')}</span>
+                          </div>
+                          <Switch 
+                            className="mt-1 sm:mt-0"
+                            checked={showMentalHealthTracker}
+                            onCheckedChange={setShowMentalHealthTracker}
+                          />
+                        </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium">{t('settings.medicationTracker')}</span>
+                          </div>
+                          <Switch 
+                            className="mt-1 sm:mt-0"
+                            checked={showMedicationTracker}
+                            onCheckedChange={setShowMedicationTracker}
+                          />
+                        </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium">{t('settings.womensHealthTracker')}</span>
+                          </div>
+                          <Switch 
+                            className="mt-1 sm:mt-0"
+                            checked={showWomensHealthTracker}
+                            onCheckedChange={setShowWomensHealthTracker}
+                          />
+                        </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium">{t('settings.videoSubscription')}</span>
+                          </div>
+                          <Switch 
+                            className="mt-1 sm:mt-0"
+                            checked={showVideoSubscription}
+                            onCheckedChange={setShowVideoSubscription}
+                          />
+                        </div>
                       </div>
                       
                       <Separator className="my-4" />
