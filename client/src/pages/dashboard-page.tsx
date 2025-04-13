@@ -526,7 +526,7 @@ export default function DashboardPage() {
       </div>
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 mb-8">
-        <Link href="/activity">
+        <Link to="/activity">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/30 dark:to-rose-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-rose-500/10 dark:bg-rose-500/20">
@@ -538,7 +538,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
         
-        <Link href="/nutrition">
+        <Link to="/nutrition">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20">
@@ -550,7 +550,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
         
-        <Link href="/sleep">
+        <Link to="/sleep">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20">
@@ -562,7 +562,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
         
-        <Link href="/mental">
+        <Link to="/mental">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-purple-500/10 dark:bg-purple-500/20">
@@ -574,7 +574,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
         
-        <Link href="/hydration">
+        <Link to="/hydration">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-blue-500/10 dark:bg-blue-500/20">
@@ -586,7 +586,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
         
-        <Link href="/medication">
+        <Link to="/medication">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
               <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
