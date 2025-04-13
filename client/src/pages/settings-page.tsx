@@ -752,7 +752,7 @@ export default function SettingsPage() {
                             {t('settings.dataDeletionWarning')}
                           </span>
                           <div className="space-y-2">
-                            <Button variant="outline" className="flex gap-2 text-amber-600 border-amber-600 hover:bg-amber-50 dark:text-amber-400 dark:border-amber-400 dark:hover:bg-amber-900/20">
+                            <Button variant="outline" className="flex gap-2 w-full sm:w-auto justify-center text-amber-600 border-amber-600 hover:bg-amber-50 dark:text-amber-400 dark:border-amber-400 dark:hover:bg-amber-900/20">
                               <RefreshCw className="h-4 w-4" />
                               {t('settings.clearAllData')}
                             </Button>
