@@ -19,6 +19,7 @@ import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
 import { ThemeProvider } from "./hooks/use-theme";
+import { DashboardSettingsProvider } from "./hooks/use-dashboard-settings";
 import { DevModeToggle } from "./components/dev-mode-toggle";
 import { ReactElement } from "react";
 
@@ -49,11 +50,13 @@ function App() {
       <ThemeProvider>
         <DevModeProvider>
           <AuthProvider>
-            <WouterRouter>
-              <Router />
-              <DevModeToggle />
-              <Toaster />
-            </WouterRouter>
+            <DashboardSettingsProvider>
+              <WouterRouter>
+                <Router />
+                <DevModeToggle />
+                <Toaster />
+              </WouterRouter>
+            </DashboardSettingsProvider>
           </AuthProvider>
         </DevModeProvider>
       </ThemeProvider>
