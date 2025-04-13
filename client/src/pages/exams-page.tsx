@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useMemo } from "react";
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { MedicalExam, HealthInsight } from "@shared/schema";
@@ -56,11 +57,70 @@ export default function ExamsPage() {
   
   // Buscar insights de saúde
   const { 
-    data: healthInsights = [], 
+    data: originalHealthInsights = [], 
     isLoading: isLoadingInsights 
   } = useQuery<HealthInsight[]>({
     queryKey: ["/api/health-insights"],
   });
+
+  // Função para traduzir categorias de insighs
+  const translateCategory = (category: string): string => {
+    if (i18n.language !== 'pt') return category;
+    
+    switch(category) {
+      case "Cardiovascular": return "Cardiovascular";
+      case "Nutrition": return "Nutrição";
+      case "Metabolism": return "Metabolismo";
+      default: return category;
+    }
+  };
+
+  // Versão traduzida dos insights de saúde
+  const healthInsights = useMemo(() => {
+    return originalHealthInsights.map(insight => {
+      if (i18n.language !== 'pt') return insight;
+      
+      // Traduzir títulos comuns
+      let translatedTitle = insight.title;
+      if (insight.title === "Cardiovascular Health Optimal") {
+        translatedTitle = "Saúde Cardiovascular Ótima";
+      } else if (insight.title === "Adequate Nutritional Profile") {
+        translatedTitle = "Perfil Nutricional Adequado";
+      } else if (insight.title === "Glycemic Management") {
+        translatedTitle = "Gestão de Glicemia";
+      }
+      
+      // Traduzir descrições comuns
+      let translatedDescription = insight.description;
+      if (insight.description.includes("indicators are at optimal levels")) {
+        translatedDescription = "Seus indicadores cardíacos estão em níveis ótimos, indicando boa função cardiovascular.";
+      } else if (insight.description.includes("nutritional markers are balanced")) {
+        translatedDescription = "Seus marcadores nutricionais estão equilibrados.";
+      } else if (insight.description.includes("glucose levels are within")) {
+        translatedDescription = "Seus níveis de glicemia estão dentro da faixa normal, indicando metabolismo eficaz.";
+      }
+      
+      // Traduzir recomendações comuns
+      let translatedRecommendation = insight.recommendation || "";
+      const recommendationStr = insight.recommendation || "";
+      
+      if (recommendationStr.includes("Continue with regular exercise")) {
+        translatedRecommendation = "Continue com exercícios regulares para manter a saúde cardíaca.";
+      } else if (recommendationStr.includes("Maintain a balanced diet rich")) {
+        translatedRecommendation = "Mantenha uma dieta balanceada rica em nutrientes essenciais.";
+      } else if (recommendationStr.includes("Maintain a balanced diet with complex")) {
+        translatedRecommendation = "Mantenha uma dieta balanceada com carboidratos complexos.";
+      }
+      
+      return {
+        ...insight,
+        category: translateCategory(insight.category),
+        title: translatedTitle,
+        description: translatedDescription,
+        recommendation: translatedRecommendation
+      };
+    });
+  }, [originalHealthInsights, i18n.language]);
   
   // Buscar um exame específico quando selecionado
   const { data: selectedExam } = useQuery<MedicalExam>({
@@ -343,9 +403,9 @@ export default function ExamsPage() {
                           {(() => {
                             try {
                               // Manipular tanto strings JSON quanto objetos diretamente
-                              const analysis = typeof selectedExam.aiAnalysis === 'string' 
+                              const analysis: { summary?: string, recommendations?: string[] } = typeof selectedExam.aiAnalysis === 'string' 
                                 ? JSON.parse(selectedExam.aiAnalysis) 
-                                : selectedExam.aiAnalysis;
+                                : selectedExam.aiAnalysis as any;
                               return analysis.summary || t('exams.noSummaryAvailable');
                             } catch (e) {
                               return t('exams.unableToParseAnalysis');
@@ -355,18 +415,33 @@ export default function ExamsPage() {
                         
                         {(() => {
                           try {
-                            const analysis = typeof selectedExam.aiAnalysis === 'string' 
+                            const analysis: { summary?: string, recommendations?: string[] } = typeof selectedExam.aiAnalysis === 'string' 
                               ? JSON.parse(selectedExam.aiAnalysis) 
-                              : selectedExam.aiAnalysis;
+                              : selectedExam.aiAnalysis as any;
                             
                             if (analysis.recommendations && Array.isArray(analysis.recommendations)) {
+                              // Traduzir recomendações quando o idioma é português
+                              const translatedRecs = analysis.recommendations.map(rec => {
+                                if (i18n.language !== 'pt') return rec;
+                                
+                                // Traduzir recomendações comuns
+                                if (rec.includes("Maintain a balanced diet")) {
+                                  return "Mantenha uma dieta balanceada e prática regular de exercícios";
+                                } else if (rec.includes("Reduce the consumption of saturated fats")) {
+                                  return "Reduzir o consumo de gorduras saturadas para melhorar os níveis de colesterol";
+                                } else if (rec.includes("Continue with the routine of periodic exams")) {
+                                  return "Continuar com a rotina de exames periódicos";
+                                }
+                                return rec;
+                              });
+                              
                               return (
                                 <div>
                                   <h5 className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                                     {t('exams.recommendations')}:
                                   </h5>
                                   <ul className="text-sm space-y-1">
-                                    {analysis.recommendations.map((rec: string, i: number) => (
+                                    {translatedRecs.map((rec: string, i: number) => (
                                       <li key={i} className="flex items-start">
                                         <CircleCheck className="h-4 w-4 text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
                                         <span className="text-gray-700 dark:text-gray-300">{rec}</span>
