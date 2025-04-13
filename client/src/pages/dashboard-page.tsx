@@ -15,6 +15,7 @@ import { formatDate } from "@/lib/utils";
 import { Link, useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
 import { DashboardStats } from "@shared/dashboard";
+import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
 
 export default function DashboardPage() {
   const { t } = useTranslation();

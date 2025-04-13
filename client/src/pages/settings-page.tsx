@@ -481,8 +481,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showActivityTracker}
-                            onCheckedChange={setShowActivityTracker}
+                            checked={settings.showActivityTracker}
+                            onCheckedChange={(checked) => updateSettings({ showActivityTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -491,8 +491,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showNutritionTracker}
-                            onCheckedChange={setShowNutritionTracker}
+                            checked={settings.showNutritionTracker}
+                            onCheckedChange={(checked) => updateSettings({ showNutritionTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -501,8 +501,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showMentalHealthTracker}
-                            onCheckedChange={setShowMentalHealthTracker}
+                            checked={settings.showMentalHealthTracker}
+                            onCheckedChange={(checked) => updateSettings({ showMentalHealthTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -511,8 +511,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showMedicationTracker}
-                            onCheckedChange={setShowMedicationTracker}
+                            checked={settings.showMedicationTracker}
+                            onCheckedChange={(checked) => updateSettings({ showMedicationTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -521,8 +521,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showWomensHealthTracker}
-                            onCheckedChange={setShowWomensHealthTracker}
+                            checked={settings.showWomensHealthTracker}
+                            onCheckedChange={(checked) => updateSettings({ showWomensHealthTracker: checked })}
                           />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -531,8 +531,8 @@ export default function SettingsPage() {
                           </div>
                           <Switch 
                             className="mt-1 sm:mt-0"
-                            checked={showVideoSubscription}
-                            onCheckedChange={setShowVideoSubscription}
+                            checked={settings.showVideoSubscription}
+                            onCheckedChange={(checked) => updateSettings({ showVideoSubscription: checked })}
                           />
                         </div>
                       </div>
