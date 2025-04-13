@@ -639,7 +639,7 @@ export default function DashboardPage() {
                 <FileText className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-cyan-500 dark:text-cyan-400" />
               </div>
               <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.exams')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Medical Exams' : 'Exames Médicos'}</p>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.exams')}</p>
             </div>
           </Card>
         </Link>
