@@ -74,21 +74,21 @@ export default function SettingsPage() {
   return (
     <MainLayout>
       <div className="container py-6 max-w-5xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-6">
           <div className="flex items-center">
             <Button 
               variant="outline" 
               size="sm"
-              className="mr-4"
+              className="mr-2 sm:mr-4"
               onClick={() => window.history.back()}
             >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {t('common.back')}
+              <ArrowLeft className="mr-1 sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">{t('common.back')}</span>
             </Button>
-            <h1 className="text-3xl font-bold">{t('navigation.settings')}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">{t('navigation.settings')}</h1>
           </div>
           <Button 
-            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 w-full sm:w-auto"
             onClick={handleSaveSettings}
           >
             <Save className="mr-2 h-4 w-4" />
@@ -97,8 +97,63 @@ export default function SettingsPage() {
         </div>
         
         <Tabs defaultValue="appearance">
+          {/* Mobile horizontal scrolling tab list */}
+          <div className="block sm:hidden mb-4 overflow-x-auto pb-2">
+            <TabsList className="flex h-auto bg-gray-50 dark:bg-[#1a2127] p-1 rounded-md">
+              <TabsTrigger 
+                value="appearance" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Palette className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="language" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Globe className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="notifications" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Bell className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="dashboard" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="preferences" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Settings className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="privacy" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Lock className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="data" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Database className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="developer" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+              >
+                <Shield className="h-4 w-4" />
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-6">
-            <div className="w-full sm:w-64 space-y-2 mb-6 sm:mb-0">
+            {/* Desktop vertical tab list - hidden on mobile */}
+            <div className="hidden sm:block sm:w-64 space-y-2 mb-6 sm:mb-0">
               <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
                 <CardContent className="p-0">
                   <TabsList className="grid w-full grid-cols-1 h-auto p-0 bg-transparent">
@@ -209,23 +264,23 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.accessibility')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.reducedMotion')}</span>
+                            <span className="font-medium">{t('settings.reducedMotion')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.reducedMotionDescription')}
                             </span>
                           </div>
-                          <Switch />
+                          <Switch className="mt-1 sm:mt-0" />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.highContrast')}</span>
+                            <span className="font-medium">{t('settings.highContrast')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.highContrastDescription')}
                             </span>
                           </div>
-                          <Switch />
+                          <Switch className="mt-1 sm:mt-0" />
                         </div>
                       </div>
                     </div>
@@ -252,23 +307,23 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.translationPreferences')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.translateExamResults')}</span>
+                            <span className="font-medium">{t('settings.translateExamResults')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.translateExamResultsDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.translateMedicalTerms')}</span>
+                            <span className="font-medium">{t('settings.translateMedicalTerms')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.translateMedicalTermsDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
                       </div>
                     </div>
@@ -288,38 +343,41 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold">{t('settings.healthAlerts')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.examResults')}</span>
+                            <span className="font-medium">{t('settings.examResults')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.examResultsDescription')}
                             </span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={notifyExamResults}
                             onCheckedChange={setNotifyExamResults}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.medicationReminders')}</span>
+                            <span className="font-medium">{t('settings.medicationReminders')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.medicationRemindersDescription')}
                             </span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={notifyMedicationReminders}
                             onCheckedChange={setNotifyMedicationReminders}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.appointmentReminders')}</span>
+                            <span className="font-medium">{t('settings.appointmentReminders')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.appointmentRemindersDescription')}
                             </span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={notifyMedicalAppointments}
                             onCheckedChange={setNotifyMedicalAppointments}
                           />
@@ -330,26 +388,27 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.activityReminders')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.dailyActivityReminders')}</span>
+                            <span className="font-medium">{t('settings.dailyActivityReminders')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.dailyActivityRemindersDescription')}
                             </span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={notifyActivityReminders}
                             onCheckedChange={setNotifyActivityReminders}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.inactivityAlerts')}</span>
+                            <span className="font-medium">{t('settings.inactivityAlerts')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.inactivityAlertsDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
                       </div>
                       
