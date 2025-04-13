@@ -110,19 +110,15 @@ export function Header() {
             {/* Controles de tema, idioma e menu para dispositivos móveis */}
             <div className="md:hidden flex items-center gap-2">
               {/* Toggle de tema - visível em telas pequenas */}
-              <Button variant="primary" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
-                <ThemeToggle />
-              </Button>
+              <ThemeToggle />
               
               {/* Alternador de idioma */}
-              <Button variant="primary" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
-                <LanguageSwitcher />
-              </Button>
+              <LanguageSwitcher />
               
               {/* Menu de navegação móvel - agora ultimo na ordem em telas pequenas */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="primary" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
+                  <Button variant="ghost" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
