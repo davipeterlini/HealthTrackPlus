@@ -192,13 +192,13 @@ export function Header() {
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
+                <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
                   <div className="flex items-center justify-between mb-6">
                     <SheetTitle className="text-xl text-blue-600 dark:text-white">
                       {t('navigation.menu')}
                     </SheetTitle>
                     <SheetClose asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
                         <X className="h-4 w-4" />
                       </Button>
                     </SheetClose>
