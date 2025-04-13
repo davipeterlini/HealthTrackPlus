@@ -604,37 +604,45 @@ export default function DashboardPage() {
           </Card>
         </Link>
         
-        {settings.showWomensHealthTracker && (
-          <Link to="/womens-health">
-            <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-              <div className="flex flex-col items-center text-center">
-                <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
-                  <div className="text-pink-500 dark:text-pink-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 16h6"/></svg>
-                  </div>
+        <Link to="/womens-health">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
+                <div className="text-pink-500 dark:text-pink-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 16h6"/></svg>
                 </div>
-                <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.womens')}</h3>
-                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.womensHealth')}</p>
               </div>
-            </Card>
-          </Link>
-        )}
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.womens')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.womensHealth')}</p>
+            </div>
+          </Card>
+        </Link>
         
-        {settings.showVideoSubscription && (
-          <Link to="/videos">
-            <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-              <div className="flex flex-col items-center text-center">
-                <div className="p-2 sm:p-3 mb-2 rounded-full bg-amber-500/10 dark:bg-amber-500/20">
-                  <div className="text-amber-500 dark:text-amber-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"><path d="M14.04 14.04v-4.08"/><path d="M10 10v4"/><path d="M6 14.08V9.92a1 1 0 0 1 .5-.87l8-4.61a1 1 0 0 1 1 0l8 4.61a1 1 0 0 1 .5.87v4.16a1 1 0 0 1-.5.87l-8 4.61a1 1 0 0 1-1 0l-8-4.61a1 1 0 0 1-.5-.87Z"/></svg>
-                  </div>
+        <Link to="/videos">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-amber-500/10 dark:bg-amber-500/20">
+                <div className="text-amber-500 dark:text-amber-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"><path d="M14.04 14.04v-4.08"/><path d="M10 10v4"/><path d="M6 14.08V9.92a1 1 0 0 1 .5-.87l8-4.61a1 1 0 0 1 1 0l8 4.61a1 1 0 0 1 .5.87v4.16a1 1 0 0 1-.5.87l-8 4.61a1 1 0 0 1-1 0l-8-4.61a1 1 0 0 1-.5-.87Z"/></svg>
                 </div>
-                <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.videos')}</h3>
-                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.videoClubs')}</p>
               </div>
-            </Card>
-          </Link>
-        )}
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.videos')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.videoClubs')}</p>
+            </div>
+          </Card>
+        </Link>
+        
+        <Link to="/exams">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-cyan-50 to-cyan-100 dark:from-cyan-900/30 dark:to-cyan-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-cyan-500/10 dark:bg-cyan-500/20">
+                <FileText className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-cyan-500 dark:text-cyan-400" />
+              </div>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.exams')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.medicalExams')}</p>
+            </div>
+          </Card>
+        </Link>
       </div>
     </MainLayout>
   );
