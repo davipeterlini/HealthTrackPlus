@@ -416,26 +416,27 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.communication')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.healthTips')}</span>
+                            <span className="font-medium">{t('settings.healthTips')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.healthTipsDescription')}
                             </span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={notifyHealthTips}
                             onCheckedChange={setNotifyHealthTips}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.newsletterAndUpdates')}</span>
+                            <span className="font-medium">{t('settings.newsletterAndUpdates')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.newsletterAndUpdatesDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
                       </div>
                     </div>
@@ -455,38 +456,42 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold">{t('settings.visibleWidgets')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.waterTracker')}</span>
+                            <span className="font-medium">{t('settings.waterTracker')}</span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={showWaterTracker}
                             onCheckedChange={setShowWaterTracker}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.sleepTracker')}</span>
+                            <span className="font-medium">{t('settings.sleepTracker')}</span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={showSleepTracker}
                             onCheckedChange={setShowSleepTracker}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.activityTracker')}</span>
+                            <span className="font-medium">{t('settings.activityTracker')}</span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={showActivityTracker}
                             onCheckedChange={setShowActivityTracker}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.nutritionTracker')}</span>
+                            <span className="font-medium">{t('settings.nutritionTracker')}</span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={showNutritionTracker}
                             onCheckedChange={setShowNutritionTracker}
                           />
@@ -497,23 +502,23 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.dashboardLayout')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.compactView')}</span>
+                            <span className="font-medium">{t('settings.compactView')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.compactViewDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.enableDragAndDrop')}</span>
+                            <span className="font-medium">{t('settings.enableDragAndDrop')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.enableDragAndDropDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
                       </div>
                     </div>
@@ -603,23 +608,23 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.behavior')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.confirmBeforeDataDeletion')}</span>
+                            <span className="font-medium">{t('settings.confirmBeforeDataDeletion')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.confirmBeforeDataDeletionDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.autoSaveEntries')}</span>
+                            <span className="font-medium">{t('settings.autoSaveEntries')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.autoSaveEntriesDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
                       </div>
                     </div>
@@ -639,23 +644,23 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold">{t('settings.dataSharing')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.shareAnalyticsData')}</span>
+                            <span className="font-medium">{t('settings.shareAnalyticsData')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.shareAnalyticsDataDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked={false} />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked={false} />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.enhancementsAndRecommendations')}</span>
+                            <span className="font-medium">{t('settings.enhancementsAndRecommendations')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.enhancementsAndRecommendationsDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
                       </div>
                       
@@ -663,23 +668,23 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.accessControl')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.requirePasswordForSensitiveData')}</span>
+                            <span className="font-medium">{t('settings.requirePasswordForSensitiveData')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.requirePasswordForSensitiveDataDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.enableBiometricAuthentication')}</span>
+                            <span className="font-medium">{t('settings.enableBiometricAuthentication')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.enableBiometricAuthenticationDescription')}
                             </span>
                           </div>
-                          <Switch />
+                          <Switch className="mt-1 sm:mt-0" />
                         </div>
                       </div>
                     </div>
@@ -701,12 +706,12 @@ export default function SettingsPage() {
                       <div className="space-y-3">
                         <div className="space-y-2">
                           <Label htmlFor="export-format">{t('settings.exportFormat')}</Label>
-                          <div className="flex gap-2">
+                          <div className="flex flex-col sm:flex-row gap-2">
                             <Select 
                               value={exportFormat}
                               onValueChange={setExportFormat}
                             >
-                              <SelectTrigger id="export-format" className="w-40">
+                              <SelectTrigger id="export-format" className="w-full sm:w-40">
                                 <SelectValue placeholder={t('settings.selectFormat')} />
                               </SelectTrigger>
                               <SelectContent>
@@ -715,7 +720,7 @@ export default function SettingsPage() {
                                 <SelectItem value="pdf">PDF</SelectItem>
                               </SelectContent>
                             </Select>
-                            <Button variant="outline" className="flex gap-2">
+                            <Button variant="outline" className="flex gap-2 w-full sm:w-auto justify-center">
                               <Download className="h-4 w-4" />
                               {t('settings.exportData')}
                             </Button>
@@ -731,7 +736,7 @@ export default function SettingsPage() {
                           <span className="text-xs text-gray-500 dark:text-gray-400">
                             {t('settings.dataImportDescription')}
                           </span>
-                          <Button variant="outline" className="flex gap-2 w-40">
+                          <Button variant="outline" className="flex gap-2 w-full sm:w-40 justify-center">
                             <Upload className="h-4 w-4" />
                             {t('settings.importData')}
                           </Button>
@@ -771,7 +776,7 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold">{t('settings.developmentSettings')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
                             <span className="font-medium">{t('settings.skipAuth')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -779,18 +784,19 @@ export default function SettingsPage() {
                             </span>
                           </div>
                           <Switch 
+                            className="mt-1 sm:mt-0"
                             checked={skipAuth}
                             onCheckedChange={toggleSkipAuth}
                           />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
                             <span className="font-medium">{t('settings.showComponentBorders')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.showComponentBordersDescription')}
                             </span>
                           </div>
-                          <Switch />
+                          <Switch className="mt-1 sm:mt-0" />
                         </div>
                       </div>
                       
@@ -798,35 +804,35 @@ export default function SettingsPage() {
                       
                       <h3 className="text-lg font-semibold">{t('settings.testingTools')}</h3>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.enableMockData')}</span>
+                            <span className="font-medium">{t('settings.enableMockData')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.enableMockDataDescription')}
                             </span>
                           </div>
-                          <Switch defaultChecked />
+                          <Switch className="mt-1 sm:mt-0" defaultChecked />
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
-                            <span>{t('settings.simulateSlowNetwork')}</span>
+                            <span className="font-medium">{t('settings.simulateSlowNetwork')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {t('settings.simulateSlowNetworkDescription')}
                             </span>
                           </div>
-                          <Switch />
+                          <Switch className="mt-1 sm:mt-0" />
                         </div>
                       </div>
                       
                       <Separator className="my-4" />
                       
                       <h3 className="text-lg font-semibold">{t('settings.advancedOptions')}</h3>
-                      <div className="space-y-3">
-                        <Button variant="outline" className="flex gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <Button variant="outline" className="flex gap-2 w-full sm:w-auto justify-center">
                           <FileText className="h-4 w-4" />
                           {t('settings.viewLogs')}
                         </Button>
-                        <Button variant="outline" className="flex gap-2">
+                        <Button variant="outline" className="flex gap-2 w-full sm:w-auto justify-center">
                           <RefreshCw className="h-4 w-4" />
                           {t('settings.resetDevSettings')}
                         </Button>
