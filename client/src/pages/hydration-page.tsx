@@ -6,19 +6,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "react-i18next";
 import { WaterIntakeRecord } from "@shared/schema";
 import { Droplet, DropletIcon, History, TrendingUp } from "lucide-react";
+import { FC } from "react";
 
 export default function HydrationPage() {
   const { t } = useTranslation();
   
   // Obter registros de consumo de água
-  const { data: waterRecords, isPending: isLoadingWaterRecords } = useQuery({
+  const { data: waterRecords = [], isPending: isLoadingWaterRecords } = useQuery<WaterIntakeRecord[]>({
     queryKey: ["/api/water"],
     refetchOnWindowFocus: false,
   });
 
   // Calcular estatísticas de hidratação
   const calculateHydrationStats = () => {
-    if (!waterRecords || waterRecords.length === 0) {
+    if (waterRecords.length === 0) {
       return {
         todayTotal: 0,
         weeklyAverage: 0,
