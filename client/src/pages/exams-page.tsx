@@ -327,11 +327,11 @@ export default function ExamsPage() {
                       
                       {selectedExam.aiProcessed ? (
                         <Badge className="bg-blue-50 text-blue-600 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
-                          AI Analyzed
+                          {t('exams.aiAnalyzed')}
                         </Badge>
                       ) : (
                         <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm">
-                          Analyze with AI
+                          {t('exams.analyzeWithAI')}
                         </Button>
                       )}
                     </div>
@@ -428,11 +428,11 @@ export default function ExamsPage() {
                   ) : examInsights.length === 0 ? (
                     <div className="text-center py-8">
                       <p className="text-gray-500 dark:text-gray-400 mb-2">
-                        No insights available for this exam yet.
+                        {t('exams.noAnalysisAvailable')}
                       </p>
                       {!selectedExam.aiProcessed && (
                         <Button onClick={handleAnalyzeExam} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm">
-                          Generate Insights with AI
+                          {t('exams.generateInsightsWithAI')}
                         </Button>
                       )}
                     </div>
@@ -501,11 +501,11 @@ export default function ExamsPage() {
                   <div className="flex flex-col items-center justify-center py-10 border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-700">
                     <FileText className="h-10 w-10 text-gray-400 dark:text-gray-500 mb-3" />
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                      {selectedExam.fileUrl ? selectedExam.fileUrl.split('/').pop() : "No file available"}
+                      {selectedExam.fileUrl ? selectedExam.fileUrl.split('/').pop() : t('common.notAvailable')}
                     </p>
                     {selectedExam.fileUrl && (
                       <Button variant="outline" className="flex items-center">
-                        <Download className="h-4 w-4 mr-2" /> Download File
+                        <Download className="h-4 w-4 mr-2" /> {t('exams.downloadExam')}
                       </Button>
                     )}
                   </div>
@@ -520,9 +520,9 @@ export default function ExamsPage() {
       <Dialog open={analysisDialogOpen} onOpenChange={setAnalysisDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Analysis Complete</DialogTitle>
+            <DialogTitle>{t('exams.completed')}</DialogTitle>
             <DialogDescription>
-              The AI analysis of your exam has been completed successfully.
+              {t('exams.examUploaded')}
             </DialogDescription>
           </DialogHeader>
           
@@ -533,13 +533,12 @@ export default function ExamsPage() {
           </div>
           
           <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
-            We've analyzed your exam and generated health insights based on the results.
-            You can view the detailed analysis and recommendations in the exam details.
+            {t('exams.aiAnalyzed')}. {t('exams.detailedResults')}.
           </p>
           
           <div className="flex justify-center">
             <Button onClick={() => setAnalysisDialogOpen(false)} className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm">
-              View Results
+              {t('exams.viewResults')}
             </Button>
           </div>
         </DialogContent>
@@ -576,12 +575,12 @@ export default function ExamsPage() {
                   <SelectValue placeholder="Select exam type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Blood Test">Blood Test</SelectItem>
-                  <SelectItem value="Imaging">Imaging</SelectItem>
-                  <SelectItem value="Cardiac">Cardiac</SelectItem>
-                  <SelectItem value="Urine Test">Urine Test</SelectItem>
-                  <SelectItem value="General Checkup">General Checkup</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  <SelectItem value="Blood Test">{t('exams.bloodTest')}</SelectItem>
+                  <SelectItem value="Imaging">{t('exams.imagingTest')}</SelectItem>
+                  <SelectItem value="Cardiac">Cardiológico</SelectItem>
+                  <SelectItem value="Urine Test">{t('exams.urineTest')}</SelectItem>
+                  <SelectItem value="General Checkup">Check-up Geral</SelectItem>
+                  <SelectItem value="Other">{t('exams.otherTest')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
