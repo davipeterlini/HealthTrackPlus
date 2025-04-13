@@ -613,7 +613,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.womens')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Cycle & Fertility Tracking' : 'Monitoramento de Ciclo e Fertilidade'}</p>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.womensHealth')}</p>
             </div>
           </Card>
         </Link>
@@ -627,7 +627,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.videos')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Premium videos & tutorials' : 'Vídeos premium e tutoriais'}</p>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.videoSubscription')}</p>
             </div>
           </Card>
         </Link>
