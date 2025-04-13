@@ -13,6 +13,7 @@ import SettingsPage from "@/pages/settings-page";
 import MentalPage from "@/pages/mental-page";
 import SleepPage from "@/pages/sleep-page";
 import HydrationPage from "@/pages/hydration-page";
+import MedicationPage from "@/pages/medication-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
@@ -32,6 +33,7 @@ function Router(): ReactElement {
       <ProtectedRoute path="/mental" component={MentalPage} />
       <ProtectedRoute path="/sleep" component={SleepPage} />
       <ProtectedRoute path="/hydration" component={HydrationPage} />
+      <ProtectedRoute path="/medication" component={MedicationPage} />
       <ProtectedRoute path="/settings" component={SettingsPage} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />

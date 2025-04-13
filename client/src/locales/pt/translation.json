@@ -191,6 +191,30 @@
     "overview": "Visão Geral",
     "detailedRecommendations": "Recomendações Detalhadas"
   },
+  "medication": {
+    "title": "Gerenciamento de Medicamentos",
+    "addMedication": "Adicionar Medicamento",
+    "currentMedications": "Medicamentos Atuais",
+    "todaysReminders": "Lembretes de Hoje",
+    "schedule": "Programação",
+    "morning": "Manhã",
+    "lunch": "Almoço",
+    "dinner": "Jantar",
+    "bedtime": "Hora de Dormir",
+    "daily": "Diário",
+    "weekly": "Semanal",
+    "tablet": "comprimido",
+    "capsule": "cápsula",
+    "liquid": "líquido",
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "taken": "Tomado",
+    "markAsTaken": "Marcar como Tomado",
+    "upcoming": "Em breve",
+    "refillReminder": "Lembrete de Recarga",
+    "medicationHistory": "Histórico de Medicamentos"
+  },
+
   "water": {
     "waterIntake": "Consumo de Água",
     "ofGoal": "da meta de",

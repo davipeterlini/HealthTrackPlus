@@ -439,6 +439,30 @@
     "skipAuthEnabled": "Authentication Bypass Enabled",
     "skipAuthDisabled": "Authentication Bypassed Disabled"
   },
+  "medication": {
+    "title": "Medication Management",
+    "addMedication": "Add Medication",
+    "currentMedications": "Current Medications",
+    "todaysReminders": "Today's Reminders",
+    "schedule": "Schedule",
+    "morning": "Morning",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "bedtime": "Bedtime",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "tablet": "tablet",
+    "capsule": "capsule",
+    "liquid": "liquid",
+    "active": "Active",
+    "inactive": "Inactive",
+    "taken": "Taken",
+    "markAsTaken": "Mark as Taken",
+    "upcoming": "Upcoming",
+    "refillReminder": "Refill Reminder",
+    "medicationHistory": "Medication History"
+  },
+
   "water": {
     "waterIntake": "Water Intake",
     "ofGoal": "of goal",
