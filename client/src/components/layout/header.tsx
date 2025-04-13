@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
-import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X } from "lucide-react";
+import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
+import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -28,23 +29,86 @@ import {
   SheetClose
 } from "@/components/ui/sheet";
 
-const getNavItems = (t: any) => [
-  { path: "/", label: t('navigation.home'), icon: Home },
-  { path: "/activity", label: t('navigation.activity'), icon: Activity },
-  { path: "/nutrition", label: t('navigation.water'), icon: Droplets },
-  { path: "/sleep", label: t('navigation.sleep'), icon: Moon },
-  { path: "/mental", label: t('navigation.mental'), icon: Brain },
-  { path: "/exams", label: t('navigation.exams'), icon: FileText }
-];
+const getNavItems = (t: any, settings: any = {}) => {
+  // Valores padrão para settings caso não seja definido
+  const defaultSettings = {
+    showActivityTracker: true,
+    showWaterTracker: true,
+    showSleepTracker: true,
+    showMentalHealthTracker: true,
+    showMedicationTracker: true,
+    showWomensHealthTracker: true,
+    showVideoSubscription: true,
+  };
+  
+  // Usar os settings passados ou os padrões
+  const effectiveSettings = settings || defaultSettings;
+  
+  const baseItems = [
+    { path: "/", label: t('navigation.home'), icon: Home, alwaysShow: true },
+  ];
+  
+  const conditionalItems = [
+    { 
+      path: "/activity", 
+      label: t('navigation.activity'), 
+      icon: Activity, 
+      show: effectiveSettings.showActivityTracker 
+    },
+    { 
+      path: "/nutrition", 
+      label: t('navigation.water'), 
+      icon: Droplets, 
+      show: effectiveSettings.showWaterTracker 
+    },
+    { 
+      path: "/sleep", 
+      label: t('navigation.sleep'), 
+      icon: Moon, 
+      show: effectiveSettings.showSleepTracker 
+    },
+    { 
+      path: "/mental", 
+      label: t('navigation.mental'), 
+      icon: Brain, 
+      show: effectiveSettings.showMentalHealthTracker 
+    },
+    { 
+      path: "/medication", 
+      label: t('navigation.medication'), 
+      icon: Pill, 
+      show: effectiveSettings.showMedicationTracker 
+    },
+    { 
+      path: "/womens-health", 
+      label: t('navigation.womens'), 
+      icon: PieChart, 
+      show: effectiveSettings.showWomensHealthTracker 
+    },
+    { 
+      path: "/exams", 
+      label: t('navigation.exams'), 
+      icon: FileText, 
+      alwaysShow: true 
+    }
+  ];
+  
+  // Adiciona itens condicionais apenas se estiverem habilitados ou sempre visíveis
+  return [
+    ...baseItems,
+    ...conditionalItems.filter(item => item.alwaysShow || item.show)
+  ];
+};
 
 export function Header() {
   const [location] = useLocation();
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const { settings } = useDashboardSettings();
   
-  // Get translated navigation items
-  const navItems = getNavItems(t);
+  // Get translated navigation items with visibility based on dashboard settings
+  const navItems = getNavItems(t, settings);
 
   const getInitials = (name: string) => {
     return name
