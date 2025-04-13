@@ -31,7 +31,7 @@ import { formatDate } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 
 export default function ExamsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedExamId, setSelectedExamId] = useState<number | null>(null);
@@ -561,7 +561,7 @@ export default function ExamsPage() {
                 id="exam-name" 
                 value={newExam.name} 
                 onChange={(e) => handleExamChange('name', e.target.value)}
-                placeholder="Ex: Blood Test Q1 2025"
+                placeholder={i18n.language === 'pt' ? "Ex: Exame de Sangue Q1 2025" : "Ex: Blood Test Q1 2025"}
               />
             </div>
             
@@ -572,7 +572,7 @@ export default function ExamsPage() {
                 onValueChange={(value) => handleExamChange('type', value)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select exam type" />
+                  <SelectValue placeholder={i18n.language === 'pt' ? "Selecione o tipo de exame" : "Select exam type"} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Blood Test">{t('exams.bloodTest')}</SelectItem>
@@ -628,7 +628,7 @@ export default function ExamsPage() {
                         {t('health.dragDropOrClick')}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-500">
-                        PDF, JPG, PNG (max 10MB)
+                        {t('health.maxFileSize')}
                       </p>
                     </div>
                   )}
