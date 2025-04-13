@@ -295,7 +295,9 @@ export default function DashboardPage() {
             return (
               <>
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white">{t('health.hydration')}</h3>
+                  <Link to="/hydration" className="group">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
+                  </Link>
                   <div className="relative w-10 h-6">
                     <Droplet className="absolute h-6 w-6 text-blue-500 dark:text-blue-400 right-0" />
                     <Droplet className="absolute h-5 w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
