@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
@@ -19,6 +18,8 @@ import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
 
 export default function DashboardPage() {
   const { t } = useTranslation();
+  const { settings } = useDashboardSettings();
+  
   const { data: exams = [] } = useQuery<MedicalExam[]>({
     queryKey: ["/api/exams"],
   });
@@ -56,10 +57,30 @@ export default function DashboardPage() {
         return "bg-gray-50 text-gray-500 border-gray-200";
     }
   };
+  
+  // Funções para controle de água
+  const addWater = (amount: number) => {
+    const waterGoal = isLoadingStats || !dashboardStats 
+      ? 2500 
+      : dashboardStats.hydration.goal;
+    setWaterAmount(prev => Math.min(waterGoal, prev + amount));
+  }
+  
+  const removeWater = (amount: number) => {
+    setWaterAmount(prev => Math.max(0, prev - amount));
+  }
+  
+  // Calcular porcentagem de hidratação
+  const waterGoal = isLoadingStats || !dashboardStats 
+    ? 2500 
+    : dashboardStats.hydration.goal;
+  const waterPercentage = Math.min(100, Math.round((waterAmount / waterGoal) * 100));
+  
   return (
     <MainLayout title={t('health.greeting')}>
       <p className="text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">{t('health.todayOverview')}</p>
 
+      {/* Big Numbers */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
@@ -134,308 +155,304 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 mb-8 shadow-md overflow-hidden">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-          <h3 className="text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
-            <div className="flex items-center">
-              <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
-              <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
+      {/* Weekly Activity Chart */}
+      {settings.showActivityTracker && (
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 mb-8 shadow-md overflow-hidden">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <h3 className="text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
+              <div className="flex items-center">
+                <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
+                <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
+                <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
+              </div>
             </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
-              <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
-            </div>
-          </div>
-        </div>
-        
-        <div className="relative h-40 sm:h-52 mt-6 sm:mt-2 ml-4 sm:ml-6 mr-1">
-          {/* Linhas de grade horizontais */}
-          <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none">
-            {[0, 1, 2, 3, 4].map((_, i) => (
-              <div 
-                key={i} 
-                className="border-t border-gray-100 dark:border-gray-800 w-full h-0"
-                style={{ top: `${i * 25}%` }}
-              />
-            ))}
           </div>
           
-          <div className="grid grid-cols-7 gap-1 sm:gap-2 h-full relative z-10">
-            {(isLoadingStats || !dashboardStats?.weeklyActivity.days ? [
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sun' : 'Dom', 
-                steps: 5240, 
-                cals: 1250, 
-                active: 25, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'D' 
-              },
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Mon' : 'Seg', 
-                steps: 7890, 
-                cals: 1540, 
-                active: 48, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'M' : 'S' 
-              },
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Tue' : 'Ter', 
-                steps: 9450, 
-                cals: 1780, 
-                active: 62, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'T' : 'T' 
-              },
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Wed' : 'Qua', 
-                steps: 10200, 
-                cals: 1820, 
-                active: 75, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'W' : 'Q' 
-              },
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Thu' : 'Qui', 
-                steps: 8750, 
-                cals: 1650, 
-                active: 53, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'T' : 'Q' 
-              },
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Fri' : 'Sex', 
-                steps: 12100, 
-                cals: 2100, 
-                active: 85, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'F' : 'S' 
-              },
-              { 
-                day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sat' : 'Sáb', 
-                steps: 6800, 
-                cals: 1420, 
-                active: 40, 
-                shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'S' 
-              }
-            ] : dashboardStats.weeklyActivity.days).map((item, i) => (
-              <div key={i} className="flex flex-col items-center h-full justify-end">
-                <div className="w-full relative flex items-end justify-center h-[85%]">
-                  {/* Barra de passos */}
-                  <div 
-                    className="w-[70%] mx-auto bg-emerald-500/80 dark:bg-emerald-500/70 rounded-t-md z-20 relative group cursor-pointer"
-                    style={{ height: `${Math.max(item.active * 0.7, 2)}%` }}
-                  >
-                    {/* Tooltip ao passar o mouse ou tocar */}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
-                      <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
-                        <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
-                        <div className="flex justify-between text-slate-600 dark:text-gray-300">
-                          <span>{t('activity.stepsLabel')}:</span>
-                          <span>{item.steps.toLocaleString()}</span>
+          <div className="relative h-40 sm:h-52 mt-6 sm:mt-2 ml-4 sm:ml-6 mr-1">
+            {/* Linhas de grade horizontais */}
+            <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none">
+              {[0, 1, 2, 3, 4].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="border-t border-gray-100 dark:border-gray-800 w-full h-0"
+                  style={{ top: `${i * 25}%` }}
+                />
+              ))}
+            </div>
+            
+            <div className="grid grid-cols-7 gap-1 sm:gap-2 h-full relative z-10">
+              {(isLoadingStats || !dashboardStats?.weeklyActivity.days ? [
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sun' : 'Dom', 
+                  steps: 5240, 
+                  cals: 1250, 
+                  active: 25, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'D' 
+                },
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Mon' : 'Seg', 
+                  steps: 7890, 
+                  cals: 1540, 
+                  active: 48, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'M' : 'S' 
+                },
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Tue' : 'Ter', 
+                  steps: 9450, 
+                  cals: 1780, 
+                  active: 62, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'T' : 'T' 
+                },
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Wed' : 'Qua', 
+                  steps: 10200, 
+                  cals: 1820, 
+                  active: 75, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'W' : 'Q' 
+                },
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Thu' : 'Qui', 
+                  steps: 8750, 
+                  cals: 1650, 
+                  active: 53, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'T' : 'Q' 
+                },
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Fri' : 'Sex', 
+                  steps: 12100, 
+                  cals: 2100, 
+                  active: 85, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'F' : 'S' 
+                },
+                { 
+                  day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sat' : 'Sáb', 
+                  steps: 6800, 
+                  cals: 1420, 
+                  active: 40, 
+                  shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'S' 
+                }
+              ] : dashboardStats.weeklyActivity.days).map((item, i) => (
+                <div key={i} className="flex flex-col items-center h-full justify-end">
+                  <div className="w-full relative flex items-end justify-center h-[85%]">
+                    {/* Barra de passos */}
+                    <div 
+                      className="w-[70%] mx-auto bg-emerald-500/80 dark:bg-emerald-500/70 rounded-t-md z-20 relative group cursor-pointer"
+                      style={{ height: `${Math.max(item.active * 0.7, 2)}%` }}
+                    >
+                      {/* Tooltip ao passar o mouse ou tocar */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
+                        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
+                          <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
+                          <div className="flex justify-between text-slate-600 dark:text-gray-300">
+                            <span>{t('activity.stepsLabel')}:</span>
+                            <span>{item.steps.toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-slate-600 dark:text-gray-300">
+                            <span>{t('activity.caloriesLabel')}:</span>
+                            <span>{item.cals}</span>
+                          </div>
                         </div>
-                        <div className="flex justify-between text-slate-600 dark:text-gray-300">
-                          <span>{t('activity.caloriesLabel')}:</span>
-                          <span>{item.cals}</span>
-                        </div>
+                        <div className="border-t-8 border-t-white dark:border-t-slate-800 border-l-8 border-l-transparent border-r-8 border-r-transparent h-0 w-0 absolute left-1/2 transform -translate-x-1/2"></div>
                       </div>
-                      <div className="border-t-8 border-t-white dark:border-t-slate-800 border-l-8 border-l-transparent border-r-8 border-r-transparent h-0 w-0 absolute left-1/2 transform -translate-x-1/2"></div>
+                    </div>
+                    
+                    {/* Linha de calorias */}
+                    <div 
+                      className="absolute bottom-0 w-[70%] mx-auto left-0 right-0 h-0.5 bg-blue-500 z-10"
+                      style={{ bottom: `${Math.min((item.cals / 2500) * 100 * 0.7, 100)}%` }}
+                    >
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500 absolute right-0 top-1/2 transform -translate-y-1/2"></div>
                     </div>
                   </div>
                   
-                  {/* Linha de calorias */}
-                  <div 
-                    className="absolute bottom-0 w-[70%] mx-auto left-0 right-0 h-0.5 bg-blue-500 z-10"
-                    style={{ bottom: `${Math.min((item.cals / 2500) * 100 * 0.7, 100)}%` }}
-                  >
-                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500 absolute right-0 top-1/2 transform -translate-y-1/2"></div>
+                  <div className="flex flex-col items-center mt-2">
+                    <span className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 hidden sm:block">{item.day}</span>
+                    <span className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 block sm:hidden">{item.shortDay}</span>
+                    <span className="text-[10px] sm:text-xs text-slate-500 dark:text-gray-500 mt-0.5">{Math.round(item.steps/1000)}k</span>
                   </div>
                 </div>
-                
-                <div className="flex flex-col items-center mt-2">
-                  <span className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 hidden sm:block">{item.day}</span>
-                  <span className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 block sm:hidden">{item.shortDay}</span>
-                  <span className="text-[10px] sm:text-xs text-slate-500 dark:text-gray-500 mt-0.5">{Math.round(item.steps/1000)}k</span>
+              ))}
+            </div>
+            
+            {/* Escala vertical - visível apenas em telas maiores */}
+            <div className="absolute -left-2 sm:left-0 top-0 bottom-8 flex flex-col justify-between">
+              {[10000, 7500, 5000, 2500, 0].map((value, i) => (
+                <div key={i} className="text-[10px] sm:text-xs text-slate-400 dark:text-gray-500 -translate-x-4 sm:-translate-x-6">
+                  {i === 0 ? '10k' : 
+                   i === 1 ? '7.5k' : 
+                   i === 2 ? '5k' : 
+                   i === 3 ? '2.5k' : '0'}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           
-          {/* Escala vertical - visível apenas em telas maiores */}
-          <div className="absolute -left-2 sm:left-0 top-0 bottom-8 flex flex-col justify-between">
-            {[10000, 7500, 5000, 2500, 0].map((value, i) => (
-              <div key={i} className="text-[10px] sm:text-xs text-slate-400 dark:text-gray-500 -translate-x-4 sm:-translate-x-6">
-                {i === 0 ? '10k' : 
-                 i === 1 ? '7.5k' : 
-                 i === 2 ? '5k' : 
-                 i === 3 ? '2.5k' : '0'}
-              </div>
-            ))}
+          {/* Informações responsivas para telas menores */}
+          <div className="mt-2 text-xs text-center text-slate-500 dark:text-gray-400 sm:hidden">
+            <p>{t('health.touchBars')}</p>
           </div>
-        </div>
-        
-        {/* Informações responsivas para telas menores */}
-        <div className="mt-2 text-xs text-center text-slate-500 dark:text-gray-400 sm:hidden">
-          <p>{t('health.touchBars')}</p>
-        </div>
-      </Card>
+        </Card>
+      )}
 
+      {/* Hydration & Sleep Trackers */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
-          {/* Componente de hidratação sem funções IIFE */}
-          {/* Usar dados da API ou fallback para a meta */}
-          {(() => {
-            const waterGoal = isLoadingStats || !dashboardStats 
-              ? 2500 
-              : dashboardStats.hydration.goal;
+        {/* Hydration Tracker */}
+        {settings.showWaterTracker && (
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
+            <div className="flex justify-between items-center mb-6">
+              <Link to="/hydration" className="group">
+                <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
+              </Link>
+              <div className="relative w-10 h-6">
+                <Droplet className="absolute h-6 w-6 text-blue-500 dark:text-blue-400 right-0" />
+                <Droplet className="absolute h-5 w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
+              </div>
+            </div>
             
-            const percentage = Math.min(100, Math.round((waterAmount / waterGoal) * 100));
-            
-            function addWater(amount: number) {
-              setWaterAmount(prev => Math.min(waterGoal, prev + amount));
-            }
-            
-            function removeWater(amount: number) {
-              setWaterAmount(prev => Math.max(0, prev - amount));
-            }
-            
-            return (
-              <>
-                <div className="flex justify-between items-center mb-6">
-                  <Link to="/hydration" className="group">
-                    <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
-                  </Link>
-                  <div className="relative w-10 h-6">
-                    <Droplet className="absolute h-6 w-6 text-blue-500 dark:text-blue-400 right-0" />
-                    <Droplet className="absolute h-5 w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
-                  </div>
-                </div>
-                <div className="space-y-5">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-800 dark:text-white text-xl font-medium">{waterAmount} ml</span>
-                    <span className="text-slate-500 dark:text-gray-400">{t('health.goal')}: {waterGoal} ml</span>
-                  </div>
-                  <div className="h-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-teal-400 dark:bg-teal-500 rounded-full transition-all duration-300" 
-                      style={{ width: `${percentage}%` }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-center gap-4 mt-6">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => removeWater(150)}
-                      className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-9 px-3"
-                    >
-                      <span className="text-teal-500 dark:text-blue-400 mr-1">−</span>
-                      <span className="text-teal-500 dark:text-blue-400 text-sm">150ml</span>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => addWater(250)}
-                      className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-9 px-3"
-                    >
-                      <span className="text-blue-500 dark:text-blue-400 mr-1">+</span>
-                      <span className="text-blue-500 dark:text-blue-400 text-sm">250ml</span>
-                    </Button>
-                  </div>
-                </div>
-              </>
-            );
-          })()}
-        </Card>
-
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-5 shadow-md rounded-xl">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
-            <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-500 dark:text-indigo-300" />
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <div className="flex items-center">
-                <Moon className="h-4 w-4 text-slate-500 dark:text-gray-400 mr-1.5" />
-                <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
+            <div className="space-y-5">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-800 dark:text-white text-xl font-medium">{waterAmount} ml</span>
+                <span className="text-slate-500 dark:text-gray-400">{t('health.goal')}: {waterGoal} ml</span>
               </div>
-              <div className="flex items-center">
-                <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
-                <span className="h-4 w-4 text-yellow-500 dark:text-yellow-400 ml-1.5">☀</span>
+              
+              <div className="h-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-teal-400 dark:bg-teal-500 rounded-full transition-all duration-300" 
+                  style={{ width: `${waterPercentage}%` }}
+                ></div>
+              </div>
+              
+              <div className="flex justify-center gap-4 mt-6">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => removeWater(150)}
+                  className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-9 px-3"
+                >
+                  <span className="text-teal-500 dark:text-blue-400 mr-1">−</span>
+                  <span className="text-teal-500 dark:text-blue-400 text-sm">150ml</span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => addWater(250)}
+                  className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-9 px-3"
+                >
+                  <span className="text-blue-500 dark:text-blue-400 mr-1">+</span>
+                  <span className="text-blue-500 dark:text-blue-400 text-sm">250ml</span>
+                </Button>
               </div>
             </div>
-            <div className="mt-4">
-              <div className="flex items-start">
-                <h2 className="text-4xl font-bold text-slate-800 dark:text-white">
-                  {isLoadingStats ? '...' : `${dashboardStats?.sleep.value || 7.5}h`}
-                </h2>
-                <span className="ml-auto text-green-500 dark:text-green-400 text-lg">{t('health.goodQuality')}</span>
-              </div>
-              <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
-            </div>
-          </div>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
-          <div className="flex justify-between items-center mb-3 sm:mb-4">
-            <h3 className="text-base sm:text-lg font-semibold">{t('health.upcomingReminders')}</h3>
-            <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
-              {t("health.viewAll")}
-            </Button>
-          </div>
-          <div className="space-y-2 sm:space-y-3">
-            <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
-                  <Pill className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
-                </div>
-                <div>
-                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
-                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Take Vitamin D' : 'Tomar Vitamina D'}
-                  </p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
-                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? '1 capsule with breakfast' : '1 cápsula com café da manhã'}
-                  </p>
-                </div>
-              </div>
-              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
-                {localStorage.getItem('i18nextLng')?.startsWith('en') ? '8:00 AM' : '08:00'}
-              </span>
-            </div>
-            <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
-                  <Activity className="h-3 w-3 sm:h-4 sm:w-4 text-rose-500" />
-                </div>
-                <div>
-                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
-                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Exercise' : 'Exercícios'}
-                  </p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
-                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? '30 minutes of walking' : '30 minutos de caminhada'}
-                  </p>
-                </div>
-              </div>
-              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
-                {localStorage.getItem('i18nextLng')?.startsWith('en') ? '6:30 PM' : '18:30'}
-              </span>
-            </div>
-            <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
-                  <Brain className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500" />
-                </div>
-                <div>
-                  <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
-                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Evening Meditation' : 'Meditação Noturna'}
-                  </p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
-                    {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Relaxation routine' : 'Rotina de relaxamento'}
-                  </p>
-                </div>
-              </div>
-              <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
-                {localStorage.getItem('i18nextLng')?.startsWith('en') ? '10:00 PM' : '22:00'}
-              </span>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        )}
         
+        {/* Sleep Tracker */}
+        {settings.showSleepTracker && (
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-5 shadow-md rounded-xl">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
+              <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-500 dark:text-indigo-300" />
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <div className="flex items-center">
+                  <Moon className="h-4 w-4 text-slate-500 dark:text-gray-400 mr-1.5" />
+                  <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
+                  <span className="h-4 w-4 text-yellow-500 dark:text-yellow-400 ml-1.5">☀</span>
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="flex items-start">
+                  <h2 className="text-4xl font-bold text-slate-800 dark:text-white">
+                    {isLoadingStats ? '...' : `${dashboardStats?.sleep.value || 7.5}h`}
+                  </h2>
+                  <span className="ml-auto text-green-500 dark:text-green-400 text-lg">{t('health.goodQuality')}</span>
+                </div>
+                <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
+              </div>
+            </div>
+          </Card>
+        )}
+      </div>
+      
+      {/* Medication & Exam Alerts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {/* Medication Reminders */}
+        {settings.showMedicationTracker && (
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+              <h3 className="text-base sm:text-lg font-semibold">{t('health.upcomingReminders')}</h3>
+              <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
+                {t("health.viewAll")}
+              </Button>
+            </div>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
+                    <Pill className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Take Vitamin D' : 'Tomar Vitamina D'}
+                    </p>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? '1 capsule with breakfast' : '1 cápsula com café da manhã'}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                  {localStorage.getItem('i18nextLng')?.startsWith('en') ? '8:00 AM' : '08:00'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
+                    <Activity className="h-3 w-3 sm:h-4 sm:w-4 text-rose-500" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Exercise' : 'Exercícios'}
+                    </p>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? '30 minutes of walking' : '30 minutos de caminhada'}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                  {localStorage.getItem('i18nextLng')?.startsWith('en') ? '6:30 PM' : '18:30'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
+                    <Brain className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Evening Meditation' : 'Meditação Noturna'}
+                    </p>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                      {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Relaxation routine' : 'Rotina de relaxamento'}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                  {localStorage.getItem('i18nextLng')?.startsWith('en') ? '10:00 PM' : '22:00'}
+                </span>
+              </div>
+            </div>
+          </Card>
+        )}
+        
+        {/* Exam Alerts */}
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
           <div className="flex justify-between items-center mb-3 sm:mb-4">
             <h3 className="text-base sm:text-lg font-semibold">{t('health.examAlerts')}</h3>
@@ -518,7 +535,7 @@ export default function DashboardPage() {
         </Card>
       </div>
       
-      {/* Atalhos para Módulos */}
+      {/* Quick Access Modules */}
       <div className="flex items-center justify-between mb-3 sm:mb-4">
         <h3 className="text-lg sm:text-xl font-semibold">{t('health.quickAccess')}</h3>
         <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
@@ -582,49 +599,42 @@ export default function DashboardPage() {
                 <Droplet className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-blue-500 dark:text-blue-400" />
               </div>
               <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.hydration')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.waterControl')}</p>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.waterTracking')}</p>
             </div>
           </Card>
         </Link>
         
-        <Link to="/medication">
-          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-            <div className="flex flex-col items-center text-center">
-              <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
-                <Pill className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-pink-500 dark:text-pink-400" />
+        {settings.showWomensHealthTracker && (
+          <Link to="/womens-health">
+            <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/30 dark:to-pink-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+              <div className="flex flex-col items-center text-center">
+                <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
+                  <div className="text-pink-500 dark:text-pink-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 16h6"/></svg>
+                  </div>
+                </div>
+                <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.womens')}</h3>
+                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.womensHealth')}</p>
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.medication')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.medicationManagement')}</p>
-            </div>
-          </Card>
-        </Link>
+            </Card>
+          </Link>
+        )}
         
-        <Link to="/womens-health">
-          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-fuchsia-50 to-fuchsia-100 dark:from-fuchsia-900/30 dark:to-fuchsia-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-            <div className="flex flex-col items-center text-center">
-              <div className="p-2 sm:p-3 mb-2 rounded-full bg-fuchsia-500/10 dark:bg-fuchsia-500/20">
-                <Heart className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-fuchsia-500 dark:text-fuchsia-400" />
+        {settings.showVideoSubscription && (
+          <Link to="/videos">
+            <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+              <div className="flex flex-col items-center text-center">
+                <div className="p-2 sm:p-3 mb-2 rounded-full bg-amber-500/10 dark:bg-amber-500/20">
+                  <div className="text-amber-500 dark:text-amber-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"><path d="M14.04 14.04v-4.08"/><path d="M10 10v4"/><path d="M6 14.08V9.92a1 1 0 0 1 .5-.87l8-4.61a1 1 0 0 1 1 0l8 4.61a1 1 0 0 1 .5.87v4.16a1 1 0 0 1-.5.87l-8 4.61a1 1 0 0 1-1 0l-8-4.61a1 1 0 0 1-.5-.87Z"/></svg>
+                  </div>
+                </div>
+                <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.videos')}</h3>
+                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.videoClubs')}</p>
               </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('womensHealth.femaleHealth')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.cycleTracking')}</p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/videos">
-          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-            <div className="flex flex-col items-center text-center">
-              <div className="p-2 sm:p-3 mb-2 rounded-full bg-amber-500/10 dark:bg-amber-500/20">
-                <svg className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="23 7 16 12 23 17 23 7" />
-                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.videos')}</h3>
-              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.videoSubscription')}</p>
-            </div>
-          </Card>
-        </Link>
+            </Card>
+          </Link>
+        )}
       </div>
     </MainLayout>
   );
