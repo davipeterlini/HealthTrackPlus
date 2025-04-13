@@ -18,8 +18,9 @@ import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
 import { ThemeProvider } from "./hooks/use-theme";
 import { DevModeToggle } from "./components/dev-mode-toggle";
+import { ReactElement } from "react";
 
-function Router() {
+function Router(): ReactElement {
   return (
     <Switch>
       <ProtectedRoute path="/" component={DashboardPage} />

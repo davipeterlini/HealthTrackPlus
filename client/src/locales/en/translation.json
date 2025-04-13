@@ -439,6 +439,29 @@
     "skipAuthEnabled": "Authentication Bypass Enabled",
     "skipAuthDisabled": "Authentication Bypassed Disabled"
   },
+  "water": {
+    "waterIntake": "Water Intake",
+    "ofGoal": "of goal",
+    "addWater": "Add Water",
+    "history": "7-Day History",
+    "recorded": "Water intake recorded",
+    "added": "Added",
+    "failedToRecord": "Failed to record water intake",
+    "today": "Today's Intake",
+    "streak": "Streak",
+    "dailyAverage": "Daily average",
+    "goalReached": "Meeting daily goal",
+    "hydrationTips": "Hydration Tips",
+    "tip1Title": "Start Your Day with Water",
+    "tip1": "Drink a glass of water right after waking up to activate your metabolism and rehydrate after sleep.",
+    "tip2Title": "Set Reminders",
+    "tip2": "Set regular reminders throughout the day to ensure you're consistently drinking water.",
+    "tip3Title": "Water-Rich Foods",
+    "tip3": "Consume water-rich foods like cucumber, watermelon, and oranges to boost your hydration.",
+    "tip4Title": "Carry a Water Bottle",
+    "tip4": "Keep a reusable water bottle with you at all times as a visual reminder to stay hydrated."
+  },
+  
   "mental": {
     "mentalHealth": "Mental Health",
     "overview": "Overview",
