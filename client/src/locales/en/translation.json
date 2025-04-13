@@ -271,7 +271,9 @@
     "back": "Back",
     "saveChanges": "Save Changes",
     "error": "Error",
-    "notAvailable": "Not Available"
+    "notAvailable": "Not Available",
+    "weeklyAverage": "Weekly Average",
+    "days": "days"
   },
   
   "exams": {

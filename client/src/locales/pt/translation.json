@@ -198,7 +198,20 @@
     "history": "Histórico de 7 Dias",
     "recorded": "Consumo registrado",
     "added": "Adicionado",
-    "failedToRecord": "Falha ao registrar consumo de água"
+    "failedToRecord": "Falha ao registrar consumo de água",
+    "today": "Consumo de Hoje",
+    "streak": "Sequência",
+    "dailyAverage": "Média diária",
+    "goalReached": "Atingindo meta diária",
+    "hydrationTips": "Dicas de Hidratação",
+    "tip1Title": "Comece o Dia com Água",
+    "tip1": "Beba um copo de água logo após acordar para ativar seu metabolismo e reidratar após o sono.",
+    "tip2Title": "Use Lembretes",
+    "tip2": "Configure lembretes regulares ao longo do dia para garantir que você esteja bebendo água consistentemente.",
+    "tip3Title": "Alimentos Ricos em Água",
+    "tip3": "Consuma alimentos com alto teor de água como pepino, melancia e laranjas para aumentar sua hidratação.",
+    "tip4Title": "Leve uma Garrafa de Água",
+    "tip4": "Mantenha uma garrafa de água reutilizável sempre com você como um lembrete visual para se manter hidratado."
   },
   "sleep": {
     "sleepTracker": "Monitor de Sono",
@@ -278,7 +291,9 @@
     "back": "Voltar",
     "saveChanges": "Salvar Alterações",
     "error": "Erro",
-    "notAvailable": "Não disponível"
+    "notAvailable": "Não disponível",
+    "weeklyAverage": "Média Semanal",
+    "days": "dias"
   },
   
   "exams": {
