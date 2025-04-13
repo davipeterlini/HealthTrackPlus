@@ -5,7 +5,7 @@ import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
-import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart } from "lucide-react";
+import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -90,6 +90,12 @@ const getNavItems = (t: any, settings: any = {}) => {
       label: t('navigation.exams'), 
       icon: FileText, 
       alwaysShow: true 
+    },
+    { 
+      path: "/videos", 
+      label: t('navigation.videos'), 
+      icon: Film, 
+      show: effectiveSettings.showVideoSubscription 
     }
   ];
   
