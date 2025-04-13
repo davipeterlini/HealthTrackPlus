@@ -609,6 +609,21 @@ export default function DashboardPage() {
             </div>
           </Card>
         </Link>
+
+        <Link to="/videos">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-amber-500/10 dark:bg-amber-500/20">
+                <svg className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="23 7 16 12 23 17 23 7" />
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.videos')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.videoSubscription')}</p>
+            </div>
+          </Card>
+        </Link>
       </div>
     </MainLayout>
   );
