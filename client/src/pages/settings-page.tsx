@@ -142,6 +142,13 @@ export default function SettingsPage() {
                 <Database className="h-4 w-4" />
               </TabsTrigger>
               <TabsTrigger 
+                value="integrations" 
+                className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
+                onClick={() => window.location.href = '/integrations'}
+              >
+                <RefreshCw className="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger 
                 value="developer" 
                 className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 flex-shrink-0 py-2 px-3 h-auto"
               >
@@ -204,6 +211,14 @@ export default function SettingsPage() {
                     >
                       <Database className="mr-2 h-4 w-4" />
                       {t('settings.data')}
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="integrations" 
+                      className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400 justify-start py-3 px-4 h-auto rounded-none text-left"
+                      onClick={() => window.location.href = '/integrations'}
+                    >
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      {t('settings.integrations')}
                     </TabsTrigger>
                     <TabsTrigger 
                       value="developer" 
