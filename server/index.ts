@@ -1,24 +1,39 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import express from 'express';
+import cors from 'cors';
+import { registerRoutes } from './routes';
+import { createServer } from 'http';
+import path from 'path';
+import { setupVite, log } from './vite';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+// Create Express app
+const app = express();
 
-  app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-  const config = new DocumentBuilder()
-    .setTitle('LifeTrek API')
-    .setDescription('Health monitoring API')
-    .setVersion('1.0')
-    .build();
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document);
-
-  await app.listen(5000, '0.0.0.0');
-}
-
-bootstrap();
+// Register API routes
+(async function() {
+  try {
+    // Create HTTP server
+    const server = createServer(app);
+    
+    // Register API routes
+    await registerRoutes(app);
+    
+    // Setup Vite for serving frontend
+    await setupVite(app, server);
+    
+    // Start server on port 5000
+    server.listen(5000, '0.0.0.0', () => {
+      log('serving on port 5000');
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+})();
