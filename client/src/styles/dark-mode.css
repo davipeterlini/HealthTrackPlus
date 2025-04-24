@@ -6,7 +6,7 @@
 @layer utilities {
   /* Cores de fundo para o corpo da página */
   .dark-bg-base {
-    @apply dark:bg-gray-900;
+    @apply dark:bg-[#0a1015];
   }
 
   /* Cores de fundo para cards */
@@ -19,9 +19,14 @@
     @apply bg-emerald-600 hover:bg-emerald-700 text-white;
   }
 
-  /* Cores para boxes e containers menores */
+  /* Cores para boxes e containers secundários */
   .dark-box {
     @apply dark:bg-[#1a2127];
+  }
+
+  /* Cores para containers terciários (ex: box dentro de cards) */
+  .dark-inner-box {
+    @apply dark:bg-gray-800/50;
   }
 
   /* Cores para ícones */
@@ -51,15 +56,48 @@
   }
 
   /* Cores para gráficos */
-  .dark-chart-color-1 {
-    color: #10b981; /* emerald-500 */
+  .dark-chart-primary {
+    @apply dark:stroke-emerald-500 dark:fill-emerald-500/20;
   }
   
-  .dark-chart-color-2 {
-    color: #60a5fa; /* blue-400 */
+  .dark-chart-secondary {
+    @apply dark:stroke-blue-500 dark:fill-blue-500/20;
   }
   
-  .dark-chart-color-3 {
-    color: #f59e0b; /* amber-500 */
+  .dark-chart-accent {
+    @apply dark:stroke-purple-500 dark:fill-purple-500/20;
   }
+
+  /* Cores para skeleton/loaders */
+  .dark-skeleton {
+    @apply dark:bg-gray-700;
+  }
+
+  /* Cores para tabs */
+  .dark-tab-active {
+    @apply dark:bg-blue-900/20 dark:text-blue-400;
+  }
+
+  /* Cores para inputs, selects e form elements */
+  .dark-input {
+    @apply dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100;
+  }
+
+  /* Cores para bordas e separadores */
+  .dark-border {
+    @apply dark:border-gray-700;
+  }
+
+  /* Cores para elementos de destaque/badge */
+  .dark-highlight {
+    @apply dark:bg-emerald-900/30 dark:text-emerald-400;
+  }
+
+  /* Definições de cores fixas para referência */
+  /* Card background: #1a2127 */
+  /* Page background: #0a1015 */
+  /* Primary action: emerald-600 (#059669) */
+  /* Primary text: gray-100 (#f3f4f6) */
+  /* Secondary text: gray-400 (#9ca3af) */
+  /* Borders: gray-700 (#374151) */
 }
