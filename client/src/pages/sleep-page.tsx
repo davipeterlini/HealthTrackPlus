@@ -219,7 +219,7 @@ export default function SleepPage() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center">
+                <div className="bg-gray-50 dark:bg-[#1a2127] p-4 rounded-lg flex items-center">
                   <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full mr-4">
                     <Clock className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                   </div>
@@ -238,7 +238,7 @@ export default function SleepPage() {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center">
+                <div className="bg-gray-50 dark:bg-[#1a2127] p-4 rounded-lg flex items-center">
                   <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full mr-4">
                     <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                   </div>
@@ -255,7 +255,7 @@ export default function SleepPage() {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center">
+                <div className="bg-gray-50 dark:bg-[#1a2127] p-4 rounded-lg flex items-center">
                   <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full mr-4">
                     <Bed className="h-6 w-6 text-green-600 dark:text-green-400" />
                   </div>
@@ -278,8 +278,8 @@ export default function SleepPage() {
           <div className="md:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="mb-4">
-                <TabsTrigger value="history">{t('sleep.sleepHistory')}</TabsTrigger>
-                <TabsTrigger value="record">{t('sleep.recordSleep')}</TabsTrigger>
+                <TabsTrigger value="history" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400">{t('sleep.sleepHistory')}</TabsTrigger>
+                <TabsTrigger value="record" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/20 dark:data-[state=active]:text-blue-400">{t('sleep.recordSleep')}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="history" className="space-y-6">
@@ -492,7 +492,7 @@ export default function SleepPage() {
 
                         <Button
                           type="submit"
-                          className="w-full"
+                          className="w-full bg-emerald-600 hover:bg-emerald-700"
                           disabled={recordSleepMutation.isPending}
                         >
                           {recordSleepMutation.isPending
