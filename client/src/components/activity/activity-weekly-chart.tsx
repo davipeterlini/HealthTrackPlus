@@ -98,12 +98,12 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
       <div className="flex justify-end items-center mb-4">
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
-            <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
+            <div className="w-3 h-3 rounded-full bg-emerald-500 dark-emerald-dot mr-1.5"></div>
+            <span className="text-xs text-slate-600 dark-text-muted">{t('activity.steps')}</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
-            <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
+            <div className="w-3 h-3 rounded-full bg-blue-500 dark-blue-dot mr-1.5"></div>
+            <span className="text-xs text-slate-600 dark-text-muted">{t('activity.calories')}</span>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
           {[0, 1, 2, 3, 4].map((_, i) => (
             <div 
               key={i} 
-              className="border-t border-gray-100 dark:border-gray-800 w-full h-0"
+              className="border-t border-gray-100 dark-grid-line w-full h-0"
               style={{ top: `${i * 25}%` }}
             />
           ))}
@@ -130,39 +130,39 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
               <div className="w-full relative flex items-end justify-center h-[85%]">
                 {/* Barra de passos */}
                 <div 
-                  className="w-[70%] mx-auto bg-emerald-500/80 dark:bg-emerald-500/70 rounded-t-md z-20 relative group"
+                  className="w-[70%] mx-auto dark-bar-green rounded-t-md z-20 relative group"
                   style={{ height: `${Math.max(item.active * 0.7, 2)}%` }} // Reduzindo o tamanho das barras para 70%
                 >
                   {/* Tooltip ao passar o mouse ou tocar */}
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
-                    <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
-                      <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
-                      <div className="flex justify-between text-slate-600 dark:text-gray-300">
+                    <div className="bg-white dark-tooltip shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
+                      <div className="font-semibold text-slate-800 dark-text-title mb-1">{item.day}</div>
+                      <div className="flex justify-between text-slate-600 dark-text-body">
                         <span>{t('activity.stepsLabel')}:</span>
                         <span>{item.steps.toLocaleString()}</span>
                       </div>
-                      <div className="flex justify-between text-slate-600 dark:text-gray-300">
+                      <div className="flex justify-between text-slate-600 dark-text-body">
                         <span>{t('activity.caloriesLabel')}:</span>
                         <span>{item.cals}</span>
                       </div>
                     </div>
-                    <div className="border-t-8 border-t-white dark:border-t-slate-800 border-l-8 border-l-transparent border-r-8 border-r-transparent h-0 w-0 absolute left-1/2 transform -translate-x-1/2"></div>
+                    <div className="border-t-8 border-t-white dark-tooltip-arrow border-l-8 border-l-transparent border-r-8 border-r-transparent h-0 w-0 absolute left-1/2 transform -translate-x-1/2"></div>
                   </div>
                 </div>
                 
                 {/* Linha de calorias */}
                 <div 
-                  className="absolute bottom-0 w-[70%] mx-auto left-0 right-0 h-0.5 bg-blue-500 z-10"
+                  className="absolute bottom-0 w-[70%] mx-auto left-0 right-0 h-0.5 dark-line-blue z-10"
                   style={{ bottom: `${Math.min((item.cals / 2500) * 100 * 0.7, 100)}%` }}
                 >
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500 absolute right-0 top-1/2 transform -translate-y-1/2"></div>
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full dark-line-blue absolute right-0 top-1/2 transform -translate-y-1/2"></div>
                 </div>
               </div>
               
               <div className="flex flex-col items-center mt-2">
-                <span className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 hidden sm:block">{item.day}</span>
-                <span className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 block sm:hidden">{item.shortDay}</span>
-                <span className="text-[10px] sm:text-xs text-slate-500 dark:text-gray-500 mt-0.5">{Math.round(item.steps/1000)}k</span>
+                <span className="text-xs sm:text-sm text-slate-600 dark-text-muted hidden sm:block">{item.day}</span>
+                <span className="text-xs sm:text-sm text-slate-600 dark-text-muted block sm:hidden">{item.shortDay}</span>
+                <span className="text-[10px] sm:text-xs text-slate-500 dark-text-muted-dim mt-0.5">{Math.round(item.steps/1000)}k</span>
               </div>
             </div>
           ))}
@@ -171,7 +171,7 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
         {/* Escala vertical - visível apenas em telas maiores */}
         <div className="absolute -left-2 sm:left-0 top-0 bottom-8 flex flex-col justify-between">
           {[10000, 7500, 5000, 2500, 0].map((value, i) => (
-            <div key={i} className="text-[10px] sm:text-xs text-slate-400 dark:text-gray-500 -translate-x-4 sm:-translate-x-6">
+            <div key={i} className="text-[10px] sm:text-xs text-slate-400 dark-text-muted-dim -translate-x-4 sm:-translate-x-6">
               {i === 0 ? '10k' : 
                i === 1 ? '7.5k' : 
                i === 2 ? '5k' : 
@@ -182,7 +182,7 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
       </div>
       
       {/* Informações responsivas para telas menores */}
-      <div className="mt-2 text-xs text-center text-slate-500 dark:text-gray-400 sm:hidden">
+      <div className="mt-2 text-xs text-center text-slate-500 dark-text-muted sm:hidden">
         <p>{t('health.touchBars')}</p>
       </div>
     </CardContent>
