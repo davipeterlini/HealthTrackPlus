@@ -161,7 +161,7 @@ export default function SleepPage() {
   };
 
   // Cores para os gráficos
-  const COLORS = ['#0088FE', '#FFBB28', '#FF8042'];
+  const COLORS = ['#10b981', '#60a5fa', '#f59e0b'];
   const QUALITY_COLORS = {
     poor: "#ef4444",
     fair: "#f97316",
@@ -205,12 +205,12 @@ export default function SleepPage() {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-6 mx-auto">
+      <div className="container px-4 py-6 mx-auto dark:bg-gray-900">
         <h1 className="text-2xl font-bold mb-6">{t('sleep.sleepTracker')}</h1>
 
         <div className="grid gap-6 md:grid-cols-3">
           {/* Resumo do Sono */}
-          <Card className="md:col-span-3">
+          <Card className="md:col-span-3 dark:bg-[#1a2127] dark:border-gray-700">
             <CardHeader className="pb-3">
               <CardTitle>{t('sleep.sleepSummary')}</CardTitle>
               <CardDescription>
@@ -284,7 +284,7 @@ export default function SleepPage() {
 
               <TabsContent value="history" className="space-y-6">
                 {/* Gráfico de Histórico de Sono */}
-                <Card>
+                <Card className="dark:bg-[#1a2127] dark:border-gray-700">
                   <CardHeader>
                     <CardTitle>{t('sleep.sleepHistory')}</CardTitle>
                     <CardDescription>{t('sleep.sleepHistoryDescription')}</CardDescription>
@@ -304,8 +304,8 @@ export default function SleepPage() {
                             <Area
                               type="monotone"
                               dataKey="hours"
-                              stroke="#8884d8"
-                              fill="#8884d8"
+                              stroke="#10b981"
+                              fill="#10b981"
                               name={t('sleep.hours')}
                             />
                           </AreaChart>
@@ -323,7 +323,7 @@ export default function SleepPage() {
 
                 {/* Composição do Sono */}
                 {latestSleep && (
-                  <Card>
+                  <Card className="dark:bg-[#1a2127] dark:border-gray-700">
                     <CardHeader>
                       <CardTitle>{t('sleep.sleepComposition')}</CardTitle>
                       <CardDescription>{t('sleep.lastSleepCycles')}</CardDescription>
@@ -370,7 +370,7 @@ export default function SleepPage() {
               </TabsContent>
 
               <TabsContent value="record">
-                <Card>
+                <Card className="dark:bg-[#1a2127] dark:border-gray-700">
                   <CardHeader>
                     <CardTitle>{t('sleep.recordSleep')}</CardTitle>
                     <CardDescription>{t('sleep.recordSleepDescription')}</CardDescription>
@@ -509,7 +509,7 @@ export default function SleepPage() {
 
           {/* Dicas de Sono */}
           <div>
-            <Card className="h-full">
+            <Card className="h-full dark:bg-[#1a2127] dark:border-gray-700">
               <CardHeader>
                 <CardTitle>{t('sleep.sleepTips')}</CardTitle>
                 <CardDescription>{t('sleep.improveSleepQuality')}</CardDescription>
