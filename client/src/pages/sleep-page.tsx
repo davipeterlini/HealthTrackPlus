@@ -220,8 +220,8 @@ export default function SleepPage() {
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="bg-gray-50 dark-inner-box p-4 rounded-lg flex items-center">
-                  <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full mr-4">
-                    <Clock className="h-6 w-6 text-blue-600 dark-icon-secondary" />
+                  <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-3 rounded-full mr-4">
+                    <Clock className="h-6 w-6 text-blue-600 dark-text-accent-blue" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 dark-text-muted">{t('sleep.totalSleepHours')}</p>
@@ -239,8 +239,8 @@ export default function SleepPage() {
                 </div>
 
                 <div className="bg-gray-50 dark-inner-box p-4 rounded-lg flex items-center">
-                  <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full mr-4">
-                    <TrendingUp className="h-6 w-6 text-purple-600 dark-icon-accent" />
+                  <div className="bg-purple-100 dark-stat-icon-bg dark-stat-icon-purple p-3 rounded-full mr-4">
+                    <TrendingUp className="h-6 w-6 text-purple-600 dark-text-accent-purple" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 dark-text-muted">{t('sleep.sleepQuality')}</p>
@@ -256,8 +256,8 @@ export default function SleepPage() {
                 </div>
 
                 <div className="bg-gray-50 dark-inner-box p-4 rounded-lg flex items-center">
-                  <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full mr-4">
-                    <Bed className="h-6 w-6 text-green-600 dark-icon-primary" />
+                  <div className="bg-green-100 dark-stat-icon-bg dark-stat-icon-green p-3 rounded-full mr-4">
+                    <Bed className="h-6 w-6 text-green-600 dark-text-accent-green" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 dark-text-muted">{t('sleep.deepSleepPercentage')}</p>
@@ -494,7 +494,7 @@ export default function SleepPage() {
 
                         <Button
                           type="submit"
-                          className="w-full bg-emerald-600 hover:bg-emerald-700"
+                          className="w-full bg-emerald-600 hover:bg-emerald-700 dark-btn-success"
                           disabled={recordSleepMutation.isPending}
                         >
                           {recordSleepMutation.isPending

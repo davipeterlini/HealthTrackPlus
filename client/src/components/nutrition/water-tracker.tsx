@@ -79,7 +79,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   };
   
   return (
-    <Card className="bg-white dark-card shadow-md rounded-xl">
+    <Card className="dark-card shadow-md rounded-xl">
       <CardHeader>
         <CardTitle className="text-slate-800 dark-text-title">{t('water.waterIntake')}</CardTitle>
       </CardHeader>
@@ -126,7 +126,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
             </div>
             <Button 
               size="sm" 
-              className="mt-2 border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary rounded-full" 
+              className="mt-2 dark-btn-outline-blue rounded-full" 
               onClick={handleAddWater}
               disabled={addWaterMutation.isPending}
             >
@@ -140,9 +140,9 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
           <div className="grid grid-cols-7 gap-2">
             {waterHistory.map((day, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 dark-inner-box rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark-chart-box rounded-t-sm overflow-hidden">
                   <div 
-                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark-icon-secondary" 
+                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark-chart-fill-blue" 
                     style={{height: `${(day.amount / dailyGoal) * 100}%`}}
                   ></div>
                 </div>
