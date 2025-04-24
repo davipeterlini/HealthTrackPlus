@@ -519,32 +519,32 @@ export default function SleepPage() {
               <CardContent>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-icon-secondary" />
+                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
                     </div>
                     <span className="text-sm dark-text-body">{t('sleep.tip1')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-icon-secondary" />
+                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
                     </div>
                     <span className="text-sm dark-text-body">{t('sleep.tip2')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 rounded-full mr-2">
-                      <Activity className="h-4 w-4 text-blue-600 dark-icon-secondary" />
+                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
+                      <Activity className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
                     </div>
                     <span className="text-sm dark-text-body">{t('sleep.tip3')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-icon-secondary" />
+                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
                     </div>
                     <span className="text-sm dark-text-body">{t('sleep.tip4')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-icon-secondary" />
+                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
                     </div>
                     <span className="text-sm dark-text-body">{t('sleep.tip5')}</span>
                   </li>
