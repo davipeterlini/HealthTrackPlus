@@ -205,8 +205,8 @@ export default function SleepPage() {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-6 mx-auto dark:bg-gray-900">
-        <h1 className="text-2xl font-bold mb-6">{t('sleep.sleepTracker')}</h1>
+      <div className="container px-4 py-6 mx-auto dark-bg-base">
+        <h1 className="text-2xl font-bold mb-6 dark-text-title">{t('sleep.sleepTracker')}</h1>
 
         <div className="grid gap-6 md:grid-cols-3">
           {/* Resumo do Sono */}

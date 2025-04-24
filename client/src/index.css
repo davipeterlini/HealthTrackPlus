@@ -1,4 +1,7 @@
 
+/* Importar estilos padronizados para o modo escuro */
+@import './styles/dark-mode.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
