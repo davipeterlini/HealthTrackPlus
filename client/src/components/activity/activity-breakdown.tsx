@@ -81,9 +81,9 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
   ];
   
   return (
-    <Card className="dark:bg-[#1a2127] dark:border-gray-700">
+    <Card className="dark-card">
       <CardHeader>
-        <CardTitle className="text-gray-900 dark:text-gray-100">{t('activity.breakdown')}</CardTitle>
+        <CardTitle className="text-gray-900 dark-text-title">{t('activity.breakdown')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
