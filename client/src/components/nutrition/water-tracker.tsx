@@ -85,9 +85,9 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
-          <div className="relative w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
+          <div className="relative w-24 h-24 rounded-full bg-blue-100 dark-stat-icon-bg flex items-center justify-center mr-4">
             <div 
-              className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400 rounded-b-full" 
+              className="absolute bottom-0 left-0 right-0 bg-blue-500 dark-chart-fill-blue rounded-b-full" 
               style={{
                 height: `${waterPercentage}%`, 
                 borderRadius: waterPercentage === 100 ? '9999px' : '0 0 9999px 9999px'
@@ -103,7 +103,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(250)}
-                className={amount === 250 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary" : "dark-text-muted dark-border"}
+                className={amount === 250 ? "dark-btn-outline-active-blue" : "dark-btn-outline"}
               >
                 250ml
               </Button>
@@ -111,7 +111,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(500)}
-                className={amount === 500 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary" : "dark-text-muted dark-border"}
+                className={amount === 500 ? "dark-btn-outline-active-blue" : "dark-btn-outline"}
               >
                 500ml
               </Button>
@@ -119,7 +119,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(1000)}
-                className={amount === 1000 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary" : "dark-text-muted dark-border"}
+                className={amount === 1000 ? "dark-btn-outline-active-blue" : "dark-btn-outline"}
               >
                 1000ml
               </Button>
