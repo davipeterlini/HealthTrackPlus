@@ -87,15 +87,15 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">{t('activity.types')}</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark-text-muted">{t('activity.types')}</h4>
           <div className="mt-2 space-y-4">
             {activityTypes.map((item, i) => (
               <div key={i}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-200">{item.type}</span>
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-200">{item.percentage}%</span>
+                  <span className="text-xs font-medium text-gray-700 dark-text-body">{item.type}</span>
+                  <span className="text-xs font-medium text-gray-700 dark-text-body">{item.percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark-progress-bg rounded-full h-2">
                   <div className={`${item.color} h-2 rounded-full`} style={{ width: `${item.percentage}%` }}></div>
                 </div>
               </div>
@@ -103,45 +103,45 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
           </div>
         </div>
         
-        <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">{t('activity.heartRateZones')}</h4>
+        <div className="pt-6 border-t border-gray-200 dark-border">
+          <h4 className="text-sm font-medium text-gray-500 dark-text-muted">{t('activity.heartRateZones')}</h4>
           
           <div className="mt-2 grid grid-cols-2 gap-4">
             {heartRateZones.map((zone, i) => (
-              <div key={i} className={`${zone.color} dark:bg-[#1a2127] dark:border dark:border-gray-700 rounded-md p-3`}>
+              <div key={i} className={`${zone.color} dark-inner-box dark-border rounded-md p-3`}>
                 <span className="text-xs font-medium">{zone.name}</span>
-                <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{zone.minutes} min</p>
+                <p className="mt-1 text-lg font-semibold text-gray-900 dark-text-title">{zone.minutes} min</p>
               </div>
             ))}
           </div>
         </div>
         
-        <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">{t('activity.connectedDevices')}</h4>
+        <div className="pt-6 border-t border-gray-200 dark-border">
+          <h4 className="text-sm font-medium text-gray-500 dark-text-muted">{t('activity.connectedDevices')}</h4>
           
           <div className="mt-3 space-y-3">
             {connectedDevices.map((device, i) => (
               <div key={i} className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-[#1a2127] flex items-center justify-center">
+                  <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark-inner-box flex items-center justify-center">
                     {device.type === 'watch' ? (
-                      <Watch className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                      <Watch className="h-4 w-4 text-gray-600 dark-text-body" />
                     ) : (
-                      <Smartphone className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                      <Smartphone className="h-4 w-4 text-gray-600 dark-text-body" />
                     )}
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{device.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-300">{t('activity.lastSynced')}: {device.lastSynced}</p>
+                    <p className="text-sm font-medium text-gray-900 dark-text-title">{device.name}</p>
+                    <p className="text-xs text-gray-500 dark-text-muted">{t('activity.lastSynced')}: {device.lastSynced}</p>
                   </div>
                 </div>
                 <div>
                   {device.connected ? (
-                    <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 border-0">
+                    <Badge variant="outline" className="bg-green-100 text-green-800 dark-badge-success border-0">
                       {t('activity.connected')}
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 border-0">
+                    <Badge variant="outline" className="bg-gray-100 text-gray-800 dark-badge-neutral border-0">
                       {t('activity.disconnected')}
                     </Badge>
                   )}
@@ -151,50 +151,50 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
           </div>
         </div>
         
-        <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">{t('activity.details')}</h4>
+        <div className="pt-6 border-t border-gray-200 dark-border">
+          <h4 className="text-sm font-medium text-gray-500 dark-text-muted">{t('activity.details')}</h4>
           
           <div className="mt-3 space-y-2">
-            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
+            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark-hover">
               <div className="flex items-center">
                 <Heart className="h-5 w-5 text-red-500 dark:text-red-400 mr-3" />
-                <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.avgHeartRate')}</span>
+                <span className="text-sm text-gray-700 dark-text-body">{t('activity.avgHeartRate')}</span>
               </div>
               <div className="flex items-center">
-                <span className="text-sm font-medium dark:text-gray-100">
+                <span className="text-sm font-medium dark-text-title">
                   {activity?.heartRate || 76} bpm
                 </span>
-                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
+                <ChevronRight className="h-4 w-4 text-gray-400 dark-text-muted ml-2" />
               </div>
             </div>
             
-            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
+            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark-hover">
               <div className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 dark:text-primary-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
-                <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.elevationGain')}</span>
+                <span className="text-sm text-gray-700 dark-text-body">{t('activity.elevationGain')}</span>
               </div>
               <div className="flex items-center">
-                <span className="text-sm font-medium dark:text-gray-100">
+                <span className="text-sm font-medium dark-text-title">
                   {activity?.elevationGain || 48} m
                 </span>
-                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
+                <ChevronRight className="h-4 w-4 text-gray-400 dark-text-muted ml-2" />
               </div>
             </div>
             
-            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-800">
+            <div className="flex items-center justify-between p-2 rounded hover:bg-gray-50 dark-hover">
               <div className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 dark:text-green-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
-                <span className="text-sm text-gray-700 dark:text-gray-200">{t('activity.pace')}</span>
+                <span className="text-sm text-gray-700 dark-text-body">{t('activity.pace')}</span>
               </div>
               <div className="flex items-center">
-                <span className="text-sm font-medium dark:text-gray-100">
+                <span className="text-sm font-medium dark-text-title">
                   {activity?.avgPace || '9:24'} /km
                 </span>
-                <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
+                <ChevronRight className="h-4 w-4 text-gray-400 dark-text-muted ml-2" />
               </div>
             </div>
           </div>
