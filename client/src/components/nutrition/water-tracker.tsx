@@ -79,9 +79,9 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   };
   
   return (
-    <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
+    <Card className="bg-white dark-card shadow-md rounded-xl">
       <CardHeader>
-        <CardTitle className="text-slate-800 dark:text-white">{t('water.waterIntake')}</CardTitle>
+        <CardTitle className="text-slate-800 dark-text-title">{t('water.waterIntake')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
@@ -93,17 +93,17 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 borderRadius: waterPercentage === 100 ? '9999px' : '0 0 9999px 9999px'
               }}
             ></div>
-            <div className="relative text-sm font-semibold dark:text-white">{Math.round(waterPercentage)}%</div>
+            <div className="relative text-sm font-semibold dark-text-title">{Math.round(waterPercentage)}%</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{todayWaterIntake} ml</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{t('water.ofGoal')} {dailyGoal} ml</div>
+            <div className="text-3xl font-bold text-gray-900 dark-text-title">{todayWaterIntake} ml</div>
+            <div className="text-sm text-gray-500 dark-text-muted">{t('water.ofGoal')} {dailyGoal} ml</div>
             <div className="mt-2 flex space-x-2">
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(250)}
-                className={amount === 250 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 250 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary" : "dark-text-muted dark-border"}
               >
                 250ml
               </Button>
@@ -111,7 +111,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(500)}
-                className={amount === 500 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 500 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary" : "dark-text-muted dark-border"}
               >
                 500ml
               </Button>
@@ -119,14 +119,14 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(1000)}
-                className={amount === 1000 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 1000 ? "border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary" : "dark-text-muted dark-border"}
               >
                 1000ml
               </Button>
             </div>
             <Button 
               size="sm" 
-              className="mt-2 border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full" 
+              className="mt-2 border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark-icon-secondary rounded-full" 
               onClick={handleAddWater}
               disabled={addWaterMutation.isPending}
             >
@@ -136,17 +136,17 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
         </div>
         
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('water.history')}</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark-text-muted mb-3">{t('water.history')}</h4>
           <div className="grid grid-cols-7 gap-2">
             {waterHistory.map((day, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 dark:bg-[#242c35] rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark-inner-box rounded-t-sm overflow-hidden">
                   <div 
-                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400" 
+                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark-icon-secondary" 
                     style={{height: `${(day.amount / dailyGoal) * 100}%`}}
                   ></div>
                 </div>
-                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">{formatDate(day.date).split(' ')[0]}</span>
+                <span className="text-xs text-gray-500 dark-text-muted mt-1">{formatDate(day.date).split(' ')[0]}</span>
               </div>
             ))}
           </div>
