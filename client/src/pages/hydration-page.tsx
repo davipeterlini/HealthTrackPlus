@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { WaterTracker } from "@/components/nutrition/water-tracker";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { WaterIntakeRecord } from "@shared/schema";
-import { Droplet, DropletIcon, History, TrendingUp } from "lucide-react";
+import { Droplet, DropletIcon, History, PlusCircle, TrendingUp } from "lucide-react";
 import { FC } from "react";
 
 export default function HydrationPage() {
@@ -90,6 +91,9 @@ export default function HydrationPage() {
         <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
           {t('water.waterIntake')}
         </h1>
+        <Button className="bg-emerald-600 hover:bg-emerald-700">
+          <PlusCircle className="mr-2 h-4 w-4" /> {t('water.addMeal')}
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
