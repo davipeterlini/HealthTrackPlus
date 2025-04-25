@@ -126,7 +126,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
             </div>
             <Button 
               size="sm" 
-              className="mt-2 dark-btn-outline-blue rounded-full" 
+              className="mt-2 bg-green-600 hover:bg-green-700 dark-btn-success" 
               onClick={handleAddWater}
               disabled={addWaterMutation.isPending}
             >

@@ -357,9 +357,11 @@ export function MealTracker({ meals }: MealTrackerProps) {
             ))
           ) : (
             <div className="text-center py-12">
-              <Utensils className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{t('meal.noMeals')}</h3>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gray-100 dark-stat-icon-bg mb-2">
+                <Utensils className="h-8 w-8 text-gray-400 dark-text-accent-blue" />
+              </div>
+              <h3 className="mt-2 text-sm font-medium text-gray-900 dark-text-title">{t('meal.noMeals')}</h3>
+              <p className="mt-1 text-sm text-gray-500 dark-text-muted">
                 {t('meal.startTracking')}
               </p>
             </div>
