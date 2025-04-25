@@ -27,7 +27,7 @@ export default function NutritionPage() {
     <MainLayout>
       <div className="flex flex-row items-center justify-between gap-3 mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
-          {t('nutrition.title')}
+          {t('navigation.nutrition')}
         </h1>
         <Button className="bg-green-600 hover:bg-green-700">
           <PlusCircle className="mr-2 h-4 w-4" /> {t('meal.addMeal')}
