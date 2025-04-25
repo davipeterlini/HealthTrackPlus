@@ -152,12 +152,12 @@ export default function ActivityPage() {
   
   return (
     <MainLayout title={t('activity.title')} hideTitle={true}>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 dark-text-title">{t('activity.title')}</h1>
+      <div className="flex justify-between items-center responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">{t('activity.title')}</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark-btn-success">
-              <PlusCircle className="mr-2 h-4 w-4" /> {t('activity.addActivity')}
+            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button">
+              <PlusCircle className="mr-2 responsive-icon-sm" /> {t('activity.addActivity')}
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -281,24 +281,24 @@ export default function ActivityPage() {
         </Dialog>
       </div>
       
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 responsive-gap-y">
         {isLoading ? (
           <>
             <div className="lg:col-span-2">
-              <Card className="dark-card">
-                <Skeleton className="h-80 w-full dark-skeleton" />
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <Skeleton className="h-80 w-full dark:bg-gray-700" />
               </Card>
             </div>
-            <Card className="dark-card">
-              <Skeleton className="h-80 w-full dark-skeleton" />
+            <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+              <Skeleton className="h-80 w-full dark:bg-gray-700" />
             </Card>
           </>
         ) : (
           <>
-            <div className="lg:col-span-2 space-y-6">
-              <Card className="dark-card">
-                <CardHeader>
-                  <CardTitle className="text-gray-900 dark-text-title">{t('activity.summary')}</CardTitle>
+            <div className="lg:col-span-2 space-y-6 responsive-gap-y">
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <CardHeader className="responsive-card-header">
+                  <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('activity.summary')}</CardTitle>
                 </CardHeader>
                 <ActivitySummary 
                   activities={activities || []}
@@ -308,9 +308,9 @@ export default function ActivityPage() {
               </Card>
               
               {/* Weekly Activities Chart - igual ao da página inicial */}
-              <Card className="dark-card">
-                <CardHeader>
-                  <CardTitle className="text-gray-900 dark-text-title">{t('health.weeklyActivities')}</CardTitle>
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <CardHeader className="responsive-card-header">
+                  <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('health.weeklyActivities')}</CardTitle>
                 </CardHeader>
                 <ActivityWeeklyChart 
                   activities={activities || []} 
@@ -319,38 +319,38 @@ export default function ActivityPage() {
               </Card>
               
               {/* Recent Activities Section */}
-              <Card className="dark-card">
-                <CardHeader>
-                  <CardTitle className="text-gray-900 dark-text-title">{t('activity.recentActivities')}</CardTitle>
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <CardHeader className="responsive-card-header">
+                  <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('activity.recentActivities')}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="responsive-card-content">
                   {recentActivities.length > 0 ? (
                     <div className="space-y-4">
                       {recentActivities.map((activity, index) => (
-                        <div key={index} className="flex space-x-4 items-start border-b dark-border pb-4 last:border-0 last:pb-0">
-                          <div className="h-10 w-10 rounded-full bg-primary-100 dark-stat-icon-bg dark-stat-icon-primary flex items-center justify-center">
+                        <div key={index} className="flex space-x-4 items-start border-b dark:border-gray-700 pb-4 last:border-0 last:pb-0">
+                          <div className="responsive-icon-container rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
                             {getActivityIcon(activity.activityType)}
                           </div>
                           <div className="flex-1">
                             <div className="flex justify-between">
-                              <h4 className="font-medium text-sm text-gray-900 dark-text-title capitalize">{activity.activityType}</h4>
-                              <span className="text-xs text-gray-500 dark-text-muted">{formatDate(activity.date)}</span>
+                              <h4 className="font-medium responsive-text capitalize text-slate-800 dark:text-white">{activity.activityType}</h4>
+                              <span className="responsive-text-sm text-slate-500 dark:text-slate-400">{formatDate(activity.date)}</span>
                             </div>
                             
                             <div className="mt-1 flex flex-wrap gap-3">
-                              <div className="flex items-center text-xs text-gray-600 dark-text-body">
-                                <Footprints className="h-3.5 w-3.5 mr-1 dark-text-accent-green" />
+                              <div className="flex items-center responsive-text-sm text-slate-600 dark:text-slate-400">
+                                <Footprints className="responsive-icon-sm mr-1 text-green-500" />
                                 {activity.steps} {t('activity.steps')}
                               </div>
                               
-                              <div className="flex items-center text-xs text-gray-600 dark-text-body">
-                                <Clock className="h-3.5 w-3.5 mr-1 dark-text-accent-blue" />
+                              <div className="flex items-center responsive-text-sm text-slate-600 dark:text-slate-400">
+                                <Clock className="responsive-icon-sm mr-1 text-blue-500" />
                                 {activity.minutes} {t('activity.minutes')}
                               </div>
                               
                               {activity.distance && (
-                                <div className="flex items-center text-xs text-gray-600 dark-text-body">
-                                  <Dumbbell className="h-3.5 w-3.5 mr-1 dark-text-accent-purple" />
+                                <div className="flex items-center responsive-text-sm text-slate-600 dark:text-slate-400">
+                                  <Dumbbell className="responsive-icon-sm mr-1 text-purple-500" />
                                   {activity.distance} km
                                 </div>
                               )}
@@ -361,11 +361,11 @@ export default function ActivityPage() {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gray-100 dark-stat-icon-bg mb-2">
-                        <Dumbbell className="h-8 w-8 text-gray-400 dark-text-accent-blue" />
+                      <div className="responsive-icon-container mx-auto rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 mb-2">
+                        <Dumbbell className="responsive-icon text-gray-400 dark:text-gray-500" />
                       </div>
-                      <h3 className="mt-2 text-sm font-medium text-gray-900 dark-text-title">{t('activity.noActivities')}</h3>
-                      <p className="mt-1 text-sm text-gray-500 dark-text-muted">
+                      <h3 className="mt-2 responsive-text font-medium text-slate-800 dark:text-white">{t('activity.noActivities')}</h3>
+                      <p className="mt-1 responsive-text-sm text-slate-500 dark:text-slate-400">
                         {t('activity.startTracking')}
                       </p>
                     </div>

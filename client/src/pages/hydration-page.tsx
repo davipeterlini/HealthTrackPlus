@@ -87,35 +87,35 @@ export default function HydrationPage() {
 
   return (
     <MainLayout>
-      <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+      <div className="flex items-center justify-between responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
           {t('water.waterIntake')}
         </h1>
-        <Button variant="default" className="bg-green-600 hover:bg-green-700 dark-btn-success">
-          <PlusCircle className="mr-2 h-4 w-4" /> {t('water.addMeal')}
+        <Button variant="default" className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button">
+          <PlusCircle className="mr-2 responsive-icon-sm" /> {t('water.addMeal')}
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-        <Card className="bg-white dark:bg-[#1a2127] border border-blue-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-1">
-            <CardTitle className="text-sm sm:text-base text-slate-600 dark:text-gray-400">
+      <div className="responsive-grid-3 responsive-mb">
+        <Card className="bg-white dark:bg-[#1a2127] border-blue-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-1">
+            <CardTitle className="responsive-text-sm text-slate-600 dark:text-slate-400">
               {t('water.today')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             {isLoadingWaterRecords ? (
               <Skeleton className="h-10 w-full dark:bg-gray-700" />
             ) : (
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900/30 rounded-full p-3 mr-3">
-                  <Droplet className="h-5 w-5 text-blue-500 dark:text-blue-400" />
+                <div className="responsive-icon-container flex-shrink-0 bg-blue-100 dark:bg-blue-900/30 rounded-full mr-3">
+                  <Droplet className="responsive-icon text-blue-500 dark:text-blue-400" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+                  <div className="responsive-text-lg font-bold text-slate-800 dark:text-white">
                     {hydrationStats.todayTotal} ml
                   </div>
-                  <div className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">
+                  <div className="responsive-text-sm text-slate-500 dark:text-slate-400">
                     {hydrationStats.percentOfGoal}% {t('water.ofGoal')} 2500 ml
                   </div>
                 </div>
@@ -124,25 +124,25 @@ export default function HydrationPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-green-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-1">
-            <CardTitle className="text-sm sm:text-base text-slate-600 dark:text-gray-400">
+        <Card className="bg-white dark:bg-[#1a2127] border-green-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-1">
+            <CardTitle className="responsive-text-sm text-slate-600 dark:text-slate-400">
               {t('common.weeklyAverage')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             {isLoadingWaterRecords ? (
               <Skeleton className="h-10 w-full dark:bg-gray-700" />
             ) : (
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-green-100 dark:bg-green-900/30 rounded-full p-3 mr-3">
-                  <TrendingUp className="h-5 w-5 text-green-500 dark:text-green-400" />
+                <div className="responsive-icon-container flex-shrink-0 bg-green-100 dark:bg-green-900/30 rounded-full mr-3">
+                  <TrendingUp className="responsive-icon text-green-500 dark:text-green-400" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+                  <div className="responsive-text-lg font-bold text-slate-800 dark:text-white">
                     {hydrationStats.weeklyAverage} ml
                   </div>
-                  <div className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">
+                  <div className="responsive-text-sm text-slate-500 dark:text-slate-400">
                     {t('water.dailyAverage')}
                   </div>
                 </div>
@@ -151,25 +151,25 @@ export default function HydrationPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-purple-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-1">
-            <CardTitle className="text-sm sm:text-base text-slate-600 dark:text-gray-400">
+        <Card className="bg-white dark:bg-[#1a2127] border-purple-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-1">
+            <CardTitle className="responsive-text-sm text-slate-600 dark:text-slate-400">
               {t('water.streak')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             {isLoadingWaterRecords ? (
               <Skeleton className="h-10 w-full dark:bg-gray-700" />
             ) : (
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 rounded-full p-3 mr-3">
-                  <History className="h-5 w-5 text-purple-500 dark:text-purple-400" />
+                <div className="responsive-icon-container flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 rounded-full mr-3">
+                  <History className="responsive-icon text-purple-500 dark:text-purple-400" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+                  <div className="responsive-text-lg font-bold text-slate-800 dark:text-white">
                     {hydrationStats.streakDays} {t('common.days')}
                   </div>
-                  <div className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">
+                  <div className="responsive-text-sm text-slate-500 dark:text-slate-400">
                     {t('water.goalReached')}
                   </div>
                 </div>
