@@ -88,7 +88,7 @@ export default function HydrationPage() {
   return (
     <MainLayout>
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark-text-title">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
           {t('water.waterIntake')}
         </h1>
         <Button variant="default" className="bg-green-600 hover:bg-green-700 dark-btn-success">
@@ -97,25 +97,25 @@ export default function HydrationPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-        <Card className="dark-card shadow-md rounded-xl">
+        <Card className="bg-white dark:bg-[#1a2127] border border-blue-100 dark:border-0 shadow-md">
           <CardHeader className="pb-1">
-            <CardTitle className="text-sm sm:text-base text-slate-600 dark-text-muted">
+            <CardTitle className="text-sm sm:text-base text-slate-600 dark:text-gray-400">
               {t('water.today')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             {isLoadingWaterRecords ? (
-              <Skeleton className="h-10 w-full dark-skeleton" />
+              <Skeleton className="h-10 w-full dark:bg-gray-700" />
             ) : (
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue rounded-full p-3 mr-3">
-                  <Droplet className="h-5 w-5 text-blue-500 dark-text-accent-blue" />
+                <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900/30 rounded-full p-3 mr-3">
+                  <Droplet className="h-5 w-5 text-blue-500 dark:text-blue-400" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark-text-title">
+                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
                     {hydrationStats.todayTotal} ml
                   </div>
-                  <div className="text-xs sm:text-sm text-slate-500 dark-text-muted">
+                  <div className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">
                     {hydrationStats.percentOfGoal}% {t('water.ofGoal')} 2500 ml
                   </div>
                 </div>
@@ -124,25 +124,25 @@ export default function HydrationPage() {
           </CardContent>
         </Card>
 
-        <Card className="dark-card shadow-md rounded-xl">
+        <Card className="bg-white dark:bg-[#1a2127] border border-green-100 dark:border-0 shadow-md">
           <CardHeader className="pb-1">
-            <CardTitle className="text-sm sm:text-base text-slate-600 dark-text-muted">
+            <CardTitle className="text-sm sm:text-base text-slate-600 dark:text-gray-400">
               {t('common.weeklyAverage')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             {isLoadingWaterRecords ? (
-              <Skeleton className="h-10 w-full dark-skeleton" />
+              <Skeleton className="h-10 w-full dark:bg-gray-700" />
             ) : (
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-green-100 dark-stat-icon-bg dark-stat-icon-green rounded-full p-3 mr-3">
-                  <TrendingUp className="h-5 w-5 text-green-500 dark-text-accent-green" />
+                <div className="flex-shrink-0 bg-green-100 dark:bg-green-900/30 rounded-full p-3 mr-3">
+                  <TrendingUp className="h-5 w-5 text-green-500 dark:text-green-400" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark-text-title">
+                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
                     {hydrationStats.weeklyAverage} ml
                   </div>
-                  <div className="text-xs sm:text-sm text-slate-500 dark-text-muted">
+                  <div className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">
                     {t('water.dailyAverage')}
                   </div>
                 </div>
@@ -151,25 +151,25 @@ export default function HydrationPage() {
           </CardContent>
         </Card>
 
-        <Card className="dark-card shadow-md rounded-xl">
+        <Card className="bg-white dark:bg-[#1a2127] border border-purple-100 dark:border-0 shadow-md">
           <CardHeader className="pb-1">
-            <CardTitle className="text-sm sm:text-base text-slate-600 dark-text-muted">
+            <CardTitle className="text-sm sm:text-base text-slate-600 dark:text-gray-400">
               {t('water.streak')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             {isLoadingWaterRecords ? (
-              <Skeleton className="h-10 w-full dark-skeleton" />
+              <Skeleton className="h-10 w-full dark:bg-gray-700" />
             ) : (
               <div className="flex items-center">
-                <div className="flex-shrink-0 bg-purple-100 dark-stat-icon-bg dark-stat-icon-purple rounded-full p-3 mr-3">
-                  <History className="h-5 w-5 text-purple-500 dark-text-accent-purple" />
+                <div className="flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 rounded-full p-3 mr-3">
+                  <History className="h-5 w-5 text-purple-500 dark:text-purple-400" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark-text-title">
+                  <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
                     {hydrationStats.streakDays} {t('common.days')}
                   </div>
-                  <div className="text-xs sm:text-sm text-slate-500 dark-text-muted">
+                  <div className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">
                     {t('water.goalReached')}
                   </div>
                 </div>
@@ -181,65 +181,65 @@ export default function HydrationPage() {
 
       <div className="mb-6 sm:mb-8">
         {isLoadingWaterRecords ? (
-          <Skeleton className="h-64 w-full dark-skeleton" />
+          <Skeleton className="h-64 w-full dark:bg-gray-700" />
         ) : (
           <WaterTracker waterRecords={waterRecords || []} />
         )}
       </div>
 
-      <div className="mt-6 dark-card shadow-md rounded-xl p-5 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-semibold text-slate-800 dark-text-title mb-4">
+      <div className="mt-6 bg-white dark:bg-[#1a2127] border border-blue-100 dark:border-0 shadow-md rounded-xl p-5 sm:p-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-white mb-4">
           {t('water.hydrationTips')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex">
-            <div className="p-2 mr-3 bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue rounded-full h-min">
-              <DropletIcon className="h-5 w-5 text-blue-500 dark-text-accent-blue" />
+            <div className="p-2 mr-3 bg-blue-100 dark:bg-blue-900/30 rounded-full h-min">
+              <DropletIcon className="h-5 w-5 text-blue-500 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-medium text-slate-800 dark-text-title text-sm sm:text-base">
+              <h3 className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
                 {t('water.tip1Title')}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark-text-body mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 mt-1">
                 {t('water.tip1')}
               </p>
             </div>
           </div>
           <div className="flex">
-            <div className="p-2 mr-3 bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue rounded-full h-min">
-              <DropletIcon className="h-5 w-5 text-blue-500 dark-text-accent-blue" />
+            <div className="p-2 mr-3 bg-blue-100 dark:bg-blue-900/30 rounded-full h-min">
+              <DropletIcon className="h-5 w-5 text-blue-500 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-medium text-slate-800 dark-text-title text-sm sm:text-base">
+              <h3 className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
                 {t('water.tip2Title')}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark-text-body mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 mt-1">
                 {t('water.tip2')}
               </p>
             </div>
           </div>
           <div className="flex">
-            <div className="p-2 mr-3 bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue rounded-full h-min">
-              <DropletIcon className="h-5 w-5 text-blue-500 dark-text-accent-blue" />
+            <div className="p-2 mr-3 bg-blue-100 dark:bg-blue-900/30 rounded-full h-min">
+              <DropletIcon className="h-5 w-5 text-blue-500 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-medium text-slate-800 dark-text-title text-sm sm:text-base">
+              <h3 className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
                 {t('water.tip3Title')}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark-text-body mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 mt-1">
                 {t('water.tip3')}
               </p>
             </div>
           </div>
           <div className="flex">
-            <div className="p-2 mr-3 bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue rounded-full h-min">
-              <DropletIcon className="h-5 w-5 text-blue-500 dark-text-accent-blue" />
+            <div className="p-2 mr-3 bg-blue-100 dark:bg-blue-900/30 rounded-full h-min">
+              <DropletIcon className="h-5 w-5 text-blue-500 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-medium text-slate-800 dark-text-title text-sm sm:text-base">
+              <h3 className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
                 {t('water.tip4Title')}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark-text-body mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400 mt-1">
                 {t('water.tip4')}
               </p>
             </div>
