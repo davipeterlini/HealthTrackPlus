@@ -143,15 +143,15 @@ export function MealTracker({ meals }: MealTrackerProps) {
   const getMealIcon = (mealType: string) => {
     switch (mealType.toLowerCase()) {
       case "breakfast":
-        return <Sun className="text-emerald-500" />;
+        return <Sun className="text-emerald-500 dark-text-accent-green" />;
       case "lunch":
-        return <Cloud className="text-emerald-500" />;
+        return <Cloud className="text-emerald-500 dark-text-accent-blue" />;
       case "dinner":
-        return <Moon className="text-emerald-500" />;
+        return <Moon className="text-emerald-500 dark-text-accent-purple" />;
       case "snack":
-        return <Coffee className="text-emerald-500" />;
+        return <Coffee className="text-emerald-500 dark-text-accent-primary" />;
       default:
-        return <Utensils className="text-gray-600" />;
+        return <Utensils className="text-gray-600 dark-text-accent-blue" />;
     }
   };
   
@@ -176,12 +176,12 @@ export function MealTracker({ meals }: MealTrackerProps) {
   };
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="dark-card">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>{t('meal.mealTracker')}</CardTitle>
+        <CardTitle className="text-gray-900 dark-text-title">{t('meal.mealTracker')}</CardTitle>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark-btn-success">
               <PlusCircle className="mr-2 h-4 w-4" /> {t('meal.addMeal')}
             </Button>
           </DialogTrigger>
@@ -290,7 +290,11 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 </div>
                 
                 <DialogFooter>
-                  <Button type="submit" disabled={addMealMutation.isPending}>
+                  <Button 
+                    type="submit" 
+                    disabled={addMealMutation.isPending}
+                    className="bg-green-600 hover:bg-green-700 dark-btn-success"
+                  >
                     {addMealMutation.isPending ? t('meal.savingMeal') : t('meal.saveMeal')}
                   </Button>
                 </DialogFooter>
@@ -311,7 +315,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   {mealList.map((meal, idx) => (
                     <div key={idx} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0 last:pb-0">
                       <div className="flex items-start">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gray-100 dark-stat-icon-bg dark-stat-icon-primary flex items-center justify-center">
                           {getMealIcon(meal.mealType)}
                         </div>
                         <div className="ml-4 flex-1">
