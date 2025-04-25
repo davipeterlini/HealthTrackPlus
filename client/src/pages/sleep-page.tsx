@@ -206,40 +206,40 @@ export default function SleepPage() {
   return (
     <MainLayout>
       <div className="container px-4 py-6 mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('sleep.sleepTracker')}</h1>
+        <div className="flex justify-between items-center responsive-mb">
+          <h1 className="responsive-title-lg text-slate-800 dark:text-white">{t('sleep.sleepTracker')}</h1>
           <Button 
             variant="default" 
-            className="bg-green-600 hover:bg-green-700 dark-btn-success"
+            className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button"
             onClick={() => setActiveTab("record")}
           >
-            <PlusCircle className="mr-2 h-4 w-4" /> {t('sleep.recordSleep')}
+            <PlusCircle className="mr-2 responsive-icon-sm" /> {t('sleep.recordSleep')}
           </Button>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="responsive-grid-3 responsive-gap-y">
           {/* Resumo do Sono */}
-          <Card className="md:col-span-3 bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg text-slate-800 dark:text-white">{t('sleep.sleepSummary')}</CardTitle>
-              <CardDescription className="text-slate-600 dark:text-gray-400">
+          <Card className="md:col-span-3 bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardHeader className="responsive-card-header pb-3">
+              <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('sleep.sleepSummary')}</CardTitle>
+              <CardDescription className="responsive-text-sm text-slate-600 dark:text-slate-400">
                 {t('sleep.sleepSummaryDescription')}
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center border border-slate-200 dark:border-gray-700">
-                  <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full mr-4">
-                    <Clock className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+            <CardContent className="responsive-card-content">
+              <div className="responsive-grid-3">
+                <div className="bg-white dark:bg-gray-800/50 responsive-card-inner flex items-center border-slate-200 dark:border-gray-700">
+                  <div className="responsive-icon-container bg-emerald-100 dark:bg-emerald-900/30 rounded-full mr-4">
+                    <Clock className="responsive-icon text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-600 dark:text-gray-400">{t('sleep.totalSleepHours')}</p>
-                    <p className="text-2xl font-bold text-slate-800 dark:text-white">
+                    <p className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('sleep.totalSleepHours')}</p>
+                    <p className="responsive-text-lg font-bold text-slate-800 dark:text-white">
                       {latestSleep
                         ? `${latestSleep.hours} ${t('sleep.hours')}`
                         : t('common.notAvailable')}
                     </p>
-                    <p className="text-xs text-slate-600 dark:text-gray-400">
+                    <p className="responsive-text-xs text-slate-600 dark:text-slate-400">
                       {latestSleep
                         ? format(new Date(latestSleep.date), 'dd/MM/yyyy')
                         : ""}
@@ -247,35 +247,35 @@ export default function SleepPage() {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center border border-slate-200 dark:border-gray-700">
-                  <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full mr-4">
-                    <TrendingUp className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                <div className="bg-white dark:bg-gray-800/50 responsive-card-inner flex items-center border-slate-200 dark:border-gray-700">
+                  <div className="responsive-icon-container bg-emerald-100 dark:bg-emerald-900/30 rounded-full mr-4">
+                    <TrendingUp className="responsive-icon text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-600 dark:text-gray-400">{t('sleep.sleepQuality')}</p>
-                    <p className="text-2xl font-bold text-slate-800 dark:text-white">
+                    <p className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('sleep.sleepQuality')}</p>
+                    <p className="responsive-text-lg font-bold text-slate-800 dark:text-white">
                       {sleepData.length > 0
                         ? t(`sleep.${qualityText}`)
                         : t('common.notAvailable')}
                     </p>
-                    <p className="text-xs text-slate-600 dark:text-gray-400">
+                    <p className="responsive-text-xs text-slate-600 dark:text-slate-400">
                       {t('sleep.averageQuality')}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center border border-slate-200 dark:border-gray-700">
-                  <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full mr-4">
-                    <Bed className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                <div className="bg-white dark:bg-gray-800/50 responsive-card-inner flex items-center border-slate-200 dark:border-gray-700">
+                  <div className="responsive-icon-container bg-emerald-100 dark:bg-emerald-900/30 rounded-full mr-4">
+                    <Bed className="responsive-icon text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-600 dark:text-gray-400">{t('sleep.deepSleepPercentage')}</p>
-                    <p className="text-2xl font-bold text-slate-800 dark:text-white">
+                    <p className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('sleep.deepSleepPercentage')}</p>
+                    <p className="responsive-text-lg font-bold text-slate-800 dark:text-white">
                       {latestSleep && latestSleep.hours > 0
                         ? `${Math.round((latestSleep.deepSleep / latestSleep.hours) * 100)}%`
                         : t('common.notAvailable')}
                     </p>
-                    <p className="text-xs text-slate-600 dark:text-gray-400">
+                    <p className="responsive-text-xs text-slate-600 dark:text-slate-400">
                       {t('sleep.ofTotalSleep')}
                     </p>
                   </div>
@@ -293,12 +293,12 @@ export default function SleepPage() {
 
               <TabsContent value="history" className="space-y-6">
                 {/* Gráfico de Histórico de Sono */}
-                <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
-                  <CardHeader>
-                    <CardTitle className="text-slate-800 dark:text-white">{t('sleep.sleepHistory')}</CardTitle>
-                    <CardDescription className="text-slate-600 dark:text-gray-400">{t('sleep.sleepHistoryDescription')}</CardDescription>
+                <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                  <CardHeader className="responsive-card-header">
+                    <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('sleep.sleepHistory')}</CardTitle>
+                    <CardDescription className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('sleep.sleepHistoryDescription')}</CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="responsive-card-content">
                     <div className="h-80">
                       {sleepHistoryData.length > 0 ? (
                         <ResponsiveContainer width="100%" height="100%">
@@ -337,12 +337,12 @@ export default function SleepPage() {
 
                 {/* Composição do Sono */}
                 {latestSleep && (
-                  <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
-                    <CardHeader>
-                      <CardTitle className="text-slate-800 dark:text-white">{t('sleep.sleepComposition')}</CardTitle>
-                      <CardDescription className="text-slate-600 dark:text-gray-400">{t('sleep.lastSleepCycles')}</CardDescription>
+                  <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                    <CardHeader className="responsive-card-header">
+                      <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('sleep.sleepComposition')}</CardTitle>
+                      <CardDescription className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('sleep.lastSleepCycles')}</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex flex-col items-center">
+                    <CardContent className="responsive-card-content flex flex-col items-center">
                       <div className="h-64 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>

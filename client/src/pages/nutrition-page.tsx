@@ -25,25 +25,25 @@ export default function NutritionPage() {
   
   return (
     <MainLayout>
-      <div className="flex flex-row items-center justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+      <div className="flex flex-row items-center justify-between responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
           {t('navigation.nutrition')}
         </h1>
-        <Button className="bg-green-600 hover:bg-green-700">
-          <PlusCircle className="mr-2 h-4 w-4" /> {t('meal.addMeal')}
+        <Button className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button">
+          <PlusCircle className="mr-2 responsive-icon-sm" /> {t('meal.addMeal')}
         </Button>
       </div>
     
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-1 space-y-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 responsive-gap-y">
+        <div className="lg:col-span-1 space-y-6 responsive-gap-y">
           {waterLoading ? (
-            <Skeleton className="h-64 w-full dark:bg-gray-700" />
+            <Skeleton className="responsive-chart w-full dark:bg-gray-700" />
           ) : (
             <WaterTracker waterRecords={waterRecords || []} />
           )}
           
           {sleepLoading ? (
-            <Skeleton className="h-96 w-full dark:bg-gray-700" />
+            <Skeleton className="responsive-chart w-full dark:bg-gray-700" />
           ) : (
             <SleepTracker sleepRecords={sleepRecords || []} />
           )}
