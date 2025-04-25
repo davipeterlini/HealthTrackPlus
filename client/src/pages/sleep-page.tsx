@@ -40,7 +40,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/use-auth";
-import { Moon, Clock, Bed, TrendingUp, Activity } from "lucide-react";
+import { Moon, Clock, Bed, TrendingUp, Activity, PlusCircle } from "lucide-react";
 import {
   AreaChart,
   Area,
@@ -206,7 +206,16 @@ export default function SleepPage() {
   return (
     <MainLayout>
       <div className="container px-4 py-6 mx-auto">
-        <h1 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white">{t('sleep.sleepTracker')}</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">{t('sleep.sleepTracker')}</h1>
+          <Button 
+            variant="default" 
+            className="bg-green-600 hover:bg-green-700 dark-btn-success"
+            onClick={() => setActiveTab("record")}
+          >
+            <PlusCircle className="mr-2 h-4 w-4" /> {t('sleep.recordSleep')}
+          </Button>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           {/* Resumo do Sono */}
