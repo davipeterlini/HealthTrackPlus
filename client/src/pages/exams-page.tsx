@@ -287,7 +287,7 @@ export default function ExamsPage() {
       </div>
       
       {/* Lista de exames */}
-      <Card className="mb-8 bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+      <Card className="mb-8 bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
         <ExamList 
           exams={exams} 
           isLoading={isLoadingExams} 
@@ -306,7 +306,7 @@ export default function ExamsPage() {
       {isLoadingInsights ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="p-4 animate-pulse bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+            <Card key={i} className="p-4 animate-pulse bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
               <div className="h-4 bg-gray-200 dark:bg-gray-700 w-1/2 rounded mb-3"></div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 w-3/4 rounded mb-2"></div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 w-full rounded mb-2"></div>
@@ -316,7 +316,7 @@ export default function ExamsPage() {
           ))}
         </div>
       ) : healthInsights.length === 0 ? (
-        <Card className="p-6 text-center bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+        <Card className="p-6 text-center bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
           <div className="mx-auto w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="h-6 w-6 text-gray-500 dark:text-gray-400" />
           </div>
@@ -328,13 +328,13 @@ export default function ExamsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {healthInsights.map((insight) => (
-            <Card key={insight.id} className="p-5 flex flex-col h-full bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+            <Card key={insight.id} className="p-5 flex flex-col h-full bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
               <div className="flex justify-between items-start mb-3">
                 <div className="flex items-center">
                   <div className={`p-2 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-3`}>
                     {getCategoryIcon(insight.category)}
                   </div>
-                  <h3 className="font-semibold">{insight.title}</h3>
+                  <h3 className="font-semibold text-slate-800 dark:text-white">{insight.title}</h3>
                 </div>
                 <Badge className={getSeverityColor(insight.severity)}>
                   {insight.severity.charAt(0).toUpperCase() + insight.severity.slice(1)}
@@ -397,8 +397,8 @@ export default function ExamsPage() {
                     </div>
                     
                     {selectedExam.aiAnalysis && typeof selectedExam.aiAnalysis === 'object' && (
-                      <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
-                        <h4 className="text-sm font-medium mb-2">{t('exams.aiAnalysis')}</h4>
+                      <div className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-lg p-4">
+                        <h4 className="text-sm font-medium mb-2 text-slate-800 dark:text-white">{t('exams.aiAnalysis')}</h4>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
                           {(() => {
                             try {
@@ -470,7 +470,7 @@ export default function ExamsPage() {
                                 : selectedExam.results;
                               
                               return Object.entries(results).map(([key, value]) => (
-                                <div key={key} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-md p-3">
+                                <div key={key} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-md p-3">
                                   <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                                     {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
                                   </p>
@@ -513,8 +513,8 @@ export default function ExamsPage() {
                     </div>
                   ) : (
                     <div className="space-y-5">
-                      <div className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg pt-3">
-                        <h3 className="text-base font-medium px-4 mb-1">{t('health.insightVisualization')}</h3>
+                      <div className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-lg pt-3">
+                        <h3 className="text-base font-medium px-4 mb-1 text-slate-800 dark:text-white">{t('health.insightVisualization')}</h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400 px-4 mb-2">
                           {t('health.healthChartsDescription')}
                         </p>
@@ -542,13 +542,13 @@ export default function ExamsPage() {
                       
                       <h3 className="text-base font-medium mt-4">{t('health.detailedRecommendations')}</h3>
                       {examInsights.map((insight) => (
-                        <div key={insight.id} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm rounded-lg p-4">
+                        <div key={insight.id} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-lg p-4">
                           <div className="flex justify-between items-start mb-2">
                             <div className="flex items-center">
                               <div className={`p-1.5 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-2`}>
                                 {getCategoryIcon(insight.category)}
                               </div>
-                              <h4 className="font-medium">{insight.title}</h4>
+                              <h4 className="font-medium text-slate-800 dark:text-white">{insight.title}</h4>
                             </div>
                             <Badge className={getSeverityColor(insight.severity)}>
                               {insight.category}
