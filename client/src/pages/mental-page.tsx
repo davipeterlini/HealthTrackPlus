@@ -141,19 +141,19 @@ const MentalPage: React.FC = () => {
         <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="flex overflow-x-auto pb-2 no-scrollbar">
             <TabsList className="bg-slate-100 dark:bg-gray-800 p-1">
-              <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127]">
+              <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:text-emerald-600 dark:data-[state=active]:bg-[#1a2127] dark:data-[state=active]:text-emerald-400">
                 <BarChart className="h-4 w-4 mr-2" />
                 {t('mental.overview')}
               </TabsTrigger>
-              <TabsTrigger value="meditate" className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127]">
+              <TabsTrigger value="meditate" className="data-[state=active]:bg-white data-[state=active]:text-emerald-600 dark:data-[state=active]:bg-[#1a2127] dark:data-[state=active]:text-emerald-400">
                 <Brain className="h-4 w-4 mr-2" />
                 {t('mental.meditate')}
               </TabsTrigger>
-              <TabsTrigger value="mood" className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127]">
+              <TabsTrigger value="mood" className="data-[state=active]:bg-white data-[state=active]:text-emerald-600 dark:data-[state=active]:bg-[#1a2127] dark:data-[state=active]:text-emerald-400">
                 <Smile className="h-4 w-4 mr-2" />
                 {t('mental.moodTracking')}
               </TabsTrigger>
-              <TabsTrigger value="stress" className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127]">
+              <TabsTrigger value="stress" className="data-[state=active]:bg-white data-[state=active]:text-emerald-600 dark:data-[state=active]:bg-[#1a2127] dark:data-[state=active]:text-emerald-400">
                 <Heart className="h-4 w-4 mr-2" />
                 {t('mental.stressManagement')}
               </TabsTrigger>
@@ -187,13 +187,13 @@ const MentalPage: React.FC = () => {
                     
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center">
-                        <Clock className="h-5 w-5 text-blue-500 dark:text-blue-400 mr-2" />
+                        <Clock className="h-5 w-5 text-emerald-500 dark:text-emerald-400 mr-2" />
                         <div>
                           <div className="text-sm font-medium text-slate-800 dark:text-white">{t('mental.meditationStreak')}</div>
                           <div className="text-xs text-slate-600 dark:text-gray-400">{t('mental.daysInARow')}</div>
                         </div>
                       </div>
-                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{streak}</div>
+                      <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{streak}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -236,7 +236,7 @@ const MentalPage: React.FC = () => {
                     {recentMeditations.slice(0, 3).map((session) => (
                       <div key={session.id} className="flex items-center justify-between py-1">
                         <div className="flex items-center gap-3">
-                          <Play className="h-5 w-5 text-blue-500 dark:text-blue-400" />
+                          <Play className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
                           <div>
                             <div className="font-medium text-slate-800 dark:text-white">{session.title}</div>
                             <div className="text-xs text-slate-600 dark:text-gray-400">
@@ -297,9 +297,9 @@ const MentalPage: React.FC = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-lg h-48 flex items-center justify-center">
+                    <div className="bg-gradient-to-r from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 rounded-lg h-48 flex items-center justify-center">
                       <div className="text-center">
-                        <Play className="mx-auto h-12 w-12 text-purple-600 dark:text-purple-400 mb-2" />
+                        <Play className="mx-auto h-12 w-12 text-emerald-600 dark:text-emerald-400 mb-2" />
                         <div className="font-medium text-lg text-slate-800 dark:text-white">{t('mental.guidedMorningMeditation')}</div>
                         <div className="text-sm text-slate-600 dark:text-gray-300">15 {t('mental.minutes')}</div>
                       </div>
@@ -322,8 +322,8 @@ const MentalPage: React.FC = () => {
                   {recentMeditations.map((session) => (
                     <Card key={session.id} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                       <div className="flex items-center p-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
-                          <Play className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                          <Play className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                         </div>
                         <div className="ml-4 flex-1">
                           <div className="font-medium text-slate-800 dark:text-white">{session.title}</div>
@@ -331,7 +331,7 @@ const MentalPage: React.FC = () => {
                             {session.duration} {t('mental.minutes')}
                           </div>
                         </div>
-                        <Button size="sm" variant="ghost" className="ml-auto text-purple-500 dark:text-purple-400">
+                        <Button size="sm" variant="ghost" className="ml-auto text-emerald-500 dark:text-emerald-400">
                           <Play className="h-4 w-4" />
                         </Button>
                       </div>
