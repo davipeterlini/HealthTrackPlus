@@ -128,13 +128,19 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
               onClick={() => handleBarClick(item.date)}
             >
               <div className="w-full relative flex items-end justify-center h-[85%]">
-                {/* Barra de passos */}
+                {/* Barra de passos com design aprimorado */}
                 <div 
-                  className="w-[70%] mx-auto dark-bar-green rounded-t-md z-20 relative group"
-                  style={{ height: `${Math.max(item.active * 0.7, 2)}%` }} // Reduzindo o tamanho das barras para 70%
+                  className="w-[70%] mx-auto dark-bar-green rounded-t-md z-20 relative group transition-all duration-300 ease-in-out"
+                  style={{ 
+                    height: `${Math.max(item.active * 0.7, 2)}%`,
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)' 
+                  }}
                 >
-                  {/* Tooltip ao passar o mouse ou tocar */}
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
+                  {/* Brilho superior para efeito 3D suave */}
+                  <div className="absolute top-0 left-0 right-0 h-[20%] bg-gradient-to-b from-white/30 to-transparent rounded-t-md"></div>
+                  
+                  {/* Tooltip aprimorado */}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30 shadow-xl">
                     <div className="bg-white dark-tooltip shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
                       <div className="font-semibold text-slate-800 dark-text-title mb-1">{item.day}</div>
                       <div className="flex justify-between text-slate-600 dark-text-body">
@@ -150,12 +156,15 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
                   </div>
                 </div>
                 
-                {/* Linha de calorias */}
-                <div 
-                  className="absolute bottom-0 w-[70%] mx-auto left-0 right-0 h-0.5 dark-line-blue z-10"
-                  style={{ bottom: `${Math.min((item.cals / 2500) * 100 * 0.7, 100)}%` }}
+                {/* Linha de calorias com design de curva suave */}
+                <div className="absolute w-[70%] mx-auto left-0 right-0 z-10"
+                  style={{ 
+                    bottom: `${Math.min((item.cals / 2500) * 100 * 0.7, 100)}%`,
+                    height: '3px',
+                    background: 'linear-gradient(to right, transparent, var(--line-blue) 50%, var(--line-blue))'
+                  }}
                 >
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full dark-line-blue absolute right-0 top-1/2 transform -translate-y-1/2"></div>
+                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full dark-line-blue absolute right-0 top-1/2 transform -translate-y-1/2 shadow-md"></div>
                 </div>
               </div>
               

@@ -301,6 +301,11 @@
     @apply dark:bg-emerald-900/30 dark:text-emerald-400;
   }
 
+  /* Linhas do gráfico suaves */
+  .dark-grid-line {
+    @apply dark:border-gray-700/50;
+  }
+
   /* Definições de cores fixas para referência */
   /* Card background: #1a2127 */
   /* Page background: #0a1015 */
@@ -314,4 +319,19 @@
   /* Secondary text: gray-400 (#9ca3af) */
   /* Muted text: gray-500 (#6b7280) */
   /* Borders: gray-700 (#374151) */
+  
+  /* Variáveis CSS para gráficos */
+  :root {
+    --line-blue: #3b82f6;
+    --line-green: #10b981;
+    --line-purple: #8b5cf6;
+    --line-red: #ef4444;
+  }
+  
+  .dark {
+    --line-blue: #60a5fa;
+    --line-green: #34d399;
+    --line-purple: #a78bfa;
+    --line-red: #f87171;
+  }
 }
