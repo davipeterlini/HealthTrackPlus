@@ -113,7 +113,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
-              <Apple className="text-emerald-500 dark:text-emerald-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+              <Apple className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
             </div>
           </div>
         </Card>
@@ -131,7 +131,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
-              <Moon className="text-emerald-500 dark:text-emerald-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+              <Moon className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
             </div>
           </div>
         </Card>
@@ -149,7 +149,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
-              <Heart className="text-emerald-500 dark:text-emerald-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+              <Heart className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
             </div>
           </div>
         </Card>
@@ -364,7 +364,7 @@ export default function DashboardPage() {
           <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-5 shadow-md rounded-xl">
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
-              <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-500 dark:text-indigo-300" />
+              <Moon className="text-indigo-500 dark:text-indigo-300 responsive-icon" />
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
