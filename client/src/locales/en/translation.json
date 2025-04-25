@@ -638,5 +638,23 @@
     "stressCategory": "Stress Reduction",
     "stressCategoryDescription": "Release tension and manage stress",
     "browseSessions": "Browse Sessions"
+  },
+  
+  "videos": {
+    "educationalContent": "Educational Content",
+    "courseTracks": "Course Tracks",
+    "allCategories": "All Categories",
+    "mentalHealth": "Mental Health",
+    "nutrition": "Nutrition",
+    "exercise": "Exercise",
+    "medical": "Medical",
+    "sleep": "Sleep",
+    "noVideosFound": "No videos found in this category",
+    "noCourseTracks": "No course tracks available",
+    "videoDescription": "Video Description",
+    "watchVideo": "Watch Video",
+    "continueVideo": "Continue Video",
+    "rewatchVideo": "Rewatch Video",
+    "completeVideo": "Complete Video"
   }
 }
