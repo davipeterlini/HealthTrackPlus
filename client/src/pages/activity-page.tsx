@@ -140,13 +140,13 @@ export default function ActivityPage() {
   const getActivityIcon = (type: string) => {
     switch (type?.toLowerCase()) {
       case "walking":
-        return <Footprints className="h-5 w-5 text-primary-600 dark:text-primary-400" />;
+        return <Footprints className="h-5 w-5 text-primary-600 dark-text-accent-primary" />;
       case "running":
-        return <Footprints className="h-5 w-5 text-green-500 dark:text-green-400" />;
+        return <Footprints className="h-5 w-5 text-green-500 dark-text-accent-green" />;
       case "cycling":
-        return <Dumbbell className="h-5 w-5 text-purple-500 dark:text-purple-400" />;
+        return <Dumbbell className="h-5 w-5 text-purple-500 dark-text-accent-purple" />;
       default:
-        return <Dumbbell className="h-5 w-5 text-blue-500 dark:text-blue-400" />;
+        return <Dumbbell className="h-5 w-5 text-blue-500 dark-text-accent-blue" />;
     }
   };
   
@@ -156,7 +156,7 @@ export default function ActivityPage() {
         <h1 className="text-2xl font-semibold text-gray-900 dark-text-title">{t('activity.title')}</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="dark-btn-primary">
+            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark-btn-success">
               <PlusCircle className="mr-2 h-4 w-4" /> {t('activity.addActivity')}
             </Button>
           </DialogTrigger>
@@ -270,7 +270,7 @@ export default function ActivityPage() {
                   <Button 
                     type="submit" 
                     disabled={addActivityMutation.isPending} 
-                    className="dark-btn-primary"
+                    className="bg-green-600 hover:bg-green-700 dark-btn-success"
                   >
                     {addActivityMutation.isPending ? t('activity.savingActivity') : t('activity.saveActivity')}
                   </Button>
@@ -328,7 +328,7 @@ export default function ActivityPage() {
                     <div className="space-y-4">
                       {recentActivities.map((activity, index) => (
                         <div key={index} className="flex space-x-4 items-start border-b dark-border pb-4 last:border-0 last:pb-0">
-                          <div className="h-10 w-10 rounded-full bg-primary-100 dark-inner-box dark-border flex items-center justify-center">
+                          <div className="h-10 w-10 rounded-full bg-primary-100 dark-stat-icon-bg dark-stat-icon-primary flex items-center justify-center">
                             {getActivityIcon(activity.activityType)}
                           </div>
                           <div className="flex-1">
@@ -339,18 +339,18 @@ export default function ActivityPage() {
                             
                             <div className="mt-1 flex flex-wrap gap-3">
                               <div className="flex items-center text-xs text-gray-600 dark-text-body">
-                                <Footprints className="h-3.5 w-3.5 mr-1" />
+                                <Footprints className="h-3.5 w-3.5 mr-1 dark-text-accent-green" />
                                 {activity.steps} {t('activity.steps')}
                               </div>
                               
                               <div className="flex items-center text-xs text-gray-600 dark-text-body">
-                                <Clock className="h-3.5 w-3.5 mr-1" />
+                                <Clock className="h-3.5 w-3.5 mr-1 dark-text-accent-blue" />
                                 {activity.minutes} {t('activity.minutes')}
                               </div>
                               
                               {activity.distance && (
                                 <div className="flex items-center text-xs text-gray-600 dark-text-body">
-                                  <Dumbbell className="h-3.5 w-3.5 mr-1" />
+                                  <Dumbbell className="h-3.5 w-3.5 mr-1 dark-text-accent-purple" />
                                   {activity.distance} km
                                 </div>
                               )}
@@ -361,7 +361,9 @@ export default function ActivityPage() {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <Dumbbell className="h-12 w-12 mx-auto text-gray-400 dark-text-muted" />
+                      <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gray-100 dark-stat-icon-bg mb-2">
+                        <Dumbbell className="h-8 w-8 text-gray-400 dark-text-accent-blue" />
+                      </div>
                       <h3 className="mt-2 text-sm font-medium text-gray-900 dark-text-title">{t('activity.noActivities')}</h3>
                       <p className="mt-1 text-sm text-gray-500 dark-text-muted">
                         {t('activity.startTracking')}
