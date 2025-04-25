@@ -2,6 +2,9 @@
 /* Importar estilos padronizados para o modo escuro */
 @import './styles/dark-mode.css';
 
+/* Importar estilos padronizados para responsividade */
+@import './styles/responsiveness.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

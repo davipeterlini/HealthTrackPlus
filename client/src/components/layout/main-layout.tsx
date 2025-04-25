@@ -14,13 +14,13 @@ export function MainLayout({ children, title, hideTitle = false }: MainLayoutPro
       <Header />
       
       <main className="flex-grow pb-16 md:pb-0">
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="responsive-section">
+          <div className="max-w-7xl mx-auto responsive-container">
             {title && !hideTitle && (
-              <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">{title}</h1>
+              <h1 className="responsive-title-lg text-gray-800 dark:text-gray-100">{title}</h1>
             )}
             
-            <div className={`${title && !hideTitle ? 'mt-6' : 'mt-0'}`}>
+            <div className={`${title && !hideTitle ? 'responsive-mt' : 'mt-0'}`}>
               {children}
             </div>
           </div>

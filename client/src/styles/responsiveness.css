@@ -1,0 +1,207 @@
+/* 
+  Esquema de Responsividade Padrão
+  Este arquivo define classes reutilizáveis para manter consistência responsiva em toda a aplicação
+*/
+
+@layer utilities {
+  /* 
+    Breakpoints principais:
+    - xs: < 576px (mobile pequeno)
+    - sm: >= 576px (mobile grande)
+    - md: >= 768px (tablets)
+    - lg: >= 992px (desktop pequeno)
+    - xl: >= 1200px (desktop grande)
+  */
+
+  /* ===== CONTAINERS E LAYOUTS ===== */
+  
+  /* Container padrão com margens responsivas */
+  .responsive-container {
+    @apply w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 mx-auto;
+  }
+  
+  /* Margens verticais responsivas para seções */
+  .responsive-section {
+    @apply my-4 sm:my-6 md:my-8 lg:my-10;
+  }
+  
+  /* Espaçamento entre elementos responsivo */
+  .responsive-gap-y {
+    @apply gap-y-3 sm:gap-y-4 md:gap-y-6;
+  }
+  
+  .responsive-gap-x {
+    @apply gap-x-2 sm:gap-x-3 md:gap-x-4 lg:gap-x-6;
+  }
+  
+  /* Padding responsivo para cards e containers */
+  .responsive-padding {
+    @apply p-3 sm:p-4 md:p-5 lg:p-6;
+  }
+  
+  /* ===== TIPOGRAFIA ===== */
+  
+  /* Tamanhos de título responsivos */
+  .responsive-title-xl {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
+  
+  .responsive-title-lg {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold;
+  }
+  
+  .responsive-title-md {
+    @apply text-base sm:text-lg md:text-xl font-semibold;
+  }
+  
+  .responsive-title-sm {
+    @apply text-sm sm:text-base md:text-lg font-semibold;
+  }
+  
+  /* Textos de parágrafo responsivos */
+  .responsive-text-lg {
+    @apply text-base sm:text-lg;
+  }
+  
+  .responsive-text {
+    @apply text-sm sm:text-base;
+  }
+  
+  .responsive-text-sm {
+    @apply text-xs sm:text-sm;
+  }
+  
+  /* ===== COMPONENTES ===== */
+  
+  /* Cards responsivos */
+  .responsive-card {
+    @apply p-3 sm:p-4 md:p-5 lg:p-6 rounded-lg shadow-md;
+  }
+  
+  .responsive-card-header {
+    @apply mb-2 sm:mb-3 md:mb-4;
+  }
+  
+  .responsive-card-content {
+    @apply space-y-2 sm:space-y-3 md:space-y-4;
+  }
+  
+  /* Botões responsivos */
+  .responsive-button-lg {
+    @apply px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base rounded-lg;
+  }
+  
+  .responsive-button {
+    @apply px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md;
+  }
+  
+  .responsive-button-sm {
+    @apply px-2 sm:px-3 py-1 sm:py-1.5 text-xs rounded;
+  }
+  
+  /* Ícones responsivos */
+  .responsive-icon-lg {
+    @apply h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7;
+  }
+  
+  .responsive-icon {
+    @apply h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6;
+  }
+  
+  .responsive-icon-sm {
+    @apply h-3 w-3 sm:h-4 sm:w-4;
+  }
+  
+  /* ===== LAYOUTS DE GRID ===== */
+  
+  /* Grid responsivo de 1 coluna (mobile) para várias colunas */
+  .responsive-grid-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5;
+  }
+  
+  .responsive-grid-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-5;
+  }
+  
+  .responsive-grid-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5;
+  }
+  
+  /* ===== HEADER E NAVEGAÇÃO ===== */
+  
+  /* Header responsivo */
+  .responsive-header {
+    @apply px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4;
+  }
+  
+  .responsive-header-title {
+    @apply text-lg sm:text-xl md:text-2xl font-bold;
+  }
+  
+  /* Nav links responsivos */
+  .responsive-nav-link {
+    @apply text-sm sm:text-base px-2 sm:px-3 py-1 sm:py-2;
+  }
+  
+  /* ===== GRÁFICOS E VISUALIZAÇÕES ===== */
+  
+  /* Altura de gráficos responsiva */
+  .responsive-chart {
+    @apply h-40 sm:h-48 md:h-56 lg:h-64;
+  }
+  
+  /* Chart com legendas responsivas */
+  .responsive-chart-legend {
+    @apply flex flex-wrap text-xs sm:text-sm gap-2 sm:gap-3;
+  }
+  
+  /* ===== FORMULÁRIOS ===== */
+  
+  /* Inputs responsivos */
+  .responsive-input {
+    @apply px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-md;
+  }
+  
+  /* Labels responsivos */
+  .responsive-label {
+    @apply text-xs sm:text-sm mb-1 sm:mb-1.5 inline-block;
+  }
+  
+  /* ===== MOBILE-SPECIFIC ===== */
+  
+  /* Visibilidade responsiva */
+  .hide-on-mobile {
+    @apply hidden sm:block;
+  }
+  
+  .show-on-mobile {
+    @apply block sm:hidden;
+  }
+  
+  /* ===== ESPAÇAMENTOS RESPONSIVOS ===== */
+  
+  /* Margens específicas para fluxo de conteúdo */
+  .responsive-mb {
+    @apply mb-3 sm:mb-4 md:mb-6;
+  }
+  
+  .responsive-mt {
+    @apply mt-3 sm:mt-4 md:mt-6;
+  }
+  
+  .responsive-my {
+    @apply my-3 sm:my-4 md:my-6;
+  }
+  
+  /* ===== BORDERS E SHADOWS ===== */
+  
+  /* Borders responsivos */
+  .responsive-border {
+    @apply border rounded-md sm:rounded-lg;
+  }
+  
+  /* Sombras responsivas */
+  .responsive-shadow {
+    @apply shadow-sm sm:shadow md:shadow-md;
+  }
+}
