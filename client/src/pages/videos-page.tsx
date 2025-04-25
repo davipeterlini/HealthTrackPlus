@@ -33,16 +33,16 @@ export default function VideosPage() {
   
   return (
     <MainLayout>
-      <div className="flex flex-row items-center justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+      <div className="flex flex-row items-center justify-between responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
           {t('navigation.videos')}
         </h1>
       </div>
       
-      <Card className="overflow-hidden bg-white border-emerald-100 dark:bg-[#1a2127] dark:border-[#2b353e]">
-        <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <h3 className="text-lg leading-6 font-medium text-slate-800 dark:text-white mb-3 sm:mb-0">
+      <Card className="overflow-hidden bg-white border-emerald-100 dark:bg-[#1a2127] dark:border-[#2b353e] responsive-card">
+        <CardContent className="responsive-card-content">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between responsive-mb">
+            <h3 className="responsive-title-sm text-slate-800 dark:text-white mb-3 sm:mb-0">
               {t('videos.educationalContent')}
             </h3>
             <div>
@@ -66,45 +66,45 @@ export default function VideosPage() {
           </div>
           
           {videosLoading ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="responsive-grid-3 responsive-gap-y">
               {Array.from({ length: 6 }).map((_, i) => (
                 <Skeleton key={i} className="h-64 w-full rounded-lg" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="responsive-grid-3 responsive-gap-y">
               {filteredVideos?.map(video => (
                 <VideoCard key={video.id} video={video} />
               ))}
               
               {filteredVideos?.length === 0 && (
                 <div className="col-span-full text-center py-12">
-                  <p className="text-slate-600 dark:text-slate-400">{t('videos.noVideosFound')}</p>
+                  <p className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('videos.noVideosFound')}</p>
                 </div>
               )}
             </div>
           )}
           
-          <div className="mt-12">
-            <h3 className="text-lg leading-6 font-medium text-slate-800 dark:text-white mb-6">
+          <div className="responsive-mt">
+            <h3 className="responsive-title-sm text-slate-800 dark:text-white responsive-mb">
               {t('videos.courseTracks')}
             </h3>
             
             {tracksLoading ? (
-              <div className="space-y-6">
+              <div className="responsive-gap-y">
                 {Array.from({ length: 2 }).map((_, i) => (
-                  <Skeleton key={i} className="h-64 w-full dark:bg-gray-700" />
+                  <Skeleton key={i} className="h-64 w-full rounded-lg" />
                 ))}
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="responsive-gap-y">
                 {courseTracks?.map(track => (
                   <CourseTrack key={track.id} track={track} />
                 ))}
                 
                 {courseTracks?.length === 0 && (
                   <div className="text-center py-12">
-                    <p className="text-slate-600 dark:text-slate-400">{t('videos.noCourseTracks')}</p>
+                    <p className="responsive-text-sm text-slate-600 dark:text-slate-400">{t('videos.noCourseTracks')}</p>
                   </div>
                 )}
               </div>
