@@ -525,7 +525,7 @@
   },
   
   "medication": {
-    "title": "Medication Management",
+    "title": "Medications",
     "addMedication": "Add Medication",
     "currentMedications": "Current Medications",
     "todaysReminders": "Today's Reminders",

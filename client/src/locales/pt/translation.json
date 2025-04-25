@@ -239,7 +239,7 @@
   },
   
   "medication": {
-    "title": "Gerenciamento de Medicamentos",
+    "title": "Medicamentos",
     "addMedication": "Adicionar Medicamento",
     "currentMedications": "Medicamentos Atuais",
     "todaysReminders": "Lembretes de Hoje",
