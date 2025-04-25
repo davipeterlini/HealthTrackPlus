@@ -535,22 +535,22 @@ export default function SleepPage() {
                     <span className="text-sm text-slate-700 dark:text-gray-300">{t('sleep.tip2')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
-                      <Activity className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
+                    <div className="bg-emerald-100 dark:bg-emerald-900/30 p-1.5 rounded-full mr-2">
+                      <Activity className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <span className="text-sm dark-text-body">{t('sleep.tip3')}</span>
+                    <span className="text-sm text-slate-700 dark:text-gray-300">{t('sleep.tip3')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
+                    <div className="bg-emerald-100 dark:bg-emerald-900/30 p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <span className="text-sm dark-text-body">{t('sleep.tip4')}</span>
+                    <span className="text-sm text-slate-700 dark:text-gray-300">{t('sleep.tip4')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
+                    <div className="bg-emerald-100 dark:bg-emerald-900/30 p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <span className="text-sm dark-text-body">{t('sleep.tip5')}</span>
+                    <span className="text-sm text-slate-700 dark:text-gray-300">{t('sleep.tip5')}</span>
                   </li>
                 </ul>
               </CardContent>
