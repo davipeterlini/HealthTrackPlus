@@ -14,6 +14,7 @@ interface CourseTrackProps {
 }
 
 export function CourseTrack({ track }: CourseTrackProps) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   
   // For demo purposes, we'll use a fixed progress percentage
@@ -37,7 +38,7 @@ export function CourseTrack({ track }: CourseTrackProps) {
             <p className="mt-1 text-sm text-primary-700 dark:text-primary-300">{track.description}</p>
           </div>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-200">
-            {track.videoCount} Videos
+            {track.videoCount} {t('common.videos')}
           </span>
         </div>
         <div className="mt-3">
@@ -45,7 +46,7 @@ export function CourseTrack({ track }: CourseTrackProps) {
             <div className="flex mb-2 items-center justify-between">
               <div>
                 <span className="text-xs font-semibold inline-block text-primary-700 dark:text-primary-300">
-                  {trackProgress}% Complete
+                  {trackProgress}% {t('common.completed')}
                 </span>
               </div>
             </div>
@@ -99,15 +100,15 @@ export function CourseTrack({ track }: CourseTrackProps) {
                       )}
                     </div>
                     <div className="ml-3 flex-1">
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{video.title} ({video.duration})</p>
+                      <p className="text-sm font-medium text-slate-800 dark:text-white">{video.title} ({video.duration})</p>
                       {status === "completed" && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Completed on Oct 15, 2023</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{t('videos.completedOn')} Oct 15, 2023</p>
                       )}
                       {status === "inProgress" && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400">In progress - {progress}% complete</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{t('videos.inProgress')} - {progress}% {t('common.completed')}</p>
                       )}
                       {status === "locked" && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Complete previous videos to unlock</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{t('videos.completeToUnlock')}</p>
                       )}
                     </div>
                     <Button
@@ -116,8 +117,8 @@ export function CourseTrack({ track }: CourseTrackProps) {
                       disabled={status === "locked"}
                       className="ml-3 text-sm"
                     >
-                      {status === "completed" ? "Rewatch" : 
-                       status === "inProgress" ? "Continue" : "Locked"}
+                      {status === "completed" ? t('videos.rewatchVideo') : 
+                       status === "inProgress" ? t('videos.continueVideo') : t('videos.locked')}
                     </Button>
                   </div>
                 </div>
@@ -134,7 +135,7 @@ export function CourseTrack({ track }: CourseTrackProps) {
           onClick={() => setExpanded(!expanded)}
           className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {expanded ? "Hide details" : "Show all videos"} {expanded ? "↑" : "↓"}
+          {expanded ? t('videos.hideDetails') : t('videos.showAllVideos')} {expanded ? "↑" : "↓"}
         </Button>
       </div>
     </Card>
