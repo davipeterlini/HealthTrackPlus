@@ -205,32 +205,32 @@ export default function SleepPage() {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-6 mx-auto dark-bg-base">
-        <h1 className="text-2xl font-bold mb-6 dark-text-title">{t('sleep.sleepTracker')}</h1>
+      <div className="container px-4 py-6 mx-auto">
+        <h1 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white">{t('sleep.sleepTracker')}</h1>
 
         <div className="grid gap-6 md:grid-cols-3">
           {/* Resumo do Sono */}
-          <Card className="md:col-span-3 dark-card">
+          <Card className="md:col-span-3 bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
             <CardHeader className="pb-3">
-              <CardTitle className="dark-text-title">{t('sleep.sleepSummary')}</CardTitle>
-              <CardDescription className="dark-text-muted">
+              <CardTitle className="text-lg text-slate-800 dark:text-white">{t('sleep.sleepSummary')}</CardTitle>
+              <CardDescription className="text-slate-600 dark:text-gray-400">
                 {t('sleep.sleepSummaryDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
-                <div className="bg-gray-50 dark-inner-box p-4 rounded-lg flex items-center">
-                  <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-3 rounded-full mr-4">
-                    <Clock className="h-6 w-6 text-blue-600 dark-text-accent-blue" />
+                <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center border border-slate-200 dark:border-gray-700">
+                  <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full mr-4">
+                    <Clock className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark-text-muted">{t('sleep.totalSleepHours')}</p>
-                    <p className="text-2xl font-bold dark-text-title">
+                    <p className="text-sm text-slate-600 dark:text-gray-400">{t('sleep.totalSleepHours')}</p>
+                    <p className="text-2xl font-bold text-slate-800 dark:text-white">
                       {latestSleep
                         ? `${latestSleep.hours} ${t('sleep.hours')}`
                         : t('common.notAvailable')}
                     </p>
-                    <p className="text-xs text-gray-500 dark-text-muted">
+                    <p className="text-xs text-slate-600 dark:text-gray-400">
                       {latestSleep
                         ? format(new Date(latestSleep.date), 'dd/MM/yyyy')
                         : ""}
@@ -238,35 +238,35 @@ export default function SleepPage() {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 dark-inner-box p-4 rounded-lg flex items-center">
-                  <div className="bg-purple-100 dark-stat-icon-bg dark-stat-icon-purple p-3 rounded-full mr-4">
-                    <TrendingUp className="h-6 w-6 text-purple-600 dark-text-accent-purple" />
+                <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center border border-slate-200 dark:border-gray-700">
+                  <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full mr-4">
+                    <TrendingUp className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark-text-muted">{t('sleep.sleepQuality')}</p>
-                    <p className="text-2xl font-bold dark-text-title">
+                    <p className="text-sm text-slate-600 dark:text-gray-400">{t('sleep.sleepQuality')}</p>
+                    <p className="text-2xl font-bold text-slate-800 dark:text-white">
                       {sleepData.length > 0
                         ? t(`sleep.${qualityText}`)
                         : t('common.notAvailable')}
                     </p>
-                    <p className="text-xs text-gray-500 dark-text-muted">
+                    <p className="text-xs text-slate-600 dark:text-gray-400">
                       {t('sleep.averageQuality')}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 dark-inner-box p-4 rounded-lg flex items-center">
-                  <div className="bg-green-100 dark-stat-icon-bg dark-stat-icon-green p-3 rounded-full mr-4">
-                    <Bed className="h-6 w-6 text-green-600 dark-text-accent-green" />
+                <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center border border-slate-200 dark:border-gray-700">
+                  <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full mr-4">
+                    <Bed className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark-text-muted">{t('sleep.deepSleepPercentage')}</p>
-                    <p className="text-2xl font-bold dark-text-title">
+                    <p className="text-sm text-slate-600 dark:text-gray-400">{t('sleep.deepSleepPercentage')}</p>
+                    <p className="text-2xl font-bold text-slate-800 dark:text-white">
                       {latestSleep && latestSleep.hours > 0
                         ? `${Math.round((latestSleep.deepSleep / latestSleep.hours) * 100)}%`
                         : t('common.notAvailable')}
                     </p>
-                    <p className="text-xs text-gray-500 dark-text-muted">
+                    <p className="text-xs text-slate-600 dark:text-gray-400">
                       {t('sleep.ofTotalSleep')}
                     </p>
                   </div>
@@ -278,16 +278,16 @@ export default function SleepPage() {
           <div className="md:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="mb-4">
-                <TabsTrigger value="history" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark-tab-active">{t('sleep.sleepHistory')}</TabsTrigger>
-                <TabsTrigger value="record" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark-tab-active">{t('sleep.recordSleep')}</TabsTrigger>
+                <TabsTrigger value="history" className="data-[state=active]:bg-emerald-50 data-[state=active]:text-emerald-600 dark:data-[state=active]:bg-emerald-900/20 dark:data-[state=active]:text-emerald-400">{t('sleep.sleepHistory')}</TabsTrigger>
+                <TabsTrigger value="record" className="data-[state=active]:bg-emerald-50 data-[state=active]:text-emerald-600 dark:data-[state=active]:bg-emerald-900/20 dark:data-[state=active]:text-emerald-400">{t('sleep.recordSleep')}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="history" className="space-y-6">
                 {/* Gráfico de Histórico de Sono */}
-                <Card className="dark-card">
+                <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                   <CardHeader>
-                    <CardTitle className="dark-text-title">{t('sleep.sleepHistory')}</CardTitle>
-                    <CardDescription className="dark-text-muted">{t('sleep.sleepHistoryDescription')}</CardDescription>
+                    <CardTitle className="text-slate-800 dark:text-white">{t('sleep.sleepHistory')}</CardTitle>
+                    <CardDescription className="text-slate-600 dark:text-gray-400">{t('sleep.sleepHistoryDescription')}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="h-80">
@@ -313,11 +313,11 @@ export default function SleepPage() {
                         </ResponsiveContainer>
                       ) : (
                         <div className="flex flex-col items-center justify-center h-full text-center">
-                          <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gray-100 dark-stat-icon-bg mb-2">
-                            <Moon className="h-8 w-8 text-gray-400 dark-text-accent-blue" />
+                          <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-emerald-100 dark:bg-emerald-900/30 mb-2">
+                            <Moon className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
                           </div>
-                          <h3 className="mt-2 text-sm font-medium text-gray-900 dark-text-title">{t('sleep.noSleepData')}</h3>
-                          <p className="mt-1 text-sm text-gray-500 dark-text-muted">
+                          <h3 className="mt-2 text-sm font-medium text-slate-800 dark:text-white">{t('sleep.noSleepData')}</h3>
+                          <p className="mt-1 text-sm text-slate-600 dark:text-gray-400">
                             {t('sleep.recordSleepDescription')}
                           </p>
                         </div>
@@ -328,10 +328,10 @@ export default function SleepPage() {
 
                 {/* Composição do Sono */}
                 {latestSleep && (
-                  <Card className="dark-card">
+                  <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                     <CardHeader>
-                      <CardTitle className="dark-text-title">{t('sleep.sleepComposition')}</CardTitle>
-                      <CardDescription className="dark-text-muted">{t('sleep.lastSleepCycles')}</CardDescription>
+                      <CardTitle className="text-slate-800 dark:text-white">{t('sleep.sleepComposition')}</CardTitle>
+                      <CardDescription className="text-slate-600 dark:text-gray-400">{t('sleep.lastSleepCycles')}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center">
                       <div className="h-64 w-full">
