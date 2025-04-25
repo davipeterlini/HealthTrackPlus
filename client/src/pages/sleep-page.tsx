@@ -375,10 +375,10 @@ export default function SleepPage() {
               </TabsContent>
 
               <TabsContent value="record">
-                <Card className="dark-card">
+                <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                   <CardHeader>
-                    <CardTitle className="dark-text-title">{t('sleep.recordSleep')}</CardTitle>
-                    <CardDescription className="dark-text-muted">{t('sleep.recordSleepDescription')}</CardDescription>
+                    <CardTitle className="text-slate-800 dark:text-white">{t('sleep.recordSleep')}</CardTitle>
+                    <CardDescription className="text-slate-600 dark:text-gray-400">{t('sleep.recordSleepDescription')}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Form {...form}>
@@ -389,7 +389,7 @@ export default function SleepPage() {
                             name="hours"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel className="dark-text-body">{t('sleep.totalSleepHours')}</FormLabel>
+                                <FormLabel className="text-slate-800 dark:text-white">{t('sleep.totalSleepHours')}</FormLabel>
                                 <FormControl>
                                   <Input
                                     type="number"
@@ -409,7 +409,7 @@ export default function SleepPage() {
                             name="quality"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>{t('sleep.sleepQuality')}</FormLabel>
+                                <FormLabel className="text-slate-800 dark:text-white">{t('sleep.sleepQuality')}</FormLabel>
                                 <Select
                                   onValueChange={field.onChange}
                                   defaultValue={field.value}
@@ -433,7 +433,7 @@ export default function SleepPage() {
                         </div>
 
                         <div className="space-y-4">
-                          <div className="text-sm font-medium mb-2">
+                          <div className="text-sm font-medium mb-2 text-slate-800 dark:text-white">
                             {t('sleep.sleepCycles')}
                           </div>
                           <div className="grid gap-4 md:grid-cols-3">
@@ -442,7 +442,7 @@ export default function SleepPage() {
                               name="deepSleep"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>{t('sleep.deepSleep')} (h)</FormLabel>
+                                  <FormLabel className="text-slate-800 dark:text-white">{t('sleep.deepSleep')} (h)</FormLabel>
                                   <FormControl>
                                     <Input
                                       type="number"
@@ -461,7 +461,7 @@ export default function SleepPage() {
                               name="lightSleep"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>{t('sleep.lightSleep')} (h)</FormLabel>
+                                  <FormLabel className="text-slate-800 dark:text-white">{t('sleep.lightSleep')} (h)</FormLabel>
                                   <FormControl>
                                     <Input
                                       type="number"
@@ -480,7 +480,7 @@ export default function SleepPage() {
                               name="rem"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>{t('sleep.rem')} (h)</FormLabel>
+                                  <FormLabel className="text-slate-800 dark:text-white">{t('sleep.rem')} (h)</FormLabel>
                                   <FormControl>
                                     <Input
                                       type="number"
@@ -515,24 +515,24 @@ export default function SleepPage() {
 
           {/* Dicas de Sono */}
           <div>
-            <Card className="h-full dark-card">
+            <Card className="h-full bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
               <CardHeader>
-                <CardTitle className="dark-text-title">{t('sleep.sleepTips')}</CardTitle>
-                <CardDescription className="dark-text-muted">{t('sleep.improveSleepQuality')}</CardDescription>
+                <CardTitle className="text-slate-800 dark:text-white">{t('sleep.sleepTips')}</CardTitle>
+                <CardDescription className="text-slate-600 dark:text-gray-400">{t('sleep.improveSleepQuality')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
+                    <div className="bg-emerald-100 dark:bg-emerald-900/30 p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <span className="text-sm dark-text-body">{t('sleep.tip1')}</span>
+                    <span className="text-sm text-slate-700 dark:text-gray-300">{t('sleep.tip1')}</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
-                      <Moon className="h-4 w-4 text-blue-600 dark-text-accent-blue" />
+                    <div className="bg-emerald-100 dark:bg-emerald-900/30 p-1.5 rounded-full mr-2">
+                      <Moon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <span className="text-sm dark-text-body">{t('sleep.tip2')}</span>
+                    <span className="text-sm text-slate-700 dark:text-gray-300">{t('sleep.tip2')}</span>
                   </li>
                   <li className="flex items-start">
                     <div className="bg-blue-100 dark-stat-icon-bg dark-stat-icon-blue p-1.5 rounded-full mr-2">
