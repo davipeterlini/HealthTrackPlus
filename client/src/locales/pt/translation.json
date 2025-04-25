@@ -365,7 +365,10 @@
     "error": "Erro",
     "notAvailable": "Não disponível",
     "weeklyAverage": "Média Semanal",
-    "days": "dias"
+    "days": "dias",
+    "progress": "Progresso",
+    "videos": "vídeos",
+    "completed": "concluído"
   },
   
   "exams": {
