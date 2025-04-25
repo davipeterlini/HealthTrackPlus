@@ -12,29 +12,29 @@ export default function WomensHealthPage(): ReactElement {
   return (
     <MainLayout>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark-text-title">
           {t('womensHealth.title')}
         </h1>
-        <Button className="self-start sm:self-auto bg-pink-600 hover:bg-pink-700 dark:bg-pink-600 dark:hover:bg-pink-700 text-white">
+        <Button className="self-start sm:self-auto bg-green-600 hover:bg-green-700 dark-btn-success">
           {t('womensHealth.logCycle')}
         </Button>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
+        <Card className="dark-card shadow-md rounded-xl">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Calendar className="mr-2 h-5 w-5 text-pink-500" />
+            <CardTitle className="text-lg font-semibold text-slate-800 dark-text-title flex items-center">
+              <Calendar className="mr-2 h-5 w-5 text-pink-500 dark-text-accent-primary" />
               {t('womensHealth.cycleTracker')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col">
               <div className="text-center mb-4">
-                <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
+                <h3 className="text-2xl font-bold text-slate-800 dark-text-title">
                   {t('womensHealth.day')} 16
                 </h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-sm text-slate-500 dark-text-muted">
                   {t('womensHealth.ofCycle')} (28 {t('common.days')})
                 </p>
               </div>
@@ -73,10 +73,10 @@ export default function WomensHealthPage(): ReactElement {
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
+        <Card className="dark-card shadow-md rounded-xl">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Heart className="mr-2 h-5 w-5 text-pink-500" />
+            <CardTitle className="text-lg font-semibold text-slate-800 dark-text-title flex items-center">
+              <Heart className="mr-2 h-5 w-5 text-pink-500 dark-text-accent-primary" />
               {t('womensHealth.symptoms')}
             </CardTitle>
           </CardHeader>
@@ -85,7 +85,7 @@ export default function WomensHealthPage(): ReactElement {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-2 h-8 bg-pink-500 rounded-full mr-3"></div>
-                  <span className="text-sm text-slate-800 dark:text-white">{t('womensHealth.mood')}</span>
+                  <span className="text-sm text-slate-800 dark-text-body">{t('womensHealth.mood')}</span>
                 </div>
                 <Badge className="bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
                   {t('womensHealth.medium')}
@@ -95,7 +95,7 @@ export default function WomensHealthPage(): ReactElement {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-2 h-8 bg-amber-500 rounded-full mr-3"></div>
-                  <span className="text-sm text-slate-800 dark:text-white">{t('womensHealth.energy')}</span>
+                  <span className="text-sm text-slate-800 dark-text-body">{t('womensHealth.energy')}</span>
                 </div>
                 <Badge className="bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
                   {t('womensHealth.high')}
@@ -129,10 +129,10 @@ export default function WomensHealthPage(): ReactElement {
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
+        <Card className="dark-card shadow-md rounded-xl">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <TrendingUp className="mr-2 h-5 w-5 text-pink-500" />
+            <CardTitle className="text-lg font-semibold text-slate-800 dark-text-title flex items-center">
+              <TrendingUp className="mr-2 h-5 w-5 text-pink-500 dark-text-accent-primary" />
               {t('womensHealth.insights')}
             </CardTitle>
           </CardHeader>
@@ -180,9 +180,9 @@ export default function WomensHealthPage(): ReactElement {
         </Card>
       </div>
       
-      <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl mb-8">
+      <Card className="dark-card shadow-md rounded-xl mb-8">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white">
+          <CardTitle className="text-lg font-semibold text-slate-800 dark-text-title">
             {t('womensHealth.recommendations')}
           </CardTitle>
         </CardHeader>

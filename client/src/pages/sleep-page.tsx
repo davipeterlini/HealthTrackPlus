@@ -312,9 +312,13 @@ export default function SleepPage() {
                           </AreaChart>
                         </ResponsiveContainer>
                       ) : (
-                        <div className="flex items-center justify-center h-full">
-                          <p className="dark-text-muted">
-                            {t('sleep.noSleepData')}
+                        <div className="flex flex-col items-center justify-center h-full text-center">
+                          <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gray-100 dark-stat-icon-bg mb-2">
+                            <Moon className="h-8 w-8 text-gray-400 dark-text-accent-blue" />
+                          </div>
+                          <h3 className="mt-2 text-sm font-medium text-gray-900 dark-text-title">{t('sleep.noSleepData')}</h3>
+                          <p className="mt-1 text-sm text-gray-500 dark-text-muted">
+                            {t('sleep.recordSleepDescription')}
                           </p>
                         </div>
                       )}
