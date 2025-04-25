@@ -140,7 +140,7 @@ const MentalPage: React.FC = () => {
         
         <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="flex overflow-x-auto pb-2 no-scrollbar">
-            <TabsList className="bg-gray-100 dark:bg-gray-800 p-1">
+            <TabsList className="bg-slate-100 dark:bg-gray-800 p-1">
               <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127]">
                 <BarChart className="h-4 w-4 mr-2" />
                 {t('mental.overview')}
@@ -320,18 +320,18 @@ const MentalPage: React.FC = () => {
                 <h2 className="font-semibold text-xl mb-4">{t('mental.recentlyPlayed')}</h2>
                 <div className="space-y-3">
                   {recentMeditations.map((session) => (
-                    <Card key={session.id} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+                    <Card key={session.id} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                       <div className="flex items-center p-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
-                          <Play className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
+                          <Play className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                         </div>
                         <div className="ml-4 flex-1">
-                          <div className="font-medium">{session.title}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                          <div className="font-medium text-slate-800 dark:text-white">{session.title}</div>
+                          <div className="text-xs text-slate-600 dark:text-gray-400">
                             {session.duration} {t('mental.minutes')}
                           </div>
                         </div>
-                        <Button size="sm" variant="ghost" className="ml-auto">
+                        <Button size="sm" variant="ghost" className="ml-auto text-purple-500 dark:text-purple-400">
                           <Play className="h-4 w-4" />
                         </Button>
                       </div>
@@ -344,10 +344,10 @@ const MentalPage: React.FC = () => {
           
           <TabsContent value="mood" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader>
-                  <CardTitle>{t('mental.logYourMood')}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-slate-800 dark:text-white">{t('mental.logYourMood')}</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-gray-400">
                     {t('mental.logYourMoodDescription')}
                   </CardDescription>
                 </CardHeader>
@@ -357,59 +357,59 @@ const MentalPage: React.FC = () => {
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50">
                         <Frown className="h-7 w-7 text-red-500" />
                       </div>
-                      <span className="text-xs">{t('mental.terrible')}</span>
+                      <span className="text-xs text-slate-800 dark:text-white">{t('mental.terrible')}</span>
                     </button>
                     <button className="flex flex-col items-center space-y-1">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 hover:bg-orange-200 dark:bg-orange-900/30 dark:hover:bg-orange-900/50">
                         <Frown className="h-7 w-7 text-orange-500" />
                       </div>
-                      <span className="text-xs">{t('mental.bad')}</span>
+                      <span className="text-xs text-slate-800 dark:text-white">{t('mental.bad')}</span>
                     </button>
                     <button className="flex flex-col items-center space-y-1">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-900/30 dark:hover:bg-yellow-900/50">
                         <Smile className="h-7 w-7 text-yellow-500" />
                       </div>
-                      <span className="text-xs">{t('mental.neutral')}</span>
+                      <span className="text-xs text-slate-800 dark:text-white">{t('mental.neutral')}</span>
                     </button>
                     <button className="flex flex-col items-center space-y-1">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50">
                         <Smile className="h-7 w-7 text-green-500" />
                       </div>
-                      <span className="text-xs">{t('mental.good')}</span>
+                      <span className="text-xs text-slate-800 dark:text-white">{t('mental.good')}</span>
                     </button>
                     <button className="flex flex-col items-center space-y-1">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50">
                         <Smile className="h-7 w-7 text-emerald-500" />
                       </div>
-                      <span className="text-xs">{t('mental.great')}</span>
+                      <span className="text-xs text-slate-800 dark:text-white">{t('mental.great')}</span>
                     </button>
                   </div>
                   
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
+                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700">
                     {t('mental.logMood')}
                   </Button>
                 </CardContent>
               </Card>
               
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader>
-                  <CardTitle>{t('mental.moodHistory')}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-slate-800 dark:text-white">{t('mental.moodHistory')}</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-gray-400">
                     {t('mental.moodHistoryDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {moodLogs.map((log, index) => (
-                      <div key={index} className="flex items-start gap-3 pb-3 border-b border-gray-200 dark:border-gray-700 last:border-0">
+                      <div key={index} className="flex items-start gap-3 pb-3 border-b border-slate-200 dark:border-slate-800 last:border-0">
                         {getMoodIcon(log.mood)}
                         <div>
-                          <div className="font-medium">{getMoodText(log.mood)}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                          <div className="font-medium text-slate-800 dark:text-white">{getMoodText(log.mood)}</div>
+                          <div className="text-xs text-slate-600 dark:text-gray-400">
                             {log.date.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
                           </div>
                           {log.notes && (
-                            <div className="mt-1 text-sm">{log.notes}</div>
+                            <div className="mt-1 text-sm text-slate-700 dark:text-gray-300">{log.notes}</div>
                           )}
                         </div>
                       </div>
@@ -417,7 +417,7 @@ const MentalPage: React.FC = () => {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button variant="outline" size="sm" className="w-full text-emerald-500 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50">
                     <Calendar className="mr-2 h-4 w-4" />
                     {t('mental.viewFullHistory')}
                   </Button>
@@ -428,24 +428,24 @@ const MentalPage: React.FC = () => {
           
           <TabsContent value="stress" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader>
-                  <CardTitle>{t('mental.stressLevelTracking')}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-slate-800 dark:text-white">{t('mental.stressLevelTracking')}</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-gray-400">
                     {t('mental.stressLevelTrackingDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <div className="text-sm font-medium mb-1">{t('mental.weeklyStressOverview')}</div>
+                      <div className="text-sm font-medium mb-1 text-slate-800 dark:text-white">{t('mental.weeklyStressOverview')}</div>
                       <div className="flex items-end h-40 gap-2">
                         {stressLevels.map((data, index) => (
                           <div key={index} className="flex-1 flex flex-col items-center">
-                            <div className="w-full bg-gradient-to-t from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/10 rounded-t-sm" style={{ height: `${data.level}%` }}>
-                              <div className="w-full bg-blue-600 dark:bg-blue-500 h-1"></div>
+                            <div className="w-full bg-gradient-to-t from-emerald-100 to-emerald-50 dark:from-emerald-900/30 dark:to-emerald-800/10 rounded-t-sm" style={{ height: `${data.level}%` }}>
+                              <div className="w-full bg-emerald-500 dark:bg-emerald-500 h-1"></div>
                             </div>
-                            <div className="text-xs mt-1 text-gray-500">
+                            <div className="text-xs mt-1 text-slate-600 dark:text-gray-400">
                               {new Date(data.date).toLocaleDateString(undefined, { weekday: 'short' })}
                             </div>
                           </div>
@@ -453,14 +453,14 @@ const MentalPage: React.FC = () => {
                       </div>
                     </div>
                     
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-lg">
                       <div className="flex items-start">
-                        <AlertCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-2 flex-shrink-0" />
+                        <AlertCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400 mt-0.5 mr-2 flex-shrink-0" />
                         <div>
-                          <div className="font-medium text-blue-800 dark:text-blue-300">
+                          <div className="font-medium text-emerald-800 dark:text-emerald-300">
                             {t('mental.stressInsight')}
                           </div>
-                          <div className="text-sm text-blue-600 dark:text-blue-400">
+                          <div className="text-sm text-emerald-600 dark:text-emerald-400">
                             {t('mental.stressInsightDescription')}
                           </div>
                         </div>
@@ -470,63 +470,63 @@ const MentalPage: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader>
-                  <CardTitle>{t('mental.stressManagementTools')}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-slate-800 dark:text-white">{t('mental.stressManagementTools')}</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-gray-400">
                     {t('mental.stressManagementToolsDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <Card className="border border-gray-200 dark:border-gray-700">
+                    <Card className="border border-emerald-100 dark:border-emerald-900/20 bg-white dark:bg-[#1e262d]">
                       <div className="p-4">
                         <div className="flex items-center mb-2">
-                          <div className="h-8 w-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mr-3">
-                            <Brain className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                          <div className="h-8 w-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mr-3">
+                            <Brain className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                           </div>
-                          <div className="font-medium">{t('mental.guidedBreathing')}</div>
+                          <div className="font-medium text-slate-800 dark:text-white">{t('mental.guidedBreathing')}</div>
                         </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                        <p className="text-sm text-slate-600 dark:text-gray-400 mb-3">
                           {t('mental.guidedBreathingDescription')}
                         </p>
-                        <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
+                        <Button size="sm" className="w-full bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700">
                           <Play className="mr-2 h-4 w-4" />
                           {t('mental.startSession')}
                         </Button>
                       </div>
                     </Card>
                     
-                    <Card className="border border-gray-200 dark:border-gray-700">
+                    <Card className="border border-emerald-100 dark:border-emerald-900/20 bg-white dark:bg-[#1e262d]">
                       <div className="p-4">
                         <div className="flex items-center mb-2">
-                          <div className="h-8 w-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-3">
-                            <Heart className="h-5 w-5 text-green-600 dark:text-green-400" />
+                          <div className="h-8 w-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mr-3">
+                            <Heart className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                           </div>
-                          <div className="font-medium">{t('mental.quickMeditation')}</div>
+                          <div className="font-medium text-slate-800 dark:text-white">{t('mental.quickMeditation')}</div>
                         </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                        <p className="text-sm text-slate-600 dark:text-gray-400 mb-3">
                           {t('mental.quickMeditationDescription')}
                         </p>
-                        <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">
+                        <Button size="sm" className="w-full bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700">
                           <Play className="mr-2 h-4 w-4" />
                           {t('mental.startSession')}
                         </Button>
                       </div>
                     </Card>
                     
-                    <Card className="border border-gray-200 dark:border-gray-700">
+                    <Card className="border border-emerald-100 dark:border-emerald-900/20 bg-white dark:bg-[#1e262d]">
                       <div className="p-4">
                         <div className="flex items-center mb-2">
-                          <div className="h-8 w-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mr-3">
-                            <Smile className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                          <div className="h-8 w-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mr-3">
+                            <Smile className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                           </div>
-                          <div className="font-medium">{t('mental.journal')}</div>
+                          <div className="font-medium text-slate-800 dark:text-white">{t('mental.journal')}</div>
                         </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                        <p className="text-sm text-slate-600 dark:text-gray-400 mb-3">
                           {t('mental.journalDescription')}
                         </p>
-                        <Button size="sm" className="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800">
+                        <Button size="sm" className="w-full bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700">
                           <Calendar className="mr-2 h-4 w-4" />
                           {t('mental.openJournal')}
                         </Button>
