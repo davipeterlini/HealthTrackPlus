@@ -82,73 +82,73 @@ export default function DashboardPage() {
 
       {/* Big Numbers */}
       <div className="responsive-grid-4 responsive-mb">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('activity.activeMinutes')}</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">
+              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('activity.activeMinutes')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1.5">
                 {isLoadingStats ? '...' : dashboardStats?.activeMinutes.value || 45}
               </h2>
-              <p className={`flex items-center text-xs sm:text-sm ${dashboardStats?.activeMinutes.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
+              <p className={`flex items-center responsive-text-sm ${dashboardStats?.activeMinutes.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
                 <span className="mr-1">{dashboardStats?.activeMinutes.trend === 'up' ? '↑' : '↓'}</span>
                 {isLoadingStats ? '...' : dashboardStats?.activeMinutes.change || 15}% {t('health.stepsUp')}
               </p>
             </div>
-            <div className="bg-purple-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
+            <div className="bg-purple-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
               <Clock className="text-purple-500 dark:text-purple-400 responsive-icon" />
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.calories')}</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">
+              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.calories')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1.5">
                 {isLoadingStats ? '...' : dashboardStats?.calories.value.toLocaleString() || '1,450'}
               </h2>
-              <p className="text-red-500 dark:text-red-400 text-xs sm:text-sm">
+              <p className="text-red-500 dark:text-red-400 responsive-text-sm">
                 <span className="mr-1">↓</span>
                 {isLoadingStats ? '...' : dashboardStats?.calories.remaining || 320} {t('health.remaining')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
+            <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
               <Apple className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.sleep')}</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">
+              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.sleep')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1.5">
                 {isLoadingStats ? '...' : `${dashboardStats?.sleep.value || 7.5}h`}
               </h2>
-              <p className={`flex items-center text-xs sm:text-sm ${dashboardStats?.sleep.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
+              <p className={`flex items-center responsive-text-sm ${dashboardStats?.sleep.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
                 <span className="mr-1">{dashboardStats?.sleep.trend === 'up' ? '↑' : '↓'}</span>
                 {isLoadingStats ? '...' : dashboardStats?.sleep.change || 30}min {t('health.moreMinutes')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
+            <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
               <Moon className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1 sm:mb-2 text-xs sm:text-sm">{t('health.avgBPM')}</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">
+              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.avgBPM')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1.5">
                 {isLoadingStats ? '...' : dashboardStats?.heartRate.value || 72}
               </h2>
-              <p className={`flex items-center text-xs sm:text-sm ${dashboardStats?.heartRate.status === 'normal' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
+              <p className={`flex items-center responsive-text-sm ${dashboardStats?.heartRate.status === 'normal' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
                 <span className="mr-1">{dashboardStats?.heartRate.trend === 'down' ? '↓' : '↑'}</span>
                 {t('health.healthy')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
+            <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
               <Heart className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
             </div>
           </div>
