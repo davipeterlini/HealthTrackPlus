@@ -163,34 +163,34 @@ const MentalPage: React.FC = () => {
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Mental Health Summary */}
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">{t('mental.mentalHealthSummary')}</CardTitle>
+                  <CardTitle className="text-lg text-slate-800 dark:text-white">{t('mental.mentalHealthSummary')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{t('mental.stressLevel')}</span>
-                        <span className="text-sm font-medium">{Math.round(averageStressLevel)}%</span>
+                        <span className="text-sm text-slate-600 dark:text-gray-400">{t('mental.stressLevel')}</span>
+                        <span className="text-sm font-medium text-slate-800 dark:text-white">{Math.round(averageStressLevel)}%</span>
                       </div>
-                      <Progress value={averageStressLevel} className="h-2 bg-gray-200 dark:bg-gray-700" />
+                      <Progress value={averageStressLevel} className="h-2 bg-slate-200 dark:bg-gray-700" />
                     </div>
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{t('mental.weeklyMeditation')}</span>
-                        <span className="text-sm font-medium">{totalMinutesMeditated} {t('mental.minutes')}</span>
+                        <span className="text-sm text-slate-600 dark:text-gray-400">{t('mental.weeklyMeditation')}</span>
+                        <span className="text-sm font-medium text-slate-800 dark:text-white">{totalMinutesMeditated} {t('mental.minutes')}</span>
                       </div>
-                      <Progress value={totalMinutesMeditated / 60 * 100} max={100} className="h-2 bg-gray-200 dark:bg-gray-700" />
+                      <Progress value={totalMinutesMeditated / 60 * 100} max={100} className="h-2 bg-slate-200 dark:bg-gray-700" />
                     </div>
                     
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center">
-                        <Clock className="h-5 w-5 text-blue-500 mr-2" />
+                        <Clock className="h-5 w-5 text-blue-500 dark:text-blue-400 mr-2" />
                         <div>
-                          <div className="text-sm font-medium">{t('mental.meditationStreak')}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{t('mental.daysInARow')}</div>
+                          <div className="text-sm font-medium text-slate-800 dark:text-white">{t('mental.meditationStreak')}</div>
+                          <div className="text-xs text-slate-600 dark:text-gray-400">{t('mental.daysInARow')}</div>
                         </div>
                       </div>
                       <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{streak}</div>
@@ -200,9 +200,9 @@ const MentalPage: React.FC = () => {
               </Card>
               
               {/* Mood Tracking */}
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">{t('mental.recentMoods')}</CardTitle>
+                  <CardTitle className="text-lg text-slate-800 dark:text-white">{t('mental.recentMoods')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -210,8 +210,8 @@ const MentalPage: React.FC = () => {
                       <div key={index} className="flex items-center gap-3 py-1">
                         {getMoodIcon(log.mood)}
                         <div>
-                          <div className="font-medium">{getMoodText(log.mood)}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                          <div className="font-medium text-slate-800 dark:text-white">{getMoodText(log.mood)}</div>
+                          <div className="text-xs text-slate-600 dark:text-gray-400">
                             {log.date.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
                           </div>
                         </div>
@@ -220,39 +220,39 @@ const MentalPage: React.FC = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="pt-0">
-                  <Button variant="outline" size="sm" className="w-full" onClick={() => setActiveTab('mood')}>
+                  <Button variant="outline" size="sm" className="w-full text-emerald-500 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50" onClick={() => setActiveTab('mood')}>
                     {t('mental.viewAllMoods')}
                   </Button>
                 </CardFooter>
               </Card>
               
               {/* Recent Meditations */}
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">{t('mental.recentMeditations')}</CardTitle>
+                  <CardTitle className="text-lg text-slate-800 dark:text-white">{t('mental.recentMeditations')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     {recentMeditations.slice(0, 3).map((session) => (
                       <div key={session.id} className="flex items-center justify-between py-1">
                         <div className="flex items-center gap-3">
-                          <Play className="h-5 w-5 text-blue-500" />
+                          <Play className="h-5 w-5 text-blue-500 dark:text-blue-400" />
                           <div>
-                            <div className="font-medium">{session.title}</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                            <div className="font-medium text-slate-800 dark:text-white">{session.title}</div>
+                            <div className="text-xs text-slate-600 dark:text-gray-400">
                               {session.duration} {t('mental.minutes')}
                             </div>
                           </div>
                         </div>
                         {session.completed && (
-                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <CheckCircle className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
                         )}
                       </div>
                     ))}
                   </div>
                 </CardContent>
                 <CardFooter className="pt-0">
-                  <Button variant="outline" size="sm" className="w-full" onClick={() => setActiveTab('meditate')}>
+                  <Button variant="outline" size="sm" className="w-full text-emerald-500 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50" onClick={() => setActiveTab('meditate')}>
                     {t('mental.exploreAllMeditations')}
                   </Button>
                 </CardFooter>
@@ -266,18 +266,18 @@ const MentalPage: React.FC = () => {
                 <h2 className="font-semibold text-xl mb-4">{t('mental.meditationCategories')}</h2>
                 <div className="space-y-4">
                   {meditationCategories.map((category) => (
-                    <Card key={category.id} className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+                    <Card key={category.id} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
                       <CardHeader className="pb-2">
                         <div className="flex items-center">
                           {category.icon}
-                          <CardTitle className="ml-2 text-lg">{category.name}</CardTitle>
+                          <CardTitle className="ml-2 text-lg text-slate-800 dark:text-white">{category.name}</CardTitle>
                         </div>
-                        <CardDescription>
+                        <CardDescription className="text-slate-600 dark:text-gray-400">
                           {category.description}
                         </CardDescription>
                       </CardHeader>
                       <CardFooter>
-                        <Button size="sm" className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
+                        <Button size="sm" className="w-full bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700">
                           <Play className="mr-2 h-4 w-4" />
                           {t('mental.browseSessions')}
                         </Button>
@@ -289,28 +289,28 @@ const MentalPage: React.FC = () => {
               
               <div>
                 <h2 className="font-semibold text-xl mb-4">{t('mental.recommendedForYou')}</h2>
-                <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm mb-6">
+                <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md mb-6">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">{t('mental.featuredMeditation')}</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-lg text-slate-800 dark:text-white">{t('mental.featuredMeditation')}</CardTitle>
+                    <CardDescription className="text-slate-600 dark:text-gray-400">
                       {t('mental.featuredMeditationDescription')}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg h-48 flex items-center justify-center">
+                    <div className="bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-lg h-48 flex items-center justify-center">
                       <div className="text-center">
-                        <Play className="mx-auto h-12 w-12 text-blue-600 dark:text-blue-400 mb-2" />
-                        <div className="font-medium text-lg">{t('mental.guidedMorningMeditation')}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">15 {t('mental.minutes')}</div>
+                        <Play className="mx-auto h-12 w-12 text-purple-600 dark:text-purple-400 mb-2" />
+                        <div className="font-medium text-lg text-slate-800 dark:text-white">{t('mental.guidedMorningMeditation')}</div>
+                        <div className="text-sm text-slate-600 dark:text-gray-300">15 {t('mental.minutes')}</div>
                       </div>
                     </div>
                   </CardContent>
                   <CardFooter className="flex justify-between">
-                    <Button variant="outline">
+                    <Button variant="outline" className="border-emerald-200 dark:border-emerald-900/50 text-emerald-500 dark:text-emerald-400">
                       <Bookmark className="mr-2 h-4 w-4" />
                       {t('mental.save')}
                     </Button>
-                    <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
+                    <Button className="bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700">
                       <Play className="mr-2 h-4 w-4" />
                       {t('mental.startSession')}
                     </Button>
