@@ -5,8 +5,12 @@ import { MealTracker } from "@/components/nutrition/meal-tracker";
 import { useQuery } from "@tanstack/react-query";
 import { WaterIntakeRecord, SleepRecord, Meal } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function NutritionPage() {
+  const { t } = useTranslation();
   const { data: waterRecords, isLoading: waterLoading } = useQuery<WaterIntakeRecord[]>({
     queryKey: ["/api/water"],
   });
@@ -20,7 +24,16 @@ export default function NutritionPage() {
   });
   
   return (
-    <MainLayout title="Nutrition & Sleep">
+    <MainLayout>
+      <div className="flex flex-row items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+          {t('nutrition.title')}
+        </h1>
+        <Button className="bg-green-600 hover:bg-green-700">
+          <PlusCircle className="mr-2 h-4 w-4" /> {t('meal.addMeal')}
+        </Button>
+      </div>
+    
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="lg:col-span-1 space-y-6">
           {waterLoading ? (
