@@ -679,6 +679,12 @@
     "watchVideo": "Assistir Vídeo",
     "continueVideo": "Continuar Vídeo",
     "rewatchVideo": "Reassistir Vídeo",
-    "completeVideo": "Completar Vídeo"
+    "completeVideo": "Completar Vídeo",
+    "showAllVideos": "Mostrar todos os vídeos",
+    "hideDetails": "Ocultar detalhes",
+    "locked": "Bloqueado",
+    "completedOn": "Concluído em",
+    "inProgress": "Em andamento",
+    "completeToUnlock": "Complete os vídeos anteriores para desbloquear"
   }
 }

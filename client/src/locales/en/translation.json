@@ -278,7 +278,10 @@
     "error": "Error",
     "notAvailable": "Not Available",
     "weeklyAverage": "Weekly Average",
-    "days": "days"
+    "days": "days",
+    "progress": "Progress",
+    "videos": "videos",
+    "completed": "completed"
   },
   
   "exams": {
@@ -655,6 +658,12 @@
     "watchVideo": "Watch Video",
     "continueVideo": "Continue Video",
     "rewatchVideo": "Rewatch Video",
-    "completeVideo": "Complete Video"
+    "completeVideo": "Complete Video",
+    "showAllVideos": "Show all videos",
+    "hideDetails": "Hide details",
+    "locked": "Locked",
+    "completedOn": "Completed on",
+    "inProgress": "In progress",
+    "completeToUnlock": "Complete previous videos to unlock"
   }
 }
