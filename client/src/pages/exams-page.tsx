@@ -274,20 +274,24 @@ export default function ExamsPage() {
   
   return (
     <MainLayout title={t('health.exams')}>
-      <div className="flex justify-between items-center mb-6">
-        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-          {t('health.examsDescription')}
-        </p>
+      <div className="flex justify-between items-center responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
+          {t('health.exams')}
+        </h1>
         <Button 
-          className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white xs:text-xs sm:text-sm"
+          className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button"
           onClick={() => setUploadDialogOpen(true)}
         >
-          <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" /> {t('health.uploadExam')}
+          <Upload className="mr-2 responsive-icon-sm" /> {t('health.uploadExam')}
         </Button>
       </div>
       
+      <p className="text-slate-600 dark:text-slate-400 responsive-text-sm responsive-mb">
+        {t('health.examsDescription')}
+      </p>
+      
       {/* Lista de exames */}
-      <Card className="mb-8 bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
+      <Card className="responsive-mb bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
         <ExamList 
           exams={exams} 
           isLoading={isLoadingExams} 
@@ -296,17 +300,17 @@ export default function ExamsPage() {
       </Card>
       
       {/* Seção de insights de saúde */}
-      <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold">{t('health.healthInsights')}</h2>
-        <Button variant="outline" className="text-xs">
-          <BarChart3 className="h-4 w-4 mr-2" /> {t('health.viewAll')}
+      <div className="responsive-mb flex justify-between items-center">
+        <h2 className="responsive-title-md text-slate-800 dark:text-white">{t('health.healthInsights')}</h2>
+        <Button variant="outline" className="responsive-text-sm">
+          <BarChart3 className="responsive-icon-sm mr-2" /> {t('health.viewAll')}
         </Button>
       </div>
       
       {isLoadingInsights ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="responsive-grid-3 responsive-gap-y">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="p-4 animate-pulse bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
+            <Card key={i} className="p-4 animate-pulse bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
               <div className="h-4 bg-gray-200 dark:bg-gray-700 w-1/2 rounded mb-3"></div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 w-3/4 rounded mb-2"></div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 w-full rounded mb-2"></div>
@@ -316,38 +320,38 @@ export default function ExamsPage() {
           ))}
         </div>
       ) : healthInsights.length === 0 ? (
-        <Card className="p-6 text-center bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
+        <Card className="p-6 text-center bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
           <div className="mx-auto w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="h-6 w-6 text-gray-500 dark:text-gray-400" />
           </div>
-          <h3 className="text-lg font-medium mb-2">{t('health.noInsightsYet')}</h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-4">
+          <h3 className="responsive-title-sm mb-2 text-slate-800 dark:text-white">{t('health.noInsightsYet')}</h3>
+          <p className="responsive-text-sm text-slate-600 dark:text-slate-400 mb-4">
             {t('health.uploadExamToGetInsights')}
           </p>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="responsive-grid-3 responsive-gap-y">
           {healthInsights.map((insight) => (
-            <Card key={insight.id} className="p-5 flex flex-col h-full bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
-              <div className="flex justify-between items-start mb-3">
+            <Card key={insight.id} className="p-5 flex flex-col h-full bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+              <div className="flex justify-between items-start responsive-mb-xs">
                 <div className="flex items-center">
                   <div className={`p-2 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-3`}>
                     {getCategoryIcon(insight.category)}
                   </div>
-                  <h3 className="font-semibold text-slate-800 dark:text-white">{insight.title}</h3>
+                  <h3 className="responsive-text-md font-semibold text-slate-800 dark:text-white">{insight.title}</h3>
                 </div>
                 <Badge className={getSeverityColor(insight.severity)}>
                   {insight.severity.charAt(0).toUpperCase() + insight.severity.slice(1)}
                 </Badge>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+              <p className="responsive-text-sm text-slate-600 dark:text-slate-400 responsive-mb-xs">
                 {insight.description}
               </p>
               <div className="mt-auto">
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <div className="responsive-text-xs text-slate-500 dark:text-slate-400 mb-1">
                   {t('health.recommendation')}:
                 </div>
-                <p className="text-sm text-emerald-600 dark:text-emerald-400">
+                <p className="responsive-text-sm text-emerald-600 dark:text-emerald-400">
                   {insight.recommendation}
                 </p>
               </div>
@@ -358,18 +362,18 @@ export default function ExamsPage() {
       
       {/* Dialog de visualização de exame */}
       <Dialog open={!!selectedExamId} onOpenChange={(open) => !open && setSelectedExamId(null)}>
-        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white dark:bg-[#1a2127]">
           {selectedExam && (
             <>
               <DialogHeader>
-                <DialogTitle>{selectedExam.name}</DialogTitle>
+                <DialogTitle className="text-slate-800 dark:text-white">{selectedExam.name}</DialogTitle>
                 <DialogDescription>
                   {formatDate(selectedExam.date)} • {selectedExam.type}
                 </DialogDescription>
               </DialogHeader>
               
               <Tabs defaultValue="details">
-                <TabsList className="mb-4">
+                <TabsList className="responsive-mb">
                   <TabsTrigger value="details">{t('health.details')}</TabsTrigger>
                   <TabsTrigger value="insights">{t('health.insights')}</TabsTrigger>
                   <TabsTrigger value="file">{t('health.file')}</TabsTrigger>
@@ -397,9 +401,9 @@ export default function ExamsPage() {
                     </div>
                     
                     {selectedExam.aiAnalysis && typeof selectedExam.aiAnalysis === 'object' && (
-                      <div className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-lg p-4">
-                        <h4 className="text-sm font-medium mb-2 text-slate-800 dark:text-white">{t('exams.aiAnalysis')}</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                      <div className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card rounded-lg responsive-p">
+                        <h4 className="responsive-text-md font-medium responsive-mb-xs text-slate-800 dark:text-white">{t('exams.aiAnalysis')}</h4>
+                        <p className="responsive-text-sm text-slate-600 dark:text-slate-400 responsive-mb-xs">
                           {(() => {
                             try {
                               // Manipular tanto strings JSON quanto objetos diretamente
@@ -437,14 +441,14 @@ export default function ExamsPage() {
                               
                               return (
                                 <div>
-                                  <h5 className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                  <h5 className="responsive-text-xs text-slate-500 dark:text-slate-400 mb-1">
                                     {t('exams.recommendations')}:
                                   </h5>
-                                  <ul className="text-sm space-y-1">
+                                  <ul className="responsive-text-sm space-y-1">
                                     {translatedRecs.map((rec: string, i: number) => (
                                       <li key={i} className="flex items-start">
-                                        <CircleCheck className="h-4 w-4 text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
-                                        <span className="text-gray-700 dark:text-gray-300">{rec}</span>
+                                        <CircleCheck className="responsive-icon-xs text-emerald-500 mt-0.5 mr-2 flex-shrink-0" />
+                                        <span className="text-slate-600 dark:text-slate-300">{rec}</span>
                                       </li>
                                     ))}
                                   </ul>
@@ -461,8 +465,8 @@ export default function ExamsPage() {
                     
                     {selectedExam.results && typeof selectedExam.results === 'object' && (
                       <div>
-                        <h4 className="text-sm font-medium mb-2">{t('exams.results')}</h4>
-                        <div className="grid grid-cols-2 gap-3">
+                        <h4 className="responsive-text-md font-medium responsive-mb-xs text-slate-800 dark:text-white">{t('exams.results')}</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 responsive-gap-xs">
                           {(() => {
                             try {
                               const results = typeof selectedExam.results === 'string' 
@@ -470,11 +474,11 @@ export default function ExamsPage() {
                                 : selectedExam.results;
                               
                               return Object.entries(results).map(([key, value]) => (
-                                <div key={key} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-md p-3">
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                <div key={key} className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card rounded-md responsive-p-xs">
+                                  <p className="responsive-text-xs text-slate-500 dark:text-slate-400 mb-1">
                                     {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
                                   </p>
-                                  <p className="text-sm font-medium">
+                                  <p className="responsive-text-sm font-medium text-slate-800 dark:text-slate-100">
                                     {typeof value === 'object' 
                                       ? JSON.stringify(value) 
                                       : String(value)}
@@ -484,7 +488,7 @@ export default function ExamsPage() {
                             } catch (e) {
                               return (
                                 <div className="col-span-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md">
-                                  <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                                  <p className="responsive-text-sm text-yellow-700 dark:text-yellow-400">
                                     {t('exams.unableToParseResults')}
                                   </p>
                                 </div>
@@ -513,23 +517,23 @@ export default function ExamsPage() {
                     </div>
                   ) : (
                     <div className="space-y-5">
-                      <div className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-lg pt-3">
-                        <h3 className="text-base font-medium px-4 mb-1 text-slate-800 dark:text-white">{t('health.insightVisualization')}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 px-4 mb-2">
+                      <div className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card rounded-lg pt-3">
+                        <h3 className="responsive-text-md font-medium px-4 responsive-mb-xs text-slate-800 dark:text-white">{t('health.insightVisualization')}</h3>
+                        <p className="responsive-text-sm text-slate-500 dark:text-slate-400 px-4 responsive-mb-xs">
                           {t('health.healthChartsDescription')}
                         </p>
                         <Tabs defaultValue="overview" className="px-2 sm:px-4 pb-3">
-                          <TabsList className="mb-3 w-full flex">
+                          <TabsList className="responsive-mb-xs w-full flex">
                             <TabsTrigger value="overview" className="flex-1">{t('health.overview')}</TabsTrigger>
                             <TabsTrigger value="details" className="flex-1">{t('health.details')}</TabsTrigger>
                           </TabsList>
                           <TabsContent value="overview">
-                            <div className="h-[350px] min-w-[200px]">
+                            <div className="h-[300px] sm:h-[350px] min-w-[200px]">
                               <ExamInsightsChart insights={examInsights} />
                             </div>
                           </TabsContent>
                           <TabsContent value="details">
-                            <div className="h-[350px]">
+                            <div className="h-[300px] sm:h-[350px]">
                               {examInsights.length > 0 && (
                                 <div className="grid grid-cols-1">
                                   <InsightDetailCharts insight={examInsights[0]} />
@@ -540,28 +544,28 @@ export default function ExamsPage() {
                         </Tabs>
                       </div>
                       
-                      <h3 className="text-base font-medium mt-4">{t('health.detailedRecommendations')}</h3>
+                      <h3 className="responsive-text-md font-medium mt-4 text-slate-800 dark:text-white">{t('health.detailedRecommendations')}</h3>
                       {examInsights.map((insight) => (
-                        <div key={insight.id} className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md rounded-lg p-4">
-                          <div className="flex justify-between items-start mb-2">
+                        <div key={insight.id} className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card rounded-lg responsive-p">
+                          <div className="flex justify-between items-start responsive-mb-xs">
                             <div className="flex items-center">
                               <div className={`p-1.5 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-2`}>
                                 {getCategoryIcon(insight.category)}
                               </div>
-                              <h4 className="font-medium text-slate-800 dark:text-white">{insight.title}</h4>
+                              <h4 className="responsive-text-sm font-medium text-slate-800 dark:text-white">{insight.title}</h4>
                             </div>
                             <Badge className={getSeverityColor(insight.severity)}>
                               {insight.category}
                             </Badge>
                           </div>
-                          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                          <p className="responsive-text-sm text-slate-600 dark:text-slate-400 responsive-mb-xs">
                             {insight.description}
                           </p>
                           <div>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                            <p className="responsive-text-xs text-slate-500 dark:text-slate-400 mb-1">
                               {t('health.recommendation')}:
                             </p>
-                            <p className="text-sm text-emerald-600 dark:text-emerald-400">
+                            <p className="responsive-text-sm text-emerald-600 dark:text-emerald-400">
                               {insight.recommendation}
                             </p>
                             <InsightDetailCharts insight={insight} />
@@ -621,9 +625,9 @@ export default function ExamsPage() {
       
       {/* Dialog de upload de exame */}
       <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[500px] bg-white dark:bg-[#1a2127]">
           <DialogHeader>
-            <DialogTitle>{t('health.uploadExam')}</DialogTitle>
+            <DialogTitle className="text-slate-800 dark:text-white">{t('health.uploadExam')}</DialogTitle>
             <DialogDescription>
               {t('health.uploadExamDescription')}
             </DialogDescription>
@@ -631,7 +635,7 @@ export default function ExamsPage() {
           
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="exam-name">{t('health.examName')}</Label>
+              <Label htmlFor="exam-name" className="text-slate-800 dark:text-slate-300">{t('health.examName')}</Label>
               <Input 
                 id="exam-name" 
                 value={newExam.name} 
@@ -641,7 +645,7 @@ export default function ExamsPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="exam-type">{t('health.examType')}</Label>
+              <Label htmlFor="exam-type" className="text-slate-800 dark:text-slate-300">{t('health.examType')}</Label>
               <Select 
                 value={newExam.type} 
                 onValueChange={(value) => handleExamChange('type', value)}
@@ -661,9 +665,9 @@ export default function ExamsPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="exam-date">{t('health.examDate')}</Label>
+              <Label htmlFor="exam-date" className="text-slate-800 dark:text-slate-300">{t('health.examDate')}</Label>
               <div className="flex items-center">
-                <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2" />
+                <Calendar className="responsive-icon-sm text-slate-500 dark:text-slate-400 mr-2" />
                 <Input 
                   id="exam-date" 
                   type="date"
@@ -674,10 +678,10 @@ export default function ExamsPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="exam-file">{t('health.examFile')}</Label>
+              <Label htmlFor="exam-file" className="text-slate-800 dark:text-slate-300">{t('health.examFile')}</Label>
               <div className="flex flex-col">
                 <div 
-                  className="border-2 border-dashed rounded-md p-6 text-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                  className="border-2 border-dashed rounded-md p-4 sm:p-6 text-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <input 
@@ -688,21 +692,21 @@ export default function ExamsPage() {
                     accept=".pdf,.jpg,.jpeg,.png"
                     onChange={handleFileSelect}
                   />
-                  <FileText className="h-10 w-10 mx-auto text-gray-400 dark:text-gray-500 mb-3" />
+                  <FileText className="h-8 w-8 sm:h-10 sm:w-10 mx-auto text-slate-400 dark:text-slate-500 mb-3" />
                   
                   {newExam.file ? (
                     <div>
-                      <p className="text-sm font-medium">{newExam.file.name}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="responsive-text-sm font-medium text-slate-800 dark:text-slate-300">{newExam.file.name}</p>
+                      <p className="responsive-text-xs text-slate-500 dark:text-slate-400">
                         {Math.round(newExam.file.size / 1024)} KB
                       </p>
                     </div>
                   ) : (
                     <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                      <p className="responsive-text-sm text-slate-600 dark:text-slate-400 mb-1">
                         {t('health.dragDropOrClick')}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500">
+                      <p className="responsive-text-xs text-slate-500 dark:text-slate-500">
                         {t('health.maxFileSize')}
                       </p>
                     </div>
@@ -714,7 +718,7 @@ export default function ExamsPage() {
                     variant="outline" 
                     size="sm"
                     type="button"
-                    className="mt-2 text-xs"
+                    className="mt-2 responsive-text-xs"
                     onClick={() => {
                       setNewExam((prev) => ({ ...prev, file: null }));
                       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -732,11 +736,12 @@ export default function ExamsPage() {
               variant="outline" 
               onClick={() => setUploadDialogOpen(false)}
               disabled={uploadingExam}
+              className="responsive-text-sm"
             >
               {t('common.cancel')}
             </Button>
             <Button 
-              className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white text-xs sm:text-sm"
+              className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white responsive-button"
               onClick={() => uploadExamMutation.mutate()}
               disabled={uploadingExam || !newExam.name || !newExam.type || !newExam.date}
             >
@@ -747,7 +752,7 @@ export default function ExamsPage() {
                 </div>
               ) : (
                 <div className="flex items-center">
-                  <Upload className="h-4 w-4 mr-2" />
+                  <Upload className="responsive-icon-sm mr-2" />
                   {t('health.upload')}
                 </div>
               )}
