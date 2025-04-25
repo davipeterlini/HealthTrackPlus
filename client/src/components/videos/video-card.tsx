@@ -100,8 +100,8 @@ export function VideoCard({ video }: VideoCardProps) {
   const bgColor = colorMap[video.category] || "bg-gray-600";
 
   return (
-    <Card className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 dark:border-gray-700">
-      <div className="relative pb-[56.25%] bg-gray-200 dark:bg-gray-700">
+    <Card className="bg-white dark:bg-[#1a2127] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border-emerald-100 dark:border-[#2b353e]">
+      <div className="relative pb-[56.25%] bg-gray-100 dark:bg-gray-800">
         <div className={`absolute inset-0 flex items-center justify-center ${video.thumbnailUrl ? '' : bgColor}`} style={video.thumbnailUrl ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
           <button 
             className="w-16 h-16 rounded-full bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 flex items-center justify-center z-10 hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-all duration-200"
@@ -153,9 +153,9 @@ export function VideoCard({ video }: VideoCardProps) {
 
       {/* Video Player Dialog */}
       <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
-        <DialogContent className="sm:max-w-3xl">
+        <DialogContent className="sm:max-w-3xl dark:bg-[#1a2127] dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>{video.title}</DialogTitle>
+            <DialogTitle className="text-slate-800 dark:text-white">{video.title}</DialogTitle>
           </DialogHeader>
           <div className="relative bg-black aspect-video rounded-md overflow-hidden">
             {video.id === 1 ? (
@@ -191,8 +191,8 @@ export function VideoCard({ video }: VideoCardProps) {
             )}
           </div>
           <div className="mt-2">
-            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Video Description</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{video.description}</p>
+            <h3 className="text-sm font-medium text-slate-800 dark:text-white">Video Description</h3>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{video.description}</p>
           </div>
         </DialogContent>
       </Dialog>

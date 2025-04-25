@@ -28,8 +28,8 @@ export function CourseTrack({ track }: CourseTrackProps) {
   const sortedVideos = trackVideos?.sort((a, b) => a.order - b.order) || [];
   
   return (
-    <Card className="bg-gray-50 dark:bg-gray-800 shadow-sm overflow-hidden dark:border-gray-700">
-      <div className="px-4 py-5 sm:px-6 bg-primary-50 dark:bg-primary-900 border-b border-primary-100 dark:border-primary-800">
+    <Card className="bg-white dark:bg-[#1a2127] shadow-sm overflow-hidden border-emerald-100 dark:border-[#2b353e]">
+      <div className="px-4 py-5 sm:px-6 bg-primary-50 dark:bg-primary-900/30 border-b border-primary-100 dark:border-primary-800/50">
         <div className="flex items-center justify-between">
           <div>
             <h4 className="text-base font-medium text-primary-900 dark:text-primary-100">{track.title}</h4>
@@ -126,7 +126,7 @@ export function CourseTrack({ track }: CourseTrackProps) {
         </div>
       )}
       
-      <div className="px-4 py-4 sm:px-6 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <div className="px-4 py-4 sm:px-6 bg-white dark:bg-[#1a2127] border-t border-gray-200 dark:border-[#2b353e]">
         <Button 
           variant="ghost" 
           size="sm" 
