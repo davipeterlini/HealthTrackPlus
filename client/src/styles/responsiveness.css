@@ -88,15 +88,24 @@
   
   /* Botões responsivos */
   .responsive-button-lg {
-    @apply px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base rounded-lg;
+    @apply px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base rounded-lg min-h-10 sm:min-h-11;
   }
   
   .responsive-button {
-    @apply px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md;
+    @apply px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md min-h-9 sm:min-h-10;
   }
   
   .responsive-button-sm {
-    @apply px-2 sm:px-3 py-1 sm:py-1.5 text-xs rounded;
+    @apply px-2 sm:px-3 py-1 sm:py-1.5 text-xs rounded min-h-8 sm:min-h-9;
+  }
+  
+  /* Tamanhos responsivos para ícones em botões */
+  .responsive-button-icon {
+    @apply h-9 w-9 sm:h-10 sm:w-10 p-2;
+  }
+  
+  .responsive-button-icon-sm {
+    @apply h-8 w-8 sm:h-9 sm:w-9 p-1.5;
   }
   
   /* Ícones responsivos */

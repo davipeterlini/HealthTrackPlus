@@ -108,7 +108,7 @@ export function ActivityWeeklyChart({ activities, onSelectDate }: ActivityWeekly
         </div>
       </div>
       
-      <div className="relative h-40 sm:h-52 mt-6 sm:mt-2 ml-4 sm:ml-6 mr-1">
+      <div className="responsive-chart mt-6 sm:mt-2 ml-4 sm:ml-6 mr-1">
         {/* Linhas de grade horizontais */}
         <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none">
           {[0, 1, 2, 3, 4].map((_, i) => (

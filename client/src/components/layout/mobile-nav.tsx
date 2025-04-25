@@ -27,13 +27,13 @@ export function MobileNav() {
           
           return (
             <div key={item.path} className="flex justify-center">
-              <Link href={item.path} className={`flex flex-col items-center py-3 ${
+              <Link href={item.path} className={`flex flex-col items-center py-2 sm:py-3 ${
                 isActive 
                   ? 'text-primary dark:text-primary-400 font-medium' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}>
-                <Icon className="h-5 w-5" />
-                <span className="text-xs mt-1">{item.label}</span>
+                <Icon className="responsive-icon-sm" />
+                <span className="responsive-text-sm mt-1">{item.label}</span>
               </Link>
             </div>
           );
