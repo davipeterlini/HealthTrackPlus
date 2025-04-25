@@ -41,20 +41,20 @@ export default function WomensHealthPage(): ReactElement {
               
               <div className="grid grid-cols-4 gap-2 mb-4">
                 <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/20 text-center">
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t('womensHealth.period')}</p>
-                  <p className="text-sm font-medium">1-5</p>
+                  <p className="text-xs text-slate-500 dark-text-muted">{t('womensHealth.period')}</p>
+                  <p className="text-sm font-medium dark-text-body">1-5</p>
                 </div>
                 <div className="p-2 rounded-lg bg-yellow-100 dark:bg-yellow-900/20 text-center">
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t('womensHealth.follicular')}</p>
-                  <p className="text-sm font-medium">6-10</p>
+                  <p className="text-xs text-slate-500 dark-text-muted">{t('womensHealth.follicular')}</p>
+                  <p className="text-sm font-medium dark-text-body">6-10</p>
                 </div>
                 <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/20 text-center">
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t('womensHealth.ovulation')}</p>
-                  <p className="text-sm font-medium">11-15</p>
+                  <p className="text-xs text-slate-500 dark-text-muted">{t('womensHealth.ovulation')}</p>
+                  <p className="text-sm font-medium dark-text-body">11-15</p>
                 </div>
                 <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/20 text-center border-2 border-purple-500">
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t('womensHealth.luteal')}</p>
-                  <p className="text-sm font-medium">16-28</p>
+                  <p className="text-xs text-slate-500 dark-text-muted">{t('womensHealth.luteal')}</p>
+                  <p className="text-sm font-medium dark-text-body">16-28</p>
                 </div>
               </div>
               
@@ -143,7 +143,7 @@ export default function WomensHealthPage(): ReactElement {
                   <CalendarDays className="h-4 w-4 text-pink-500 mt-0.5 mr-2" />
                   <h3 className="font-medium text-sm text-slate-800 dark-text-title">{t('womensHealth.cycleRegularity')}</h3>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400 pl-6">
+                <p className="text-xs text-slate-600 dark-text-muted pl-6">
                   {t('womensHealth.regularCycles')}
                 </p>
               </div>
@@ -153,7 +153,7 @@ export default function WomensHealthPage(): ReactElement {
                   <Clock className="h-4 w-4 text-amber-500 mt-0.5 mr-2" />
                   <h3 className="font-medium text-sm text-slate-800 dark-text-title">{t('womensHealth.cycleDuration')}</h3>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400 pl-6">
+                <p className="text-xs text-slate-600 dark-text-muted pl-6">
                   {t('womensHealth.averageCycle')}
                 </p>
               </div>
@@ -192,7 +192,7 @@ export default function WomensHealthPage(): ReactElement {
               <h3 className="font-medium text-slate-800 dark-text-title text-sm mb-2">
                 {t('womensHealth.dietTips')}
               </h3>
-              <ul className="text-sm text-slate-600 dark:text-slate-400 list-disc ml-5 space-y-1">
+              <ul className="text-sm text-slate-600 dark-text-muted list-disc ml-5 space-y-1">
                 <li>{t('womensHealth.dietTip1')}</li>
                 <li>{t('womensHealth.dietTip2')}</li>
                 <li>{t('womensHealth.dietTip3')}</li>
@@ -203,7 +203,7 @@ export default function WomensHealthPage(): ReactElement {
               <h3 className="font-medium text-slate-800 dark-text-title text-sm mb-2">
                 {t('womensHealth.exerciseTips')}
               </h3>
-              <ul className="text-sm text-slate-600 dark:text-slate-400 list-disc ml-5 space-y-1">
+              <ul className="text-sm text-slate-600 dark-text-muted list-disc ml-5 space-y-1">
                 <li>{t('womensHealth.exerciseTip1')}</li>
                 <li>{t('womensHealth.exerciseTip2')}</li>
                 <li>{t('womensHealth.exerciseTip3')}</li>
