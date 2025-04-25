@@ -81,7 +81,7 @@ export default function DashboardPage() {
       <p className="text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">{t('health.todayOverview')}</p>
 
       {/* Big Numbers */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+      <div className="responsive-grid-4 responsive-mb">
         <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 sm:p-4 md:p-6 shadow-md">
           <div className="flex justify-between items-start">
             <div>
@@ -95,7 +95,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="bg-purple-100 dark:bg-[#2a3137] p-1.5 sm:p-2 rounded-full shadow-sm">
-              <Clock className="text-purple-500 dark:text-purple-400 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+              <Clock className="text-purple-500 dark:text-purple-400 responsive-icon" />
             </div>
           </div>
         </Card>
@@ -308,7 +308,7 @@ export default function DashboardPage() {
       )}
 
       {/* Hydration & Sleep Trackers */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      <div className="responsive-grid-2 responsive-mb">
         {/* Hydration Tracker */}
         {settings.showWaterTracker && (
           <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
@@ -392,7 +392,7 @@ export default function DashboardPage() {
       </div>
       
       {/* Medication & Exam Alerts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div className="responsive-grid-2 responsive-mb">
         {/* Medication Reminders */}
         {settings.showMedicationTracker && (
           <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
@@ -552,7 +552,7 @@ export default function DashboardPage() {
         </Button>
       </div>
       
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 responsive-mb">
         <Link to="/activity">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/30 dark:to-rose-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
