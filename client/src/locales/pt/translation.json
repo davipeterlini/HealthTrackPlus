@@ -662,5 +662,23 @@
     "stressCategory": "Redução de Estresse",
     "stressCategoryDescription": "Libere tensão e gerencie o estresse",
     "browseSessions": "Explorar Sessões"
+  },
+  
+  "videos": {
+    "educationalContent": "Conteúdo Educacional",
+    "courseTracks": "Trilhas de Cursos",
+    "allCategories": "Todas as Categorias",
+    "mentalHealth": "Saúde Mental",
+    "nutrition": "Nutrição",
+    "exercise": "Exercício",
+    "medical": "Médico",
+    "sleep": "Sono",
+    "noVideosFound": "Nenhum vídeo encontrado nesta categoria",
+    "noCourseTracks": "Nenhuma trilha de curso disponível",
+    "videoDescription": "Descrição do Vídeo",
+    "watchVideo": "Assistir Vídeo",
+    "continueVideo": "Continuar Vídeo",
+    "rewatchVideo": "Reassistir Vídeo",
+    "completeVideo": "Completar Vídeo"
   }
 }

@@ -8,6 +8,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +21,7 @@ interface VideoCardProps {
 }
 
 export function VideoCard({ video }: VideoCardProps) {
+  const { t } = useTranslation();
   const [videoOpen, setVideoOpen] = useState(false);
   const [watchProgress, setWatchProgress] = useState(0);
   const { toast } = useToast();
@@ -77,9 +79,9 @@ export function VideoCard({ video }: VideoCardProps) {
 
 
   const getProgressLabel = (progress: number): string => {
-    if (progress === 0) return "Not Started";
-    if (progress === 100) return "Completed";
-    return "In Progress";
+    if (progress === 0) return t('common.notStarted');
+    if (progress === 100) return t('common.completed');
+    return t('common.inProgress');
   };
 
   const getProgressColor = (progress: number): string => {
@@ -119,18 +121,18 @@ export function VideoCard({ video }: VideoCardProps) {
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div>
-            <h4 className="text-base font-medium text-gray-900 dark:text-gray-100">{video.title}</h4>
+            <h4 className="text-base font-medium text-slate-800 dark:text-white">{video.title}</h4>
             <div className="mt-1 flex items-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">{video.duration}</span>
+              <span className="text-xs text-slate-600 dark:text-slate-400">{video.duration}</span>
               <span className="mx-1 text-gray-300 dark:text-gray-600">•</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">{video.category}</span>
+              <span className="text-xs text-slate-600 dark:text-slate-400">{video.category}</span>
             </div>
           </div>
           <Badge className={getProgressColor(currentProgress)}>
             {getProgressLabel(currentProgress)}
           </Badge>
         </div>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{video.description}</p>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{video.description}</p>
         <div className="mt-4">
           <button 
             className={`text-sm font-medium ${
@@ -143,10 +145,10 @@ export function VideoCard({ video }: VideoCardProps) {
             onClick={handleWatchVideo}
           >
             {currentProgress === 100 
-              ? "Rewatch video" 
+              ? t('videos.rewatchVideo') 
               : currentProgress > 0 
-              ? "Continue video" 
-              : "Start video"}
+              ? t('videos.continueVideo') 
+              : t('videos.watchVideo')}
           </button>
         </div>
       </CardContent>
@@ -179,19 +181,19 @@ export function VideoCard({ video }: VideoCardProps) {
                     value={watchProgress} 
                     className="mt-6 bg-primary-600" 
                   />
-                  <p className="text-sm mt-2">Progress: {watchProgress}%</p>
+                  <p className="text-sm mt-2">{t('common.progress')}: {watchProgress}%</p>
                   <button
                     className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
                     onClick={handleVideoEnd}
                   >
-                    Complete Video
+                    {t('videos.completeVideo')}
                   </button>
                 </div>
               </div>
             )}
           </div>
           <div className="mt-2">
-            <h3 className="text-sm font-medium text-slate-800 dark:text-white">Video Description</h3>
+            <h3 className="text-sm font-medium text-slate-800 dark:text-white">{t('videos.videoDescription')}</h3>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{video.description}</p>
           </div>
         </DialogContent>
