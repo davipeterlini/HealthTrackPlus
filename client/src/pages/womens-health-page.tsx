@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Heart, TrendingUp, Clock, CalendarDays } from "lucide-react";
+import { Calendar, Heart, TrendingUp, Clock, CalendarDays, PlusCircle } from "lucide-react";
 import { ReactElement } from "react";
 
 export default function WomensHealthPage(): ReactElement {
@@ -11,12 +11,12 @@ export default function WomensHealthPage(): ReactElement {
   
   return (
     <MainLayout>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+      <div className="flex flex-row items-center justify-between gap-3 mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
           {t('womensHealth.title')}
         </h1>
-        <Button className="self-start sm:self-auto bg-green-600 hover:bg-green-700">
-          {t('womensHealth.logCycle')}
+        <Button className="bg-green-600 hover:bg-green-700">
+          <PlusCircle className="mr-2 h-4 w-4" /> {t('womensHealth.logCycle')}
         </Button>
       </div>
       
