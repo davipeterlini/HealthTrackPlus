@@ -11,20 +11,20 @@ export default function WomensHealthPage(): ReactElement {
   
   return (
     <MainLayout>
-      <div className="flex flex-row items-center justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+      <div className="flex flex-row items-center justify-between responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
           {t('womensHealth.title')}
         </h1>
-        <Button className="bg-green-600 hover:bg-green-700">
-          <PlusCircle className="mr-2 h-4 w-4" /> {t('womensHealth.logCycle')}
+        <Button className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button">
+          <PlusCircle className="mr-2 responsive-icon-sm" /> {t('womensHealth.logCycle')}
         </Button>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="bg-white dark:bg-[#1a2127] border border-pink-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Calendar className="mr-2 h-5 w-5 text-pink-500 dark:text-pink-400" />
+      <div className="responsive-grid-3 responsive-gap-y responsive-mb">
+        <Card className="bg-white dark:bg-[#1a2127] border-pink-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-2">
+            <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center">
+              <Calendar className="mr-2 responsive-icon-sm text-pink-500 dark:text-pink-400" />
               {t('womensHealth.cycleTracker')}
             </CardTitle>
           </CardHeader>
@@ -73,14 +73,14 @@ export default function WomensHealthPage(): ReactElement {
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-[#1a2127] border border-pink-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Heart className="mr-2 h-5 w-5 text-pink-500 dark:text-pink-400" />
+        <Card className="bg-white dark:bg-[#1a2127] border-pink-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-2">
+            <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center">
+              <Heart className="mr-2 responsive-icon-sm text-pink-500 dark:text-pink-400" />
               {t('womensHealth.symptoms')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -129,14 +129,14 @@ export default function WomensHealthPage(): ReactElement {
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-[#1a2127] border border-pink-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <TrendingUp className="mr-2 h-5 w-5 text-pink-500 dark:text-pink-400" />
+        <Card className="bg-white dark:bg-[#1a2127] border-pink-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-2">
+            <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center">
+              <TrendingUp className="mr-2 responsive-icon-sm text-pink-500 dark:text-pink-400" />
               {t('womensHealth.insights')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             <div className="space-y-3">
               <div className="p-3 bg-pink-50 dark:bg-pink-900/10 rounded-lg">
                 <div className="flex items-start mb-1">
@@ -180,14 +180,14 @@ export default function WomensHealthPage(): ReactElement {
         </Card>
       </div>
       
-      <Card className="bg-white dark:bg-[#1a2127] border border-pink-100 dark:border-0 shadow-md mb-8">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white">
+      <Card className="bg-white dark:bg-[#1a2127] border-pink-100 dark:border-[#2b353e] responsive-card responsive-mb">
+        <CardHeader className="responsive-card-header">
+          <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">
             {t('womensHealth.recommendations')}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CardContent className="responsive-card-content">
+          <div className="responsive-grid-2 responsive-gap-sm">
             <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
               <h3 className="font-medium text-slate-800 dark:text-white text-sm mb-2">
                 {t('womensHealth.dietTips')}

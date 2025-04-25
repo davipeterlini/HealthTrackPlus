@@ -11,20 +11,20 @@ export default function MedicationPage(): ReactElement {
   
   return (
     <MainLayout>
-      <div className="flex flex-row items-center justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">
+      <div className="flex flex-row items-center justify-between responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
           {t('medication.title')}
         </h1>
-        <Button className="bg-green-600 hover:bg-green-700">
-          <PlusCircle className="mr-2 h-4 w-4" /> {t('medication.addMedication')}
+        <Button className="bg-green-600 hover:bg-green-700 dark:text-white responsive-button">
+          <PlusCircle className="mr-2 responsive-icon-sm" /> {t('medication.addMedication')}
         </Button>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Pill className="mr-2 h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+      <div className="responsive-grid-3 responsive-gap-y responsive-mb">
+        <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-2">
+            <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center">
+              <Pill className="mr-2 responsive-icon-sm text-emerald-500 dark:text-emerald-400" />
               {t('medication.currentMedications')}
             </CardTitle>
           </CardHeader>
@@ -99,14 +99,14 @@ export default function MedicationPage(): ReactElement {
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-[#1a2127] border border-amber-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Bell className="mr-2 h-5 w-5 text-amber-500 dark:text-amber-400" />
+        <Card className="bg-white dark:bg-[#1a2127] border-amber-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-2">
+            <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center">
+              <Bell className="mr-2 responsive-icon-sm text-amber-500 dark:text-amber-400" />
               {t('medication.todaysReminders')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             <div className="space-y-4">
               <div className="flex items-center p-3 bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">
                 <div className="h-10 w-10 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mr-3 shadow-sm">
@@ -150,14 +150,14 @@ export default function MedicationPage(): ReactElement {
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-[#1a2127] border border-purple-100 dark:border-0 shadow-md">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
-              <Calendar className="mr-2 h-5 w-5 text-purple-500 dark:text-purple-400" />
+        <Card className="bg-white dark:bg-[#1a2127] border-purple-100 dark:border-[#2b353e] responsive-card">
+          <CardHeader className="responsive-card-header pb-2">
+            <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center">
+              <Calendar className="mr-2 responsive-icon-sm text-purple-500 dark:text-purple-400" />
               {t('medication.schedule')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="responsive-card-content">
             <div className="space-y-4">
               <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
                 <h3 className="font-medium text-slate-800 dark:text-white">{t('medication.morning')}</h3>
