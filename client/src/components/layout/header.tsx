@@ -145,11 +145,11 @@ export function Header() {
   return (
     <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50 responsive-header">
       <div className="responsive-content-container">
-        <div className="flex items-center justify-between h-14 xs:h-16">
-          {/* Logo - mais compacto em telas pequenas */}
+        <div className="flex items-center justify-between h-14 xs:h-16 md:h-18 lg:h-20">
+          {/* Logo - responsivo para diferentes tamanhos de tela */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="responsive-title-md text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+              <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold tracking-tight text-blue-600 dark:text-emerald-400">LifeTrek</h1>
             </Link>
           </div>
 
@@ -161,14 +161,14 @@ export function Header() {
                 <Link 
                   key={item.path}
                   href={item.path}
-                  className={`responsive-nav-link responsive-hover responsive-transition ${
+                  className={`flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 lg:px-5 lg:py-3 rounded-md transition-colors ${
                     location === item.path
-                      ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                      ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800 font-medium"
                       : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                   }`}
                 >
-                  <Icon className="responsive-icon-sm flex-shrink-0 mr-1.5" />
-                  <span className="responsive-text-sm">{item.label}</span>
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
+                  <span className="text-sm sm:text-base md:text-lg">{item.label}</span>
                 </Link>
               );
             })}
@@ -196,8 +196,8 @@ export function Header() {
             <div className="responsive-mobile-menu">
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="responsive-button-icon-sm bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
-                    <Menu className="responsive-icon-sm" />
+                  <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                    <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
@@ -277,8 +277,8 @@ export function Header() {
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="responsive-button-icon-sm text-slate-600 dark:text-gray-300">
-                    <Menu className="responsive-icon-sm" />
+                  <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full text-slate-600 dark:text-gray-300">
+                    <Menu className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
@@ -313,10 +313,10 @@ export function Header() {
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative flex items-center p-1 xs:p-1.5">
-                    <Avatar className="h-7 w-7 xs:h-8 xs:w-8 border border-blue-100 dark:border-gray-700">
+                  <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5 md:p-2">
+                    <Avatar className="h-7 w-7 sm:h-9 sm:w-9 md:h-11 md:w-11 lg:h-12 lg:w-12 border border-blue-100 dark:border-gray-700">
                       <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 responsive-text-sm">
+                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs sm:text-sm md:text-base lg:text-lg">
                         {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
