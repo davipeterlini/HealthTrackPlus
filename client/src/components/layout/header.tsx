@@ -5,7 +5,7 @@ import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
-import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film } from "lucide-react";
+import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/button";
 import { 
   Sheet, 
   SheetContent, 
-  SheetHeader, 
   SheetTitle, 
   SheetTrigger,
   SheetClose
@@ -145,51 +144,60 @@ export function Header() {
 
   return (
     <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50 responsive-header">
-      <div className="max-w-7xl mx-auto responsive-container">
-        <div className="flex items-center justify-between h-14 sm:h-16">
+      <div className="responsive-content-container">
+        <div className="flex items-center justify-between h-14 xs:h-16">
+          {/* Logo - mais compacto em telas pequenas */}
           <div className="flex items-center">
-            {/* Logo - mais compacto em telas pequenas */}
             <Link href="/" className="flex items-center">
               <h1 className="responsive-title-md text-blue-600 dark:text-emerald-400">LifeTrek</h1>
             </Link>
           </div>
 
           {/* Menu de navegação para telas médias e grandes */}
-          <nav className="hidden md:flex md:items-center responsive-gap-x">
+          <nav className="responsive-desktop-menu responsive-gap">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <Link 
                   key={item.path}
                   href={item.path}
-                  className={`flex items-center gap-1.5 responsive-nav-link rounded-md transition-colors ${
+                  className={`responsive-nav-link responsive-hover responsive-transition ${
                     location === item.path
                       ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
                       : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                   }`}
                 >
-                  <Icon className="responsive-icon-sm flex-shrink-0" />
-                  {item.label}
+                  <Icon className="responsive-icon-sm flex-shrink-0 mr-1.5" />
+                  <span className="responsive-text-sm">{item.label}</span>
                 </Link>
               );
             })}
           </nav>
 
           {/* Ações e controles para todos os tamanhos de tela */}
-          <div className="flex items-center responsive-gap-x">
-            {/* Controles de tema, idioma e menu para dispositivos móveis */}
-            <div className="md:hidden flex items-center responsive-gap-x">
-              {/* Toggle de tema - visível em telas pequenas */}
-              <ThemeToggle />
-              
-              {/* Alternador de idioma */}
-              <LanguageSwitcher />
-              
-              {/* Menu de navegação móvel - agora ultimo na ordem em telas pequenas */}
+          <div className="flex items-center responsive-gap-xs">
+            {/* Notificações, visível em desktop */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative hidden md:flex text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 responsive-button-icon-sm"
+            >
+              <BellIcon className="responsive-icon-sm" />
+              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
+            </Button>
+
+            {/* Toggle de tema - todos os tamanhos */}
+            <ThemeToggle />
+            
+            {/* Alternador de idioma - todos os tamanhos */}
+            <LanguageSwitcher />
+
+            {/* Menu de navegação móvel */}
+            <div className="responsive-mobile-menu">
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 h-8 w-8">
-                    <Menu className="h-5 w-5" />
+                  <Button variant="ghost" size="icon" className="responsive-button-icon-sm bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                    <Menu className="responsive-icon-sm" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
@@ -198,7 +206,7 @@ export function Header() {
                       {t('navigation.menu')}
                     </SheetTitle>
                     <SheetClose asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
+                      <Button variant="ghost" size="icon" className="responsive-button-icon-sm text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
                         <X className="responsive-icon-sm" />
                       </Button>
                     </SheetClose>
@@ -211,7 +219,7 @@ export function Header() {
                         <Link 
                           key={item.path}
                           href={item.path}
-                          className={`flex items-center gap-2 px-3 py-2.5 responsive-text font-medium rounded-lg transition-colors ${
+                          className={`responsive-nav-item responsive-transition ${
                             location === item.path
                               ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
                               : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
@@ -219,13 +227,13 @@ export function Header() {
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           <Icon className="responsive-icon" />
-                          {item.label}
+                          <span className="responsive-text">{item.label}</span>
                         </Link>
                       );
                     })}
                   </nav>
                   
-                  <div className="responsive-mt space-y-1">
+                  <div className="responsive-mt">
                     <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
                       <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
                         {t('navigation.account')}
@@ -234,29 +242,29 @@ export function Header() {
                         {/* Links de usuário no menu móvel */}
                         <Link 
                           href="/profile" 
-                          className="flex items-center px-3 py-2 responsive-text font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                          className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <FileText className="mr-3 responsive-icon-sm" />
-                          {t('navigation.profile')}
+                          <FileText className="responsive-icon-sm" />
+                          <span className="responsive-text">{t('navigation.profile')}</span>
                         </Link>
                         <Link 
                           href="/settings" 
-                          className="flex items-center px-3 py-2 responsive-text font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                          className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <Settings className="mr-3 responsive-icon-sm" />
-                          {t('navigation.settings')}
+                          <Settings className="responsive-icon-sm" />
+                          <span className="responsive-text">{t('navigation.settings')}</span>
                         </Link>
                         <button 
                           onClick={() => {
                             handleLogout();
                             setMobileMenuOpen(false);
                           }}
-                          className="w-full flex items-center px-3 py-2 responsive-text font-medium text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                          className="w-full responsive-nav-item text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
                         >
-                          <LogOut className="mr-3 responsive-icon-sm" />
-                          {t('navigation.logout')}
+                          <LogOut className="responsive-icon-sm" />
+                          <span className="responsive-text">{t('navigation.logout')}</span>
                         </button>
                       </div>
                     </div>
@@ -265,31 +273,11 @@ export function Header() {
               </Sheet>
             </div>
 
-            {/* Notificações, visível em todas as telas */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative hidden md:flex text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 h-8 w-8"
-            >
-              <BellIcon className="responsive-icon-sm" />
-              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
-            </Button>
-
-            {/* Toggle de tema - apenas para desktop */}
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
-            
-            {/* Alternador de idioma - apenas para desktop */}
-            <div className="hidden md:block">
-              <LanguageSwitcher />
-            </div>
-
             {/* Menu de configurações para telas médias e grandes */}
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
+                  <Button variant="ghost" size="icon" className="responsive-button-icon-sm text-slate-600 dark:text-gray-300">
                     <Menu className="responsive-icon-sm" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -325,8 +313,8 @@ export function Header() {
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5">
-                    <Avatar className="h-7 w-7 sm:h-8 sm:w-8 border border-blue-100 dark:border-gray-700">
+                  <Button variant="ghost" className="relative flex items-center p-1 xs:p-1.5">
+                    <Avatar className="h-7 w-7 xs:h-8 xs:w-8 border border-blue-100 dark:border-gray-700">
                       <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
                       <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 responsive-text-sm">
                         {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
@@ -337,7 +325,7 @@ export function Header() {
                 <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-56">
                   <DropdownMenuLabel>
                     <div className="flex flex-col">
-                      <span className="responsive-text font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
+                      <span className="responsive-text-md font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
                       <span className="responsive-text-sm text-slate-500 dark:text-gray-400">{user?.email}</span>
                     </div>
                   </DropdownMenuLabel>

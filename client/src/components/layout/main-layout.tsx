@@ -6,21 +6,27 @@ interface MainLayoutProps {
   children: ReactNode;
   title?: string; // Tornando o título opcional
   hideTitle?: boolean; // Adicionando opção para esconder o título
+  fullWidth?: boolean; // Opção para conteúdo em largura total
 }
 
-export function MainLayout({ children, title, hideTitle = false }: MainLayoutProps) {
+export function MainLayout({ 
+  children, 
+  title, 
+  hideTitle = false,
+  fullWidth = false 
+}: MainLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-800">
+    <div className="responsive-page-layout bg-slate-50 dark:bg-gray-900">
       <Header />
       
-      <main className="flex-grow pb-16 md:pb-0">
+      <main className="responsive-page-content responsive-vh">
         <div className="responsive-section">
-          <div className="max-w-7xl mx-auto responsive-container">
+          <div className={fullWidth ? "responsive-container" : "responsive-content-container"}>
             {title && !hideTitle && (
-              <h1 className="responsive-title-lg text-gray-800 dark:text-gray-100">{title}</h1>
+              <h1 className="responsive-title-lg text-slate-800 dark:text-gray-100 responsive-mb">{title}</h1>
             )}
             
-            <div className={`${title && !hideTitle ? 'responsive-mt' : 'mt-0'}`}>
+            <div className={`${title && !hideTitle ? '' : 'mt-0'}`}>
               {children}
             </div>
           </div>
