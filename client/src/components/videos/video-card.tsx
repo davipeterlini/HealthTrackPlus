@@ -102,45 +102,48 @@ export function VideoCard({ video }: VideoCardProps) {
   const bgColor = colorMap[video.category] || "bg-gray-600";
 
   return (
-    <Card className="bg-white dark:bg-[#1a2127] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border-emerald-100 dark:border-[#2b353e]">
-      <div className="relative pb-[56.25%] bg-gray-100 dark:bg-gray-800">
-        <div className={`absolute inset-0 flex items-center justify-center ${video.thumbnailUrl ? '' : bgColor}`} style={video.thumbnailUrl ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
+    <Card className="overflow-hidden responsive-shadow responsive-transition hover:shadow-md border-emerald-100 dark:border-gray-700">
+      <div className="relative pb-[56.25%] bg-slate-100 dark:bg-gray-800">
+        <div 
+          className={`absolute inset-0 flex items-center justify-center ${video.thumbnailUrl ? '' : bgColor}`} 
+          style={video.thumbnailUrl ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+        >
           <button 
-            className="w-16 h-16 rounded-full bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 flex items-center justify-center z-10 hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-all duration-200"
+            className="responsive-button-icon-lg bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 hover:bg-opacity-90 dark:hover:bg-opacity-90 responsive-transition"
             onClick={handleWatchVideo}
           >
-            <Play className="h-8 w-8 text-primary-600 dark:text-primary-400 ml-1" />
+            <Play className="responsive-icon text-emerald-600 dark:text-emerald-400 ml-1" />
           </button>
           {currentProgress > 0 && (
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-600">
-              <div className="h-full bg-primary-500 dark:bg-primary-400" style={{ width: `${currentProgress}%` }}></div>
+              <div className="h-full bg-emerald-500 dark:bg-emerald-400" style={{ width: `${currentProgress}%` }}></div>
             </div>
           )}
         </div>
       </div>
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between">
+      <CardContent>
+        <div className="flex items-start justify-between responsive-gap-xs">
           <div>
-            <h4 className="text-base font-medium text-slate-800 dark:text-white">{video.title}</h4>
-            <div className="mt-1 flex items-center">
-              <span className="text-xs text-slate-600 dark:text-slate-400">{video.duration}</span>
+            <h4 className="responsive-title-sm text-slate-800 dark:text-white truncate">{video.title}</h4>
+            <div className="responsive-mt-xs flex items-center">
+              <span className="responsive-text-xs text-slate-600 dark:text-slate-400">{video.duration}</span>
               <span className="mx-1 text-gray-300 dark:text-gray-600">•</span>
-              <span className="text-xs text-slate-600 dark:text-slate-400">{video.category}</span>
+              <span className="responsive-text-xs text-slate-600 dark:text-slate-400">{video.category}</span>
             </div>
           </div>
           <Badge className={getProgressColor(currentProgress)}>
             {getProgressLabel(currentProgress)}
           </Badge>
         </div>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{video.description}</p>
-        <div className="mt-4">
+        <p className="responsive-mt-xs responsive-text-sm text-slate-600 dark:text-slate-400 line-clamp-2">{video.description}</p>
+        <div className="responsive-mt-sm">
           <button 
-            className={`text-sm font-medium ${
+            className={`responsive-text-sm font-medium responsive-transition ${
               currentProgress === 100 
-                ? "text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300" 
+                ? "text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300" 
                 : currentProgress > 0 
-                ? "text-yellow-600 hover:text-yellow-500 dark:text-yellow-400 dark:hover:text-yellow-300"
-                : "text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+                ? "text-amber-600 hover:text-amber-500 dark:text-amber-400 dark:hover:text-amber-300"
+                : "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
             }`}
             onClick={handleWatchVideo}
           >
@@ -155,11 +158,11 @@ export function VideoCard({ video }: VideoCardProps) {
 
       {/* Video Player Dialog */}
       <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
-        <DialogContent className="sm:max-w-3xl dark:bg-[#1a2127] dark:border-gray-700">
+        <DialogContent className="sm:max-w-3xl md:max-w-4xl dark:bg-[#1a2127] dark:border-gray-700 responsive-p xs:p-6">
           <DialogHeader>
-            <DialogTitle className="text-slate-800 dark:text-white">{video.title}</DialogTitle>
+            <DialogTitle className="responsive-title-md text-slate-800 dark:text-white">{video.title}</DialogTitle>
           </DialogHeader>
-          <div className="relative bg-black aspect-video rounded-md overflow-hidden">
+          <div className="relative bg-black aspect-video rounded-md overflow-hidden responsive-mt-xs">
             {video.id === 1 ? (
               <iframe 
                 width="100%" 
@@ -173,17 +176,17 @@ export function VideoCard({ video }: VideoCardProps) {
               ></iframe>
             ) : (
               <div className="flex items-center justify-center h-full">
-                <div className="text-white text-center px-4">
-                  <div className="text-4xl mb-4">🎬</div>
-                  <p>This is where the actual video would play.</p>
-                  <p className="text-sm text-gray-400 mt-2">For this demo, we're simulating video playback.</p>
+                <div className="text-white text-center responsive-p">
+                  <div className="responsive-text-lg mb-4">🎬</div>
+                  <p className="responsive-text">{t('videos.demoVideoPlaceholder')}</p>
+                  <p className="responsive-text-sm text-gray-400 responsive-mt-xs">{t('videos.simulationNote')}</p>
                   <Progress 
                     value={watchProgress} 
-                    className="mt-6 bg-primary-600" 
+                    className="responsive-mt bg-emerald-600" 
                   />
-                  <p className="text-sm mt-2">{t('common.progress')}: {watchProgress}%</p>
+                  <p className="responsive-text-sm responsive-mt-xs">{t('common.progress')}: {watchProgress}%</p>
                   <button
-                    className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+                    className="responsive-mt responsive-button bg-emerald-600 text-white rounded hover:bg-emerald-700 responsive-transition"
                     onClick={handleVideoEnd}
                   >
                     {t('videos.completeVideo')}
@@ -192,9 +195,9 @@ export function VideoCard({ video }: VideoCardProps) {
               </div>
             )}
           </div>
-          <div className="mt-2">
-            <h3 className="text-sm font-medium text-slate-800 dark:text-white">{t('videos.videoDescription')}</h3>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{video.description}</p>
+          <div className="responsive-mt-sm">
+            <h3 className="responsive-text-sm font-medium text-slate-800 dark:text-white">{t('videos.videoDescription')}</h3>
+            <p className="responsive-mt-xs responsive-text-sm text-slate-600 dark:text-slate-400">{video.description}</p>
           </div>
         </DialogContent>
       </Dialog>
