@@ -88,14 +88,17 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
       <CardContent className="responsive-card-content space-y-6">
         <div>
           <h4 className="responsive-text-sm font-medium text-slate-600 dark:text-gray-300">{t('activity.types')}</h4>
-          <div className="mt-2 space-y-4">
+          <div className="mt-3 space-y-5 bg-slate-50 dark:bg-gray-800/50 rounded-md p-4">
             {activityTypes.map((item, i) => (
               <div key={i}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="responsive-text-xs font-medium text-slate-700 dark:text-gray-200">{item.type}</span>
-                  <span className="responsive-text-xs font-medium text-slate-700 dark:text-gray-200">{item.percentage}%</span>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <div className={`w-3 h-3 rounded-full mr-2 ${item.color.replace('bg-', '')}`}></div>
+                    <span className="responsive-text-sm font-medium text-slate-700 dark:text-gray-200">{item.type}</span>
+                  </div>
+                  <span className="responsive-text-sm font-medium text-slate-700 dark:text-gray-200">{item.percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-white dark:bg-gray-700 rounded-full h-2 shadow-sm">
                   <div className={`${item.color} h-2 rounded-full`} style={{ width: `${item.percentage}%` }}></div>
                 </div>
               </div>
@@ -106,9 +109,9 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
         <div className="pt-6 border-t border-slate-200 dark:border-gray-700">
           <h4 className="responsive-text-sm font-medium text-slate-600 dark:text-gray-300">{t('activity.heartRateZones')}</h4>
           
-          <div className="mt-2 grid grid-cols-2 gap-4">
+          <div className="mt-2 grid grid-cols-1 xs:grid-cols-2 gap-3 xs:gap-4">
             {heartRateZones.map((zone, i) => (
-              <div key={i} className={`${zone.color} dark:bg-gray-800 dark:border dark:border-gray-700 rounded-md p-3`}>
+              <div key={i} className={`${zone.color} dark:bg-gray-800 dark:border dark:border-gray-700 rounded-md p-2 xs:p-3`}>
                 <span className="responsive-text-xs font-medium">{zone.name}</span>
                 <p className="mt-1 responsive-text-md font-semibold text-slate-800 dark:text-white">{zone.minutes} min</p>
               </div>
@@ -119,11 +122,11 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
         <div className="pt-6 border-t border-slate-200 dark:border-gray-700">
           <h4 className="responsive-text-sm font-medium text-slate-600 dark:text-gray-300">{t('activity.connectedDevices')}</h4>
           
-          <div className="mt-3 space-y-3">
+          <div className="mt-3 space-y-4">
             {connectedDevices.map((device, i) => (
-              <div key={i} className="flex items-center justify-between">
+              <div key={i} className="flex flex-col xs:flex-row xs:items-center gap-3 xs:gap-0 xs:justify-between bg-slate-50 dark:bg-gray-800/50 rounded-md p-3">
                 <div className="flex items-center">
-                  <div className="responsive-icon-container rounded-full bg-slate-100 dark:bg-gray-800 flex items-center justify-center">
+                  <div className="responsive-icon-container rounded-full bg-white dark:bg-gray-700 flex items-center justify-center shadow-sm">
                     {device.type === 'watch' ? (
                       <Watch className="responsive-icon-sm text-slate-600 dark:text-gray-300" />
                     ) : (
@@ -135,7 +138,7 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
                     <p className="responsive-text-xs text-slate-500 dark:text-gray-400">{t('activity.lastSynced')}: {device.lastSynced}</p>
                   </div>
                 </div>
-                <div>
+                <div className="ml-8 xs:ml-0">
                   {device.connected ? (
                     <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 border-0">
                       {t('activity.connected')}
@@ -154,13 +157,15 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
         <div className="pt-6 border-t border-slate-200 dark:border-gray-700">
           <h4 className="responsive-text-sm font-medium text-slate-600 dark:text-gray-300">{t('activity.details')}</h4>
           
-          <div className="mt-3 space-y-2">
-            <div className="flex items-center justify-between p-2 rounded hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors">
-              <div className="flex items-center">
-                <Heart className="responsive-icon text-red-500 dark:text-red-400 mr-3" />
-                <span className="responsive-text-sm text-slate-700 dark:text-gray-200">{t('activity.avgHeartRate')}</span>
+          <div className="mt-3 space-y-3">
+            <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between p-3 rounded-md bg-slate-50 dark:bg-gray-800/50">
+              <div className="flex items-center mb-2 xs:mb-0">
+                <div className="responsive-icon-container rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                  <Heart className="responsive-icon-sm text-red-500 dark:text-red-400" />
+                </div>
+                <span className="responsive-text-sm ml-3 text-slate-700 dark:text-gray-200">{t('activity.avgHeartRate')}</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center ml-8 xs:ml-0">
                 <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
                   {activity?.heartRate || 76} bpm
                 </span>
@@ -168,14 +173,16 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
               </div>
             </div>
             
-            <div className="flex items-center justify-between p-2 rounded hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors">
-              <div className="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="responsive-icon text-emerald-600 dark:text-emerald-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-                <span className="responsive-text-sm text-slate-700 dark:text-gray-200">{t('activity.elevationGain')}</span>
+            <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between p-3 rounded-md bg-slate-50 dark:bg-gray-800/50">
+              <div className="flex items-center mb-2 xs:mb-0">
+                <div className="responsive-icon-container rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="responsive-icon-sm text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+                <span className="responsive-text-sm ml-3 text-slate-700 dark:text-gray-200">{t('activity.elevationGain')}</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center ml-8 xs:ml-0">
                 <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
                   {activity?.elevationGain || 48} m
                 </span>
@@ -183,14 +190,16 @@ export function ActivityBreakdown({ activity }: ActivityBreakdownProps) {
               </div>
             </div>
             
-            <div className="flex items-center justify-between p-2 rounded hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors">
-              <div className="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="responsive-icon text-green-500 dark:text-green-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-                <span className="responsive-text-sm text-slate-700 dark:text-gray-200">{t('activity.pace')}</span>
+            <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between p-3 rounded-md bg-slate-50 dark:bg-gray-800/50">
+              <div className="flex items-center mb-2 xs:mb-0">
+                <div className="responsive-icon-container rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="responsive-icon-sm text-green-500 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+                <span className="responsive-text-sm ml-3 text-slate-700 dark:text-gray-200">{t('activity.pace')}</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center ml-8 xs:ml-0">
                 <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
                   {activity?.avgPace || '9:24'} /km
                 </span>
