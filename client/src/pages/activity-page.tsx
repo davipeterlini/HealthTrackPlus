@@ -160,33 +160,33 @@ export default function ActivityPage() {
               <PlusCircle className="mr-2 responsive-icon-sm" /> {t('activity.addActivity')}
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="sm:max-w-md md:max-w-lg">
             <DialogHeader>
-              <DialogTitle>{t('activity.recordActivity')}</DialogTitle>
+              <DialogTitle className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-white">{t('activity.recordActivity')}</DialogTitle>
             </DialogHeader>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-2">
                 <FormField
                   control={form.control}
                   name="activityType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('activity.activityType')}</FormLabel>
+                      <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.activityType')}</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                             <SelectValue placeholder={t('activity.selectActivityType')} />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
-                          <SelectItem value="walking">{t('activity.walking')}</SelectItem>
-                          <SelectItem value="running">{t('activity.running')}</SelectItem>
-                          <SelectItem value="cycling">{t('activity.cycling')}</SelectItem>
-                          <SelectItem value="swimming">{t('activity.swimming')}</SelectItem>
-                          <SelectItem value="yoga">{t('activity.yoga')}</SelectItem>
-                          <SelectItem value="gym">{t('activity.gym')}</SelectItem>
-                          <SelectItem value="hiking">{t('activity.hiking')}</SelectItem>
-                          <SelectItem value="other">{t('activity.other')}</SelectItem>
+                        <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
+                          <SelectItem value="walking" className="dark:text-white dark:focus:bg-gray-700">{t('activity.walking')}</SelectItem>
+                          <SelectItem value="running" className="dark:text-white dark:focus:bg-gray-700">{t('activity.running')}</SelectItem>
+                          <SelectItem value="cycling" className="dark:text-white dark:focus:bg-gray-700">{t('activity.cycling')}</SelectItem>
+                          <SelectItem value="swimming" className="dark:text-white dark:focus:bg-gray-700">{t('activity.swimming')}</SelectItem>
+                          <SelectItem value="yoga" className="dark:text-white dark:focus:bg-gray-700">{t('activity.yoga')}</SelectItem>
+                          <SelectItem value="gym" className="dark:text-white dark:focus:bg-gray-700">{t('activity.gym')}</SelectItem>
+                          <SelectItem value="hiking" className="dark:text-white dark:focus:bg-gray-700">{t('activity.hiking')}</SelectItem>
+                          <SelectItem value="other" className="dark:text-white dark:focus:bg-gray-700">{t('activity.other')}</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -194,15 +194,15 @@ export default function ActivityPage() {
                   )}
                 />
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
                     name="steps"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('activity.steps')}</FormLabel>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.steps')}</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} />
+                          <Input type="number" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -214,9 +214,9 @@ export default function ActivityPage() {
                     name="calories"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('activity.calories')}</FormLabel>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.calories')}</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} />
+                          <Input type="number" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -228,9 +228,9 @@ export default function ActivityPage() {
                     name="minutes"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('activity.duration')} ({t('activity.minutes')})</FormLabel>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.duration')} ({t('activity.minutes')})</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} />
+                          <Input type="number" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -242,9 +242,9 @@ export default function ActivityPage() {
                     name="distance"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('activity.distance')} (km)</FormLabel>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.distance')} (km)</FormLabel>
                         <FormControl>
-                          <Input type="number" step="0.1" {...field} />
+                          <Input type="number" step="0.1" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -257,9 +257,9 @@ export default function ActivityPage() {
                   name="notes"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('activity.notes')}</FormLabel>
+                      <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.notes')}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="" {...field} />
+                        <Textarea placeholder="" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white resize-none min-h-[80px]" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
