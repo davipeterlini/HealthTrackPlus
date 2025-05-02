@@ -152,11 +152,11 @@ export default function ActivityPage() {
   
   return (
     <MainLayout title={t('activity.title')} hideTitle={true}>
-      <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center responsive-mb gap-3 xs:gap-0">
+      <div className="flex justify-between items-center responsive-mb">
         <h1 className="responsive-title-lg text-slate-800 dark:text-white">{t('activity.title')}</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark:text-white dark:bg-green-700 dark:hover:bg-green-600 responsive-button w-full xs:w-auto">
+            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark:text-white dark:bg-green-700 dark:hover:bg-green-600 responsive-button">
               <PlusCircle className="mr-2 responsive-icon-sm" /> {t('activity.addActivity')}
             </Button>
           </DialogTrigger>

@@ -273,7 +273,7 @@ export default function ExamsPage() {
   });
   
   return (
-    <MainLayout title={t('health.exams')}>
+    <MainLayout title={t('health.exams')} hideTitle={true}>
       <div className="flex justify-between items-center responsive-mb">
         <h1 className="responsive-title-lg text-slate-800 dark:text-white">
           {t('health.exams')}
