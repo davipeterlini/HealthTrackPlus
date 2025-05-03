@@ -19,7 +19,7 @@ export function MainLayout({
     <div className="responsive-page-layout bg-slate-50 dark:bg-gray-900">
       <Header />
       
-      <main className="responsive-page-content responsive-vh pb-16 sm:pb-0">
+      <main className="responsive-page-content responsive-vh pb-16 xs:pb-0">
         <div className="responsive-section">
           <div className={fullWidth ? "responsive-container" : "responsive-content-container"}>
             {title && !hideTitle && (

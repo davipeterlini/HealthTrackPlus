@@ -73,36 +73,36 @@
   
   /* Tamanhos de título responsivos com melhor escalabilidade para dispositivos pequenos */
   .responsive-title-xl {
-    @apply text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight md:leading-normal;
+    @apply text-lg xxs:text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight md:leading-normal;
   }
   
   .responsive-title-lg {
-    @apply text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight leading-tight md:leading-normal;
+    @apply text-base xxs:text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight leading-tight md:leading-normal;
   }
   
   .responsive-title-md {
-    @apply text-base xs:text-lg sm:text-xl md:text-2xl font-semibold tracking-tight leading-snug;
+    @apply text-sm xxs:text-base xs:text-lg sm:text-xl md:text-2xl font-semibold tracking-tight leading-snug;
   }
   
   .responsive-title-sm {
-    @apply text-sm xs:text-base sm:text-lg md:text-xl font-semibold leading-snug;
+    @apply text-xs xxs:text-sm xs:text-base sm:text-lg md:text-xl font-semibold leading-snug;
   }
   
   /* Textos de parágrafo responsivos com melhor legibilidade */
   .responsive-text-lg {
-    @apply text-base xs:text-lg md:text-xl leading-relaxed;
+    @apply text-sm xxs:text-base xs:text-lg md:text-xl leading-relaxed;
   }
   
   .responsive-text-md {
-    @apply text-sm xs:text-base md:text-lg leading-relaxed;
+    @apply text-xs xxs:text-sm xs:text-base md:text-lg leading-relaxed;
   }
   
   .responsive-text-sm {
-    @apply text-xs xs:text-sm md:text-base leading-relaxed;
+    @apply text-[11px] xxs:text-xs xs:text-sm md:text-base leading-relaxed;
   }
   
   .responsive-text-xs {
-    @apply text-[10px] xs:text-xs sm:text-sm leading-normal;
+    @apply text-[10px] xxs:text-[11px] xs:text-xs sm:text-sm leading-normal;
   }
   
   /* ===== COMPONENTES OTIMIZADOS ===== */
@@ -126,68 +126,73 @@
   
   /* Botões responsivos com tamanhos e espaçamentos otimizados */
   .responsive-button-lg {
-    @apply px-3 xs:px-4 sm:px-5 md:px-6 py-2 xs:py-2.5 md:py-3 text-xs xs:text-sm sm:text-base 
-           rounded-lg min-h-[36px] xs:min-h-[40px] sm:min-h-[44px] md:min-h-[48px] flex items-center justify-center;
+    @apply px-2.5 xxs:px-3 xs:px-4 sm:px-5 md:px-6 py-1.5 xxs:py-2 xs:py-2.5 md:py-3 text-xs xs:text-sm sm:text-base 
+           rounded-lg min-h-[32px] xxs:min-h-[36px] xs:min-h-[40px] sm:min-h-[44px] md:min-h-[48px] flex items-center justify-center;
   }
   
   .responsive-button {
-    @apply px-2.5 xs:px-3 sm:px-4 md:px-5 py-1.5 xs:py-2 text-xs sm:text-sm 
-           rounded-md min-h-[32px] xs:min-h-[36px] sm:min-h-[40px] flex items-center justify-center;
+    @apply px-2 xxs:px-2.5 xs:px-3 sm:px-4 md:px-5 py-1 xxs:py-1.5 xs:py-2 text-[11px] xxs:text-xs xs:text-sm 
+           rounded-md min-h-[28px] xxs:min-h-[32px] xs:min-h-[36px] sm:min-h-[40px] flex items-center justify-center;
   }
   
   .responsive-button-sm {
-    @apply px-2 xs:px-2.5 sm:px-3 py-1 xs:py-1.5 text-[10px] xs:text-xs 
-           rounded min-h-[28px] xs:min-h-[32px] flex items-center justify-center;
+    @apply px-1.5 xxs:px-2 xs:px-2.5 sm:px-3 py-0.5 xxs:py-1 xs:py-1.5 text-[10px] xxs:text-[11px] xs:text-xs 
+           rounded min-h-[24px] xxs:min-h-[28px] xs:min-h-[32px] flex items-center justify-center;
   }
   
   /* Tamanhos responsivos para ícones em botões - mais acessíveis em touch */
   .responsive-button-icon {
-    @apply h-8 w-8 xs:h-9 xs:w-9 sm:h-10 sm:w-10 p-1.5 xs:p-2 rounded-full flex items-center justify-center;
+    @apply h-7 w-7 xxs:h-8 xxs:w-8 xs:h-9 xs:w-9 sm:h-10 sm:w-10 p-1 xxs:p-1.5 xs:p-2 rounded-full flex items-center justify-center;
   }
   
   .responsive-button-icon-sm {
-    @apply h-7 w-7 xs:h-8 xs:w-8 sm:h-9 sm:w-9 p-1 xs:p-1.5 rounded-full flex items-center justify-center;
+    @apply h-6 w-6 xxs:h-7 xxs:w-7 xs:h-8 xs:w-8 sm:h-9 sm:w-9 p-0.5 xxs:p-1 xs:p-1.5 rounded-full flex items-center justify-center;
   }
   
   /* Ícones responsivos com melhor visibilidade em dispositivos pequenos */
   .responsive-icon-lg {
-    @apply h-5 w-5 xs:h-6 xs:w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 flex-shrink-0;
+    @apply h-4 w-4 xxs:h-5 xxs:w-5 xs:h-6 xs:w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 flex-shrink-0;
   }
   
   .responsive-icon {
-    @apply h-4 w-4 xs:h-5 xs:w-5 sm:h-6 sm:w-6 flex-shrink-0;
+    @apply h-3.5 w-3.5 xxs:h-4 xxs:w-4 xs:h-5 xs:w-5 sm:h-6 sm:w-6 flex-shrink-0;
   }
   
   .responsive-icon-sm {
-    @apply h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5 flex-shrink-0;
+    @apply h-3 w-3 xxs:h-3.5 xxs:w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5 flex-shrink-0;
   }
   
   .responsive-icon-xs {
-    @apply h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4 flex-shrink-0;
+    @apply h-2.5 w-2.5 xxs:h-3 xxs:w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4 flex-shrink-0;
   }
   
   .responsive-icon-container {
-    @apply p-1 xs:p-1.5 sm:p-2 md:p-3 rounded-full flex items-center justify-center;
+    @apply p-0.5 xxs:p-1 xs:p-1.5 sm:p-2 md:p-3 rounded-full flex items-center justify-center;
   }
   
   /* ===== LAYOUTS DE GRID OTIMIZADOS ===== */
   
   /* Grid responsivo com diferentes colunas baseado no tamanho da tela */
   .responsive-grid-2 {
-    @apply grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-3 xs:gap-4 md:gap-5;
+    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-2 xxs:gap-3 xs:gap-4 md:gap-5;
   }
   
   .responsive-grid-3 {
-    @apply grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 xs:gap-4 md:gap-5;
+    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 xxs:gap-3 xs:gap-4 md:gap-5;
   }
   
   .responsive-grid-4 {
-    @apply grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 xs:gap-4 md:gap-5;
+    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xxs:gap-3 xs:gap-4 md:gap-5;
   }
   
   /* Grid para list items */
   .responsive-list-grid {
-    @apply grid grid-cols-1 gap-2 xs:gap-3 sm:gap-4;
+    @apply grid grid-cols-1 gap-2 xxs:gap-2 xs:gap-3 sm:gap-4;
+  }
+  
+  /* Grid para dispositivos extremamente pequenos */
+  .responsive-xxs-grid {
+    @apply grid grid-cols-1 xxs:grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 xxs:gap-2 xs:gap-3 md:gap-4;
   }
   
   /* Flexbox responsivo para layouts adaptáveis */
@@ -252,18 +257,23 @@
   
   /* Inputs responsivos com melhor usabilidade em touch */
   .responsive-input {
-    @apply px-2.5 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-xs xs:text-sm sm:text-base rounded-md
-           min-h-[36px] xs:min-h-[40px] sm:min-h-[44px];
+    @apply px-2 xxs:px-2.5 xs:px-3 sm:px-4 py-1 xxs:py-1.5 xs:py-2 text-[11px] xxs:text-xs xs:text-sm sm:text-base rounded-md
+           min-h-[32px] xxs:min-h-[36px] xs:min-h-[40px] sm:min-h-[44px];
   }
   
   /* Labels responsivos com melhor legibilidade */
   .responsive-label {
-    @apply text-xs xs:text-sm mb-1 xs:mb-1.5 sm:mb-2 inline-block font-medium;
+    @apply text-[11px] xxs:text-xs xs:text-sm mb-0.5 xxs:mb-1 xs:mb-1.5 sm:mb-2 inline-block font-medium;
   }
   
   /* Form groups com espaçamento adequado */
   .responsive-form-group {
-    @apply space-y-1.5 xs:space-y-2 sm:space-y-3 mb-3 xs:mb-4 sm:mb-5;
+    @apply space-y-1 xxs:space-y-1.5 xs:space-y-2 sm:space-y-3 mb-2 xxs:mb-3 xs:mb-4 sm:mb-5;
+  }
+  
+  /* Campos de seleção responsivos */
+  .responsive-select {
+    @apply text-[11px] xxs:text-xs xs:text-sm sm:text-base min-h-[32px] xxs:min-h-[36px] xs:min-h-[40px] sm:min-h-[44px];
   }
   
   /* ===== ADAPTAÇÃO ESPECÍFICA PARA DISPOSITIVOS ===== */
@@ -306,43 +316,52 @@
   
   /* Margens específicas para fluxo de conteúdo com melhor ajuste para cada tela */
   .responsive-mb {
-    @apply mb-3 xs:mb-4 sm:mb-5 md:mb-6;
+    @apply mb-2 xxs:mb-3 xs:mb-4 sm:mb-5 md:mb-6;
   }
   
   .responsive-mb-sm {
-    @apply mb-2 xs:mb-2.5 sm:mb-3 md:mb-4;
+    @apply mb-1.5 xxs:mb-2 xs:mb-2.5 sm:mb-3 md:mb-4;
   }
   
   .responsive-mb-xs {
-    @apply mb-1.5 xs:mb-2 sm:mb-2.5;
+    @apply mb-1 xxs:mb-1.5 xs:mb-2 sm:mb-2.5;
   }
   
   .responsive-mt {
-    @apply mt-3 xs:mt-4 sm:mt-5 md:mt-6;
+    @apply mt-2 xxs:mt-3 xs:mt-4 sm:mt-5 md:mt-6;
   }
   
   .responsive-mt-sm {
-    @apply mt-2 xs:mt-2.5 sm:mt-3 md:mt-4;
+    @apply mt-1.5 xxs:mt-2 xs:mt-2.5 sm:mt-3 md:mt-4;
   }
   
   .responsive-mt-xs {
-    @apply mt-1.5 xs:mt-2 sm:mt-2.5;
+    @apply mt-1 xxs:mt-1.5 xs:mt-2 sm:mt-2.5;
   }
   
   .responsive-my {
-    @apply my-3 xs:my-4 sm:my-5 md:my-6;
+    @apply my-2 xxs:my-3 xs:my-4 sm:my-5 md:my-6;
   }
   
   .responsive-my-sm {
-    @apply my-2 xs:my-2.5 sm:my-3 md:my-4;
+    @apply my-1.5 xxs:my-2 xs:my-2.5 sm:my-3 md:my-4;
   }
   
   .responsive-mx {
-    @apply mx-3 xs:mx-4 sm:mx-5 md:mx-6;
+    @apply mx-2 xxs:mx-3 xs:mx-4 sm:mx-5 md:mx-6;
   }
   
   .responsive-mx-sm {
-    @apply mx-2 xs:mx-2.5 sm:mx-3 md:mx-4;
+    @apply mx-1.5 xxs:mx-2 xs:mx-2.5 sm:mx-3 md:mx-4;
+  }
+  
+  /* Paddings responsivos para dispositivos muito pequenos */
+  .responsive-p-content {
+    @apply p-2 xxs:p-3 xs:p-4 sm:p-5 md:p-6;
+  }
+  
+  .responsive-p-content-sm {
+    @apply p-1.5 xxs:p-2 xs:p-3 sm:p-4 md:p-5;
   }
   
   /* ===== BORDERS E SHADOWS OTIMIZADOS ===== */

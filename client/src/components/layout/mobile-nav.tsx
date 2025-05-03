@@ -114,7 +114,7 @@ export function MobileNav() {
   const navItems = getNavItems();
   
   return (
-    <div className="block sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-10">
+    <div className="block xs:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-10">
       <div className="grid grid-cols-5">
         {navItems.map((item) => {
           const Icon = item.icon;
