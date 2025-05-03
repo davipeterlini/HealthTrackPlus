@@ -303,7 +303,7 @@ export function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
                     <LogOut className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                    <span className="responsive-text">{t('navigation.logout')}</span>
+                    <span className="responsive-menu-text">{t('navigation.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -333,7 +333,7 @@ export function Header() {
                   
                   <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
                     <LogOut className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                    <span className="responsive-text">{t('navigation.logout')}</span>
+                    <span className="responsive-menu-text">{t('navigation.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

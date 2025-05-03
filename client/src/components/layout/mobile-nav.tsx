@@ -128,7 +128,7 @@ export function MobileNav() {
                   : 'text-slate-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-emerald-300'
               }`}>
                 <Icon className="responsive-icon-sm" />
-                <span className="responsive-text-xs mt-1 text-center truncate max-w-[60px]">{item.label}</span>
+                <span className="responsive-nav-text text-[10px] mt-1 text-center truncate max-w-[60px]">{item.label}</span>
               </Link>
             </div>
           );
