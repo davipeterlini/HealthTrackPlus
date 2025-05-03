@@ -168,7 +168,7 @@ export function Header() {
                   }`}
                 >
                   <Icon className="responsive-icon flex-shrink-0" />
-                  <span className="responsive-text">{item.label}</span>
+                  <span className="responsive-nav-text">{item.label}</span>
                 </Link>
               );
             })}
@@ -227,7 +227,7 @@ export function Header() {
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           <Icon className="responsive-icon" />
-                          <span className="responsive-text">{item.label}</span>
+                          <span className="responsive-nav-text">{item.label}</span>
                         </Link>
                       );
                     })}
@@ -246,7 +246,7 @@ export function Header() {
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           <FileText className="responsive-icon-sm" />
-                          <span className="responsive-text">{t('navigation.profile')}</span>
+                          <span className="responsive-nav-text">{t('navigation.profile')}</span>
                         </Link>
                         <Link 
                           href="/settings" 
@@ -254,7 +254,7 @@ export function Header() {
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           <Settings className="responsive-icon-sm" />
-                          <span className="responsive-text">{t('navigation.settings')}</span>
+                          <span className="responsive-nav-text">{t('navigation.settings')}</span>
                         </Link>
                         <button 
                           onClick={() => {
@@ -264,7 +264,7 @@ export function Header() {
                           className="w-full responsive-nav-item text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
                         >
                           <LogOut className="responsive-icon-sm" />
-                          <span className="responsive-text">{t('navigation.logout')}</span>
+                          <span className="responsive-nav-text">{t('navigation.logout')}</span>
                         </button>
                       </div>
                     </div>
@@ -285,19 +285,19 @@ export function Header() {
                   <DropdownMenuItem>
                     <Link href="/profile" className="flex items-center w-full">
                       <FileText className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                      <span className="responsive-text">{t('navigation.profile')}</span>
+                      <span className="responsive-menu-text">{t('navigation.profile')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link href="/settings" className="flex items-center w-full">
                       <Settings className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                      <span className="responsive-text">{t('navigation.settings')}</span>
+                      <span className="responsive-menu-text">{t('navigation.settings')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link href="/help" className="flex items-center w-full">
                       <HelpCircle className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                      <span className="responsive-text">{t('navigation.help')}</span>
+                      <span className="responsive-menu-text">{t('navigation.help')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

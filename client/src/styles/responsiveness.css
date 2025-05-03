@@ -105,6 +105,15 @@
     @apply text-[10px] xxs:text-[11px] xs:text-xs sm:text-sm leading-normal;
   }
   
+  /* Textos específicos para navegação e menus */
+  .responsive-nav-text {
+    @apply text-[10px] xxs:text-xs xs:text-sm sm:text-base whitespace-nowrap;
+  }
+  
+  .responsive-menu-text {
+    @apply text-[10px] xxs:text-xs xs:text-sm sm:text-base;
+  }
+  
   /* ===== COMPONENTES OTIMIZADOS ===== */
   
   /* Cards responsivos com padding ajustado para cada tamanho de tela */
