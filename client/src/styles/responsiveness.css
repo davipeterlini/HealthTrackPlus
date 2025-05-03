@@ -1,17 +1,19 @@
 /* 
   Sistema Avançado de Responsividade
   Este arquivo define classes reutilizáveis para garantir consistência responsiva em toda a aplicação
-  e otimizar a visualização em dispositivos móveis, tablets e desktop
+  e otimizar a visualização em dispositivos móveis, tablets e desktop.
+  Atualizado com melhor suporte para telas muito pequenas e grandes.
 */
 
 @layer utilities {
   /* 
     Breakpoints principais:
-    - xs: < 480px (mobile pequeno)
-    - sm: >= 480px (mobile grande)
+    - xxs: >= 360px (mobile muito pequeno)
+    - xs: >= 480px (mobile pequeno)
+    - sm: >= 640px (mobile grande/tablet pequeno)
     - md: >= 768px (tablets)
-    - lg: >= 992px (desktop pequeno)
-    - xl: >= 1200px (desktop grande)
+    - lg: >= 1024px (desktop pequeno)
+    - xl: >= 1280px (desktop médio)
     - 2xl: >= 1536px (telas maiores)
   */
 
