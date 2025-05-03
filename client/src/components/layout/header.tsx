@@ -149,7 +149,7 @@ export function Header() {
           {/* Logo - responsivo para diferentes tamanhos de tela */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold tracking-tight text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+              <h1 className="text-base xxs:text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold tracking-tight text-blue-600 dark:text-emerald-400">LifeTrek</h1>
             </Link>
           </div>
 
@@ -196,8 +196,8 @@ export function Header() {
             <div className="responsive-mobile-menu">
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
-                    <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                    <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">

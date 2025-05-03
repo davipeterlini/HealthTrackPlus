@@ -109,19 +109,24 @@
   
   /* Cards responsivos com padding ajustado para cada tamanho de tela */
   .responsive-card {
-    @apply p-3 xs:p-4 sm:p-5 md:p-6 rounded-lg shadow-md border border-opacity-30;
+    @apply p-2 xxs:p-3 xs:p-4 sm:p-5 md:p-6 rounded-lg shadow-md border border-opacity-30;
   }
   
   .responsive-card-sm {
-    @apply p-2 xs:p-3 sm:p-4 md:p-5 rounded-md shadow-sm border border-opacity-30;
+    @apply p-1.5 xxs:p-2 xs:p-3 sm:p-4 md:p-5 rounded-md shadow-sm border border-opacity-30;
   }
   
   .responsive-card-header {
-    @apply mb-2 xs:mb-3 sm:mb-4 md:mb-5;
+    @apply mb-1.5 xxs:mb-2 xs:mb-3 sm:mb-4 md:mb-5;
   }
   
   .responsive-card-content {
-    @apply space-y-2 xs:space-y-3 sm:space-y-4;
+    @apply space-y-1.5 xxs:space-y-2 xs:space-y-3 sm:space-y-4;
+  }
+  
+  /* Diálogos responsivos com melhor experiência em telas pequenas */
+  .responsive-dialog {
+    @apply max-w-[95vw] xxs:max-w-[90vw] xs:max-w-[85vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] p-2 xxs:p-3 xs:p-4 sm:p-5 md:p-6;
   }
   
   /* Botões responsivos com tamanhos e espaçamentos otimizados */
@@ -237,20 +242,30 @@
   
   /* Altura de gráficos responsiva com melhor visualização em mobile */
   .responsive-chart-sm {
-    @apply h-32 xs:h-36 sm:h-40 md:h-48 lg:h-56 w-full;
+    @apply h-28 xxs:h-32 xs:h-36 sm:h-40 md:h-48 lg:h-56 w-full;
   }
   
   .responsive-chart {
-    @apply h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 w-full;
+    @apply h-36 xxs:h-40 xs:h-48 sm:h-56 md:h-64 lg:h-72 w-full;
   }
   
   .responsive-chart-lg {
-    @apply h-48 xs:h-56 sm:h-64 md:h-72 lg:h-80 w-full;
+    @apply h-40 xxs:h-48 xs:h-56 sm:h-64 md:h-72 lg:h-80 w-full;
   }
   
   /* Chart com legendas responsivas e melhor legibilidade */
   .responsive-chart-legend {
-    @apply flex flex-wrap text-[10px] xs:text-xs sm:text-sm gap-1.5 xs:gap-2 sm:gap-3;
+    @apply flex flex-wrap text-[9px] xxs:text-[10px] xs:text-xs sm:text-sm gap-1 xxs:gap-1.5 xs:gap-2 sm:gap-3;
+  }
+  
+  /* Barras de gráficos com largura responsiva */
+  .responsive-chart-bar {
+    @apply w-5 xxs:w-6 xs:w-7 sm:w-8 md:w-10;
+  }
+  
+  /* Contêiner para gráficos circulares responsivos */
+  .responsive-pie-container {
+    @apply w-full max-w-[120px] xxs:max-w-[150px] xs:max-w-[180px] sm:max-w-[200px] md:max-w-[240px] mx-auto;
   }
   
   /* ===== FORMULÁRIOS OTIMIZADOS ===== */
@@ -279,6 +294,14 @@
   /* ===== ADAPTAÇÃO ESPECÍFICA PARA DISPOSITIVOS ===== */
   
   /* Visibilidade responsiva específica para mobile, tablet e desktop */
+  .hide-on-xs-mobile {
+    @apply hidden xxs:block;
+  }
+  
+  .show-on-xs-mobile {
+    @apply block xxs:hidden;
+  }
+  
   .hide-on-mobile {
     @apply hidden xs:hidden sm:block;
   }
@@ -310,6 +333,27 @@
   
   .landscape-only {
     @apply hidden landscape:block;
+  }
+  
+  /* Classes específicas para diferentes tipos de dispositivos */
+  .xxs-only {
+    @apply block xxs:hidden;
+  }
+  
+  .xs-only {
+    @apply hidden xxs:block xs:block sm:hidden;
+  }
+  
+  .sm-only {
+    @apply hidden sm:block md:hidden;
+  }
+  
+  .md-only {
+    @apply hidden md:block lg:hidden;
+  }
+  
+  .lg-and-up {
+    @apply hidden lg:block;
   }
   
   /* ===== ESPAÇAMENTOS RESPONSIVOS OTIMIZADOS ===== */
