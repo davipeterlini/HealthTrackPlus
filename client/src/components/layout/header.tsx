@@ -143,39 +143,39 @@ export function Header() {
   }, []);
 
   return (
-    <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50 responsive-header">
+    <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
       <div className="responsive-content-container">
-        <div className="flex items-center justify-between h-14 xs:h-16 md:h-18 lg:h-20">
+        <div className="responsive-header-container">
           {/* Logo - responsivo para diferentes tamanhos de tela */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-base xxs:text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl font-bold tracking-tight text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+              <h1 className="responsive-logo text-blue-600 dark:text-emerald-400">LifeTrek</h1>
             </Link>
           </div>
 
           {/* Menu de navegação para telas médias e grandes */}
-          <nav className="responsive-desktop-menu responsive-gap">
+          <nav className="responsive-desktop-menu responsive-header-gap">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <Link 
                   key={item.path}
                   href={item.path}
-                  className={`flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 lg:px-5 lg:py-3 rounded-md transition-colors ${
+                  className={`responsive-nav-link flex items-center gap-1.5 xxs:gap-2 sm:gap-3 rounded-md transition-colors ${
                     location === item.path
                       ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800 font-medium"
                       : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                   }`}
                 >
-                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
-                  <span className="text-sm sm:text-base md:text-lg">{item.label}</span>
+                  <Icon className="responsive-icon flex-shrink-0" />
+                  <span className="responsive-text">{item.label}</span>
                 </Link>
               );
             })}
           </nav>
 
           {/* Ações e controles para todos os tamanhos de tela */}
-          <div className="flex items-center responsive-gap-xs">
+          <div className="responsive-header-actions">
             {/* Notificações, visível em desktop */}
             <Button 
               variant="ghost" 
@@ -183,7 +183,7 @@ export function Header() {
               className="relative hidden md:flex text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 responsive-button-icon-sm"
             >
               <BellIcon className="responsive-icon-sm" />
-              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
+              <span className="absolute top-0 right-0 h-1.5 w-1.5 xxs:h-2 xxs:w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
             </Button>
 
             {/* Toggle de tema - todos os tamanhos */}
@@ -200,9 +200,9 @@ export function Header() {
                     <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
+                <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] xxs:w-[75vw] max-w-xs py-3 xxs:py-4 xs:py-5">
                   <div className="flex items-center justify-between responsive-mb">
-                    <SheetTitle className="responsive-title-sm text-blue-600 dark:text-white">
+                    <SheetTitle className="responsive-header-title text-blue-600 dark:text-white">
                       {t('navigation.menu')}
                     </SheetTitle>
                     <SheetClose asChild>
