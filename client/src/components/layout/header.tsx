@@ -277,32 +277,32 @@ export function Header() {
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 flex items-center justify-center rounded-full text-slate-600 dark:text-gray-300">
-                    <Menu className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
+                  <Button variant="ghost" size="icon" className="responsive-button-icon rounded-full text-slate-600 dark:text-gray-300">
+                    <Menu className="responsive-icon" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
+                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-44 sm:w-48">
                   <DropdownMenuItem>
                     <Link href="/profile" className="flex items-center w-full">
-                      <FileText className="mr-2 responsive-icon-sm" />
+                      <FileText className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
                       <span className="responsive-text">{t('navigation.profile')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link href="/settings" className="flex items-center w-full">
-                      <Settings className="mr-2 responsive-icon-sm" />
+                      <Settings className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
                       <span className="responsive-text">{t('navigation.settings')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link href="/help" className="flex items-center w-full">
-                      <HelpCircle className="mr-2 responsive-icon-sm" />
+                      <HelpCircle className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
                       <span className="responsive-text">{t('navigation.help')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                    <LogOut className="mr-2 responsive-icon-sm" />
+                    <LogOut className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
                     <span className="responsive-text">{t('navigation.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -313,16 +313,16 @@ export function Header() {
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5 md:p-2">
-                    <Avatar className="h-7 w-7 sm:h-9 sm:w-9 md:h-11 md:w-11 lg:h-12 lg:w-12 border border-blue-100 dark:border-gray-700">
+                  <Button variant="ghost" className="relative flex items-center p-0.5 xs:p-1 sm:p-1.5 md:p-2">
+                    <Avatar className="h-6 w-6 xs:h-7 xs:w-7 sm:h-9 sm:w-9 md:h-11 md:w-11 lg:h-12 lg:w-12 border border-blue-100 dark:border-gray-700">
                       <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs sm:text-sm md:text-base lg:text-lg">
+                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg">
                         {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-56">
+                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48 sm:w-56">
                   <DropdownMenuLabel>
                     <div className="flex flex-col">
                       <span className="responsive-text-md font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
@@ -332,7 +332,7 @@ export function Header() {
                   <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
                   
                   <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                    <LogOut className="mr-2 responsive-icon-sm" />
+                    <LogOut className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
                     <span className="responsive-text">{t('navigation.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
