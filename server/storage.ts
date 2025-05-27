@@ -180,6 +180,8 @@ export class MemStorage implements IStorage {
   private courseTracks: Map<number, CourseTrack>;
   private trackVideos: Map<number, TrackVideo>;
   private healthInsights: Map<number, HealthInsight>;
+  private healthProfiles: Map<number, HealthProfile>;
+  private healthPlans: Map<number, HealthPlan>;
   
   currentUserId: number;
   currentMedicalExamId: number;
@@ -203,6 +205,8 @@ export class MemStorage implements IStorage {
   currentCourseTrackId: number;
   currentTrackVideoId: number;
   currentHealthInsightId: number;
+  currentHealthProfileId: number;
+  currentHealthPlanId: number;
   sessionStore: any; // Fix para error do LSP
 
   constructor() {
@@ -228,6 +232,8 @@ export class MemStorage implements IStorage {
     this.courseTracks = new Map();
     this.trackVideos = new Map();
     this.healthInsights = new Map();
+    this.healthProfiles = new Map();
+    this.healthPlans = new Map();
     
     this.currentUserId = 1;
     this.currentMedicalExamId = 1;
@@ -251,6 +257,8 @@ export class MemStorage implements IStorage {
     this.currentCourseTrackId = 1;
     this.currentTrackVideoId = 1;
     this.currentHealthInsightId = 1;
+    this.currentHealthProfileId = 1;
+    this.currentHealthPlanId = 1;
     
     // Initialize sample videos and data
     this.initSampleVideos();
@@ -1491,6 +1499,72 @@ export class MemStorage implements IStorage {
     return Array.from(this.trackVideos.values())
       .filter((trackVideo) => trackVideo.trackId === trackId)
       .sort((a, b) => a.order - b.order);
+  }
+
+  // Health Profile methods
+  async getHealthProfile(userId: number): Promise<HealthProfile | undefined> {
+    return Array.from(this.healthProfiles.values())
+      .find(profile => profile.userId === userId);
+  }
+
+  async createHealthProfile(profile: InsertHealthProfile): Promise<HealthProfile> {
+    const id = this.currentHealthProfileId++;
+    const newProfile: HealthProfile = { 
+      ...profile, 
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.healthProfiles.set(id, newProfile);
+    return newProfile;
+  }
+
+  async updateHealthProfile(userId: number, profile: Partial<InsertHealthProfile>): Promise<HealthProfile> {
+    const existingProfile = await this.getHealthProfile(userId);
+    
+    if (!existingProfile) {
+      throw new Error(`Health profile for user ${userId} not found`);
+    }
+    
+    const updatedProfile: HealthProfile = { 
+      ...existingProfile, 
+      ...profile,
+      updatedAt: new Date()
+    };
+    this.healthProfiles.set(existingProfile.id, updatedProfile);
+    return updatedProfile;
+  }
+
+  // Health Plan methods
+  async getHealthPlan(userId: number): Promise<HealthPlan | undefined> {
+    return Array.from(this.healthPlans.values())
+      .find(plan => plan.userId === userId);
+  }
+
+  async createHealthPlan(plan: InsertHealthPlan): Promise<HealthPlan> {
+    const id = this.currentHealthPlanId++;
+    const newPlan: HealthPlan = { 
+      ...plan, 
+      id,
+      createdAt: new Date()
+    };
+    this.healthPlans.set(id, newPlan);
+    return newPlan;
+  }
+
+  async updateHealthPlan(userId: number, plan: Partial<InsertHealthPlan>): Promise<HealthPlan> {
+    const existingPlan = await this.getHealthPlan(userId);
+    
+    if (!existingPlan) {
+      throw new Error(`Health plan for user ${userId} not found`);
+    }
+    
+    const updatedPlan: HealthPlan = { 
+      ...existingPlan, 
+      ...plan
+    };
+    this.healthPlans.set(existingPlan.id, updatedPlan);
+    return updatedPlan;
   }
 }
 
