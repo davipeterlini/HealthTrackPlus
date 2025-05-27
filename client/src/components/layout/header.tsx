@@ -5,7 +5,7 @@ import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
-import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film } from "lucide-react";
+import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -240,6 +240,14 @@ export function Header() {
                       </h3>
                       <div className="mt-3 space-y-1">
                         {/* Links de usuário no menu móvel */}
+                        <Link 
+                          href="/health-plan-setup" 
+                          className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <Target className="responsive-icon-sm" />
+                          <span className="responsive-nav-text">Plano de Saúde</span>
+                        </Link>
                         <Link 
                           href="/profile" 
                           className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
