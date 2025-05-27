@@ -203,34 +203,38 @@ export default function FastingPage() {
         </div>
 
         <Tabs defaultValue="current" className="w-full">
-          <TabsList className="responsive-grid-4 responsive-mb bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 responsive-mb bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg">
             <TabsTrigger 
               value="current" 
-              className="responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
             >
-              <Timer className="responsive-icon-sm mr-2" />
-              {t('fasting.current', 'Atual')}
+              <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">{t('fasting.current', 'Atual')}</span>
+              <span className="sm:hidden">Atual</span>
             </TabsTrigger>
             <TabsTrigger 
               value="history" 
-              className="responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
             >
-              <History className="responsive-icon-sm mr-2" />
-              {t('fasting.history', 'Histórico')}
+              <History className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">{t('fasting.history', 'Histórico')}</span>
+              <span className="sm:hidden">Histórico</span>
             </TabsTrigger>
             <TabsTrigger 
               value="stats" 
-              className="responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
             >
-              <BarChart3 className="responsive-icon-sm mr-2" />
-              {t('fasting.stats', 'Estatísticas')}
+              <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">{t('fasting.stats', 'Estatísticas')}</span>
+              <span className="sm:hidden">Stats</span>
             </TabsTrigger>
             <TabsTrigger 
               value="settings" 
-              className="responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
             >
-              <Settings2 className="responsive-icon-sm mr-2" />
-              {t('fasting.settings', 'Configurações')}
+              <Settings2 className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">{t('fasting.settings', 'Configurações')}</span>
+              <span className="sm:hidden">Config</span>
             </TabsTrigger>
           </TabsList>
 
@@ -268,11 +272,11 @@ export default function FastingPage() {
                 {currentSession ? (
                   <div className="responsive-space-y">
                     {/* Timer Principal */}
-                    <div className="text-center responsive-py">
-                      <div className="responsive-text-4xl font-bold text-slate-900 dark:text-white responsive-mb-sm">
+                    <div className="text-center py-4 sm:py-6">
+                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-4">
                         {formatTime(getCurrentFastHours(), getCurrentFastMinutes())}
                       </div>
-                      <p className="text-slate-600 dark:text-gray-400 responsive-text-base">
+                      <p className="text-slate-600 dark:text-gray-400 text-sm sm:text-base">
                         {t('fasting.target', 'Meta')}: {currentSession.targetDuration}h
                       </p>
                     </div>
@@ -290,25 +294,25 @@ export default function FastingPage() {
                     </div>
 
                     {/* Fases do Jejum */}
-                    <div className="responsive-grid-2 responsive-gap responsive-mt">
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
-                        <Moon className="responsive-icon text-indigo-500 dark:text-indigo-400" />
-                        <div>
-                          <p className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                      <div className="flex items-center gap-3 p-3 sm:p-4 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
+                        <Moon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs sm:text-sm font-medium text-slate-800 dark:text-white truncate">
                             {t('fasting.fatBurning', 'Queima de Gordura')}
                           </p>
-                          <p className="responsive-text-xs text-slate-600 dark:text-gray-400">
+                          <p className="text-xs text-slate-600 dark:text-gray-400">
                             {getCurrentFastHours() >= 12 ? t('fasting.active', 'Ativo') : `${12 - getCurrentFastHours()}h restantes`}
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
-                        <Award className="responsive-icon text-emerald-500 dark:text-emerald-400" />
-                        <div>
-                          <p className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                      <div className="flex items-center gap-3 p-3 sm:p-4 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
+                        <Award className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs sm:text-sm font-medium text-slate-800 dark:text-white truncate">
                             {t('fasting.autophagy', 'Autofagia')}
                           </p>
-                          <p className="responsive-text-xs text-slate-600 dark:text-gray-400">
+                          <p className="text-xs text-slate-600 dark:text-gray-400">
                             {getCurrentFastHours() >= 16 ? t('fasting.active', 'Ativo') : `${16 - getCurrentFastHours()}h restantes`}
                           </p>
                         </div>
@@ -316,23 +320,23 @@ export default function FastingPage() {
                     </div>
 
                     {/* Botões de Controle */}
-                    <div className="flex gap-3 responsive-mt">
+                    <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-6">
                       {isFastingCompleted() && (
                         <Button 
                           onClick={completeFasting}
-                          className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white responsive-button"
+                          className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-3 sm:py-2"
                         >
-                          <Award className="responsive-icon-sm mr-2" />
-                          {t('fasting.complete', 'Completar Jejum')}
+                          <Award className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                          <span className="text-sm sm:text-base">{t('fasting.complete', 'Completar Jejum')}</span>
                         </Button>
                       )}
                       <Button 
                         variant="outline"
                         onClick={stopFasting}
-                        className="flex-1 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 responsive-button"
+                        className="flex-1 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 py-3 sm:py-2"
                       >
-                        <Square className="responsive-icon-sm mr-2" />
-                        {t('fasting.stop', 'Parar Jejum')}
+                        <Square className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                        <span className="text-sm sm:text-base">{t('fasting.stop', 'Parar Jejum')}</span>
                       </Button>
                     </div>
                   </div>
@@ -385,10 +389,10 @@ export default function FastingPage() {
                     {/* Botão Iniciar */}
                     <Button 
                       onClick={startFasting}
-                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-white responsive-button responsive-mt"
+                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 sm:py-2 mt-4 sm:mt-6"
                     >
-                      <Play className="responsive-icon-sm mr-2" />
-                      {t('fasting.start', 'Iniciar Jejum')}
+                      <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      <span className="text-sm sm:text-base">{t('fasting.start', 'Iniciar Jejum')}</span>
                     </Button>
                   </div>
                 )}
@@ -500,19 +504,19 @@ export default function FastingPage() {
           </TabsContent>
 
           {/* Aba Stats - Estatísticas */}
-          <TabsContent value="stats" className="responsive-space-y">
-            <div className="responsive-grid-2 responsive-gap">
-              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
-                <CardContent className="responsive-p-content">
+          <TabsContent value="stats" className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 shadow-md">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/20">
-                      <TrendingUp className="responsive-icon text-emerald-600 dark:text-emerald-400" />
+                    <div className="p-2 sm:p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/20 flex-shrink-0">
+                      <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <div>
-                      <p className="responsive-text-2xl font-bold text-slate-900 dark:text-white">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {stats.totalSessions}
                       </p>
-                      <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
                         {t('fasting.totalSessions', 'Total de Jejuns')}
                       </p>
                     </div>
@@ -520,17 +524,17 @@ export default function FastingPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
-                <CardContent className="responsive-p-content">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 shadow-md">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/20">
-                      <Award className="responsive-icon text-blue-600 dark:text-blue-400" />
+                    <div className="p-2 sm:p-3 rounded-full bg-blue-100 dark:bg-blue-900/20 flex-shrink-0">
+                      <Award className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <div>
-                      <p className="responsive-text-2xl font-bold text-slate-900 dark:text-white">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {stats.longestFast}h
                       </p>
-                      <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
                         {t('fasting.longestFast', 'Maior Jejum')}
                       </p>
                     </div>
@@ -538,17 +542,17 @@ export default function FastingPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
-                <CardContent className="responsive-p-content">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 shadow-md">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900/20">
-                      <Target className="responsive-icon text-purple-600 dark:text-purple-400" />
+                    <div className="p-2 sm:p-3 rounded-full bg-purple-100 dark:bg-purple-900/20 flex-shrink-0">
+                      <Target className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
                     </div>
-                    <div>
-                      <p className="responsive-text-2xl font-bold text-slate-900 dark:text-white">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {stats.currentStreak}
                       </p>
-                      <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
                         {t('fasting.currentStreak', 'Sequência Atual')}
                       </p>
                     </div>
@@ -556,17 +560,17 @@ export default function FastingPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
-                <CardContent className="responsive-p-content">
+              <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 shadow-md">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-full bg-orange-100 dark:bg-orange-900/20">
-                      <Calendar className="responsive-icon text-orange-600 dark:text-orange-400" />
+                    <div className="p-2 sm:p-3 rounded-full bg-orange-100 dark:bg-orange-900/20 flex-shrink-0">
+                      <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 dark:text-orange-400" />
                     </div>
-                    <div>
-                      <p className="responsive-text-2xl font-bold text-slate-900 dark:text-white">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {stats.weeklyCompleted}/{stats.weeklyGoal}
                       </p>
-                      <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
                         {t('fasting.weeklyGoal', 'Meta Semanal')}
                       </p>
                     </div>
