@@ -558,12 +558,12 @@ function GoalsStep({ form }: { form: any }) {
                     <SelectValue placeholder="Selecione o prazo" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="1_month">1 mês</SelectItem>
-                  <SelectItem value="3_months">3 meses</SelectItem>
-                  <SelectItem value="6_months">6 meses</SelectItem>
-                  <SelectItem value="1_year">1 ano</SelectItem>
-                  <SelectItem value="long_term">Longo prazo</SelectItem>
+                <SelectContent className="bg-white dark:bg-[#1a2127] border-slate-200 dark:border-gray-700">
+                  <SelectItem value="1_month" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">1 mês</SelectItem>
+                  <SelectItem value="3_months" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">3 meses</SelectItem>
+                  <SelectItem value="6_months" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">6 meses</SelectItem>
+                  <SelectItem value="1_year" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">1 ano</SelectItem>
+                  <SelectItem value="long_term" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Longo prazo</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -577,10 +577,10 @@ function GoalsStep({ form }: { form: any }) {
 
 function ScheduleStep({ form }: { form: any }) {
   return (
-    <div className="space-y-6">
+    <div className="responsive-space-y">
       <div>
-        <h3 className="responsive-title-sm responsive-mb-xs">Horários e Rotina</h3>
-        <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+        <h3 className="responsive-title-lg responsive-mb-sm text-slate-800 dark:text-white">Horários e Rotina</h3>
+        <p className="responsive-text-base text-slate-600 dark:text-gray-400">
           Defina seus horários para criarmos uma rotina personalizada.
         </p>
       </div>
