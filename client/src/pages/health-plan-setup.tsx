@@ -340,10 +340,10 @@ function calculateBMI(weight: number, height: number): number {
 // Componentes dos steps
 function BasicInfoStep({ form }: { form: any }) {
   return (
-    <div className="space-y-6">
+    <div className="responsive-space-y">
       <div>
-        <h3 className="responsive-title-sm responsive-mb-xs">Informações Básicas</h3>
-        <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+        <h3 className="responsive-title-lg responsive-mb-sm text-slate-800 dark:text-white">Informações Básicas</h3>
+        <p className="responsive-text-base text-slate-600 dark:text-gray-400">
           Vamos começar com algumas informações básicas sobre você.
         </p>
       </div>
@@ -381,10 +381,10 @@ function BasicInfoStep({ form }: { form: any }) {
                     <SelectValue placeholder="Selecione seu gênero" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="male">Masculino</SelectItem>
-                  <SelectItem value="female">Feminino</SelectItem>
-                  <SelectItem value="other">Outro</SelectItem>
+                <SelectContent className="bg-white dark:bg-[#1a2127] border-slate-200 dark:border-gray-700">
+                  <SelectItem value="male" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Masculino</SelectItem>
+                  <SelectItem value="female" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Feminino</SelectItem>
+                  <SelectItem value="other" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Outro</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -488,10 +488,10 @@ function BasicInfoStep({ form }: { form: any }) {
 // Continuarei com os outros componentes dos steps...
 function GoalsStep({ form }: { form: any }) {
   return (
-    <div className="space-y-6">
+    <div className="responsive-space-y">
       <div>
-        <h3 className="responsive-title-sm responsive-mb-xs">Seus Objetivos</h3>
-        <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+        <h3 className="responsive-title-lg responsive-mb-sm text-slate-800 dark:text-white">Seus Objetivos</h3>
+        <p className="responsive-text-base text-slate-600 dark:text-gray-400">
           Defina seus objetivos principais para criarmos um plano adequado.
         </p>
       </div>
@@ -508,13 +508,13 @@ function GoalsStep({ form }: { form: any }) {
                   <SelectValue placeholder="Selecione seu objetivo principal" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
-                <SelectItem value="weight_loss">Perder peso</SelectItem>
-                <SelectItem value="weight_gain">Ganhar peso</SelectItem>
-                <SelectItem value="maintain_weight">Manter peso</SelectItem>
-                <SelectItem value="muscle_gain">Ganhar massa muscular</SelectItem>
-                <SelectItem value="improve_fitness">Melhorar condicionamento</SelectItem>
-                <SelectItem value="improve_health">Melhorar saúde geral</SelectItem>
+              <SelectContent className="bg-white dark:bg-[#1a2127] border-slate-200 dark:border-gray-700">
+                <SelectItem value="weight_loss" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Perder peso</SelectItem>
+                <SelectItem value="weight_gain" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Ganhar peso</SelectItem>
+                <SelectItem value="maintain_weight" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Manter peso</SelectItem>
+                <SelectItem value="muscle_gain" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Ganhar massa muscular</SelectItem>
+                <SelectItem value="improve_fitness" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Melhorar condicionamento</SelectItem>
+                <SelectItem value="improve_health" className="text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-gray-800">Melhorar saúde geral</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
