@@ -507,6 +507,20 @@ export const insertHealthInsightSchema = createInsertSchema(healthInsights).omit
   id: true,
 });
 
+export const insertHealthProfileSchema = createInsertSchema(healthProfiles).omit({
+  id: true,
+  bmr: true,
+  tdee: true,
+  bmi: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertHealthPlanSchema = createInsertSchema(healthPlans).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
