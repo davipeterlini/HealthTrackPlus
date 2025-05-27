@@ -181,7 +181,7 @@ export default function DashboardPage() {
             </div>
             
             <div className="grid grid-cols-7 gap-1 sm:gap-2 h-full relative z-10">
-              {(isLoadingStats || !dashboardStats?.weeklyActivity.days ? [
+              {(isLoadingStats || !dashboardStats?.weeklyActivity?.days ? [
                 { 
                   day: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Sun' : 'Dom', 
                   steps: 5240, 
@@ -376,7 +376,7 @@ export default function DashboardPage() {
               <div className="mt-4">
                 <div className="flex items-start">
                   <h2 className="text-4xl font-bold text-slate-800 dark:text-white">
-                    {isLoadingStats ? '...' : `${dashboardStats?.sleep.value || 7.5}h`}
+                    {isLoadingStats ? '...' : `${dashboardStats?.sleep?.value || 7.5}h`}
                   </h2>
                   <span className="ml-auto text-green-500 dark:text-green-400 text-lg">{t('health.goodQuality')}</span>
                 </div>
