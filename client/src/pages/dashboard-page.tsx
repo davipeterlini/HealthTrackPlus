@@ -83,11 +83,11 @@ export default function DashboardPage() {
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('activity.activeMinutes')}</p>
               <h2 className="responsive-title-xl font-bold mb-1.5">
-                {isLoadingStats ? '...' : dashboardStats?.activeMinutes.value || 45}
+                {isLoadingStats ? '...' : dashboardStats?.activeMinutes?.value || 45}
               </h2>
-              <p className={`flex items-center responsive-text-sm ${dashboardStats?.activeMinutes.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
-                <span className="mr-1">{dashboardStats?.activeMinutes.trend === 'up' ? '↑' : '↓'}</span>
-                {isLoadingStats ? '...' : dashboardStats?.activeMinutes.change || 15}% {t('health.stepsUp')}
+              <p className={`flex items-center responsive-text-sm ${dashboardStats?.activeMinutes?.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
+                <span className="mr-1">{dashboardStats?.activeMinutes?.trend === 'up' ? '↑' : '↓'}</span>
+                {isLoadingStats ? '...' : dashboardStats?.activeMinutes?.change || 15}% {t('health.stepsUp')}
               </p>
             </div>
             <div className="bg-purple-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
@@ -101,11 +101,11 @@ export default function DashboardPage() {
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.calories')}</p>
               <h2 className="responsive-title-xl font-bold mb-1.5">
-                {isLoadingStats ? '...' : dashboardStats?.calories.value.toLocaleString() || '1,450'}
+                {isLoadingStats ? '...' : dashboardStats?.calories?.value?.toLocaleString() || '1,450'}
               </h2>
               <p className="text-red-500 dark:text-red-400 responsive-text-sm">
                 <span className="mr-1">↓</span>
-                {isLoadingStats ? '...' : dashboardStats?.calories.remaining || 320} {t('health.remaining')}
+                {isLoadingStats ? '...' : dashboardStats?.calories?.remaining || 320} {t('health.remaining')}
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
@@ -137,10 +137,10 @@ export default function DashboardPage() {
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.avgBPM')}</p>
               <h2 className="responsive-title-xl font-bold mb-1.5">
-                {isLoadingStats ? '...' : dashboardStats?.heartRate.value || 72}
+                {isLoadingStats ? '...' : dashboardStats?.heartRate?.value || 72}
               </h2>
-              <p className={`flex items-center responsive-text-sm ${dashboardStats?.heartRate.status === 'normal' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
-                <span className="mr-1">{dashboardStats?.heartRate.trend === 'down' ? '↓' : '↑'}</span>
+              <p className={`flex items-center responsive-text-sm ${dashboardStats?.heartRate?.status === 'normal' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
+                <span className="mr-1">{dashboardStats?.heartRate?.trend === 'down' ? '↓' : '↑'}</span>
                 {t('health.healthy')}
               </p>
             </div>
