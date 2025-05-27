@@ -1112,6 +1112,118 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Health Profile routes
+  app.get("/api/health-profile", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+      const profile = await storage.getHealthProfile(1);
+      return res.json(profile);
+    }
+    
+    const userId = (req.user as Express.User).id;
+    const profile = await storage.getHealthProfile(userId);
+    res.json(profile);
+  });
+
+  app.post("/api/health-profile", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      // Para desenvolvimento, use userId fixo
+      const userId = 1;
+      try {
+        const profile = await storage.createHealthProfile({
+          userId,
+          ...req.body
+        });
+        return res.status(201).json(profile);
+      } catch (error) {
+        console.error("Erro ao criar perfil de saúde:", error);
+        return res.status(500).json({ message: "Falha ao criar perfil de saúde" });
+      }
+    }
+    
+    const userId = (req.user as Express.User).id;
+    
+    try {
+      const profile = await storage.createHealthProfile({
+        userId,
+        ...req.body
+      });
+      
+      res.status(201).json(profile);
+    } catch (error) {
+      console.error("Erro ao criar perfil de saúde:", error);
+      res.status(500).json({ message: "Falha ao criar perfil de saúde" });
+    }
+  });
+
+  app.put("/api/health-profile", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      // Para desenvolvimento, use userId fixo
+      const userId = 1;
+      try {
+        const profile = await storage.updateHealthProfile(userId, req.body);
+        return res.json(profile);
+      } catch (error) {
+        console.error("Erro ao atualizar perfil de saúde:", error);
+        return res.status(500).json({ message: "Falha ao atualizar perfil de saúde" });
+      }
+    }
+    
+    const userId = (req.user as Express.User).id;
+    
+    try {
+      const profile = await storage.updateHealthProfile(userId, req.body);
+      res.json(profile);
+    } catch (error) {
+      console.error("Erro ao atualizar perfil de saúde:", error);
+      res.status(500).json({ message: "Falha ao atualizar perfil de saúde" });
+    }
+  });
+
+  // Health Plan routes
+  app.get("/api/health-plan", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+      const plan = await storage.getHealthPlan(1);
+      return res.json(plan);
+    }
+    
+    const userId = (req.user as Express.User).id;
+    const plan = await storage.getHealthPlan(userId);
+    res.json(plan);
+  });
+
+  app.post("/api/health-plan", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      // Para desenvolvimento, use userId fixo
+      const userId = 1;
+      try {
+        const plan = await storage.createHealthPlan({
+          userId,
+          ...req.body
+        });
+        return res.status(201).json(plan);
+      } catch (error) {
+        console.error("Erro ao criar plano de saúde:", error);
+        return res.status(500).json({ message: "Falha ao criar plano de saúde" });
+      }
+    }
+    
+    const userId = (req.user as Express.User).id;
+    
+    try {
+      const plan = await storage.createHealthPlan({
+        userId,
+        ...req.body
+      });
+      
+      res.status(201).json(plan);
+    } catch (error) {
+      console.error("Erro ao criar plano de saúde:", error);
+      res.status(500).json({ message: "Falha ao criar plano de saúde" });
+    }
+  });
+
   // Add test route
   app.get('/api/test', (req, res) => {
     res.json({ message: 'Server is running!' });

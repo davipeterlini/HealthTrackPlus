@@ -3,14 +3,15 @@ import {
   waterIntake, meals, videos, videoProgress, courseTracks, trackVideos,
   foodItems, recipes, stressLevels, medications, medicationLogs,
   meditationSessions, menstrualCycles, menstrualCycleSymptoms,
-  fertilityTracking, pregnancyTracking, healthInsights,
+  fertilityTracking, pregnancyTracking, healthInsights, healthProfiles, healthPlans,
   type User, type InsertUser, type MedicalExam, type ExamDetail, type Activity,
   type SleepRecord, type WaterIntakeRecord, type Meal, type Video,
   type VideoProgress, type CourseTrack, type TrackVideo,
   type FoodItem, type Recipe, type StressLevel, type Medication,
   type MedicationLog, type MeditationSession, type MenstrualCycle,
   type MenstrualCycleSymptom, type FertilityTracking, type PregnancyTracking,
-  type HealthInsight
+  type HealthInsight, type HealthProfile, type HealthPlan,
+  type InsertHealthProfile, type InsertHealthPlan
 } from "@shared/schema";
 import { DashboardStats } from "@shared/dashboard";
 import session from "express-session";
@@ -141,6 +142,16 @@ export interface IStorage {
   
   // Track video methods
   getTrackVideos(trackId: number): Promise<TrackVideo[]>;
+  
+  // Health Profile methods
+  getHealthProfile(userId: number): Promise<HealthProfile | undefined>;
+  createHealthProfile(profile: InsertHealthProfile): Promise<HealthProfile>;
+  updateHealthProfile(userId: number, profile: Partial<InsertHealthProfile>): Promise<HealthProfile>;
+  
+  // Health Plan methods
+  getHealthPlan(userId: number): Promise<HealthPlan | undefined>;
+  createHealthPlan(plan: InsertHealthPlan): Promise<HealthPlan>;
+  updateHealthPlan(userId: number, plan: Partial<InsertHealthPlan>): Promise<HealthPlan>;
   
   // Session store
   sessionStore: any;
