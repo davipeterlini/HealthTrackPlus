@@ -16,6 +16,7 @@ import HydrationPage from "@/pages/hydration-page";
 import MedicationPage from "@/pages/medication-page";
 import WomensHealthPage from "@/pages/womens-health-page";
 import IntegrationsPage from "@/pages/integrations-page";
+import FastingPage from "@/pages/fasting-page";
 import { HealthPlanSetup } from "@/pages/health-plan-setup";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
@@ -39,6 +40,7 @@ function Router(): ReactElement {
       <ProtectedRoute path="/hydration" component={HydrationPage} />
       <ProtectedRoute path="/medication" component={MedicationPage} />
       <ProtectedRoute path="/womens-health" component={WomensHealthPage} />
+      <ProtectedRoute path="/fasting" component={FastingPage} />
       <ProtectedRoute path="/health-plan-setup" component={HealthPlanSetup} />
       <ProtectedRoute path="/settings" component={SettingsPage} />
       <ProtectedRoute path="/integrations" component={IntegrationsPage} />

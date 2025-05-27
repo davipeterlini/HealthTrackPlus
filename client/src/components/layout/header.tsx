@@ -5,7 +5,7 @@ import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
-import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target } from "lucide-react";
+import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -95,6 +95,12 @@ const getNavItems = (t: any, settings: any = {}) => {
       label: t('navigation.videos'), 
       icon: Film, 
       show: effectiveSettings.showVideoSubscription 
+    },
+    { 
+      path: "/fasting", 
+      label: t('navigation.fasting', 'Jejum'), 
+      icon: Timer, 
+      show: true 
     }
   ];
   

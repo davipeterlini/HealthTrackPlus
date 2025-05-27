@@ -9,7 +9,8 @@ import {
   Moon,
   Brain,
   Pill,
-  PieChart
+  PieChart,
+  Timer
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
@@ -97,6 +98,13 @@ export function MobileNav() {
         label: t('navigation.videos'), 
         icon: Film,
         show: effectiveSettings.showVideoSubscription,
+        alwaysShow: false 
+      },
+      { 
+        path: "/fasting", 
+        label: t('navigation.fasting', 'Jejum'), 
+        icon: Timer,
+        show: true,
         alwaysShow: false 
       }
     ];
