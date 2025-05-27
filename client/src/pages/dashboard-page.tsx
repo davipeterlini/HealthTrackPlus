@@ -119,11 +119,11 @@ export default function DashboardPage() {
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.sleep')}</p>
               <h2 className="responsive-title-xl font-bold mb-1.5">
-                {isLoadingStats ? '...' : `${dashboardStats?.sleep.value || 7.5}h`}
+                {isLoadingStats ? '...' : `${dashboardStats?.sleep?.value || 7.5}h`}
               </h2>
-              <p className={`flex items-center responsive-text-sm ${dashboardStats?.sleep.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
-                <span className="mr-1">{dashboardStats?.sleep.trend === 'up' ? '↑' : '↓'}</span>
-                {isLoadingStats ? '...' : dashboardStats?.sleep.change || 30}min {t('health.moreMinutes')}
+              <p className={`flex items-center responsive-text-sm ${dashboardStats?.sleep?.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
+                <span className="mr-1">{dashboardStats?.sleep?.trend === 'up' ? '↑' : '↓'}</span>
+                {isLoadingStats ? '...' : dashboardStats?.sleep?.change || 30}min {t('health.moreMinutes')}
               </p>
             </div>
             <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
@@ -231,7 +231,7 @@ export default function DashboardPage() {
                   active: 40, 
                   shortDay: localStorage.getItem('i18nextLng')?.startsWith('en') ? 'S' : 'S' 
                 }
-              ] : dashboardStats.weeklyActivity.days).map((item, i) => (
+              ] : dashboardStats?.weeklyActivity?.days || []).map((item, i) => (
                 <div key={i} className="flex flex-col items-center h-full justify-end">
                   <div className="w-full relative flex items-end justify-center h-[85%]">
                     {/* Barra de passos com design aprimorado */}
