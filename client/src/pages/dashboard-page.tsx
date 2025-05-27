@@ -15,6 +15,7 @@ import { Link, useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
 import { DashboardStats } from "@shared/dashboard";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
+import { ContextualTipsOverlay } from "@/components/ai-health-tips/contextual-tips-overlay";
 
 export default function DashboardPage() {
   const { t } = useTranslation();
@@ -31,10 +32,23 @@ export default function DashboardPage() {
   // Estado para controle de hidratação
   const [waterAmount, setWaterAmount] = useState(1300);
   
+  // Valores seguros para hidratação
+  const waterGoal = dashboardStats?.hydration?.goal || 2500;
+  const waterPercentage = Math.min((waterAmount / waterGoal) * 100, 100);
+  
+  // Funções para controlar água
+  const addWater = (amount: number) => {
+    setWaterAmount(prev => Math.min(prev + amount, waterGoal));
+  };
+  
+  const removeWater = (amount: number) => {
+    setWaterAmount(prev => Math.max(prev - amount, 0));
+  };
+  
   // Atualizar waterAmount quando os dados da API chegarem
   useEffect(() => {
-    if (!isLoadingStats && dashboardStats) {
-      setWaterAmount(dashboardStats.hydration.current);
+    if (!isLoadingStats && dashboardStats && dashboardStats.hydration) {
+      setWaterAmount(dashboardStats.hydration.current || 1300);
     }
   }, [isLoadingStats, dashboardStats]);
   
@@ -57,24 +71,6 @@ export default function DashboardPage() {
         return "bg-gray-50 text-gray-500 border-gray-200";
     }
   };
-  
-  // Funções para controle de água
-  const addWater = (amount: number) => {
-    const waterGoal = isLoadingStats || !dashboardStats 
-      ? 2500 
-      : dashboardStats.hydration.goal;
-    setWaterAmount(prev => Math.min(waterGoal, prev + amount));
-  }
-  
-  const removeWater = (amount: number) => {
-    setWaterAmount(prev => Math.max(0, prev - amount));
-  }
-  
-  // Calcular porcentagem de hidratação
-  const waterGoal = isLoadingStats || !dashboardStats 
-    ? 2500 
-    : dashboardStats.hydration.goal;
-  const waterPercentage = Math.min(100, Math.round((waterAmount / waterGoal) * 100));
   
   return (
     <MainLayout title={t('health.greeting')}>
@@ -665,6 +661,12 @@ export default function DashboardPage() {
           </Card>
         </Link>
       </div>
+      
+      {/* Contextual AI Health Tips Overlay */}
+      <ContextualTipsOverlay 
+        currentPage="dashboard"
+        userActivity={dashboardStats}
+      />
     </MainLayout>
   );
 }

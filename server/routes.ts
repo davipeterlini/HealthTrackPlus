@@ -1083,6 +1083,114 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Generate new AI insights manually
+  app.post("/api/health-insights/generate", async (req, res) => {
+    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    let userId = 1;
+    
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
+    try {
+      const profile = await storage.getHealthProfile(userId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Perfil de saúde não encontrado. Crie um perfil primeiro." });
+      }
+
+      // Regenerate insights using the AI integration
+      await storage.generateHealthInsights(userId, profile);
+      
+      // Return updated insights
+      const insights = await storage.getHealthInsights(userId);
+      res.json({
+        message: "Insights personalizados gerados com sucesso!",
+        insights
+      });
+    } catch (error) {
+      console.error("Erro ao gerar insights de IA:", error);
+      res.status(500).json({ message: "Falha ao gerar insights personalizados" });
+    }
+  });
+
+  // Contextual AI Health Tips API
+  app.get("/api/ai-tips/contextual", async (req, res) => {
+    let userId = 1;
+    
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
+    try {
+      const { page, activity } = req.query;
+      const currentHour = new Date().getHours();
+      
+      // Get user's health profile for context
+      const profile = await storage.getHealthProfile(userId);
+      
+      // Generate contextual tips based on time, page, and user data
+      const tips = await storage.generateContextualTips(userId, {
+        currentPage: page as string || 'dashboard',
+        timeOfDay: currentHour,
+        userActivity: activity,
+        profile
+      });
+      
+      res.json(tips);
+    } catch (error) {
+      console.error("Erro ao buscar dicas contextuais:", error);
+      res.status(500).json({ message: "Falha ao buscar dicas contextuais" });
+    }
+  });
+
+  app.post("/api/ai-tips/generate", async (req, res) => {
+    let userId = 1;
+    
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
+    try {
+      const { context } = req.body;
+      
+      // Get user profile for personalization
+      const profile = await storage.getHealthProfile(userId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Perfil de saúde necessário para gerar dicas personalizadas" });
+      }
+      
+      // Generate AI-powered contextual tip
+      const tip = await storage.generateAIContextualTip(userId, context, profile);
+      
+      res.json(tip);
+    } catch (error) {
+      console.error("Erro ao gerar dica contextual:", error);
+      res.status(500).json({ message: "Falha ao gerar dica contextual" });
+    }
+  });
+
+  app.post("/api/ai-tips/action", async (req, res) => {
+    let userId = 1;
+    
+    if (req.isAuthenticated()) {
+      userId = (req.user as Express.User).id;
+    }
+    
+    try {
+      const { tipId, action } = req.body;
+      
+      // Log the tip action for learning and analytics
+      await storage.logTipAction(userId, tipId, action);
+      
+      res.json({ message: "Ação registrada com sucesso" });
+    } catch (error) {
+      console.error("Erro ao registrar ação da dica:", error);
+      res.status(500).json({ message: "Falha ao registrar ação" });
+    }
+  });
+
   app.get("/api/health-insights/exam/:examId", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     

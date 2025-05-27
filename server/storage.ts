@@ -16,6 +16,8 @@ import {
 import { DashboardStats } from "@shared/dashboard";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import { db } from "./db";
+import { eq, and, desc, gte, lte } from "drizzle-orm";
 
 const MemoryStore = createMemoryStore(session);
 
@@ -1568,4 +1570,800 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database Storage Implementation using PostgreSQL
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  // Health Profile methods with PostgreSQL
+  async getHealthProfile(userId: number): Promise<HealthProfile | undefined> {
+    const [profile] = await db
+      .select()
+      .from(healthProfiles)
+      .where(eq(healthProfiles.userId, userId));
+    return profile || undefined;
+  }
+
+  async createHealthProfile(profile: InsertHealthProfile): Promise<HealthProfile> {
+    const [newProfile] = await db
+      .insert(healthProfiles)
+      .values({
+        ...profile,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+      .returning();
+    
+    // After saving profile, generate AI insights
+    await this.generateHealthInsights(newProfile.userId, newProfile);
+    
+    return newProfile;
+  }
+
+  async updateHealthProfile(userId: number, profile: Partial<InsertHealthProfile>): Promise<HealthProfile> {
+    const [updatedProfile] = await db
+      .update(healthProfiles)
+      .set({
+        ...profile,
+        updatedAt: new Date()
+      })
+      .where(eq(healthProfiles.userId, userId))
+      .returning();
+    
+    if (!updatedProfile) {
+      throw new Error(`Health profile for user ${userId} not found`);
+    }
+    
+    // Regenerate AI insights with updated data
+    await this.generateHealthInsights(userId, updatedProfile);
+    
+    return updatedProfile;
+  }
+
+  // Health Plan methods with PostgreSQL
+  async getHealthPlan(userId: number): Promise<HealthPlan | undefined> {
+    const [plan] = await db
+      .select()
+      .from(healthPlans)
+      .where(eq(healthPlans.userId, userId));
+    return plan || undefined;
+  }
+
+  async createHealthPlan(plan: InsertHealthPlan): Promise<HealthPlan> {
+    const [newPlan] = await db
+      .insert(healthPlans)
+      .values({
+        ...plan,
+        startDate: plan.startDate || new Date(),
+        createdAt: new Date(),
+        lastUpdated: new Date()
+      })
+      .returning();
+    
+    return newPlan;
+  }
+
+  async updateHealthPlan(userId: number, plan: Partial<InsertHealthPlan>): Promise<HealthPlan> {
+    const [updatedPlan] = await db
+      .update(healthPlans)
+      .set({
+        ...plan,
+        lastUpdated: new Date()
+      })
+      .where(eq(healthPlans.userId, userId))
+      .returning();
+    
+    if (!updatedPlan) {
+      throw new Error(`Health plan for user ${userId} not found`);
+    }
+    
+    return updatedPlan;
+  }
+
+  // AI Integration for Health Insights
+  async generateHealthInsights(userId: number, profile: HealthProfile): Promise<void> {
+    try {
+      const OpenAI = (await import('openai')).default;
+      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+      // Prepare user data for AI analysis
+      const userData = {
+        age: profile.age,
+        gender: profile.gender,
+        height: profile.height,
+        weight: profile.weight,
+        activityLevel: profile.activityLevel,
+        primaryGoal: profile.primaryGoal,
+        sleepHours: profile.sleepHours,
+        waterIntake: profile.waterIntake,
+        stressLevel: profile.stressLevel,
+        exerciseFrequency: profile.exerciseFrequency,
+        dietaryRestrictions: profile.dietaryRestrictions,
+        medicalConditions: profile.medicalConditions,
+        currentMedications: profile.currentMedications
+      };
+
+      const prompt = `
+        Analise os seguintes dados de saúde do usuário e gere insights personalizados:
+        
+        Dados do usuário: ${JSON.stringify(userData, null, 2)}
+        
+        Por favor, forneça insights em formato JSON com as seguintes categorias:
+        1. Recomendações de atividade física
+        2. Sugestões nutricionais
+        3. Otimização do sono
+        4. Gerenciamento de hidratação
+        5. Dicas de bem-estar mental
+        6. Alertas de saúde (se aplicável)
+        
+        Formato esperado:
+        {
+          "activityRecommendations": "string",
+          "nutritionSuggestions": "string", 
+          "sleepOptimization": "string",
+          "hydrationManagement": "string",
+          "mentalWellnessTips": "string",
+          "healthAlerts": "string",
+          "overallScore": number (1-100),
+          "priorityAreas": ["string"]
+        }
+      `;
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+        messages: [
+          {
+            role: "system",
+            content: "Você é um especialista em saúde e wellness que analisa dados pessoais para fornecer insights personalizados. Responda sempre em português brasileiro."
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        response_format: { type: "json_object" },
+        temperature: 0.7
+      });
+
+      const insights = JSON.parse(response.choices[0].message.content || '{}');
+
+      // Save insights to database
+      await db.insert(healthInsights).values({
+        userId,
+        category: 'comprehensive_analysis',
+        title: 'Análise Personalizada de Saúde',
+        content: insights.activityRecommendations,
+        recommendations: [
+          insights.nutritionSuggestions,
+          insights.sleepOptimization,
+          insights.hydrationManagement,
+          insights.mentalWellnessTips
+        ],
+        severity: insights.healthAlerts ? 'medium' : 'low',
+        actionable: true,
+        metadata: insights,
+        createdAt: new Date()
+      });
+
+    } catch (error) {
+      console.error('Error generating health insights:', error);
+      // Don't throw error to prevent profile creation from failing
+    }
+  }
+
+  // Health Insights methods
+  async getHealthInsights(userId: number): Promise<HealthInsight[]> {
+    return await db
+      .select()
+      .from(healthInsights)
+      .where(eq(healthInsights.userId, userId))
+      .orderBy(desc(healthInsights.createdAt));
+  }
+
+  async getHealthInsightsByCategory(userId: number, category: string): Promise<HealthInsight[]> {
+    return await db
+      .select()
+      .from(healthInsights)
+      .where(and(
+        eq(healthInsights.userId, userId),
+        eq(healthInsights.category, category)
+      ))
+      .orderBy(desc(healthInsights.createdAt));
+  }
+
+  async getHealthInsightsByExam(examId: number): Promise<HealthInsight[]> {
+    return await db
+      .select()
+      .from(healthInsights)
+      .where(eq(healthInsights.examId, examId))
+      .orderBy(desc(healthInsights.createdAt));
+  }
+
+  async createHealthInsight(insight: Omit<HealthInsight, 'id'>): Promise<HealthInsight> {
+    const [newInsight] = await db
+      .insert(healthInsights)
+      .values(insight)
+      .returning();
+    return newInsight;
+  }
+
+  // Contextual AI Tips methods
+  async generateContextualTips(userId: number, context: any): Promise<any[]> {
+    try {
+      const currentTime = new Date();
+      const currentHour = currentTime.getHours();
+      
+      // Generate tips based on context
+      const tips = [];
+      
+      // Time-based tips
+      if (currentHour >= 6 && currentHour <= 9) {
+        tips.push({
+          id: `morning-tip-${Date.now()}`,
+          type: 'suggestion',
+          title: 'Bom Dia! Hora de se Hidratar',
+          message: 'Comece o dia bebendo um copo de água para ativar seu metabolismo e se manter hidratado.',
+          category: 'hydration',
+          priority: 'medium',
+          triggerCondition: 'morning_routine',
+          actionable: true,
+          actions: [
+            { label: 'Registrar 250ml de água', action: 'hydrate_now', primary: true },
+            { label: 'Ver metas de hidratação', action: 'view_hydration_goals' }
+          ],
+          timestamp: currentTime.toISOString(),
+          contextData: {
+            timeBasedInsight: 'Melhor momento para hidratação matinal',
+            currentActivity: 'Rotina matinal'
+          }
+        });
+      }
+      
+      if (currentHour >= 12 && currentHour <= 14) {
+        tips.push({
+          id: `lunch-tip-${Date.now()}`,
+          type: 'reminder',
+          title: 'Hora do Almoço Saudável',
+          message: 'Que tal fazer uma pausa para um almoço balanceado? Inclua proteínas, vegetais e carboidratos complexos.',
+          category: 'nutrition',
+          priority: 'high',
+          triggerCondition: 'lunch_time',
+          actionable: true,
+          actions: [
+            { label: 'Registrar refeição', action: 'log_meal', primary: true },
+            { label: 'Ver receitas saudáveis', action: 'view_recipes' }
+          ],
+          timestamp: currentTime.toISOString(),
+          contextData: {
+            timeBasedInsight: 'Horário ideal para refeição principal',
+            currentActivity: 'Horário de almoço'
+          }
+        });
+      }
+      
+      if (currentHour >= 18 && currentHour <= 20) {
+        tips.push({
+          id: `evening-tip-${Date.now()}`,
+          type: 'suggestion',
+          title: 'Momento de Relaxar',
+          message: 'Fim do dia chegando! Que tal alguns minutos de meditação ou alongamento para relaxar?',
+          category: 'mental_health',
+          priority: 'medium',
+          triggerCondition: 'evening_routine',
+          actionable: true,
+          actions: [
+            { label: 'Iniciar meditação 5min', action: 'meditation_break', primary: true },
+            { label: 'Ver exercícios de relaxamento', action: 'view_relaxation' }
+          ],
+          timestamp: currentTime.toISOString(),
+          contextData: {
+            timeBasedInsight: 'Melhor momento para relaxamento',
+            currentActivity: 'Fim do dia'
+          }
+        });
+      }
+      
+      // Context-based tips
+      if (context.currentPage === 'activity') {
+        tips.push({
+          id: `activity-tip-${Date.now()}`,
+          type: 'suggestion',
+          title: 'Motivação para Exercitar-se',
+          message: 'Você está na página de atividades! Que tal definir uma meta de passos para hoje?',
+          category: 'activity',
+          priority: 'medium',
+          triggerCondition: 'viewing_activity_page',
+          actionable: true,
+          actions: [
+            { label: 'Começar treino', action: 'start_workout', primary: true },
+            { label: 'Definir meta de passos', action: 'set_steps_goal' }
+          ],
+          timestamp: currentTime.toISOString(),
+          contextData: {
+            currentActivity: 'Visualizando página de atividades'
+          }
+        });
+      }
+      
+      return tips.slice(0, 3); // Return max 3 tips
+    } catch (error) {
+      console.error('Error generating contextual tips:', error);
+      return [];
+    }
+  }
+
+  async generateAIContextualTip(userId: number, context: any, profile: HealthProfile): Promise<any> {
+    try {
+      const OpenAI = (await import('openai')).default;
+      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+      const contextPrompt = `
+        Baseado no perfil de saúde e contexto atual do usuário, gere uma dica de saúde personalizada e contextual:
+        
+        Perfil do usuário:
+        - Idade: ${profile.age}
+        - Gênero: ${profile.gender}
+        - Nível de atividade: ${profile.activityLevel}
+        - Objetivo principal: ${profile.primaryGoal}
+        
+        Contexto atual:
+        - Página atual: ${context.currentPage}
+        - Hora do dia: ${context.timeOfDay}h
+        - Atividade recente: ${context.userActivity || 'Nenhuma'}
+        
+        Gere uma dica no seguinte formato JSON:
+        {
+          "type": "suggestion|reminder|warning|achievement",
+          "title": "Título curto e atrativo",
+          "message": "Mensagem personalizada de 1-2 frases",
+          "category": "hydration|activity|sleep|nutrition|mental_health",
+          "priority": "low|medium|high",
+          "actions": [
+            {
+              "label": "Ação sugerida",
+              "action": "action_id",
+              "primary": true/false
+            }
+          ],
+          "contextData": {
+            "personalizedInsight": "Insight específico baseado no perfil",
+            "reasoning": "Por que esta dica é relevante agora"
+          }
+        }
+      `;
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content: "Você é um assistente de saúde especializado em gerar dicas personalizadas e contextuais. Responda sempre em português brasileiro e em formato JSON válido."
+          },
+          {
+            role: "user",
+            content: contextPrompt
+          }
+        ],
+        response_format: { type: "json_object" },
+        temperature: 0.7
+      });
+
+      const tipData = JSON.parse(response.choices[0].message.content || '{}');
+      
+      return {
+        id: `ai-tip-${Date.now()}-${userId}`,
+        ...tipData,
+        triggerCondition: 'ai_generated',
+        actionable: true,
+        timestamp: new Date().toISOString()
+      };
+
+    } catch (error) {
+      console.error('Error generating AI contextual tip:', error);
+      // Return fallback tip
+      return {
+        id: `fallback-tip-${Date.now()}`,
+        type: 'suggestion',
+        title: 'Mantenha-se Hidratado',
+        message: 'Lembre-se de beber água regularmente ao longo do dia para manter-se saudável.',
+        category: 'hydration',
+        priority: 'medium',
+        triggerCondition: 'fallback',
+        actionable: true,
+        actions: [
+          { label: 'Registrar água', action: 'hydrate_now', primary: true }
+        ],
+        timestamp: new Date().toISOString(),
+        contextData: {
+          personalizedInsight: 'Dica geral de hidratação',
+          reasoning: 'Hidratação é fundamental para a saúde'
+        }
+      };
+    }
+  }
+
+  async logTipAction(userId: number, tipId: string, action: string): Promise<void> {
+    try {
+      // Log tip action for analytics and learning
+      console.log(`User ${userId} performed action '${action}' on tip '${tipId}'`);
+      
+      // Could store in database for future ML improvements
+      // For now, just log to console
+      
+    } catch (error) {
+      console.error('Error logging tip action:', error);
+    }
+  }
+
+  // Placeholder implementations for other methods (keeping memory storage for now)
+  async getDashboardStats(userId: number): Promise<DashboardStats> {
+    // Implementation for dashboard stats
+    return {
+      totalSteps: 0,
+      caloriesBurned: 0,
+      waterIntake: 0,
+      sleepHours: 0,
+      weeklyProgress: 0
+    };
+  }
+
+  // Keep existing memory storage methods for other features
+  private memStorage = new MemStorage();
+
+  // Delegate other methods to memory storage
+  async getMedicalExams(userId: number): Promise<MedicalExam[]> {
+    return this.memStorage.getMedicalExams(userId);
+  }
+
+  async getMedicalExam(id: number): Promise<MedicalExam | undefined> {
+    return this.memStorage.getMedicalExam(id);
+  }
+
+  async createMedicalExam(exam: Omit<MedicalExam, 'id'>): Promise<MedicalExam> {
+    return this.memStorage.createMedicalExam(exam);
+  }
+
+  async updateMedicalExam(id: number, data: Partial<Omit<MedicalExam, 'id'>>): Promise<MedicalExam> {
+    return this.memStorage.updateMedicalExam(id, data);
+  }
+
+  async updateMedicalExamWithAIAnalysis(id: number, aiAnalysis: any, anomalies: boolean, riskLevel: string): Promise<MedicalExam> {
+    return this.memStorage.updateMedicalExamWithAIAnalysis(id, aiAnalysis, anomalies, riskLevel);
+  }
+
+  async getExamDetails(examId: number): Promise<ExamDetail[]> {
+    return this.memStorage.getExamDetails(examId);
+  }
+
+  async getExamDetail(id: number): Promise<ExamDetail | undefined> {
+    return this.memStorage.getExamDetail(id);
+  }
+
+  async createExamDetail(detail: Omit<ExamDetail, 'id'>): Promise<ExamDetail> {
+    return this.memStorage.createExamDetail(detail);
+  }
+
+  async updateExamDetail(id: number, data: Partial<Omit<ExamDetail, 'id'>>): Promise<ExamDetail> {
+    return this.memStorage.updateExamDetail(id, data);
+  }
+
+  // Delegate all other methods to memory storage for now
+  async getActivities(userId: number, startDate?: Date, endDate?: Date): Promise<Activity[]> {
+    return this.memStorage.getActivities(userId, startDate, endDate);
+  }
+
+  async getActivity(id: number): Promise<Activity | undefined> {
+    return this.memStorage.getActivity(id);
+  }
+
+  async createActivity(activity: Omit<Activity, 'id'>): Promise<Activity> {
+    return this.memStorage.createActivity(activity);
+  }
+
+  async updateActivity(id: number, data: Partial<Omit<Activity, 'id'>>): Promise<Activity> {
+    return this.memStorage.updateActivity(id, data);
+  }
+
+  async deleteActivity(id: number): Promise<void> {
+    return this.memStorage.deleteActivity(id);
+  }
+
+  async getSleepRecords(userId: number, startDate?: Date, endDate?: Date): Promise<SleepRecord[]> {
+    return this.memStorage.getSleepRecords(userId, startDate, endDate);
+  }
+
+  async getSleepRecord(id: number): Promise<SleepRecord | undefined> {
+    return this.memStorage.getSleepRecord(id);
+  }
+
+  async createSleepRecord(record: Omit<SleepRecord, 'id'>): Promise<SleepRecord> {
+    return this.memStorage.createSleepRecord(record);
+  }
+
+  async updateSleepRecord(id: number, data: Partial<Omit<SleepRecord, 'id'>>): Promise<SleepRecord> {
+    return this.memStorage.updateSleepRecord(id, data);
+  }
+
+  async deleteSleepRecord(id: number): Promise<void> {
+    return this.memStorage.deleteSleepRecord(id);
+  }
+
+  async getWaterIntakeRecords(userId: number, startDate?: Date, endDate?: Date): Promise<WaterIntakeRecord[]> {
+    return this.memStorage.getWaterIntakeRecords(userId, startDate, endDate);
+  }
+
+  async getWaterIntakeRecord(id: number): Promise<WaterIntakeRecord | undefined> {
+    return this.memStorage.getWaterIntakeRecord(id);
+  }
+
+  async createWaterIntakeRecord(record: Omit<WaterIntakeRecord, 'id'>): Promise<WaterIntakeRecord> {
+    return this.memStorage.createWaterIntakeRecord(record);
+  }
+
+  async updateWaterIntakeRecord(id: number, data: Partial<Omit<WaterIntakeRecord, 'id'>>): Promise<WaterIntakeRecord> {
+    return this.memStorage.updateWaterIntakeRecord(id, data);
+  }
+
+  async deleteWaterIntakeRecord(id: number): Promise<void> {
+    return this.memStorage.deleteWaterIntakeRecord(id);
+  }
+
+  async getMeals(userId: number, startDate?: Date, endDate?: Date): Promise<Meal[]> {
+    return this.memStorage.getMeals(userId, startDate, endDate);
+  }
+
+  async getMeal(id: number): Promise<Meal | undefined> {
+    return this.memStorage.getMeal(id);
+  }
+
+  async createMeal(meal: Omit<Meal, 'id'>): Promise<Meal> {
+    return this.memStorage.createMeal(meal);
+  }
+
+  async updateMeal(id: number, data: Partial<Omit<Meal, 'id'>>): Promise<Meal> {
+    return this.memStorage.updateMeal(id, data);
+  }
+
+  async deleteMeal(id: number): Promise<void> {
+    return this.memStorage.deleteMeal(id);
+  }
+
+  async getVideos(): Promise<Video[]> {
+    return this.memStorage.getVideos();
+  }
+
+  async getVideo(id: number): Promise<Video | undefined> {
+    return this.memStorage.getVideo(id);
+  }
+
+  async getVideosByCategory(category: string): Promise<Video[]> {
+    return this.memStorage.getVideosByCategory(category);
+  }
+
+  async getVideoProgress(userId: number, videoId: number): Promise<VideoProgress | undefined> {
+    return this.memStorage.getVideoProgress(userId, videoId);
+  }
+
+  async updateVideoProgress(userId: number, videoId: number, progress: number, completed: boolean): Promise<VideoProgress> {
+    return this.memStorage.updateVideoProgress(userId, videoId, progress, completed);
+  }
+
+  async getFoodItems(): Promise<FoodItem[]> {
+    return this.memStorage.getFoodItems();
+  }
+
+  async getFoodItem(id: number): Promise<FoodItem | undefined> {
+    return this.memStorage.getFoodItem(id);
+  }
+
+  async searchFoodItems(query: string): Promise<FoodItem[]> {
+    return this.memStorage.searchFoodItems(query);
+  }
+
+  async getRecipes(): Promise<Recipe[]> {
+    return this.memStorage.getRecipes();
+  }
+
+  async getRecipe(id: number): Promise<Recipe | undefined> {
+    return this.memStorage.getRecipe(id);
+  }
+
+  async searchRecipes(query: string): Promise<Recipe[]> {
+    return this.memStorage.searchRecipes(query);
+  }
+
+  async getStressLevels(userId: number, startDate?: Date, endDate?: Date): Promise<StressLevel[]> {
+    return this.memStorage.getStressLevels(userId, startDate, endDate);
+  }
+
+  async getStressLevel(id: number): Promise<StressLevel | undefined> {
+    return this.memStorage.getStressLevel(id);
+  }
+
+  async createStressLevel(record: Omit<StressLevel, 'id'>): Promise<StressLevel> {
+    return this.memStorage.createStressLevel(record);
+  }
+
+  async updateStressLevel(id: number, data: Partial<Omit<StressLevel, 'id'>>): Promise<StressLevel> {
+    return this.memStorage.updateStressLevel(id, data);
+  }
+
+  async deleteStressLevel(id: number): Promise<void> {
+    return this.memStorage.deleteStressLevel(id);
+  }
+
+  async getMedications(userId: number): Promise<Medication[]> {
+    return this.memStorage.getMedications(userId);
+  }
+
+  async getMedication(id: number): Promise<Medication | undefined> {
+    return this.memStorage.getMedication(id);
+  }
+
+  async createMedication(medication: Omit<Medication, 'id'>): Promise<Medication> {
+    return this.memStorage.createMedication(medication);
+  }
+
+  async updateMedication(id: number, data: Partial<Omit<Medication, 'id'>>): Promise<Medication> {
+    return this.memStorage.updateMedication(id, data);
+  }
+
+  async deleteMedication(id: number): Promise<void> {
+    return this.memStorage.deleteMedication(id);
+  }
+
+  async getMedicationLogs(userId: number, startDate?: Date, endDate?: Date): Promise<MedicationLog[]> {
+    return this.memStorage.getMedicationLogs(userId, startDate, endDate);
+  }
+
+  async getMedicationLog(id: number): Promise<MedicationLog | undefined> {
+    return this.memStorage.getMedicationLog(id);
+  }
+
+  async createMedicationLog(log: Omit<MedicationLog, 'id'>): Promise<MedicationLog> {
+    return this.memStorage.createMedicationLog(log);
+  }
+
+  async updateMedicationLog(id: number, data: Partial<Omit<MedicationLog, 'id'>>): Promise<MedicationLog> {
+    return this.memStorage.updateMedicationLog(id, data);
+  }
+
+  async deleteMedicationLog(id: number): Promise<void> {
+    return this.memStorage.deleteMedicationLog(id);
+  }
+
+  async getMeditationSessions(userId: number, startDate?: Date, endDate?: Date): Promise<MeditationSession[]> {
+    return this.memStorage.getMeditationSessions(userId, startDate, endDate);
+  }
+
+  async getMeditationSession(id: number): Promise<MeditationSession | undefined> {
+    return this.memStorage.getMeditationSession(id);
+  }
+
+  async createMeditationSession(session: Omit<MeditationSession, 'id'>): Promise<MeditationSession> {
+    return this.memStorage.createMeditationSession(session);
+  }
+
+  async updateMeditationSession(id: number, data: Partial<Omit<MeditationSession, 'id'>>): Promise<MeditationSession> {
+    return this.memStorage.updateMeditationSession(id, data);
+  }
+
+  async deleteMeditationSession(id: number): Promise<void> {
+    return this.memStorage.deleteMeditationSession(id);
+  }
+
+  async getMenstrualCycles(userId: number, startDate?: Date, endDate?: Date): Promise<MenstrualCycle[]> {
+    return this.memStorage.getMenstrualCycles(userId, startDate, endDate);
+  }
+
+  async getMenstrualCycle(id: number): Promise<MenstrualCycle | undefined> {
+    return this.memStorage.getMenstrualCycle(id);
+  }
+
+  async createMenstrualCycle(cycle: Omit<MenstrualCycle, 'id'>): Promise<MenstrualCycle> {
+    return this.memStorage.createMenstrualCycle(cycle);
+  }
+
+  async updateMenstrualCycle(id: number, data: Partial<Omit<MenstrualCycle, 'id'>>): Promise<MenstrualCycle> {
+    return this.memStorage.updateMenstrualCycle(id, data);
+  }
+
+  async deleteMenstrualCycle(id: number): Promise<void> {
+    return this.memStorage.deleteMenstrualCycle(id);
+  }
+
+  async getMenstrualCycleSymptoms(cycleId: number): Promise<MenstrualCycleSymptom[]> {
+    return this.memStorage.getMenstrualCycleSymptoms(cycleId);
+  }
+
+  async getMenstrualCycleSymptom(id: number): Promise<MenstrualCycleSymptom | undefined> {
+    return this.memStorage.getMenstrualCycleSymptom(id);
+  }
+
+  async createMenstrualCycleSymptom(symptom: Omit<MenstrualCycleSymptom, 'id'>): Promise<MenstrualCycleSymptom> {
+    return this.memStorage.createMenstrualCycleSymptom(symptom);
+  }
+
+  async updateMenstrualCycleSymptom(id: number, data: Partial<Omit<MenstrualCycleSymptom, 'id'>>): Promise<MenstrualCycleSymptom> {
+    return this.memStorage.updateMenstrualCycleSymptom(id, data);
+  }
+
+  async deleteMenstrualCycleSymptom(id: number): Promise<void> {
+    return this.memStorage.deleteMenstrualCycleSymptom(id);
+  }
+
+  async getFertilityTracking(userId: number, startDate?: Date, endDate?: Date): Promise<FertilityTracking[]> {
+    return this.memStorage.getFertilityTracking(userId, startDate, endDate);
+  }
+
+  async getFertilityTrackingRecord(id: number): Promise<FertilityTracking | undefined> {
+    return this.memStorage.getFertilityTrackingRecord(id);
+  }
+
+  async createFertilityTracking(record: Omit<FertilityTracking, 'id'>): Promise<FertilityTracking> {
+    return this.memStorage.createFertilityTracking(record);
+  }
+
+  async updateFertilityTracking(id: number, data: Partial<Omit<FertilityTracking, 'id'>>): Promise<FertilityTracking> {
+    return this.memStorage.updateFertilityTracking(id, data);
+  }
+
+  async deleteFertilityTracking(id: number): Promise<void> {
+    return this.memStorage.deleteFertilityTracking(id);
+  }
+
+  async getPregnancyTracking(userId: number): Promise<PregnancyTracking[]> {
+    return this.memStorage.getPregnancyTracking(userId);
+  }
+
+  async getPregnancyTrackingRecord(id: number): Promise<PregnancyTracking | undefined> {
+    return this.memStorage.getPregnancyTrackingRecord(id);
+  }
+
+  async createPregnancyTracking(record: Omit<PregnancyTracking, 'id'>): Promise<PregnancyTracking> {
+    return this.memStorage.createPregnancyTracking(record);
+  }
+
+  async updatePregnancyTracking(id: number, data: Partial<Omit<PregnancyTracking, 'id'>>): Promise<PregnancyTracking> {
+    return this.memStorage.updatePregnancyTracking(id, data);
+  }
+
+  async deletePregnancyTracking(id: number): Promise<void> {
+    return this.memStorage.deletePregnancyTracking(id);
+  }
+
+  async getCourseTracks(): Promise<CourseTrack[]> {
+    return this.memStorage.getCourseTracks();
+  }
+
+  async getCourseTrack(id: number): Promise<CourseTrack | undefined> {
+    return this.memStorage.getCourseTrack(id);
+  }
+
+  async getTrackVideos(trackId: number): Promise<TrackVideo[]> {
+    return this.memStorage.getTrackVideos(trackId);
+  }
+}
+
+export const storage = new DatabaseStorage();
