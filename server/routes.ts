@@ -5,6 +5,15 @@ import { setupAuth } from "./auth";
 import multer from "multer";
 import path from "path";
 import { randomBytes } from "crypto";
+import Stripe from "stripe";
+
+// Initialize Stripe
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2023-10-16",
+});
 
 // Configure multer for file uploads
 const upload = multer({
@@ -36,6 +45,156 @@ const upload = multer({
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   setupAuth(app);
+
+  // Subscription routes
+  app.post("/api/create-subscription", async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = req.user as Express.User;
+      
+      if (!user.email) {
+        return res.status(400).json({ message: "User email is required" });
+      }
+
+      // Check if user already has an active subscription
+      if (user.subscriptionStatus === 'active') {
+        return res.status(400).json({ message: "User already has an active subscription" });
+      }
+
+      let customer;
+      
+      // Create or retrieve Stripe customer
+      if (user.stripeCustomerId) {
+        customer = await stripe.customers.retrieve(user.stripeCustomerId);
+      } else {
+        customer = await stripe.customers.create({
+          email: user.email,
+          name: user.name || user.username,
+        });
+        
+        // Update user with Stripe customer ID
+        await storage.updateUser(user.id, { stripeCustomerId: customer.id });
+      }
+
+      // Create subscription
+      const subscription = await stripe.subscriptions.create({
+        customer: customer.id,
+        items: [{
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Health & Wellness Premium',
+              description: 'Acesso completo ao aplicativo de saúde e bem-estar',
+            },
+            unit_amount: 1999, // $19.99 per month
+            recurring: {
+              interval: 'month',
+            },
+          },
+        }],
+        payment_behavior: 'default_incomplete',
+        expand: ['latest_invoice.payment_intent'],
+      });
+
+      // Update user subscription info
+      await storage.updateUserSubscription(
+        user.id,
+        customer.id,
+        subscription.id,
+        subscription.status,
+        new Date(subscription.current_period_end * 1000)
+      );
+
+      res.json({
+        subscriptionId: subscription.id,
+        clientSecret: subscription.latest_invoice?.payment_intent?.client_secret,
+      });
+    } catch (error: any) {
+      console.error('Error creating subscription:', error);
+      res.status(500).json({ message: "Error creating subscription: " + error.message });
+    }
+  });
+
+  app.post("/api/cancel-subscription", async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = req.user as Express.User;
+      
+      if (!user.stripeSubscriptionId) {
+        return res.status(400).json({ message: "No active subscription found" });
+      }
+
+      // Cancel subscription at period end
+      const subscription = await stripe.subscriptions.update(user.stripeSubscriptionId, {
+        cancel_at_period_end: true,
+      });
+
+      // Update user subscription status
+      await storage.updateUserSubscription(
+        user.id,
+        user.stripeCustomerId!,
+        subscription.id,
+        'canceled',
+        new Date(subscription.current_period_end * 1000)
+      );
+
+      res.json({ message: "Subscription canceled successfully" });
+    } catch (error: any) {
+      console.error('Error canceling subscription:', error);
+      res.status(500).json({ message: "Error canceling subscription: " + error.message });
+    }
+  });
+
+  app.get("/api/subscription-status", async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = req.user as Express.User;
+      
+      let subscriptionStatus = {
+        isActive: false,
+        status: user.subscriptionStatus || 'inactive',
+        endDate: user.subscriptionEndDate,
+      };
+
+      // If user has a Stripe subscription, check its current status
+      if (user.stripeSubscriptionId) {
+        try {
+          const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+          
+          // Update local database with current Stripe status
+          await storage.updateUserSubscription(
+            user.id,
+            user.stripeCustomerId!,
+            subscription.id,
+            subscription.status,
+            new Date(subscription.current_period_end * 1000)
+          );
+
+          subscriptionStatus = {
+            isActive: subscription.status === 'active',
+            status: subscription.status,
+            endDate: new Date(subscription.current_period_end * 1000),
+          };
+        } catch (stripeError) {
+          console.error('Error fetching subscription from Stripe:', stripeError);
+        }
+      }
+
+      res.json(subscriptionStatus);
+    } catch (error: any) {
+      console.error('Error checking subscription status:', error);
+      res.status(500).json({ message: "Error checking subscription status: " + error.message });
+    }
+  });
 
   // Dashboard routes
   app.get("/api/dashboard", async (req, res) => {
