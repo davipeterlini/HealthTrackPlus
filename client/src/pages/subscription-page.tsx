@@ -5,11 +5,9 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Star, Check, X, CreditCard, Shield, Zap, Users, Calendar, BookOpen, Video, Headphones, Trophy, Gift, Heart, Brain, Activity } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { Star, Check, X, CreditCard, Shield, Zap, Users, Brain, Activity, Trophy } from "lucide-react";
 
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
@@ -66,7 +64,6 @@ const SubscriptionForm = ({ clientSecret }: { clientSecret: string }) => {
 };
 
 export default function SubscriptionPage() {
-  const { t } = useTranslation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [clientSecret, setClientSecret] = useState("");
