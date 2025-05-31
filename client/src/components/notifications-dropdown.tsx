@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { useLocation } from "wouter";
 import { BellIcon, Check, X, AlertTriangle, Info, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,11 +55,44 @@ const mockNotifications: Notification[] = [
     message: 'Confira o novo vídeo sobre meditação mindfulness.',
     timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 dia atrás
     read: true
+  },
+  {
+    id: '5',
+    type: 'warning',
+    title: 'Hora do Jejum',
+    message: 'Seu período de jejum intermitente começou. Evite consumir calorias.',
+    timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 horas atrás
+    read: false
+  },
+  {
+    id: '6',
+    type: 'info',
+    title: 'Lembrete de Sono',
+    message: 'É hora de se preparar para dormir. Desligue os dispositivos eletrônicos.',
+    timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 horas atrás
+    read: true
+  },
+  {
+    id: '7',
+    type: 'success',
+    title: 'Exame Agendado',
+    message: 'Seu exame de sangue foi agendado para amanhã às 8:00.',
+    timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000), // 8 horas atrás
+    read: true
+  },
+  {
+    id: '8',
+    type: 'warning',
+    title: 'Pressão Arterial',
+    message: 'Não se esqueça de medir sua pressão arterial hoje.',
+    timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000), // 12 horas atrás
+    read: false
   }
 ];
 
 export function NotificationsDropdown() {
   const { t } = useTranslation();
+  const [, setLocation] = useLocation();
   const [notifications, setNotifications] = useState<Notification[]>(mockNotifications);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -148,7 +182,7 @@ export function NotificationsDropdown() {
           )}
         </div>
 
-        <ScrollArea className="max-h-96">
+        <div className="max-h-96 overflow-y-auto">
           {notifications.length === 0 ? (
             <div className="p-4 text-center text-slate-500 dark:text-gray-400">
               <BellIcon className="h-8 w-8 mx-auto mb-2 opacity-50" />
@@ -211,7 +245,7 @@ export function NotificationsDropdown() {
               ))}
             </div>
           )}
-        </ScrollArea>
+        </div>
 
         {notifications.length > 0 && (
           <>
@@ -219,6 +253,7 @@ export function NotificationsDropdown() {
             <div className="p-2">
               <Button 
                 variant="ghost" 
+                onClick={() => setLocation('/notifications')}
                 className="w-full justify-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
               >
                 Ver todas as notificações
