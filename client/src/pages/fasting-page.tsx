@@ -280,15 +280,22 @@ export default function FastingPage() {
                     </div>
 
                     {/* Barra de Progresso */}
-                    <div className="responsive-space-y-sm">
-                      <div className="flex justify-between responsive-text-sm text-slate-600 dark:text-gray-400">
-                        <span>{t('fasting.progress', 'Progresso')}</span>
-                        <span>{Math.round(getFastingProgress())}%</span>
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm text-slate-600 dark:text-gray-400">
+                        <span className="font-medium">{t('fasting.progress', 'Progresso')}</span>
+                        <span className="font-bold text-emerald-600 dark:text-emerald-400">{Math.round(getFastingProgress())}%</span>
                       </div>
-                      <Progress 
-                        value={getFastingProgress()} 
-                        className="h-3 bg-slate-200 dark:bg-gray-700"
-                      />
+                      <div className="relative">
+                        <Progress 
+                          value={getFastingProgress()} 
+                          className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/10 to-emerald-600/10 rounded-full pointer-events-none animate-pulse" />
+                      </div>
+                      <div className="flex justify-between text-xs text-slate-500 dark:text-gray-500">
+                        <span>Início</span>
+                        <span>Meta: {currentSession.targetDuration}h</span>
+                      </div>
                     </div>
 
                     {/* Fases do Jejum */}
@@ -759,6 +766,21 @@ export default function FastingPage() {
           </Card>
         </div>
       </div>
+
+      {/* Floating Action Button */}
+      {!currentSession && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <Button
+            onClick={() => {
+              setSelectedFastingType("16:8");
+              startFasting();
+            }}
+            className="w-16 h-16 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 border-4 border-white dark:border-gray-800"
+          >
+            <Play className="w-6 h-6" />
+          </Button>
+        </div>
+      )}
     </MainLayout>
   );
 }
