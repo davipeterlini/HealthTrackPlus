@@ -138,7 +138,6 @@ export default function NotificationsPage() {
 
   const connectGoogleCalendar = async () => {
     try {
-      // Integração com Google Calendar API
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
         `client_id=${import.meta.env.VITE_GOOGLE_CLIENT_ID}&` +
         `redirect_uri=${window.location.origin}/auth/google/callback&` +
@@ -148,7 +147,6 @@ export default function NotificationsPage() {
       
       window.open(authUrl, 'google-auth', 'width=500,height=600');
       
-      // Simular conexão bem-sucedida (em produção, isso viria do callback)
       setTimeout(() => {
         setCalendarIntegrations(prev => ({ ...prev, google: true }));
         toast({
@@ -167,7 +165,6 @@ export default function NotificationsPage() {
 
   const connectAppleCalendar = () => {
     try {
-      // Para Apple Calendar, geramos um arquivo .ics para download
       const icsContent = generateICSFile();
       const blob = new Blob([icsContent], { type: 'text/calendar' });
       const url = URL.createObjectURL(blob);
@@ -196,7 +193,7 @@ export default function NotificationsPage() {
       .filter(n => n.type === 'warning' || n.type === 'info')
       .map(n => {
         const startDate = new Date(n.timestamp);
-        const endDate = new Date(startDate.getTime() + 30 * 60 * 1000); // 30 minutos
+        const endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
         
         return `BEGIN:VEVENT
 UID:${n.id}@health-app.com
@@ -232,13 +229,11 @@ END:VCALENDAR`;
   };
 
   const addToCalendar = (notification: Notification) => {
-    // Criar evento individual no formato Google Calendar URL
     const startDate = new Date(notification.timestamp);
-    const endDate = new Date(startDate.getTime() + 30 * 60 * 1000); // 30 minutos
+    const endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
 
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(notification.title)}&dates=${formatDateForGoogle(startDate)}/${formatDateForGoogle(endDate)}&details=${encodeURIComponent(notification.message)}&ctz=America/Sao_Paulo`;
 
-    // Abrir Google Calendar em nova aba
     window.open(googleCalendarUrl, '_blank');
 
     toast({
@@ -281,252 +276,260 @@ END:VCALENDAR`;
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
-      <div className="mb-6">
-        <div className="flex items-center gap-4 mb-4">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-          <div className="flex items-center gap-3">
-            <BellIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-              {t('notifications.title', 'Notificações')}
-            </h1>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto p-4 sm:p-6 max-w-6xl">
+        <div className="mb-6 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="gap-2 self-start">
+                <ArrowLeft className="h-4 w-4" />
+                Voltar
+              </Button>
+            </Link>
+            <div className="flex items-center gap-3 flex-1">
+              <BellIcon className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+                {t('notifications.title', 'Notificações')}
+              </h1>
+              {unreadCount > 0 && (
+                <Badge variant="secondary" className="hidden sm:inline-flex">
+                  {unreadCount} não lidas
+                </Badge>
+              )}
+            </div>
             {unreadCount > 0 && (
-              <Badge variant="secondary">
+              <Badge variant="secondary" className="sm:hidden self-start">
                 {unreadCount} não lidas
               </Badge>
             )}
           </div>
-        </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-          <div className="flex gap-2">
-            <Button
-              variant={filter === 'all' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setFilter('all')}
-            >
-              Todas ({notifications.length})
-            </Button>
-            <Button
-              variant={filter === 'unread' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setFilter('unread')}
-            >
-              Não lidas ({unreadCount})
-            </Button>
-          </div>
+          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant={filter === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setFilter('all')}
+              >
+                Todas ({notifications.length})
+              </Button>
+              <Button
+                variant={filter === 'unread' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setFilter('unread')}
+              >
+                Não lidas ({unreadCount})
+              </Button>
+            </div>
 
-          <div className="flex gap-2">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Calendar className="h-4 w-4" />
-                  Integração de Calendário
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Integração com Calendários</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Conecte seus calendários para sincronizar lembretes de saúde automaticamente.
-                  </p>
-                  
-                  {/* Google Calendar */}
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                            <Calendar className="h-4 w-4 text-white" />
+            <div className="flex flex-wrap gap-2 w-full lg:w-auto">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm" className="gap-2 flex-1 sm:flex-none">
+                    <Calendar className="h-4 w-4" />
+                    Integração de Calendário
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-md bg-card border-border">
+                  <DialogHeader>
+                    <DialogTitle className="text-foreground">Integração com Calendários</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      Conecte seus calendários para sincronizar lembretes de saúde automaticamente.
+                    </p>
+                    
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                              <Calendar className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="font-medium text-foreground">Google Calendar</h3>
+                              <p className="text-sm text-muted-foreground">
+                                {calendarIntegrations.google ? 'Conectado' : 'Não conectado'}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="font-medium">Google Calendar</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {calendarIntegrations.google ? 'Conectado' : 'Não conectado'}
-                            </p>
-                          </div>
-                        </div>
-                        {calendarIntegrations.google ? (
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => disconnectCalendar('google')}
-                          >
-                            Desconectar
-                          </Button>
-                        ) : (
-                          <Button 
-                            variant="default" 
-                            size="sm" 
-                            onClick={connectGoogleCalendar}
-                          >
-                            Conectar
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Apple Calendar */}
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-                            <Calendar className="h-4 w-4 text-white" />
-                          </div>
-                          <div>
-                            <h3 className="font-medium">Apple Calendar</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {calendarIntegrations.apple ? 'Arquivo exportado' : 'Não conectado'}
-                            </p>
-                          </div>
-                        </div>
-                        {calendarIntegrations.apple ? (
-                          <div className="flex gap-2">
+                          {calendarIntegrations.google ? (
                             <Button 
                               variant="outline" 
+                              size="sm" 
+                              onClick={() => disconnectCalendar('google')}
+                            >
+                              Desconectar
+                            </Button>
+                          ) : (
+                            <Button 
+                              variant="default" 
+                              size="sm" 
+                              onClick={connectGoogleCalendar}
+                            >
+                              Conectar
+                            </Button>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-800 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                              <Calendar className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="font-medium text-foreground">Apple Calendar</h3>
+                              <p className="text-sm text-muted-foreground">
+                                {calendarIntegrations.apple ? 'Arquivo exportado' : 'Não conectado'}
+                              </p>
+                            </div>
+                          </div>
+                          {calendarIntegrations.apple ? (
+                            <div className="flex gap-2">
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={connectAppleCalendar}
+                              >
+                                Exportar Novamente
+                              </Button>
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => disconnectCalendar('apple')}
+                              >
+                                Reset
+                              </Button>
+                            </div>
+                          ) : (
+                            <Button 
+                              variant="default" 
                               size="sm" 
                               onClick={connectAppleCalendar}
                             >
-                              Exportar Novamente
+                              Exportar .ics
                             </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              onClick={() => disconnectCalendar('apple')}
-                            >
-                              Reset
-                            </Button>
-                          </div>
-                        ) : (
-                          <Button 
-                            variant="default" 
-                            size="sm" 
-                            onClick={connectAppleCalendar}
-                          >
-                            Exportar .ics
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
 
-                  <div className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
-                    <p>• Google Calendar: Sincronização automática em tempo real</p>
-                    <p>• Apple Calendar: Exportação de arquivo .ics para importação manual</p>
+                    <div className="text-xs text-muted-foreground space-y-1">
+                      <p>• Google Calendar: Sincronização automática em tempo real</p>
+                      <p>• Apple Calendar: Exportação de arquivo .ics para importação manual</p>
+                    </div>
                   </div>
-                </div>
-              </DialogContent>
-            </Dialog>
+                </DialogContent>
+              </Dialog>
 
-            {unreadCount > 0 && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={markAllAsRead}
-                className="text-blue-600 dark:text-blue-400"
-              >
-                Marcar todas como lidas
-              </Button>
-            )}
+              {unreadCount > 0 && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={markAllAsRead}
+                  className="text-emerald-600 dark:text-emerald-400 flex-1 sm:flex-none"
+                >
+                  Marcar todas como lidas
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="space-y-4">
-        {filteredNotifications.length === 0 ? (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <BellIcon className="h-12 w-12 mx-auto mb-4 text-slate-400" />
-              <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">
-                {filter === 'unread' ? 'Nenhuma notificação não lida' : 'Nenhuma notificação'}
-              </h3>
-              <p className="text-slate-500 dark:text-gray-400">
-                {filter === 'unread' 
-                  ? 'Todas as suas notificações foram lidas.'
-                  : 'Você não tem notificações no momento.'
-                }
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          filteredNotifications.map((notification) => (
-            <Card 
-              key={notification.id}
-              className={`transition-all hover:shadow-md ${
-                !notification.read ? 'border-blue-200 bg-blue-50 dark:bg-blue-900/10 dark:border-blue-800' : ''
-              }`}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-1">
-                    {getNotificationIcon(notification.type)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <h3 className={`font-medium ${
-                          !notification.read 
-                            ? 'text-slate-900 dark:text-white' 
-                            : 'text-slate-700 dark:text-gray-300'
-                        }`}>
-                          {notification.title}
-                        </h3>
-                        <p className="text-slate-600 dark:text-gray-400 mt-1">
-                          {notification.message}
-                        </p>
-                        <p className="text-sm text-slate-500 dark:text-gray-500 mt-2">
-                          {formatTime(notification.timestamp)}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {(notification.type === 'warning' || notification.type === 'info') && (
+        <div className="space-y-4">
+          {filteredNotifications.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <BellIcon className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-medium text-foreground mb-2">
+                  {filter === 'unread' ? 'Nenhuma notificação não lida' : 'Nenhuma notificação'}
+                </h3>
+                <p className="text-muted-foreground">
+                  {filter === 'unread' 
+                    ? 'Todas as suas notificações foram lidas.'
+                    : 'Você não tem notificações no momento.'
+                  }
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            filteredNotifications.map((notification) => (
+              <Card 
+                key={notification.id}
+                className={`transition-all hover:shadow-md ${
+                  !notification.read ? 'border-emerald-200 bg-emerald-50 dark:bg-emerald-900/10 dark:border-emerald-800' : ''
+                }`}
+              >
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      {getNotificationIcon(notification.type)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h3 className={`font-medium ${
+                            !notification.read 
+                              ? 'text-foreground' 
+                              : 'text-muted-foreground'
+                          }`}>
+                            {notification.title}
+                          </h3>
+                          <p className="text-muted-foreground mt-1">
+                            {notification.message}
+                          </p>
+                          <p className="text-sm text-muted-foreground mt-2">
+                            {formatTime(notification.timestamp)}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          {(notification.type === 'warning' || notification.type === 'info') && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => addToCalendar(notification)}
+                              className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
+                            >
+                              <Calendar className="h-4 w-4 mr-1" />
+                              <span className="hidden sm:inline">Adicionar ao Calendário</span>
+                              <span className="sm:hidden">Calendário</span>
+                            </Button>
+                          )}
+                          {!notification.read && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => markAsRead(notification.id)}
+                              className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
+                            >
+                              <Check className="h-4 w-4 mr-1" />
+                              <span className="hidden sm:inline">Marcar como lida</span>
+                              <span className="sm:hidden">Lida</span>
+                            </Button>
+                          )}
                           <Button 
                             variant="ghost" 
                             size="sm" 
-                            onClick={() => addToCalendar(notification)}
-                            className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
+                            onClick={() => removeNotification(notification.id)}
+                            className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
                           >
-                            <Calendar className="h-4 w-4" />
-                            Adicionar ao Calendário
+                            <X className="h-4 w-4 mr-1" />
+                            <span className="hidden sm:inline">Remover</span>
+                            <span className="sm:hidden">X</span>
                           </Button>
-                        )}
-                        {!notification.read && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => markAsRead(notification.id)}
-                            className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
-                          >
-                            <Check className="h-4 w-4" />
-                            Marcar como lida
-                          </Button>
-                        )}
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => removeNotification(notification.id)}
-                          className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
-                        >
-                          <X className="h-4 w-4" />
-                          Remover
-                        </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
