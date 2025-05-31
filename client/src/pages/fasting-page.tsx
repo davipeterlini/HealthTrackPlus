@@ -280,30 +280,21 @@ export default function FastingPage() {
                     </div>
 
                     {/* Barra de Progresso */}
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       <div className="flex justify-between text-sm text-slate-600 dark:text-gray-400">
-                        <span className="font-medium">{t('fasting.progress', 'Progresso')}</span>
-                        <span className="font-bold text-emerald-600 dark:text-emerald-400">{Math.round(getFastingProgress())}%</span>
+                        <span>{t('fasting.progress', 'Progresso')}</span>
+                        <span className="font-medium text-emerald-600 dark:text-emerald-400">{Math.round(getFastingProgress())}%</span>
                       </div>
-                      <div className="relative">
-                        <Progress 
-                          value={getFastingProgress()} 
-                          className="h-4 bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/10 to-emerald-600/10 rounded-full pointer-events-none animate-pulse" />
-                      </div>
-                      <div className="flex justify-between text-xs text-slate-500 dark:text-gray-500">
-                        <span>Início</span>
-                        <span>Meta: {currentSession.targetDuration}h</span>
-                      </div>
+                      <Progress 
+                        value={getFastingProgress()} 
+                        className="h-3 bg-slate-200 dark:bg-gray-700"
+                      />
                     </div>
 
                     {/* Fases do Jejum */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-                      <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 border border-indigo-200 dark:border-indigo-700/50">
-                        <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-800/50">
-                          <Moon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                        </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137] border border-slate-200 dark:border-gray-700">
+                        <Moon className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
                         <div className="min-w-0 flex-1">
                           <p className="text-sm font-medium text-slate-800 dark:text-white">
                             {t('fasting.fatBurning', 'Queima de Gordura')}
@@ -317,10 +308,8 @@ export default function FastingPage() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 border border-emerald-200 dark:border-emerald-700/50">
-                        <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-800/50">
-                          <Award className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                        </div>
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137] border border-slate-200 dark:border-gray-700">
+                        <Award className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
                         <div className="min-w-0 flex-1">
                           <p className="text-sm font-medium text-slate-800 dark:text-white">
                             {t('fasting.autophagy', 'Autofagia')}
@@ -337,23 +326,23 @@ export default function FastingPage() {
                     </div>
 
                     {/* Botões de Controle */}
-                    <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                    <div className="flex flex-col sm:flex-row gap-4 mt-8">
                       {isFastingCompleted() && (
                         <Button 
                           onClick={completeFasting}
-                          className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium py-4 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02]"
+                          className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-4 px-6 rounded-xl transition-colors duration-200"
                         >
-                          <Award className="w-5 h-5 mr-2" />
-                          <span className="text-base">{t('fasting.complete', 'Completar Jejum')}</span>
+                          <Award className="w-5 h-5 mr-3" />
+                          <span className="text-lg">{t('fasting.complete', 'Completar Jejum')}</span>
                         </Button>
                       )}
                       <Button 
                         variant="outline"
                         onClick={stopFasting}
-                        className="flex-1 border-2 border-red-200 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 font-medium py-4 px-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-[1.02]"
+                        className="flex-1 border-2 border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 font-medium py-4 px-6 rounded-xl transition-colors duration-200"
                       >
-                        <Square className="w-5 h-5 mr-2" />
-                        <span className="text-base">{t('fasting.stop', 'Parar Jejum')}</span>
+                        <Square className="w-5 h-5 mr-3" />
+                        <span className="text-lg">{t('fasting.stop', 'Parar Jejum')}</span>
                       </Button>
                     </div>
                   </div>
@@ -406,10 +395,10 @@ export default function FastingPage() {
                     {/* Botão Iniciar */}
                     <Button 
                       onClick={startFasting}
-                      className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium py-4 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] mt-6"
+                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-4 px-6 rounded-xl transition-colors duration-200 mt-6"
                     >
-                      <Play className="w-5 h-5 mr-2" />
-                      <span className="text-base">{t('fasting.start', 'Iniciar Jejum')}</span>
+                      <Play className="w-5 h-5 mr-3" />
+                      <span className="text-lg">{t('fasting.start', 'Iniciar Jejum')}</span>
                     </Button>
                   </div>
                 )}
@@ -767,20 +756,7 @@ export default function FastingPage() {
         </div>
       </div>
 
-      {/* Floating Action Button */}
-      {!currentSession && (
-        <div className="fixed bottom-6 right-6 z-50">
-          <Button
-            onClick={() => {
-              setSelectedFastingType("16:8");
-              startFasting();
-            }}
-            className="w-16 h-16 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 border-4 border-white dark:border-gray-800"
-          >
-            <Play className="w-6 h-6" />
-          </Button>
-        </div>
-      )}
+
     </MainLayout>
   );
 }
