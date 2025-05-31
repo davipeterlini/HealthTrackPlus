@@ -192,99 +192,112 @@ export function Header() {
               <span className="absolute top-0 right-0 h-1.5 w-1.5 xxs:h-2 xxs:w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
             </Button>
 
-            {/* Toggle de tema - todos os tamanhos */}
-            <ThemeToggle />
-            
-            {/* Alternador de idioma - todos os tamanhos */}
-            <LanguageSwitcher />
+            {/* Controles agrupados no mobile - lado direito */}
+            <div className="flex items-center gap-1 md:gap-2">
+              {/* Notificações no mobile */}
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="relative md:hidden text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 responsive-button-icon-sm"
+              >
+                <BellIcon className="responsive-icon-sm" />
+                <span className="absolute top-0 right-0 h-1.5 w-1.5 xxs:h-2 xxs:w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
+              </Button>
 
-            {/* Menu de navegação móvel */}
-            <div className="responsive-mobile-menu">
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
-                    <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 sm:h-5 sm:w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] xxs:w-[75vw] max-w-xs py-3 xxs:py-4 xs:py-5">
-                  <div className="flex items-center justify-between responsive-mb">
-                    <SheetTitle className="responsive-header-title text-blue-600 dark:text-white">
-                      {t('navigation.menu')}
-                    </SheetTitle>
-                    <SheetClose asChild>
-                      <Button variant="ghost" size="icon" className="responsive-button-icon-sm text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
-                        <X className="responsive-icon-sm" />
-                      </Button>
-                    </SheetClose>
-                  </div>
-                  
-                  <nav className="flex flex-col space-y-1">
-                    {navItems.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link 
-                          key={item.path}
-                          href={item.path}
-                          className={`responsive-nav-item responsive-transition ${
-                            location === item.path
-                              ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
-                              : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
-                          }`}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <Icon className="responsive-icon" />
-                          <span className="responsive-nav-text">{item.label}</span>
-                        </Link>
-                      );
-                    })}
-                  </nav>
-                  
-                  <div className="responsive-mt">
-                    <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
-                      <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
-                        {t('navigation.account')}
-                      </h3>
-                      <div className="mt-3 space-y-1">
-                        {/* Links de usuário no menu móvel */}
-                        <Link 
-                          href="/health-plan-setup" 
-                          className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <Target className="responsive-icon-sm" />
-                          <span className="responsive-nav-text">Plano de Saúde</span>
-                        </Link>
-                        <Link 
-                          href="/profile" 
-                          className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <FileText className="responsive-icon-sm" />
-                          <span className="responsive-nav-text">{t('navigation.profile')}</span>
-                        </Link>
-                        <Link 
-                          href="/settings" 
-                          className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <Settings className="responsive-icon-sm" />
-                          <span className="responsive-nav-text">{t('navigation.settings')}</span>
-                        </Link>
-                        <button 
-                          onClick={() => {
-                            handleLogout();
-                            setMobileMenuOpen(false);
-                          }}
-                          className="w-full responsive-nav-item text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
-                        >
-                          <LogOut className="responsive-icon-sm" />
-                          <span className="responsive-nav-text">{t('navigation.logout')}</span>
-                        </button>
+              {/* Toggle de tema */}
+              <ThemeToggle />
+              
+              {/* Alternador de idioma */}
+              <LanguageSwitcher />
+
+              {/* Menu de navegação móvel - agora do lado direito */}
+              <div className="responsive-mobile-menu">
+                <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                      <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] xxs:w-[75vw] max-w-xs py-3 xxs:py-4 xs:py-5">
+                    <div className="flex items-center justify-between responsive-mb">
+                      <SheetTitle className="responsive-header-title text-blue-600 dark:text-white">
+                        {t('navigation.menu')}
+                      </SheetTitle>
+                      <SheetClose asChild>
+                        <Button variant="ghost" size="icon" className="responsive-button-icon-sm text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
+                          <X className="responsive-icon-sm" />
+                        </Button>
+                      </SheetClose>
+                    </div>
+                    
+                    <nav className="flex flex-col space-y-1">
+                      {navItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link 
+                            key={item.path}
+                            href={item.path}
+                            className={`responsive-nav-item responsive-transition ${
+                              location === item.path
+                                ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                                : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
+                            }`}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <Icon className="responsive-icon" />
+                            <span className="responsive-nav-text">{item.label}</span>
+                          </Link>
+                        );
+                      })}
+                    </nav>
+                    
+                    <div className="responsive-mt">
+                      <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
+                        <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
+                          {t('navigation.account')}
+                        </h3>
+                        <div className="mt-3 space-y-1">
+                          {/* Links de usuário no menu móvel */}
+                          <Link 
+                            href="/health-plan-setup" 
+                            className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <Target className="responsive-icon-sm" />
+                            <span className="responsive-nav-text">Plano de Saúde</span>
+                          </Link>
+                          <Link 
+                            href="/profile" 
+                            className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <FileText className="responsive-icon-sm" />
+                            <span className="responsive-nav-text">{t('navigation.profile')}</span>
+                          </Link>
+                          <Link 
+                            href="/settings" 
+                            className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <Settings className="responsive-icon-sm" />
+                            <span className="responsive-nav-text">{t('navigation.settings')}</span>
+                          </Link>
+                          <button 
+                            onClick={() => {
+                              handleLogout();
+                              setMobileMenuOpen(false);
+                            }}
+                            className="w-full responsive-nav-item text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
+                          >
+                            <LogOut className="responsive-icon-sm" />
+                            <span className="responsive-nav-text">{t('navigation.logout')}</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
+                  </SheetContent>
+                </Sheet>
+              </div>
             </div>
 
             {/* Menu de configurações para telas médias e grandes */}
