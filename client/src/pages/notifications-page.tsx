@@ -130,6 +130,11 @@ export default function NotificationsPage() {
     setNotifications(prev => 
       prev.map(notification => ({ ...notification, read: true }))
     );
+    
+    toast({
+      title: "Notificações Atualizadas",
+      description: "Todas as notificações foram marcadas como lidas.",
+    });
   };
 
   const removeNotification = (id: string) => {
