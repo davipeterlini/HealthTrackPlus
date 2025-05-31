@@ -192,18 +192,16 @@ export default function FastingPage() {
 
   return (
     <MainLayout>
-      <div className="responsive-container responsive-px responsive-py">
-        <div className="responsive-mb">
-          <h1 className="responsive-title-2xl font-bold text-slate-900 dark:text-white responsive-mb-sm">
-            {t('fasting.title', 'Controle de Jejum')}
-          </h1>
-          <p className="text-slate-600 dark:text-gray-400 responsive-text-base">
-            {t('fasting.subtitle', 'Monitore seus períodos de jejum intermitente')}
-          </p>
-        </div>
+      <div className="flex flex-row items-center justify-between responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">
+          {t('navigation.fasting', 'Jejum Intermitente')}
+        </h1>
+      </div>
 
-        <Tabs defaultValue="current" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 responsive-mb bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 responsive-gap-y">
+        <div className="lg:col-span-2">
+          <Tabs defaultValue="current" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 responsive-mb bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg">
             <TabsTrigger 
               value="current" 
               className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
@@ -668,7 +666,79 @@ export default function FastingPage() {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
+          </Tabs>
+        </div>
+        
+        <div className="lg:col-span-1 space-y-6 responsive-gap-y">
+          {/* Quick Stats Card */}
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
+            <CardHeader className="responsive-p-content">
+              <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">
+                {t('fasting.quickStats', 'Estatísticas Rápidas')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="responsive-p-content">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                    {t('fasting.longestFast', 'Maior jejum')}
+                  </span>
+                  <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                    {stats.longestFast}h
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                    {t('fasting.currentStreak', 'Sequência atual')}
+                  </span>
+                  <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                    {stats.currentStreak} dias
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                    {t('fasting.totalSessions', 'Total de jejuns')}
+                  </span>
+                  <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                    {stats.totalSessions}
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Today's Status Card */}
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
+            <CardHeader className="responsive-p-content">
+              <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">
+                {t('fasting.todayStatus', 'Status de Hoje')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="responsive-p-content">
+              <div className="text-center">
+                {currentSession ? (
+                  <div>
+                    <div className="responsive-text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
+                      {formatTime(getCurrentFastHours(), getCurrentFastMinutes())}
+                    </div>
+                    <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                      {t('fasting.inProgress', 'Em andamento')}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="responsive-text-2xl font-bold text-slate-400 dark:text-gray-500 mb-2">
+                      00:00
+                    </div>
+                    <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                      {t('fasting.notStarted', 'Não iniciado')}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </MainLayout>
   );
