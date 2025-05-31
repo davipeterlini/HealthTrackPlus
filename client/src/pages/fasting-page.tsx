@@ -202,38 +202,38 @@ export default function FastingPage() {
         <div className="lg:col-span-2">
           <Tabs defaultValue="current" className="w-full">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 responsive-mb bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg">
-            <TabsTrigger 
-              value="current" 
-              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
-            >
-              <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">{t('fasting.current', 'Atual')}</span>
-              <span className="sm:hidden">Atual</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="history" 
-              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
-            >
-              <History className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">{t('fasting.history', 'Histórico')}</span>
-              <span className="sm:hidden">Histórico</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="stats" 
-              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
-            >
-              <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">{t('fasting.stats', 'Estatísticas')}</span>
-              <span className="sm:hidden">Stats</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="settings" 
-              className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
-            >
-              <Settings2 className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">{t('fasting.settings', 'Configurações')}</span>
-              <span className="sm:hidden">Config</span>
-            </TabsTrigger>
+              <TabsTrigger 
+                value="current" 
+                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              >
+                <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{t('fasting.current', 'Atual')}</span>
+                <span className="sm:hidden">Atual</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="history" 
+                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              >
+                <History className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{t('fasting.history', 'Histórico')}</span>
+                <span className="sm:hidden">Histórico</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="stats" 
+                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              >
+                <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{t('fasting.stats', 'Estatísticas')}</span>
+                <span className="sm:hidden">Stats</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="settings" 
+                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+              >
+                <Settings2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{t('fasting.settings', 'Configurações')}</span>
+                <span className="sm:hidden">Config</span>
+              </TabsTrigger>
           </TabsList>
 
           {/* Aba Current - Jejum Atual */}
@@ -292,49 +292,61 @@ export default function FastingPage() {
                     </div>
 
                     {/* Fases do Jejum */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
-                      <div className="flex items-center gap-3 p-3 sm:p-4 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
-                        <Moon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                      <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 border border-indigo-200 dark:border-indigo-700/50">
+                        <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-800/50">
+                          <Moon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                        </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs sm:text-sm font-medium text-slate-800 dark:text-white truncate">
+                          <p className="text-sm font-medium text-slate-800 dark:text-white">
                             {t('fasting.fatBurning', 'Queima de Gordura')}
                           </p>
                           <p className="text-xs text-slate-600 dark:text-gray-400">
-                            {getCurrentFastHours() >= 12 ? t('fasting.active', 'Ativo') : `${12 - getCurrentFastHours()}h restantes`}
+                            {getCurrentFastHours() >= 12 ? (
+                              <span className="text-emerald-600 dark:text-emerald-400 font-medium">{t('fasting.active', 'Ativo')}</span>
+                            ) : (
+                              `${12 - getCurrentFastHours()}h restantes`
+                            )}
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 p-3 sm:p-4 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
-                        <Award className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500 dark:text-emerald-400 flex-shrink-0" />
+                      <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 border border-emerald-200 dark:border-emerald-700/50">
+                        <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-800/50">
+                          <Award className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                        </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs sm:text-sm font-medium text-slate-800 dark:text-white truncate">
+                          <p className="text-sm font-medium text-slate-800 dark:text-white">
                             {t('fasting.autophagy', 'Autofagia')}
                           </p>
                           <p className="text-xs text-slate-600 dark:text-gray-400">
-                            {getCurrentFastHours() >= 16 ? t('fasting.active', 'Ativo') : `${16 - getCurrentFastHours()}h restantes`}
+                            {getCurrentFastHours() >= 16 ? (
+                              <span className="text-emerald-600 dark:text-emerald-400 font-medium">{t('fasting.active', 'Ativo')}</span>
+                            ) : (
+                              `${16 - getCurrentFastHours()}h restantes`
+                            )}
                           </p>
                         </div>
                       </div>
                     </div>
 
                     {/* Botões de Controle */}
-                    <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-6">
+                    <div className="flex flex-col sm:flex-row gap-3 mt-6">
                       {isFastingCompleted() && (
                         <Button 
                           onClick={completeFasting}
-                          className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-3 sm:py-2"
+                          className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium py-4 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02]"
                         >
-                          <Award className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                          <span className="text-sm sm:text-base">{t('fasting.complete', 'Completar Jejum')}</span>
+                          <Award className="w-5 h-5 mr-2" />
+                          <span className="text-base">{t('fasting.complete', 'Completar Jejum')}</span>
                         </Button>
                       )}
                       <Button 
                         variant="outline"
                         onClick={stopFasting}
-                        className="flex-1 border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 py-3 sm:py-2"
+                        className="flex-1 border-2 border-red-200 dark:border-red-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 font-medium py-4 px-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-[1.02]"
                       >
-                        <Square className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                        <span className="text-sm sm:text-base">{t('fasting.stop', 'Parar Jejum')}</span>
+                        <Square className="w-5 h-5 mr-2" />
+                        <span className="text-base">{t('fasting.stop', 'Parar Jejum')}</span>
                       </Button>
                     </div>
                   </div>
@@ -387,10 +399,10 @@ export default function FastingPage() {
                     {/* Botão Iniciar */}
                     <Button 
                       onClick={startFasting}
-                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 sm:py-2 mt-4 sm:mt-6"
+                      className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium py-4 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] mt-6"
                     >
-                      <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      <span className="text-sm sm:text-base">{t('fasting.start', 'Iniciar Jejum')}</span>
+                      <Play className="w-5 h-5 mr-2" />
+                      <span className="text-base">{t('fasting.start', 'Iniciar Jejum')}</span>
                     </Button>
                   </div>
                 )}
@@ -671,35 +683,36 @@ export default function FastingPage() {
         
         <div className="lg:col-span-1 space-y-6 responsive-gap-y">
           {/* Quick Stats Card */}
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
-            <CardHeader className="responsive-p-content">
-              <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg text-slate-800 dark:text-white flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 {t('fasting.quickStats', 'Estatísticas Rápidas')}
               </CardTitle>
             </CardHeader>
-            <CardContent className="responsive-p-content">
+            <CardContent className="pt-0">
               <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
+                  <span className="text-sm text-slate-600 dark:text-gray-400">
                     {t('fasting.longestFast', 'Maior jejum')}
                   </span>
-                  <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                  <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
                     {stats.longestFast}h
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
+                  <span className="text-sm text-slate-600 dark:text-gray-400">
                     {t('fasting.currentStreak', 'Sequência atual')}
                   </span>
-                  <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                  <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
                     {stats.currentStreak} dias
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-slate-50 dark:bg-[#2a3137]">
+                  <span className="text-sm text-slate-600 dark:text-gray-400">
                     {t('fasting.totalSessions', 'Total de jejuns')}
                   </span>
-                  <span className="responsive-text-sm font-medium text-slate-800 dark:text-white">
+                  <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
                     {stats.totalSessions}
                   </span>
                 </div>
@@ -708,29 +721,35 @@ export default function FastingPage() {
           </Card>
 
           {/* Today's Status Card */}
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-gray-700 responsive-card shadow-md">
-            <CardHeader className="responsive-p-content">
-              <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">
+          <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 border border-emerald-200 dark:border-emerald-700/50 shadow-lg hover:shadow-xl transition-shadow duration-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg text-slate-800 dark:text-white flex items-center gap-2">
+                <Clock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 {t('fasting.todayStatus', 'Status de Hoje')}
               </CardTitle>
             </CardHeader>
-            <CardContent className="responsive-p-content">
-              <div className="text-center">
+            <CardContent className="pt-0">
+              <div className="text-center p-6 rounded-xl bg-white/50 dark:bg-[#1a2127]/50">
                 {currentSession ? (
                   <div>
-                    <div className="responsive-text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
+                    <div className="text-4xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
                       {formatTime(getCurrentFastHours(), getCurrentFastMinutes())}
                     </div>
-                    <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-sm text-slate-600 dark:text-gray-400 font-medium">
                       {t('fasting.inProgress', 'Em andamento')}
                     </p>
+                    <div className="mt-3 p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                      <p className="text-xs text-emerald-700 dark:text-emerald-300">
+                        Meta: {currentSession.targetDuration}h
+                      </p>
+                    </div>
                   </div>
                 ) : (
                   <div>
-                    <div className="responsive-text-2xl font-bold text-slate-400 dark:text-gray-500 mb-2">
+                    <div className="text-4xl font-bold text-slate-400 dark:text-gray-500 mb-2">
                       00:00
                     </div>
-                    <p className="responsive-text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-sm text-slate-600 dark:text-gray-400 font-medium">
                       {t('fasting.notStarted', 'Não iniciado')}
                     </p>
                   </div>
