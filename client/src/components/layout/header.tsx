@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
+import { NotificationsDropdown } from '../notifications-dropdown';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
 import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown } from "lucide-react";
@@ -182,14 +183,7 @@ export function Header() {
         {/* Controles sempre à direita */}
         <div className="flex items-center gap-1 md:gap-2">
           {/* Notificações */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="relative h-8 w-8 md:h-9 md:w-9 text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300"
-          >
-            <BellIcon className="h-4 w-4 md:h-5 md:w-5" />
-            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
-          </Button>
+          <NotificationsDropdown />
 
           {/* Toggle de tema */}
           <ThemeToggle />
