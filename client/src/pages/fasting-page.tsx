@@ -201,40 +201,40 @@ export default function FastingPage() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 responsive-gap-y">
         <div className="lg:col-span-2">
           <Tabs defaultValue="current" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 responsive-mb bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg">
+            <TabsList className="grid w-full grid-cols-4 bg-slate-100 dark:bg-[#2a3137] p-1 rounded-lg mb-6">
               <TabsTrigger 
                 value="current" 
-                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400 transition-all duration-200"
               >
-                <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
+                <Timer className="w-4 h-4" />
                 <span className="hidden sm:inline">{t('fasting.current', 'Atual')}</span>
                 <span className="sm:hidden">Atual</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="history" 
-                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400 transition-all duration-200"
               >
-                <History className="w-3 h-3 sm:w-4 sm:h-4" />
+                <History className="w-4 h-4" />
                 <span className="hidden sm:inline">{t('fasting.history', 'Histórico')}</span>
                 <span className="sm:hidden">Histórico</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="stats" 
-                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400 transition-all duration-200"
               >
-                <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">{t('fasting.stats', 'Estatísticas')}</span>
+                <BarChart3 className="w-4 h-4" />
+                <span className="hidden sm:inline">{t('fasting.stats', 'Stats')}</span>
                 <span className="sm:hidden">Stats</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
-                className="flex items-center gap-1 sm:gap-2 responsive-text-xs sm:responsive-text-sm data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium data-[state=active]:bg-white data-[state=active]:dark:bg-[#1a2127] data-[state=active]:text-slate-900 data-[state=active]:dark:text-white text-slate-600 dark:text-gray-400 transition-all duration-200"
               >
-                <Settings2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">{t('fasting.settings', 'Configurações')}</span>
+                <Settings2 className="w-4 h-4" />
+                <span className="hidden sm:inline">{t('fasting.settings', 'Config')}</span>
                 <span className="sm:hidden">Config</span>
               </TabsTrigger>
-          </TabsList>
+            </TabsList>
 
           {/* Aba Current - Jejum Atual */}
           <TabsContent value="current" className="responsive-space-y">
