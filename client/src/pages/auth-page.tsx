@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { DevModeHeaderToggle } from "@/components/dev-mode-header-toggle";
 import { CheckCircle } from "lucide-react";
 
 export default function AuthPage() {
@@ -52,8 +53,9 @@ export default function AuthPage() {
   if (showTwoFactor) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-        {/* Theme and Language Controls */}
+        {/* Theme, Dev Mode and Language Controls */}
         <div className="absolute top-4 right-4 flex space-x-2 z-10">
+          <DevModeHeaderToggle />
           <ThemeToggle />
           <LanguageSwitcher />
         </div>
@@ -67,8 +69,9 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col-reverse md:flex-row bg-white dark:bg-gray-800 relative">
-      {/* Theme and Language Controls */}
+      {/* Theme, Dev Mode and Language Controls */}
       <div className="absolute top-4 right-4 flex space-x-2 z-10">
+        <DevModeHeaderToggle />
         <ThemeToggle />
         <LanguageSwitcher />
       </div>
