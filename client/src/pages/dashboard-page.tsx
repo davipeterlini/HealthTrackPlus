@@ -3,7 +3,7 @@ import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
 import { 
   Activity, Heart, Moon, Apple, Droplet, AlertCircle, 
-  FileText, Brain, Pill, Calculator, Clock, BellIcon, Timer
+  FileText, Brain, Pill, Calculator, Clock, BellIcon, Timer, Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -669,6 +669,18 @@ export default function DashboardPage() {
               </div>
               <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.fasting', 'Jejum')}</h3>
               <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.fastingManagement', 'Controle de Jejum')}</p>
+            </div>
+          </Card>
+        </Link>
+
+        <Link to="/subscription">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-violet-50 to-violet-100 dark:from-violet-900/30 dark:to-violet-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-violet-500/10 dark:bg-violet-500/20">
+                <Star className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-violet-500 dark:text-violet-400" />
+              </div>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.subscription', 'Premium')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.subscriptionClub', 'Clube de Assinatura')}</p>
             </div>
           </Card>
         </Link>
