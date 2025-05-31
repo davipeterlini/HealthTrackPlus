@@ -181,156 +181,155 @@ export function Header() {
 
         {/* Controles sempre à direita */}
         <div className="flex items-center gap-1 md:gap-2">
-            {/* Notificações */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative h-8 w-8 md:h-9 md:w-9 text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300"
-            >
-              <BellIcon className="h-4 w-4 md:h-5 md:w-5" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
-            </Button>
+          {/* Notificações */}
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="relative h-8 w-8 md:h-9 md:w-9 text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300"
+          >
+            <BellIcon className="h-4 w-4 md:h-5 md:w-5" />
+            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
+          </Button>
 
-            {/* Toggle de tema */}
-            <ThemeToggle />
-            
-            {/* Alternador de idioma */}
-            <LanguageSwitcher />
+          {/* Toggle de tema */}
+          <ThemeToggle />
+          
+          {/* Alternador de idioma */}
+          <LanguageSwitcher />
 
-            {/* Menu de navegação móvel - sempre visível em telas pequenas */}
-            <div className="md:hidden">
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
-                    <Menu className="h-4 w-4" />
-                  </Button>
-                </SheetTrigger>
-                  <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] xxs:w-[75vw] max-w-xs py-3 xxs:py-4 xs:py-5">
-                    <div className="flex items-center justify-between responsive-mb">
-                      <SheetTitle className="responsive-header-title text-blue-600 dark:text-white">
-                        {t('navigation.menu')}
-                      </SheetTitle>
-                      <SheetClose asChild>
-                        <Button variant="ghost" size="icon" className="responsive-button-icon-sm text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
-                          <X className="responsive-icon-sm" />
-                        </Button>
-                      </SheetClose>
+          {/* Menu de navegação móvel - sempre visível em telas pequenas */}
+          <div className="md:hidden">
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                  <Menu className="h-4 w-4" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] max-w-xs py-4">
+                <div className="flex items-center justify-between mb-4">
+                  <SheetTitle className="text-lg font-semibold text-blue-600 dark:text-white">
+                    {t('navigation.menu')}
+                  </SheetTitle>
+                  <SheetClose asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </SheetClose>
+                </div>
+                
+                <nav className="flex flex-col space-y-1">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link 
+                        key={item.path}
+                        href={item.path}
+                        className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
+                          location === item.path
+                            ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
+                            : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Icon className="h-4 w-4" />
+                        <span className="text-sm font-medium">{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+                
+                <div className="mt-6">
+                  <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
+                    <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
+                      {t('navigation.account')}
+                    </h3>
+                    <div className="mt-3 space-y-1">
+                      <Link 
+                        href="/health-plan-setup" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Target className="h-4 w-4" />
+                        <span className="text-sm">Plano de Saúde</span>
+                      </Link>
+                      <Link 
+                        href="/profile" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span className="text-sm">{t('navigation.profile')}</span>
+                      </Link>
+                      <Link 
+                        href="/settings" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Settings className="h-4 w-4" />
+                        <span className="text-sm">{t('navigation.settings')}</span>
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          handleLogout();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span className="text-sm">{t('navigation.logout')}</span>
+                      </button>
                     </div>
-                    
-                    <nav className="flex flex-col space-y-1">
-                      {navItems.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <Link 
-                            key={item.path}
-                            href={item.path}
-                            className={`responsive-nav-item responsive-transition ${
-                              location === item.path
-                                ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
-                                : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
-                            }`}
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <Icon className="responsive-icon" />
-                            <span className="responsive-nav-text">{item.label}</span>
-                          </Link>
-                        );
-                      })}
-                    </nav>
-                    
-                    <div className="responsive-mt">
-                      <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
-                        <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
-                          {t('navigation.account')}
-                        </h3>
-                        <div className="mt-3 space-y-1">
-                          {/* Links de usuário no menu móvel */}
-                          <Link 
-                            href="/health-plan-setup" 
-                            className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <Target className="responsive-icon-sm" />
-                            <span className="responsive-nav-text">Plano de Saúde</span>
-                          </Link>
-                          <Link 
-                            href="/profile" 
-                            className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <FileText className="responsive-icon-sm" />
-                            <span className="responsive-nav-text">{t('navigation.profile')}</span>
-                          </Link>
-                          <Link 
-                            href="/settings" 
-                            className="responsive-nav-item text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <Settings className="responsive-icon-sm" />
-                            <span className="responsive-nav-text">{t('navigation.settings')}</span>
-                          </Link>
-                          <button 
-                            onClick={() => {
-                              handleLogout();
-                              setMobileMenuOpen(false);
-                            }}
-                            className="w-full responsive-nav-item text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
-                          >
-                            <LogOut className="responsive-icon-sm" />
-                            <span className="responsive-nav-text">{t('navigation.logout')}</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </SheetContent>
-                </Sheet>
-              </div>
-            </div>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
 
-            {/* Avatar do usuário - apenas para desktop */}
-            <div className="hidden md:block">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative flex items-center p-1">
-                    <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
-                      <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs">
-                        {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
-                  <DropdownMenuLabel>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
-                      <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
-                  <DropdownMenuItem>
-                    <Link href="/profile" className="flex items-center w-full">
-                      <FileText className="mr-2 h-4 w-4" />
-                      <span className="text-sm">{t('navigation.profile')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/settings" className="flex items-center w-full">
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span className="text-sm">{t('navigation.settings')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span className="text-sm">{t('navigation.logout')}</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+          {/* Avatar do usuário - apenas para desktop */}
+          <div className="hidden md:block">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative flex items-center p-1">
+                  <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
+                    <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
+                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs">
+                      {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
+                    <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
+                <DropdownMenuItem>
+                  <Link href="/profile" className="flex items-center w-full">
+                    <FileText className="mr-2 h-4 w-4" />
+                    <span className="text-sm">{t('navigation.profile')}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/settings" className="flex items-center w-full">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span className="text-sm">{t('navigation.settings')}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span className="text-sm">{t('navigation.logout')}</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
     </header>
   );
 }
+
+export default Header;
