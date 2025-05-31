@@ -49,6 +49,7 @@ export function ContextualTipsOverlay({
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showTipHistory, setShowTipHistory] = useState(false);
   const [activeTip, setActiveTip] = useState<ContextualTip | null>(null);
   const [dismissedTips, setDismissedTips] = useState<string[]>([]);
   const [tipHistory, setTipHistory] = useState<ContextualTip[]>([]);
@@ -198,7 +199,10 @@ export function ContextualTipsOverlay({
       {!showOverlay && activeTip && (
         <div 
           className="fixed bottom-20 right-4 z-50 cursor-pointer animate-bounce"
-          onClick={() => setShowOverlay(true)}
+          onClick={() => {
+            setShowOverlay(true);
+            setShowTipHistory(true);
+          }}
         >
           <div className="relative">
             <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
@@ -212,7 +216,12 @@ export function ContextualTipsOverlay({
       )}
 
       {/* Main Overlay Dialog */}
-      <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
+      <Dialog open={showOverlay} onOpenChange={(open) => {
+        setShowOverlay(open);
+        if (!open) {
+          setShowTipHistory(false);
+        }
+      }}>
         <DialogContent className={`max-w-md ${getTipBackground(activeTip.priority)} dark:bg-[#1a2127] dark:border-gray-700`}>
           <DialogHeader>
             <div className="flex items-center justify-between">
@@ -232,7 +241,10 @@ export function ContextualTipsOverlay({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleDismissTip(activeTip.id)}
+                  onClick={() => {
+                    handleDismissTip(activeTip.id);
+                    setShowTipHistory(false);
+                  }}
                   className="h-6 w-6 p-0"
                 >
                   <X className="h-4 w-4" />
@@ -314,7 +326,7 @@ export function ContextualTipsOverlay({
       </Dialog>
 
       {/* Tips History Sidebar (Optional) */}
-      {tipHistory.length > 0 && (
+      {tipHistory.length > 0 && showTipHistory && (
         <div className="fixed top-20 right-4 z-40">
           <Card className="w-64 max-h-96 overflow-hidden shadow-lg">
             <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
