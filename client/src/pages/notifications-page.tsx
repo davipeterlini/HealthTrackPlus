@@ -127,13 +127,15 @@ export default function NotificationsPage() {
   };
 
   const markAllAsRead = () => {
+    const unreadNotifications = notifications.filter(n => !n.read);
+    
     setNotifications(prev => 
       prev.map(notification => ({ ...notification, read: true }))
     );
     
     toast({
       title: "Notificações Atualizadas",
-      description: "Todas as notificações foram marcadas como lidas.",
+      description: `${unreadNotifications.length} notificações marcadas como lidas.`,
     });
   };
 
