@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
 import { NotificationsDropdown } from '../notifications-dropdown';
+import { DevModeHeaderToggle } from '../dev-mode-header-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
 import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown } from "lucide-react";
@@ -190,6 +191,9 @@ export function Header() {
           
           {/* Alternador de idioma */}
           <LanguageSwitcher />
+
+          {/* Modo desenvolvedor */}
+          <DevModeHeaderToggle />
 
           {/* Menu de navegação móvel - sempre visível em telas pequenas */}
           <div className="md:hidden">

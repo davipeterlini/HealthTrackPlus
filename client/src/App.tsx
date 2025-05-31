@@ -25,7 +25,7 @@ import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
 import { ThemeProvider } from "./hooks/use-theme";
 import { DashboardSettingsProvider } from "./hooks/use-dashboard-settings";
-import { DevModeToggle } from "./components/dev-mode-toggle";
+
 import { ReactElement } from "react";
 
 function Router(): ReactElement {
@@ -63,7 +63,6 @@ function App() {
             <DashboardSettingsProvider>
               <WouterRouter>
                 <Router />
-                <DevModeToggle />
                 <Toaster />
               </WouterRouter>
             </DashboardSettingsProvider>
