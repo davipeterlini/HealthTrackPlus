@@ -28,7 +28,8 @@ export default defineConfig({
       ],
     },
     include: [
-      'client/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+      'client/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'server/test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts}'
     ],
   },
 });

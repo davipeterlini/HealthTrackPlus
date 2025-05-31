@@ -2,6 +2,8 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Router } from 'wouter';
+import { AuthProvider } from '@/hooks/use-auth';
+import { DashboardSettingsProvider } from '@/hooks/use-dashboard-settings';
 
 // Create a custom render function that includes providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -15,9 +17,13 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        {children}
-      </Router>
+      <AuthProvider>
+        <DashboardSettingsProvider>
+          <Router>
+            {children}
+          </Router>
+        </DashboardSettingsProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
