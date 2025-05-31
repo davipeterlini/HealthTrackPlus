@@ -213,12 +213,12 @@ export function ContextualTipsOverlay({
 
       {/* Main Overlay Dialog */}
       <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
-        <DialogContent className={`max-w-md ${getTipBackground(activeTip.priority)}`}>
+        <DialogContent className={`max-w-md ${getTipBackground(activeTip.priority)} dark:bg-[#1a2127] dark:border-gray-700`}>
           <DialogHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 {getTipIcon(activeTip.type)}
-                <DialogTitle className="text-lg font-semibold">
+                <DialogTitle className="text-lg font-semibold dark:text-white">
                   {activeTip.title}
                 </DialogTitle>
               </div>
@@ -243,16 +243,16 @@ export function ContextualTipsOverlay({
 
           <CardContent className="p-0 space-y-4">
             <div className="space-y-3">
-              <p className="text-sm text-gray-700 leading-relaxed">
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                 {activeTip.message}
               </p>
 
               {activeTip.contextData && (
-                <div className="bg-white/60 rounded-lg p-3 space-y-2">
-                  <h4 className="text-xs font-medium text-gray-600 uppercase tracking-wide">
+                <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 space-y-2">
+                  <h4 className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                     {t('aiTips.context', 'Contexto')}
                   </h4>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
                     {activeTip.contextData.currentActivity && (
                       <p>• {t('aiTips.currentActivity', 'Atividade atual')}: {activeTip.contextData.currentActivity}</p>
                     )}
@@ -267,7 +267,7 @@ export function ContextualTipsOverlay({
             {/* Action Buttons */}
             {activeTip.actions && activeTip.actions.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-gray-700">
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   {t('aiTips.suggestedActions', 'Ações Sugeridas')}
                 </h4>
                 <div className="flex flex-col gap-2">
