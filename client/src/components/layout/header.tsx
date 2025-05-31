@@ -150,74 +150,61 @@ export function Header() {
 
   return (
     <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
-      <div className="responsive-content-container">
-        <div className="responsive-header-container">
-          {/* Logo - responsivo para diferentes tamanhos de tela */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center">
-              <h1 className="responsive-logo text-blue-600 dark:text-emerald-400">LifeTrek</h1>
-            </Link>
-          </div>
+      <div className="flex items-center justify-between w-full px-4 md:px-6 h-14 md:h-16">
+        {/* Logo - sempre à esquerda */}
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center">
+            <h1 className="responsive-logo text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+          </Link>
+        </div>
 
-          {/* Menu de navegação para telas médias e grandes */}
-          <nav className="responsive-desktop-menu responsive-header-gap">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link 
-                  key={item.path}
-                  href={item.path}
-                  className={`responsive-nav-link flex items-center gap-1.5 xxs:gap-2 sm:gap-3 rounded-md transition-colors ${
-                    location === item.path
-                      ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800 font-medium"
-                      : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
-                  }`}
-                >
-                  <Icon className="responsive-icon flex-shrink-0" />
-                  <span className="responsive-nav-text">{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+        {/* Menu de navegação para telas médias e grandes - centro */}
+        <nav className="hidden md:flex items-center space-x-6">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link 
+                key={item.path}
+                href={item.path}
+                className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+                  location === item.path
+                    ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800 font-medium"
+                    : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                <Icon className="h-4 w-4 flex-shrink-0" />
+                <span className="text-sm font-medium">{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
 
-          {/* Ações e controles para todos os tamanhos de tela */}
-          <div className="responsive-header-actions">
-            {/* Notificações, visível em desktop */}
+        {/* Controles sempre à direita */}
+        <div className="flex items-center gap-1 md:gap-2">
+            {/* Notificações */}
             <Button 
               variant="ghost" 
               size="icon" 
-              className="relative hidden md:flex text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 responsive-button-icon-sm"
+              className="relative h-8 w-8 md:h-9 md:w-9 text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300"
             >
-              <BellIcon className="responsive-icon-sm" />
-              <span className="absolute top-0 right-0 h-1.5 w-1.5 xxs:h-2 xxs:w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
+              <BellIcon className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
             </Button>
 
-            {/* Controles agrupados no mobile - lado direito */}
-            <div className="flex items-center gap-1 md:gap-2">
-              {/* Notificações no mobile */}
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="relative md:hidden text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 responsive-button-icon-sm"
-              >
-                <BellIcon className="responsive-icon-sm" />
-                <span className="absolute top-0 right-0 h-1.5 w-1.5 xxs:h-2 xxs:w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
-              </Button>
+            {/* Toggle de tema */}
+            <ThemeToggle />
+            
+            {/* Alternador de idioma */}
+            <LanguageSwitcher />
 
-              {/* Toggle de tema */}
-              <ThemeToggle />
-              
-              {/* Alternador de idioma */}
-              <LanguageSwitcher />
-
-              {/* Menu de navegação móvel - agora do lado direito */}
-              <div className="responsive-mobile-menu">
-                <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                  <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
-                      <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 sm:h-5 sm:w-5" />
-                    </Button>
-                  </SheetTrigger>
+            {/* Menu de navegação móvel - sempre visível em telas pequenas */}
+            <div className="md:hidden">
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                    <Menu className="h-4 w-4" />
+                  </Button>
+                </SheetTrigger>
                   <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] xxs:w-[75vw] max-w-xs py-3 xxs:py-4 xs:py-5">
                     <div className="flex items-center justify-between responsive-mb">
                       <SheetTitle className="responsive-header-title text-blue-600 dark:text-white">
@@ -300,67 +287,43 @@ export function Header() {
               </div>
             </div>
 
-            {/* Menu de configurações para telas médias e grandes */}
-            <div className="hidden md:block">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="responsive-button-icon rounded-full text-slate-600 dark:text-gray-300">
-                    <Menu className="responsive-icon" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-44 sm:w-48">
-                  <DropdownMenuItem>
-                    <Link href="/profile" className="flex items-center w-full">
-                      <FileText className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                      <span className="responsive-menu-text">{t('navigation.profile')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/settings" className="flex items-center w-full">
-                      <Settings className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                      <span className="responsive-menu-text">{t('navigation.settings')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/help" className="flex items-center w-full">
-                      <HelpCircle className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                      <span className="responsive-menu-text">{t('navigation.help')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                    <LogOut className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                    <span className="responsive-menu-text">{t('navigation.logout')}</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
             {/* Avatar do usuário - apenas para desktop */}
             <div className="hidden md:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative flex items-center p-0.5 xs:p-1 sm:p-1.5 md:p-2">
-                    <Avatar className="h-6 w-6 xs:h-7 xs:w-7 sm:h-9 sm:w-9 md:h-11 md:w-11 lg:h-12 lg:w-12 border border-blue-100 dark:border-gray-700">
+                  <Button variant="ghost" className="relative flex items-center p-1">
+                    <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
                       <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg">
+                      <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs">
                         {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48 sm:w-56">
+                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
                   <DropdownMenuLabel>
                     <div className="flex flex-col">
-                      <span className="responsive-text-md font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
-                      <span className="responsive-text-sm text-slate-500 dark:text-gray-400">{user?.email}</span>
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
+                      <span className="text-xs text-slate-500 dark:text-gray-400">{user?.email}</span>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
-                  
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="flex items-center w-full">
+                      <FileText className="mr-2 h-4 w-4" />
+                      <span className="text-sm">{t('navigation.profile')}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/settings" className="flex items-center w-full">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span className="text-sm">{t('navigation.settings')}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                    <LogOut className="mr-1.5 xxs:mr-2 responsive-icon-sm" />
-                    <span className="responsive-menu-text">{t('navigation.logout')}</span>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span className="text-sm">{t('navigation.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
