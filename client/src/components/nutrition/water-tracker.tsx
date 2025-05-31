@@ -7,6 +7,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { WaterIntakeRecord } from "@shared/schema";
 import { Droplets, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface WaterTrackerProps {
   waterRecords: WaterIntakeRecord[];
@@ -16,6 +17,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   const [amount, setAmount] = useState(250); // Default amount: 250ml
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { t, i18n } = useTranslation();
   
   const dailyGoal = 2500; // ml
   
@@ -53,14 +55,14 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
     },
     onSuccess: () => {
       toast({
-        title: "Water intake recorded",
-        description: `Added ${amount}ml of water`,
+        title: t('water.recorded'),
+        description: `${t('water.added')} ${amount}ml`,
       });
       queryClient.invalidateQueries({ queryKey: ["/api/water"] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Failed to record water intake",
+        title: t('water.failedToRecord'),
         description: error.message,
         variant: "destructive",
       });
@@ -73,35 +75,35 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
+    return date.toLocaleDateString(i18n.language === 'pt' ? 'pt-BR' : 'en-US', { weekday: 'short', day: 'numeric' });
   };
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="bg-white dark:bg-[#1a2127] border border-blue-100 dark:border-0 shadow-md">
       <CardHeader>
-        <CardTitle className="dark:text-gray-100">Water Intake</CardTitle>
+        <CardTitle className="text-slate-800 dark:text-white">{t('water.waterIntake')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
           <div className="relative w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
             <div 
-              className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400 rounded-b-full" 
+              className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-500" 
               style={{
                 height: `${waterPercentage}%`, 
                 borderRadius: waterPercentage === 100 ? '9999px' : '0 0 9999px 9999px'
               }}
             ></div>
-            <div className="relative text-sm font-semibold dark:text-white">{Math.round(waterPercentage)}%</div>
+            <div className="relative text-sm font-semibold text-slate-800 dark:text-white">{Math.round(waterPercentage)}%</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{todayWaterIntake} ml</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">of {dailyGoal} ml goal</div>
+            <div className="text-3xl font-bold text-slate-800 dark:text-white">{todayWaterIntake} ml</div>
+            <div className="text-sm text-slate-500 dark:text-gray-400">{t('water.ofGoal')} {dailyGoal} ml</div>
             <div className="mt-2 flex space-x-2">
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(250)}
-                className={amount === 250 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 250 ? "border-blue-500 text-blue-500 dark:text-blue-400 dark:border-blue-500" : "border-gray-300 dark:border-gray-700"}
               >
                 250ml
               </Button>
@@ -109,7 +111,7 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(500)}
-                className={amount === 500 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 500 ? "border-blue-500 text-blue-500 dark:text-blue-400 dark:border-blue-500" : "border-gray-300 dark:border-gray-700"}
               >
                 500ml
               </Button>
@@ -117,34 +119,34 @@ export function WaterTracker({ waterRecords }: WaterTrackerProps) {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setAmount(1000)}
-                className={amount === 1000 ? "bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700" : "dark:text-gray-300 dark:border-gray-600"}
+                className={amount === 1000 ? "border-blue-500 text-blue-500 dark:text-blue-400 dark:border-blue-500" : "border-gray-300 dark:border-gray-700"}
               >
                 1000ml
               </Button>
             </div>
             <Button 
               size="sm" 
-              className="mt-2" 
+              className="mt-2 bg-green-600 hover:bg-green-700" 
               onClick={handleAddWater}
               disabled={addWaterMutation.isPending}
             >
-              <Droplets className="mr-1 h-4 w-4" /> Add Water
+              <Droplets className="mr-1 h-4 w-4" /> {t('water.addWater')}
             </Button>
           </div>
         </div>
         
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">7-Day History</h4>
+          <h4 className="text-sm font-medium text-slate-500 dark:text-gray-400 mb-3">{t('water.history')}</h4>
           <div className="grid grid-cols-7 gap-2">
             {waterHistory.map((day, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 dark:bg-gray-700 rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark:bg-gray-800 rounded-t-sm overflow-hidden">
                   <div 
-                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-400" 
+                    className="absolute bottom-0 left-0 right-0 bg-blue-500 dark:bg-blue-500/80" 
                     style={{height: `${(day.amount / dailyGoal) * 100}%`}}
                   ></div>
                 </div>
-                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">{formatDate(day.date).split(' ')[0]}</span>
+                <span className="text-xs text-slate-500 dark:text-gray-400 mt-1">{formatDate(day.date).split(' ')[0]}</span>
               </div>
             ))}
           </div>

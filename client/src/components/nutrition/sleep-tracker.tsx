@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { SleepRecord } from "@shared/schema";
 import { Moon, PlusCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -61,6 +62,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { t, i18n } = useTranslation();
   
   const recommendedHours = 8;
   
@@ -108,15 +110,15 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
     },
     onSuccess: () => {
       toast({
-        title: "Sleep record added",
-        description: "Your sleep data has been recorded successfully."
+        title: t('sleep.recorded'),
+        description: t('sleep.saveRecord')
       });
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["/api/sleep"] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Failed to record sleep",
+        title: t('sleep.failedToRecord', 'Failed to record sleep'),
         description: error.message,
         variant: "destructive"
       });
@@ -129,13 +131,13 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
+    return date.toLocaleDateString(i18n.language === 'pt' ? 'pt-BR' : 'en-US', { weekday: 'short', day: 'numeric' });
   };
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="bg-white dark:bg-[#1a2127] border dark:border-0 shadow-md rounded-xl">
       <CardHeader>
-        <CardTitle className="dark:text-gray-100">Sleep</CardTitle>
+        <CardTitle className="text-slate-800 dark:text-white">{t('navigation.sleep')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center">
@@ -144,19 +146,19 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
             <span className="absolute top-1 right-0 text-xs font-medium text-purple-600 dark:text-purple-400">hrs</span>
           </div>
           <div>
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Night</div>
+            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">{t('sleep.lastNight')}</div>
             <div className="text-base font-semibold text-gray-900 dark:text-gray-100">
-              {lastSleep.hours} hours ({lastSleep.quality})
+              {lastSleep.hours} {t('sleep.hours')} ({lastSleep.quality})
             </div>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="mt-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
-                  <Moon className="mr-1 h-4 w-4" /> Log Sleep
+                <Button variant="outline" size="sm" className="mt-2 border-indigo-400 dark:border-indigo-500 border bg-transparent hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-indigo-500 dark:text-indigo-400 rounded-full">
+                  <Moon className="mr-1 h-4 w-4" /> {t('sleep.logSleep')}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Record Sleep</DialogTitle>
+                  <DialogTitle>{t('sleep.recordSleep')}</DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -165,12 +167,12 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
                       name="hours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Total Sleep Hours</FormLabel>
+                          <FormLabel>{t('sleep.totalSleepHours')}</FormLabel>
                           <FormControl>
                             <Input type="number" step="0.1" {...field} />
                           </FormControl>
                           <FormDescription>
-                            Enter your total sleep time in hours
+                            {t('sleep.enterSleepTime')}
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -182,18 +184,18 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
                       name="quality"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Sleep Quality</FormLabel>
+                          <FormLabel>{t('sleep.sleepQuality')}</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Select sleep quality" />
+                                <SelectValue placeholder={t('sleep.selectQuality')} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="Poor">Poor</SelectItem>
-                              <SelectItem value="Fair">Fair</SelectItem>
-                              <SelectItem value="Good">Good</SelectItem>
-                              <SelectItem value="Excellent">Excellent</SelectItem>
+                              <SelectItem value="Poor">{t('sleep.poor')}</SelectItem>
+                              <SelectItem value="Fair">{t('sleep.fair')}</SelectItem>
+                              <SelectItem value="Good">{t('sleep.good')}</SelectItem>
+                              <SelectItem value="Excellent">{t('sleep.excellent')}</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -207,7 +209,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
                         name="deepSleep"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Deep Sleep</FormLabel>
+                            <FormLabel>{t('sleep.deepSleep')}</FormLabel>
                             <FormControl>
                               <Input type="number" step="0.1" {...field} />
                             </FormControl>
@@ -221,7 +223,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
                         name="lightSleep"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Light Sleep</FormLabel>
+                            <FormLabel>{t('sleep.lightSleep')}</FormLabel>
                             <FormControl>
                               <Input type="number" step="0.1" {...field} />
                             </FormControl>
@@ -235,7 +237,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
                         name="rem"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>REM</FormLabel>
+                            <FormLabel>{t('sleep.rem')}</FormLabel>
                             <FormControl>
                               <Input type="number" step="0.1" {...field} />
                             </FormControl>
@@ -247,7 +249,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
                     
                     <DialogFooter>
                       <Button type="submit" disabled={addSleepMutation.isPending}>
-                        {addSleepMutation.isPending ? "Saving..." : "Save Sleep Record"}
+                        {addSleepMutation.isPending ? t('sleep.savingRecord') : t('sleep.saveRecord')}
                       </Button>
                     </DialogFooter>
                   </form>
@@ -258,10 +260,10 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
         </div>
         
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Sleep Composition</h4>
-          <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('sleep.sleepComposition')}</h4>
+          <div className="bg-gray-100 dark:bg-[#242c35] rounded-lg p-3">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Deep Sleep</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('sleep.deepSleep')}</span>
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {lastSleep.deepSleep} h ({Math.round((lastSleep.deepSleep / lastSleep.hours) * 100) || 0}%)
               </span>
@@ -272,7 +274,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
             />
             
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Light Sleep</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('sleep.lightSleep')}</span>
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {lastSleep.lightSleep} h ({Math.round((lastSleep.lightSleep / lastSleep.hours) * 100) || 0}%)
               </span>
@@ -283,7 +285,7 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
             />
             
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">REM</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('sleep.rem')}</span>
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {lastSleep.rem} h ({Math.round((lastSleep.rem / lastSleep.hours) * 100) || 0}%)
               </span>
@@ -296,11 +298,11 @@ export function SleepTracker({ sleepRecords }: SleepTrackerProps) {
         </div>
         
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Sleep History</h4>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{t('sleep.sleepHistory')}</h4>
           <div className="grid grid-cols-7 gap-2">
             {sleepHistory.map((sleep, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="relative w-full h-16 bg-gray-100 dark:bg-gray-700 rounded-t-sm overflow-hidden">
+                <div className="relative w-full h-16 bg-gray-100 dark:bg-[#242c35] rounded-t-sm overflow-hidden">
                   <div 
                     className="absolute bottom-0 left-0 right-0 bg-purple-500 dark:bg-purple-400" 
                     style={{height: `${(sleep.hours / 10) * 100}%`}}

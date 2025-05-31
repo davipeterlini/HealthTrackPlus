@@ -51,19 +51,22 @@ export default function AuthPage() {
   
   if (showTwoFactor) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
         {/* Theme and Language Controls */}
-        <div className="absolute top-4 right-4 flex space-x-2">
+        <div className="absolute top-4 right-4 flex space-x-2 z-10">
           <ThemeToggle />
           <LanguageSwitcher />
         </div>
-        <TwoFactorForm onBack={() => setShowTwoFactor(false)} />
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+          <h2 className="text-2xl font-semibold text-blue-600 dark:text-emerald-500 mb-6 text-center">{t('auth.twoFactorTitle')}</h2>
+          <TwoFactorForm onBack={() => setShowTwoFactor(false)} />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col-reverse md:flex-row bg-gray-50 dark:bg-gray-800 relative">
+    <div className="min-h-screen w-full flex flex-col-reverse md:flex-row bg-white dark:bg-gray-800 relative">
       {/* Theme and Language Controls */}
       <div className="absolute top-4 right-4 flex space-x-2 z-10">
         <ThemeToggle />
@@ -72,50 +75,58 @@ export default function AuthPage() {
       
       {/* Auth form section */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-6 md:p-8">
-        <Card className="w-full max-w-md bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg">
-          <CardContent className="pt-6">
-            <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-blue-600 dark:text-emerald-400 mb-2">{t('auth.appName')}</h1>
-              <p className="text-sm text-slate-600 dark:text-gray-400">
-                {t('auth.appDescription')}
-              </p>
-            </div>
-            
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
-                <TabsTrigger value="register">{t('auth.register')}</TabsTrigger>
-              </TabsList>
-              <TabsContent value="login">
-                <LoginForm onRequestTwoFactor={() => setShowTwoFactor(true)} />
-              </TabsContent>
-              <TabsContent value="register">
-                <RegisterForm />
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+        <div className="w-full max-w-md">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl font-bold text-blue-600 dark:text-white mb-2">{t('auth.appName')}</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {t('auth.appDescription')}
+            </p>
+          </div>
+          
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger 
+                value="login" 
+                className="data-[state=active]:text-blue-500 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:shadow-none data-[state=active]:font-medium dark:data-[state=active]:text-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:border-gray-500"
+              >
+                {t('auth.login')}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="register" 
+                className="data-[state=active]:text-blue-500 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:shadow-none data-[state=active]:font-medium dark:data-[state=active]:text-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:border-gray-500"
+              >
+                {t('auth.register')}
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="login">
+              <LoginForm onRequestTwoFactor={() => setShowTwoFactor(true)} />
+            </TabsContent>
+            <TabsContent value="register">
+              <RegisterForm />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
       
       {/* Hero section */}
-      <div className="hidden md:w-1/2 md:flex bg-gradient-to-br from-blue-500 to-blue-700 dark:from-emerald-600 dark:to-emerald-800 items-center justify-center shadow-inner">
+      <div className="hidden md:w-1/2 md:flex bg-gradient-to-br from-blue-400 to-blue-600 items-center justify-center dark:bg-gradient-to-br dark:from-gray-700 dark:to-gray-900">
         <div className="max-w-lg px-8 py-12 text-white">
           <h2 className="text-3xl font-bold mb-6">{t('auth.heroTitle')}</h2>
           <ul className="space-y-4">
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature1')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature2')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature3')}</span>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0" />
+              <CheckCircle className="h-6 w-6 mr-2 flex-shrink-0 text-white dark:text-white" />
               <span>{t('auth.heroFeature4')}</span>
             </li>
           </ul>

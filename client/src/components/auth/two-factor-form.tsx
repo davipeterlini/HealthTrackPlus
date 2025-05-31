@@ -64,11 +64,10 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
   };
   
   return (
-    <Card className="w-full max-w-md">
-      <CardContent className="pt-6">
+    <div className="w-full">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Two-Factor Authentication</h2>
-          <p className="text-sm text-gray-600">
+          <h3 className="text-xl font-semibold mb-2 text-blue-700 dark:text-white">Two Factor Authentication</h3>
+          <p className="text-sm text-blue-600 dark:text-gray-400 mb-3">
             Enter the 6-digit code sent to your email
           </p>
         </div>
@@ -88,7 +87,7 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
                           type="text"
                           inputMode="numeric"
                           maxLength={1}
-                          className="w-12 h-12 text-center text-xl font-semibold"
+                          className="w-12 h-12 text-center text-xl font-semibold border-blue-200 focus:border-blue-300 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-emerald-500 dark:focus:ring-emerald-500"
                           value={digit}
                           onChange={(e) => handleDigitChange(index, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(index, e)}
@@ -104,7 +103,7 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
             
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white dark:bg-emerald-600 dark:hover:bg-emerald-700" 
               disabled={verifyTwoFactorMutation.isPending || digits.join("").length !== 6}
             >
               {verifyTwoFactorMutation.isPending ? (
@@ -118,9 +117,9 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
             </Button>
             
             <div className="text-center space-y-4">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-blue-600 dark:text-gray-400">
                 Didn't receive a code?{" "}
-                <a href="#" className="font-medium text-primary hover:text-primary/80">
+                <a href="#" className="font-medium text-blue-700 hover:text-blue-800 dark:text-emerald-500 dark:hover:text-emerald-400">
                   Resend code
                 </a>
               </p>
@@ -128,6 +127,7 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
               <Button
                 type="button"
                 variant="ghost"
+                className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:text-gray-400 dark:hover:text-gray-50 dark:hover:bg-gray-800"
                 onClick={onBack}
               >
                 Back to login
@@ -135,7 +135,6 @@ export function TwoFactorForm({ onBack }: TwoFactorFormProps) {
             </div>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

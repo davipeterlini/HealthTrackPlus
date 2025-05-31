@@ -69,9 +69,9 @@ export function RegisterForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.fullName')}</FormLabel>
+              <FormLabel className="text-blue-700 dark:text-gray-300">{t('auth.fullName')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.fullName')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" placeholder={t('auth.fullName')} {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -83,9 +83,9 @@ export function RegisterForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.username')}</FormLabel>
+              <FormLabel className="text-blue-700 dark:text-gray-300">{t('auth.username')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.username')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" placeholder={t('auth.username')} {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,9 +97,9 @@ export function RegisterForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.email')}</FormLabel>
+              <FormLabel className="text-blue-700 dark:text-gray-300">{t('auth.email')}</FormLabel>
               <FormControl>
-                <Input type="email" placeholder={t('auth.email')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" type="email" placeholder={t('auth.email')} {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,9 +111,9 @@ export function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.password')}</FormLabel>
+              <FormLabel className="text-blue-700 dark:text-gray-300">{t('auth.password')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder={t('auth.password')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" type="password" placeholder={t('auth.password')} {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,9 +125,9 @@ export function RegisterForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.confirmPassword')}</FormLabel>
+              <FormLabel className="text-blue-700 dark:text-gray-300">{t('auth.confirmPassword')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder={t('auth.confirmPassword')} {...field} />
+                <Input className="focus:border-blue-500 focus:ring-blue-500 dark:focus:border-emerald-500 dark:focus:ring-emerald-500" type="password" placeholder={t('auth.confirmPassword')} {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,7 +147,7 @@ export function RegisterForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  {t('auth.agreeToTerms')} <a href="#" className="text-primary hover:text-primary/80">{t('auth.termsOfService')}</a> {t('auth.and')} <a href="#" className="text-primary hover:text-primary/80">{t('auth.privacyPolicy')}</a>
+                  {t('auth.agreeToTerms')} <a href="#" className="text-blue-500 hover:text-blue-600 dark:text-emerald-500 dark:hover:text-emerald-400">{t('auth.termsOfService')}</a> {t('auth.and')} <a href="#" className="text-blue-500 hover:text-blue-600 dark:text-emerald-500 dark:hover:text-emerald-400">{t('auth.privacyPolicy')}</a>
                 </FormLabel>
                 <FormMessage />
               </div>
@@ -157,7 +157,7 @@ export function RegisterForm() {
         
         <Button 
           type="submit" 
-          className="w-full" 
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white dark:bg-emerald-600 dark:hover:bg-emerald-700" 
           disabled={registerMutation.isPending}
         >
           {registerMutation.isPending ? (
@@ -172,10 +172,10 @@ export function RegisterForm() {
         
         <div className="relative my-4">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-300 dark:border-gray-600" />
+            <span className="w-full border-t border-blue-200 dark:border-gray-600" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">{t('auth.orRegisterWith')}</span>
+            <span className="bg-white dark:bg-gray-900 px-2 text-blue-500 dark:text-gray-400">{t('auth.orRegisterWith')}</span>
           </div>
         </div>
         
@@ -183,18 +183,20 @@ export function RegisterForm() {
           <Button
             type="button"
             variant="outline"
+            className="border-blue-200 hover:border-blue-300 dark:border-gray-600 dark:hover:border-gray-500"
             onClick={() => handleOAuthRegister("Google")}
           >
-            <FaGoogle className="mr-2 h-4 w-4" />
-            {t('auth.google')}
+            <FaGoogle className="mr-2 h-4 w-4 text-blue-600" />
+            <span className="text-blue-700 dark:text-white">{t('auth.google')}</span>
           </Button>
           <Button
             type="button"
             variant="outline"
+            className="border-blue-200 hover:border-blue-300 dark:border-gray-600 dark:hover:border-gray-500"
             onClick={() => handleOAuthRegister("Facebook")}
           >
-            <FaFacebook className="mr-2 h-4 w-4" />
-            {t('auth.facebook')}
+            <FaFacebook className="mr-2 h-4 w-4 text-blue-600" />
+            <span className="text-blue-700 dark:text-white">{t('auth.facebook')}</span>
           </Button>
         </div>
       </form>

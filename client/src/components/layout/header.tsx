@@ -3,8 +3,11 @@ import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
 import { ThemeToggle } from '../theme-toggle';
+import { NotificationsDropdown } from '../notifications-dropdown';
+import { DevModeHeaderToggle } from '../dev-mode-header-toggle';
 import { useAuth } from "@/hooks/use-auth";
-import { BellIcon, LanguagesIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X } from "lucide-react";
+import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
+import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -22,26 +25,103 @@ import { Button } from "@/components/ui/button";
 import { 
   Sheet, 
   SheetContent, 
-  SheetHeader, 
   SheetTitle, 
   SheetTrigger,
   SheetClose
 } from "@/components/ui/sheet";
 
-const navItems = [
-  { path: "/", label: "Início", icon: Home },
-  { path: "/activity", label: "Atividades", icon: Activity },
-  { path: "/nutrition", label: "Água", icon: Droplets },
-  { path: "/sleep", label: "Sono", icon: Moon },
-  { path: "/mental", label: "Mental", icon: Brain },
-  { path: "/exams", label: "Exames", icon: FileText }
-];
+const getNavItems = (t: any, settings: any = {}) => {
+  // Valores padrão para settings caso não seja definido
+  const defaultSettings = {
+    showActivityTracker: true,
+    showWaterTracker: true,
+    showSleepTracker: true,
+    showMentalHealthTracker: true,
+    showMedicationTracker: true,
+    showWomensHealthTracker: true,
+    showVideoSubscription: true,
+  };
+  
+  // Usar os settings passados ou os padrões
+  const effectiveSettings = settings || defaultSettings;
+  
+  const baseItems = [
+    { path: "/", label: t('navigation.home'), icon: Home, alwaysShow: true },
+  ];
+  
+  const conditionalItems = [
+    { 
+      path: "/activity", 
+      label: t('navigation.activity'), 
+      icon: Activity, 
+      show: effectiveSettings.showActivityTracker 
+    },
+    { 
+      path: "/nutrition", 
+      label: t('navigation.water'), 
+      icon: Droplets, 
+      show: effectiveSettings.showWaterTracker 
+    },
+    { 
+      path: "/sleep", 
+      label: t('navigation.sleep'), 
+      icon: Moon, 
+      show: effectiveSettings.showSleepTracker 
+    },
+    { 
+      path: "/mental", 
+      label: t('navigation.mental'), 
+      icon: Brain, 
+      show: effectiveSettings.showMentalHealthTracker 
+    },
+    { 
+      path: "/medication", 
+      label: t('navigation.medication'), 
+      icon: Pill, 
+      show: effectiveSettings.showMedicationTracker 
+    },
+    { 
+      path: "/womens-health", 
+      label: t('navigation.womens'), 
+      icon: PieChart, 
+      show: effectiveSettings.showWomensHealthTracker 
+    },
+    { 
+      path: "/exams", 
+      label: t('navigation.exams'), 
+      icon: FileText, 
+      alwaysShow: true 
+    },
+    { 
+      path: "/videos", 
+      label: t('navigation.videos'), 
+      icon: Film, 
+      show: effectiveSettings.showVideoSubscription 
+    },
+    { 
+      path: "/fasting", 
+      label: t('navigation.fasting', 'Jejum'), 
+      icon: Timer, 
+      show: true 
+    }
+  ];
+  
+  // Adiciona itens condicionais apenas se estiverem habilitados ou sempre visíveis
+  return [
+    ...baseItems,
+    ...conditionalItems.filter(item => item.alwaysShow || item.show)
+  ];
+};
 
 export function Header() {
   const [location] = useLocation();
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const { settings } = useDashboardSettings();
+  
+  // Get translated navigation items with visibility based on dashboard settings
+  const navItems = getNavItems(t, settings);
 
   const getInitials = (name: string) => {
     return name
@@ -72,81 +152,67 @@ export function Header() {
 
   return (
     <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            {/* Logo - mais compacto em telas pequenas */}
-            <Link href="/" className="flex items-center">
-              <h1 className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-emerald-400">LifeTrek</h1>
-            </Link>
-          </div>
+      <div className="flex items-center justify-between w-full px-4 md:px-6 h-14 md:h-16">
+        {/* Logo - sempre à esquerda */}
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center">
+            <h1 className="responsive-logo text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+          </Link>
+        </div>
 
-          {/* Menu de navegação para telas médias e grandes */}
-          <nav className="hidden md:flex md:items-center md:space-x-4 lg:space-x-6">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link 
-                  key={item.path}
-                  href={item.path}
-                  className={`flex items-center gap-1.5 px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium rounded-md transition-colors ${
-                    location === item.path
-                      ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
-                      : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
-                  }`}
-                >
-                  <Icon className="h-4 w-4 lg:h-5 lg:w-5 flex-shrink-0" />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
+        {/* Menu de navegação para telas médias e grandes - centro */}
+        <nav className="hidden md:flex items-center space-x-6">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link 
+                key={item.path}
+                href={item.path}
+                className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+                  location === item.path
+                    ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800 font-medium"
+                    : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
+                }`}
+              >
+                <Icon className="h-4 w-4 flex-shrink-0" />
+                <span className="text-sm font-medium">{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
 
-          {/* Ações e controles para todos os tamanhos de tela */}
-          <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
-            {/* Notificações */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 h-8 w-8"
-            >
-              <BellIcon className="h-5 w-5" />
-              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-blue-500 dark:bg-red-500"></span>
-            </Button>
+        {/* Controles sempre à direita */}
+        <div className="flex items-center gap-1 md:gap-2">
+          {/* Notificações */}
+          <NotificationsDropdown />
 
-            {/* Toggle de tema - esconder em telas muito pequenas */}
-            <div className="hidden sm:block">
-              <ThemeToggle />
-            </div>
-            
-            {/* Alternador de idioma */}
-            <LanguageSwitcher />
+          {/* Toggle de tema */}
+          <ThemeToggle />
+          
+          {/* Alternador de idioma */}
+          <LanguageSwitcher />
 
-            {/* Menu de navegação móvel */}
+          {/* Modo desenvolvedor */}
+          <DevModeHeaderToggle />
+
+          {/* Menu de navegação móvel - sempre visível em telas pequenas */}
+          <div className="md:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
-                  <Menu className="h-5 w-5" />
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
+                  <Menu className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="border-r border-blue-50 dark:border-gray-800 w-[75vw] max-w-xs">
-                <div className="flex items-center justify-between mb-6">
-                  <SheetTitle className="text-xl text-blue-600 dark:text-white">
+              <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[85vw] max-w-xs py-4">
+                <div className="flex items-center justify-between mb-4">
+                  <SheetTitle className="text-lg font-semibold text-blue-600 dark:text-white">
                     {t('navigation.menu')}
                   </SheetTitle>
                   <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
                       <X className="h-4 w-4" />
                     </Button>
                   </SheetClose>
-                </div>
-                
-                {/* Alternador de tema em telas muito pequenas (dentro do menu) */}
-                <div className="sm:hidden mb-4 px-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600 dark:text-gray-300">{t('common.theme')}</span>
-                    <ThemeToggle />
-                  </div>
                 </div>
                 
                 <nav className="flex flex-col space-y-1">
@@ -156,108 +222,81 @@ export function Header() {
                       <Link 
                         key={item.path}
                         href={item.path}
-                        className={`flex items-center gap-2 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                        className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
                           location === item.path
                             ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800"
                             : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <Icon className="h-5 w-5" />
-                        {item.label}
+                        <Icon className="h-4 w-4" />
+                        <span className="text-sm font-medium">{item.label}</span>
                       </Link>
                     );
                   })}
                 </nav>
                 
-                <div className="mt-8 space-y-1">
+                <div className="mt-6">
                   <div className="border-t border-blue-100 dark:border-gray-700 pt-4">
                     <h3 className="px-3 text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">
                       {t('navigation.account')}
                     </h3>
                     <div className="mt-3 space-y-1">
-                      {/* Links de usuário no menu móvel */}
                       <Link 
-                        href="/profile" 
-                        className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        href="/health-plan-setup" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <FileText className="mr-3 h-4 w-4" />
-                        {t('navigation.profile')}
+                        <Target className="h-4 w-4" />
+                        <span className="text-sm">Plano de Saúde</span>
+                      </Link>
+                      <Link 
+                        href="/profile" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span className="text-sm">{t('navigation.profile')}</span>
                       </Link>
                       <Link 
                         href="/settings" 
-                        className="flex items-center px-3 py-2 text-sm font-medium text-slate-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-gray-800 dark:hover:text-emerald-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <Settings className="mr-3 h-4 w-4" />
-                        {t('navigation.settings')}
+                        <Settings className="h-4 w-4" />
+                        <span className="text-sm">{t('navigation.settings')}</span>
                       </Link>
                       <button 
                         onClick={() => {
                           handleLogout();
                           setMobileMenuOpen(false);
                         }}
-                        className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300"
                       >
-                        <LogOut className="mr-3 h-4 w-4" />
-                        {t('navigation.logout')}
+                        <LogOut className="h-4 w-4" />
+                        <span className="text-sm">{t('navigation.logout')}</span>
                       </button>
                     </div>
                   </div>
                 </div>
               </SheetContent>
             </Sheet>
+          </div>
 
-            {/* Menu de configurações para telas médias e grandes */}
-            <div className="hidden md:block">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-slate-600 dark:text-gray-300 h-8 w-8">
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
-                  <DropdownMenuItem>
-                    <Link href="/profile" className="flex items-center w-full">
-                      <FileText className="mr-2 h-4 w-4" />
-                      {t('navigation.profile')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/settings" className="flex items-center w-full">
-                      <Settings className="mr-2 h-4 w-4" />
-                      {t('navigation.settings')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/help" className="flex items-center w-full">
-                      <HelpCircle className="mr-2 h-4 w-4" />
-                      {t('navigation.help')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    {t('navigation.logout')}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            {/* Avatar do usuário */}
+          {/* Avatar do usuário - apenas para desktop */}
+          <div className="hidden md:block">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative flex items-center p-1 sm:p-1.5">
-                  <Avatar className="h-7 w-7 sm:h-8 sm:w-8 border border-blue-100 dark:border-gray-700">
+                <Button variant="ghost" className="relative flex items-center p-1">
+                  <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
                     <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs sm:text-sm">
+                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs">
                       {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-56">
+              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
@@ -265,33 +304,22 @@ export function Header() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
-                
-                {/* Mostrar apenas em desktop, pois no mobile já está no menu lateral */}
-                <div className="md:hidden">
-                  <DropdownMenuItem>
-                    <Link href="/profile" className="flex items-center w-full">
-                      <FileText className="mr-2 h-4 w-4" />
-                      {t('navigation.profile')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/settings" className="flex items-center w-full">
-                      <Settings className="mr-2 h-4 w-4" />
-                      {t('navigation.settings')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/help" className="flex items-center w-full">
-                      <HelpCircle className="mr-2 h-4 w-4" />
-                      {t('navigation.help')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-blue-100 dark:bg-gray-700" />
-                </div>
-                
+                <DropdownMenuItem>
+                  <Link href="/profile" className="flex items-center w-full">
+                    <FileText className="mr-2 h-4 w-4" />
+                    <span className="text-sm">{t('navigation.profile')}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/settings" className="flex items-center w-full">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span className="text-sm">{t('navigation.settings')}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400">
                   <LogOut className="mr-2 h-4 w-4" />
-                  {t('navigation.logout')}
+                  <span className="text-sm">{t('navigation.logout')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -301,3 +329,5 @@ export function Header() {
     </header>
   );
 }
+
+export default Header;

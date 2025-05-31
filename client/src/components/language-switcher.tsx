@@ -18,24 +18,24 @@ export function LanguageSwitcher() {
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9"
+          className="responsive-button-icon border-blue-200 dark:border-gray-600 bg-blue-600 hover:bg-blue-700 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full"
         >
-          <Languages className="h-4 w-4" />
+          <Languages className="responsive-icon text-white" />
           <span className="sr-only">
             {i18n.language === 'pt' ? 'Mudar idioma' : 'Change language'}
           </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="responsive-menu-text">
         <DropdownMenuItem
           onClick={() => i18n.changeLanguage('pt')}
-          className={i18n.language === 'pt' ? 'bg-accent' : ''}
+          className={i18n.language === 'pt' ? 'bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white' : ''}
         >
           Português (PT)
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => i18n.changeLanguage('en')}
-          className={i18n.language === 'en' ? 'bg-accent' : ''}
+          className={i18n.language === 'en' ? 'bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white' : ''}
         >
           English (EN)
         </DropdownMenuItem>

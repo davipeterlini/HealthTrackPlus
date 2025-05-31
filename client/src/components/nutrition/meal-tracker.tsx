@@ -8,6 +8,7 @@ import { Meal } from "@shared/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { PlusCircle, Utensils, Coffee, Sun, Cloud, Moon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -57,6 +58,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { t, i18n } = useTranslation();
   
   // Sort by date (latest first) and meal type
   const mealTypeOrder = { "breakfast": 1, "lunch": 2, "snack": 3, "dinner": 4 };
@@ -99,8 +101,8 @@ export function MealTracker({ meals }: MealTrackerProps) {
     },
     onSuccess: () => {
       toast({
-        title: "Meal added successfully",
-        description: "Your meal has been recorded."
+        title: t('meal.mealAdded'),
+        description: t('meal.mealAddedMessage')
       });
       setOpen(false);
       form.reset();
@@ -108,7 +110,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
     },
     onError: (error: Error) => {
       toast({
-        title: "Failed to add meal",
+        title: t('meal.failedToAdd'),
         description: error.message,
         variant: "destructive"
       });
@@ -141,21 +143,22 @@ export function MealTracker({ meals }: MealTrackerProps) {
   const getMealIcon = (mealType: string) => {
     switch (mealType.toLowerCase()) {
       case "breakfast":
-        return <Sun className="text-emerald-500" />;
+        return <Sun className="text-emerald-500 dark-text-accent-green" />;
       case "lunch":
-        return <Cloud className="text-emerald-500" />;
+        return <Cloud className="text-emerald-500 dark-text-accent-blue" />;
       case "dinner":
-        return <Moon className="text-emerald-500" />;
+        return <Moon className="text-emerald-500 dark-text-accent-purple" />;
       case "snack":
-        return <Coffee className="text-emerald-500" />;
+        return <Coffee className="text-emerald-500 dark-text-accent-primary" />;
       default:
-        return <Utensils className="text-gray-600" />;
+        return <Utensils className="text-gray-600 dark-text-accent-blue" />;
     }
   };
   
   const formatDate = (dateString: string | Date) => {
     const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
-    return date.toLocaleDateString("en-US", {
+    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
+    return date.toLocaleDateString(locale, {
       weekday: "long",
       month: "long",
       day: "numeric"
@@ -164,26 +167,27 @@ export function MealTracker({ meals }: MealTrackerProps) {
   
   const formatTime = (dateString: string | Date) => {
     const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
-    return date.toLocaleTimeString("en-US", {
+    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
+    return date.toLocaleTimeString(locale, {
       hour: "numeric",
       minute: "2-digit",
-      hour12: true
+      hour12: locale === 'en-US'
     });
   };
   
   return (
-    <Card className="dark:bg-gray-800 dark:border-gray-700">
+    <Card className="dark-card">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Meal Tracking</CardTitle>
+        <CardTitle className="text-gray-900 dark-text-title">{t('meal.mealTracker')}</CardTitle>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" /> Add Meal
+            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark-btn-success">
+              <PlusCircle className="mr-2 h-4 w-4" /> {t('meal.addMeal')}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add a Meal</DialogTitle>
+              <DialogTitle>{t('meal.recordMeal')}</DialogTitle>
             </DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -192,18 +196,18 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   name="mealType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Meal Type</FormLabel>
+                      <FormLabel>{t('meal.mealType')}</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select meal type" />
+                            <SelectValue placeholder={t('meal.selectMealType')} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="breakfast">Breakfast</SelectItem>
-                          <SelectItem value="lunch">Lunch</SelectItem>
-                          <SelectItem value="dinner">Dinner</SelectItem>
-                          <SelectItem value="snack">Snack</SelectItem>
+                          <SelectItem value="breakfast">{t('meal.breakfast')}</SelectItem>
+                          <SelectItem value="lunch">{t('meal.lunch')}</SelectItem>
+                          <SelectItem value="dinner">{t('meal.dinner')}</SelectItem>
+                          <SelectItem value="snack">{t('meal.snack')}</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -216,9 +220,9 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>{t('meal.description')}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Describe what you ate" {...field} />
+                        <Textarea placeholder={t('meal.descriptionPlaceholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -231,7 +235,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="calories"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Calories (kcal)</FormLabel>
+                        <FormLabel>{t('meal.calories')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -247,7 +251,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="carbs"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Carbs (g)</FormLabel>
+                        <FormLabel>{t('meal.carbs')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -261,7 +265,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="protein"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Protein (g)</FormLabel>
+                        <FormLabel>{t('meal.protein')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -275,7 +279,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     name="fat"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Fat (g)</FormLabel>
+                        <FormLabel>{t('meal.fat')}</FormLabel>
                         <FormControl>
                           <Input type="number" {...field} />
                         </FormControl>
@@ -286,8 +290,12 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 </div>
                 
                 <DialogFooter>
-                  <Button type="submit" disabled={addMealMutation.isPending}>
-                    {addMealMutation.isPending ? "Saving..." : "Save Meal"}
+                  <Button 
+                    type="submit" 
+                    disabled={addMealMutation.isPending}
+                    className="bg-green-600 hover:bg-green-700 dark-btn-success"
+                  >
+                    {addMealMutation.isPending ? t('meal.savingMeal') : t('meal.saveMeal')}
                   </Button>
                 </DialogFooter>
               </form>
@@ -307,7 +315,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   {mealList.map((meal, idx) => (
                     <div key={idx} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0 last:pb-0">
                       <div className="flex items-start">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-gray-100 dark-stat-icon-bg dark-stat-icon-primary flex items-center justify-center">
                           {getMealIcon(meal.mealType)}
                         </div>
                         <div className="ml-4 flex-1">
@@ -325,17 +333,17 @@ export function MealTracker({ meals }: MealTrackerProps) {
                               )}
                               {meal.carbs && (
                                 <Badge variant="outline" className="bg-emerald-100 dark:bg-blue-900 text-emerald-700 dark:text-blue-300 border-0">
-                                  {meal.carbs}g carbs
+                                  {meal.carbs}g {t('meal.carbs').toLowerCase()}
                                 </Badge>
                               )}
                               {meal.protein && (
                                 <Badge variant="outline" className="bg-emerald-100 dark:bg-red-900 text-emerald-700 dark:text-red-300 border-0">
-                                  {meal.protein}g protein
+                                  {meal.protein}g {t('meal.protein').toLowerCase()}
                                 </Badge>
                               )}
                               {meal.fat && (
                                 <Badge variant="outline" className="bg-emerald-100 dark:bg-yellow-900 text-emerald-700 dark:text-yellow-300 border-0">
-                                  {meal.fat}g fat
+                                  {meal.fat}g {t('meal.fat').toLowerCase()}
                                 </Badge>
                               )}
                             </div>
@@ -349,10 +357,12 @@ export function MealTracker({ meals }: MealTrackerProps) {
             ))
           ) : (
             <div className="text-center py-12">
-              <Utensils className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No meals recorded</h3>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Start by adding your meals to track your nutrition.
+              <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gray-100 dark-stat-icon-bg mb-2">
+                <Utensils className="h-8 w-8 text-gray-400 dark-text-accent-blue" />
+              </div>
+              <h3 className="mt-2 text-sm font-medium text-gray-900 dark-text-title">{t('meal.noMeals')}</h3>
+              <p className="mt-1 text-sm text-gray-500 dark-text-muted">
+                {t('meal.startTracking')}
               </p>
             </div>
           )}
@@ -360,13 +370,13 @@ export function MealTracker({ meals }: MealTrackerProps) {
           {/* Nutrition Summary */}
           {todayMeals.length > 0 && (
             <div className="mt-8">
-              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Nutrition Summary</h4>
+              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">{t('meal.nutritionSummary')}</h4>
               
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Calorie chart */}
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                   <div className="flex items-center justify-between">
-                    <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">Calories</h5>
+                    <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('meal.calories')}</h5>
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.calories} / {dailyGoals.calories}</span>
                   </div>
                   <div className="mt-3 relative pt-1">
@@ -382,21 +392,21 @@ export function MealTracker({ meals }: MealTrackerProps) {
                   
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                     <div className="bg-emerald-50 dark:bg-blue-900 p-2 rounded">
-                      <span className="block text-xs text-emerald-700 dark:text-blue-300">Carbs</span>
+                      <span className="block text-xs text-emerald-700 dark:text-blue-300">{t('meal.carbs')}</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.carbs}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.carbs * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
                     <div className="bg-emerald-50 dark:bg-red-900 p-2 rounded">
-                      <span className="block text-xs text-emerald-700 dark:text-red-300">Protein</span>
+                      <span className="block text-xs text-emerald-700 dark:text-red-300">{t('meal.protein')}</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.protein}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.protein * 4 / dailyTotals.calories) * 100) || 0}%
                       </span>
                     </div>
                     <div className="bg-emerald-50 dark:bg-yellow-900 p-2 rounded">
-                      <span className="block text-xs text-emerald-700 dark:text-yellow-300">Fat</span>
+                      <span className="block text-xs text-emerald-700 dark:text-yellow-300">{t('meal.fat')}</span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">{dailyTotals.fat}g</span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {Math.round((dailyTotals.fat * 9 / dailyTotals.calories) * 100) || 0}%
@@ -407,12 +417,12 @@ export function MealTracker({ meals }: MealTrackerProps) {
                 
                 {/* Nutritional info */}
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">Nutrients</h5>
+                  <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('meal.nutrients')}</h5>
                   
                   <div className="mt-3 space-y-3">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Carbs</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('meal.carbs')}</span>
                         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.carbs}g / {dailyGoals.carbs}g</span>
                       </div>
                       <Progress 
@@ -423,7 +433,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Protein</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('meal.protein')}</span>
                         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.protein}g / {dailyGoals.protein}g</span>
                       </div>
                       <Progress 
@@ -434,7 +444,7 @@ export function MealTracker({ meals }: MealTrackerProps) {
                     
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Fat</span>
+                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{t('meal.fat')}</span>
                         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{dailyTotals.fat}g / {dailyGoals.fat}g</span>
                       </div>
                       <Progress 

@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card";
 import { Activity } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ActivityData {
   date: string;
@@ -16,23 +17,29 @@ interface ActivityData {
 
 interface ActivityCardProps {
   data?: ActivityData[];
+  compact?: boolean;
 }
 
-export function ActivityCard({ data }: ActivityCardProps) {
+export function ActivityCard({ data, compact = false }: ActivityCardProps) {
   const [chartData, setChartData] = useState<ActivityData[]>([]);
+  const { t, i18n } = useTranslation();
   
   useEffect(() => {
     // If no data is provided, use sample data
     if (!data) {
-      const sampleData: ActivityData[] = [
-        { date: '2023-10-20', steps: 12453, activeMinutes: 65, calories: 567 },
-        { date: '2023-10-19', steps: 8234, activeMinutes: 42, calories: 423 },
-        { date: '2023-10-18', steps: 10876, activeMinutes: 58, calories: 512 },
-        { date: '2023-10-17', steps: 9543, activeMinutes: 51, calories: 478 },
-        { date: '2023-10-16', steps: 7865, activeMinutes: 38, calories: 389 },
-        { date: '2023-10-15', steps: 11234, activeMinutes: 62, calories: 534 },
-        { date: '2023-10-14', steps: 6543, activeMinutes: 32, calories: 345 }
-      ];
+      const today = new Date();
+      const sampleData: ActivityData[] = Array.from({ length: 7 }, (_, i) => {
+        const date = new Date();
+        date.setDate(today.getDate() - i);
+        
+        return { 
+          date: date.toISOString().split('T')[0], 
+          steps: Math.floor(Math.random() * 8000) + 4000, 
+          activeMinutes: Math.floor(Math.random() * 40) + 20, 
+          calories: Math.floor(Math.random() * 300) + 200 
+        };
+      }).reverse();
+      
       setChartData(sampleData);
     } else {
       setChartData(data);
@@ -41,27 +48,35 @@ export function ActivityCard({ data }: ActivityCardProps) {
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const currentLang = i18n.language;
+    
+    // Usar o idioma atual para formatação de data
+    const options: Intl.DateTimeFormatOptions = { weekday: 'short' };
+    return date.toLocaleDateString(currentLang === 'pt' ? 'pt-BR' : 'en-US', options);
   };
   
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base font-medium flex items-center">
-          <Activity className="h-4 w-4 mr-2 text-primary" />
-          Weekly Activity
+    <Card variant={compact ? "small" : "default"}>
+      <CardHeader className={compact ? "pb-1" : "pb-2"}>
+        <CardTitle className="responsive-title-sm flex items-center">
+          <Activity className="responsive-icon-sm mr-2 text-emerald-500 dark:text-emerald-400" />
+          {t('dashboard.weeklyActivity')}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-64 relative">
-          <div className="h-full flex items-end space-x-2">
+        <div className={`${compact ? 'responsive-chart-sm' : 'responsive-chart'} relative`}>
+          <div className="h-full flex items-end responsive-gap-xs">
             {chartData.map((day, i) => (
-              <div key={i} className="flex flex-col items-center space-y-1 flex-1">
+              <div key={i} className="flex flex-col items-center responsive-gap-xs flex-1">
                 <div 
-                  className="w-full bg-primary-400 rounded-t-sm hover:bg-primary-500 transition-all duration-200" 
-                  style={{ height: `${(day.steps / 14000) * 100}%` }}
+                  className="w-full bg-emerald-400 dark:bg-emerald-500 rounded-t-sm hover:bg-emerald-500 dark:hover:bg-emerald-400 responsive-transition" 
+                  style={{ 
+                    height: `${Math.min((day.steps / 14000) * 100, 95)}%`,
+                    minHeight: '4px'
+                  }}
                 />
-                <span className="text-xs text-gray-500">{formatDate(day.date)}</span>
+                <span className="responsive-text-xs text-slate-500 dark:text-slate-400 hidden xs:block">{formatDate(day.date)}</span>
+                <span className="responsive-text-xs text-slate-500 dark:text-slate-400 xs:hidden">{i % 2 === 0 ? formatDate(day.date) : ''}</span>
               </div>
             ))}
           </div>

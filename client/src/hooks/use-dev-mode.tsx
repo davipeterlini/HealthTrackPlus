@@ -3,6 +3,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 type DevModeContextType = {
   skipAuth: boolean;
   toggleSkipAuth: () => void;
+  setSkipAuth: (value: boolean) => void;
 };
 
 const DevModeContext = createContext<DevModeContextType | null>(null);
@@ -30,8 +31,13 @@ export function DevModeProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const handleSetSkipAuth = (value: boolean) => {
+    localStorage.setItem('dev_mode_skip_auth', String(value));
+    setSkipAuth(value);
+  };
+
   return (
-    <DevModeContext.Provider value={{ skipAuth, toggleSkipAuth }}>
+    <DevModeContext.Provider value={{ skipAuth, toggleSkipAuth, setSkipAuth: handleSetSkipAuth }}>
       {children}
     </DevModeContext.Provider>
   );
