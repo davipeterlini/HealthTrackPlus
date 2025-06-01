@@ -4,7 +4,7 @@ echo "🧪 Executando todos os testes da aplicação..."
 
 echo ""
 echo "=== 1. Testes unitários do frontend ==="
-npx vitest run client/src/ --reporter=basic --run
+npx vitest run frontend/src/ --reporter=basic --run
 
 echo ""
 echo "=== 2. Testes básicos do backend ==="
@@ -20,7 +20,7 @@ echo "✓ Testes de integração: e2e/tests/integration.spec.ts"
 
 echo ""
 echo "=== 4. Testes de Dark Mode e Responsividade ==="
-npx vitest run client/src/test/tailwind-responsive.test.tsx --reporter=basic --run
+npx vitest run frontend/src/test/tailwind-responsive.test.tsx --reporter=basic --run
 
 echo ""
 echo "=== 5. Resumo da cobertura de testes ==="
