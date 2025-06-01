@@ -7,14 +7,14 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './frontend/src'),
+      '@': path.resolve(__dirname, './client/src'),
       '@shared': path.resolve(__dirname, './shared'),
     },
   },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./frontend/src/test/setup.ts'],
+    setupFiles: ['./client/src/test/setup.ts'],
     css: true,
     coverage: {
       reporter: ['text', 'json', 'html'],
@@ -28,7 +28,7 @@ export default defineConfig({
       ],
     },
     include: [
-      'frontend/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'client/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
       'backend/test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts}'
     ],
   },
