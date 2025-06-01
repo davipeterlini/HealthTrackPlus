@@ -1,0 +1,32 @@
+
+/* Importar estilos padronizados para o modo escuro */
+@import './styles/dark-mode.css';
+
+/* Importar estilos padronizados para responsividade */
+@import './styles/responsiveness.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-white text-gray-900 dark:bg-[#0a1015] dark:text-white;
+  }
+
+  :root {
+    --background: 245 247 251;
+    --foreground: 51 65 85;
+    --primary: 79 129 189;
+  }
+
+  .dark {
+    --background: 20 20 20;
+    --foreground: 255 255 255;
+    --primary: 20 215 169;
+  }
+}

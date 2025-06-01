@@ -1,0 +1,337 @@
+/* 
+  Esquema de cores padrão do modo escuro
+  Baseado na página de Atividade para manter consistência em toda a aplicação
+*/
+
+@layer utilities {
+  /* Cores de fundo para o corpo da página e elementos base */
+  .dark-bg-base {
+    @apply dark:bg-[#0a1015];
+  }
+
+  /* Cores de fundo para cards */
+  .dark-card {
+    @apply dark:bg-[#1a2127] dark:border-gray-700;
+  }
+
+  /* Containers internos dentro de cards */
+  .dark-inner-card {
+    @apply dark:bg-gray-800 dark:border-gray-700 dark:shadow-md;
+  }
+
+  /* Cores para botões e ações */
+  .dark-btn-primary {
+    @apply bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white;
+  }
+
+  .dark-btn-secondary {
+    @apply bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white;
+  }
+
+  .dark-btn-accent {
+    @apply bg-purple-600 hover:bg-purple-700 dark:bg-purple-600 dark:hover:bg-purple-700 text-white;
+  }
+
+  .dark-btn-danger {
+    @apply bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white;
+  }
+
+  .dark-btn-neutral {
+    @apply bg-gray-600 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 text-white;
+  }
+
+  /* Badges e indicadores de status */
+  .dark-badge-success {
+    @apply dark:bg-green-900/30 dark:text-green-300 dark:border-green-700;
+  }
+
+  .dark-badge-warning {
+    @apply dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700;
+  }
+
+  .dark-badge-danger {
+    @apply dark:bg-red-900/30 dark:text-red-300 dark:border-red-700;
+  }
+
+  .dark-badge-neutral {
+    @apply dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600;
+  }
+
+  /* Cores para boxes e containers secundários */
+  .dark-box {
+    @apply dark:bg-[#1a2127];
+  }
+
+  /* Cores para containers terciários (ex: box dentro de cards) */
+  .dark-inner-box {
+    @apply dark:bg-gray-800/50;
+  }
+
+  /* Cores para ícones e ícones de status */
+  .dark-icon-primary {
+    @apply dark:text-emerald-400;
+  }
+  
+  .dark-icon-secondary {
+    @apply dark:text-blue-400;
+  }
+
+  .dark-icon-accent {
+    @apply dark:text-purple-400;
+  }
+
+  .dark-icon-danger {
+    @apply dark:text-red-400;
+  }
+
+  /* Cores para ícones circulares estatísticas */
+  .dark-stat-icon-bg {
+    @apply dark:bg-gray-800;
+  }
+
+  .dark-stat-icon-green {
+    @apply dark:border-green-700 dark:border;
+  }
+
+  .dark-stat-icon-blue {
+    @apply dark:border-blue-700 dark:border;
+  }
+
+  .dark-stat-icon-purple {
+    @apply dark:border-purple-700 dark:border;
+  }
+
+  .dark-stat-icon-red {
+    @apply dark:border-red-700 dark:border;
+  }
+
+  /* Cores para gráficos de barras */
+  .dark-bar-green {
+    @apply dark:bg-emerald-500/70;
+  }
+
+  .dark-bar-blue {
+    @apply dark:bg-blue-500/70;
+  }
+
+  .dark-bar-purple {
+    @apply dark:bg-purple-500/70;
+  }
+
+  .dark-bar-red {
+    @apply dark:bg-red-500/70;
+  }
+
+  /* Cores para linhas nos gráficos */
+  .dark-line-green {
+    @apply dark:bg-emerald-500;
+  }
+
+  .dark-line-blue {
+    @apply dark:bg-blue-500;
+  }
+
+  .dark-line-purple {
+    @apply dark:bg-purple-500;
+  }
+
+  .dark-line-red {
+    @apply dark:bg-red-500;
+  }
+
+  /* Cores para barras de progresso */
+  .dark-progress-bg {
+    @apply dark:bg-gray-700;
+  }
+
+  .dark-progress-green {
+    @apply dark:bg-emerald-500;
+  }
+
+  .dark-progress-blue {
+    @apply dark:bg-blue-500;
+  }
+
+  .dark-progress-purple {
+    @apply dark:bg-purple-500;
+  }
+
+  .dark-progress-red {
+    @apply dark:bg-red-500;
+  }
+
+  /* Cores para texto */
+  .dark-text-title {
+    @apply dark:text-gray-100;
+  }
+  
+  .dark-text-body {
+    @apply dark:text-gray-300;
+  }
+  
+  .dark-text-muted {
+    @apply dark:text-gray-400;
+  }
+
+  .dark-text-muted-dim {
+    @apply dark:text-gray-500;
+  }
+
+  /* Cores de texto acentuadas */
+  .dark-text-green {
+    @apply dark:text-green-400;
+  }
+
+  .dark-text-blue {
+    @apply dark:text-blue-400;
+  }
+
+  .dark-text-purple {
+    @apply dark:text-purple-400;
+  }
+
+  .dark-text-red {
+    @apply dark:text-red-400;
+  }
+
+  .dark-text-amber {
+    @apply dark:text-amber-400;
+  }
+
+  /* Cores para texto em ícones acentuados */
+  .dark-text-accent-green {
+    @apply dark:text-emerald-400;
+  }
+
+  .dark-text-accent-blue {
+    @apply dark:text-blue-400;
+  }
+
+  .dark-text-accent-purple {
+    @apply dark:text-purple-400;
+  }
+
+  .dark-text-accent-red {
+    @apply dark:text-red-400;
+  }
+
+  /* Bolinhas indicadoras coloridas */
+  .dark-emerald-dot {
+    @apply dark:bg-emerald-500;
+  }
+  
+  .dark-blue-dot {
+    @apply dark:bg-blue-500;
+  }
+  
+  .dark-purple-dot {
+    @apply dark:bg-purple-500;
+  }
+  
+  .dark-red-dot {
+    @apply dark:bg-red-500;
+  }
+
+  /* Cores para gráficos */
+  .dark-chart-primary {
+    @apply dark:stroke-emerald-500 dark:fill-emerald-500/20;
+  }
+  
+  .dark-chart-secondary {
+    @apply dark:stroke-blue-500 dark:fill-blue-500/20;
+  }
+  
+  .dark-chart-accent {
+    @apply dark:stroke-purple-500 dark:fill-purple-500/20;
+  }
+
+  /* Cores para skeleton/loaders */
+  .dark-skeleton {
+    @apply dark:bg-gray-700;
+  }
+
+  /* Cores para tabs */
+  .dark-tab-active {
+    @apply dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-600;
+  }
+
+  .dark-tab-inactive {
+    @apply dark:bg-gray-800/20 dark:text-gray-400 dark:border-transparent;
+  }
+
+  /* Cores para inputs, selects e form elements */
+  .dark-input {
+    @apply dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-500;
+  }
+
+  .dark-input-focus {
+    @apply dark:focus:border-blue-600 dark:focus:ring-blue-600/20;
+  }
+
+  /* Cores para bordas e separadores */
+  .dark-border {
+    @apply dark:border-gray-700;
+  }
+
+  .dark-border-light {
+    @apply dark:border-gray-600;
+  }
+
+  /* Elementos de hover */
+  .dark-hover {
+    @apply dark:hover:bg-gray-800;
+  }
+
+  /* Cores para tooltips */
+  .dark-tooltip {
+    @apply dark:bg-slate-800;
+  }
+
+  .dark-tooltip-arrow {
+    @apply dark:border-t-slate-800;
+  }
+
+  /* Cores para notificações e elementos de destaque */
+  .dark-notification {
+    @apply dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800;
+  }
+
+  /* Cores para elementos de destaque/badge */
+  .dark-highlight {
+    @apply dark:bg-emerald-900/30 dark:text-emerald-400;
+  }
+
+  /* Linhas do gráfico suaves */
+  .dark-grid-line {
+    @apply dark:border-gray-700/50;
+  }
+
+  /* Definições de cores fixas para referência */
+  /* Card background: #1a2127 */
+  /* Page background: #0a1015 */
+  /* Inner card background: #1f2937 (gray-800) */
+  /* Primary action: emerald-600 (#059669) */
+  /* Secondary action: blue-600 (#2563eb) */
+  /* Accent action: purple-600 (#9333ea) */
+  /* Danger action: red-600 (#dc2626) */
+  /* Primary text: gray-100 (#f3f4f6) */
+  /* Body text: gray-300 (#d1d5db) */
+  /* Secondary text: gray-400 (#9ca3af) */
+  /* Muted text: gray-500 (#6b7280) */
+  /* Borders: gray-700 (#374151) */
+  
+  /* Variáveis CSS para gráficos */
+  :root {
+    --line-blue: #3b82f6;
+    --line-green: #10b981;
+    --line-purple: #8b5cf6;
+    --line-red: #ef4444;
+  }
+  
+  .dark {
+    --line-blue: #60a5fa;
+    --line-green: #34d399;
+    --line-purple: #a78bfa;
+    --line-red: #f87171;
+  }
+}
