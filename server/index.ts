@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { registerRoutes } from '../backend/routes';
 import { createServer } from 'http';
 import path from 'path';
@@ -8,6 +9,7 @@ import { setupVite, log } from '../backend/vite';
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
