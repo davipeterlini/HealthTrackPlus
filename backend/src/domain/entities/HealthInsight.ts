@@ -80,7 +80,6 @@ export class HealthInsight {
   ): Omit<HealthInsight, 'id'> {
     return {
       userId,
-      examId,
       date: new Date(),
       category,
       title,
@@ -89,6 +88,7 @@ export class HealthInsight {
       severity,
       status: 'active',
       aiGenerated,
+      examId,
       data,
       isActive: () => true,
       requiresAttention: () => severity === 'attention' || severity === 'high',
