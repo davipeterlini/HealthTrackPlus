@@ -66,7 +66,7 @@ O LifeTrek é uma aplicação web full-stack para monitoramento abrangente de sa
 │   │   └── test/             # Testes do frontend
 │   ├── index.html            # Template HTML principal
 │   └── public/               # Assets estáticos
-├── server/                    # Backend Express/NestJS
+├── backend/                   # Backend Express/NestJS
 │   ├── test/                 # Testes do backend
 │   ├── auth.ts               # Configuração Passport.js
 │   ├── db.ts                 # Conexão PostgreSQL

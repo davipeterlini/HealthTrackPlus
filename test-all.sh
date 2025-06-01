@@ -8,7 +8,7 @@ npx vitest run frontend/src/ --reporter=basic --run
 
 echo ""
 echo "=== 2. Testes básicos do backend ==="
-npx vitest run server/test/basic.test.ts --reporter=basic --run
+npx vitest run backend/test/basic.test.ts --reporter=basic --run
 
 echo ""
 echo "=== 3. Verificando estrutura de testes E2E ==="
