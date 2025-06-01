@@ -81,7 +81,7 @@ export class MedicalExamRepository implements IMedicalExamRepository {
 
   async delete(id: number): Promise<boolean> {
     const result = await db.delete(medicalExams).where(eq(medicalExams.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getExamDetails(examId: number): Promise<any[]> {

@@ -89,7 +89,7 @@ export class UserRepository implements IUserRepository {
 
   async delete(id: number): Promise<boolean> {
     const result = await db.delete(users).where(eq(users.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   private mapToEntity(drizzleUser: DrizzleUser): User {
