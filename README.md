@@ -1,4 +1,3 @@
-
 # LifeTrek - Monitoramento Integrado de Saúde
 
 ## 📋 Sobre
