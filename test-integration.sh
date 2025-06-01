@@ -7,7 +7,7 @@ npx vitest run frontend/src/ --reporter=verbose
 
 echo ""
 echo "2. Testes unitários do backend:"
-npx vitest run server/test/ --reporter=verbose
+npx vitest run backend/test/ --reporter=verbose
 
 echo ""
 echo "3. Testes de integração E2E:"
