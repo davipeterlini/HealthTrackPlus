@@ -3,7 +3,7 @@
 echo "🔄 Executando testes de integração completos..."
 
 echo "1. Testes unitários do frontend:"
-npx vitest run client/src/ --reporter=verbose
+npx vitest run frontend/src/ --reporter=verbose
 
 echo ""
 echo "2. Testes unitários do backend:"

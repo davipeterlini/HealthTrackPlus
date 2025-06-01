@@ -52,7 +52,7 @@ O LifeTrek é uma aplicação web full-stack para monitoramento abrangente de sa
 
 ```
 /
-├── client/                    # Frontend React
+├── frontend/                  # Frontend React
 │   ├── src/
 │   │   ├── components/        # Componentes reutilizáveis
 │   │   │   ├── ui/           # shadcn/ui components
