@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { registerRoutes } from './routes';
+import { registerRoutes } from '../backend/routes';
 import { createServer } from 'http';
 import path from 'path';
-import { setupVite, log } from './vite';
+import { setupVite, log } from '../backend/vite';
 
 // Create Express app
 const app = express();

@@ -24,12 +24,12 @@ export default defineConfig({
         '**/*.d.ts',
         '**/*.config.js',
         '**/*.config.ts',
-        'server/',
+        'backend/',
       ],
     },
     include: [
       'client/src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      'server/test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts}'
+      'backend/test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts}'
     ],
   },
 });
