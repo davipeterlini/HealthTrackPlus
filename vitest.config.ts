@@ -20,7 +20,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
-        'client/src/test/',
+        'frontend/src/test/',
         '**/*.d.ts',
         '**/*.config.js',
         '**/*.config.ts',
