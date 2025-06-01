@@ -31,6 +31,13 @@ export async function setupVite(app: Express, server: Server) {
 
   const vite = await createViteServer({
     ...viteConfig,
+    root: path.resolve(__dirname, "..", "frontend"),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "..", "frontend", "src"),
+        "@shared": path.resolve(__dirname, "..", "shared"),
+      },
+    },
     configFile: false,
     customLogger: {
       ...viteLogger,
