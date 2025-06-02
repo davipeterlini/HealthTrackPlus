@@ -165,8 +165,8 @@ npm run db:generate  # Gerar migrações
 ## 📦 Estrutura do Projeto
 
 ```
-├── client/          # Frontend React
-├── server/          # Backend Express
+├── frontend/          # Frontend React
+├── backend/          # Backend Express
 ├── shared/          # Tipos e schemas compartilhados
 └── ...
 ```
