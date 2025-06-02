@@ -1,7 +1,18 @@
-
 #!/bin/bash
 
+set -e
+
 echo "🔧 Configurando plataformas móveis..."
+
+# Verificar se a pasta node_modules existe
+if [ ! -d "node_modules" ]; then
+    echo "📦 Pasta node_modules não encontrada. Executando npm install..."
+    npm install
+fi
+
+# Instalar @capacitor/cli
+echo "📦 Instalando @capacitor/cli..."
+npm install @capacitor/cli
 
 # Verificar se o Capacitor está inicializado
 if [ ! -f "capacitor.config.ts" ]; then
