@@ -16,6 +16,12 @@ install_dependencies() {
   npm install @capacitor/cli
 }
 
+# Função para executar o build
+run_build() {
+  print_info "🏗️ Executando build do projeto..."
+  npm run build
+}
+
 # Função para verificar se o Capacitor está inicializado
 check_capacitor_initialized() {
   if [ ! -f "capacitor.config.ts" ]; then
@@ -60,6 +66,7 @@ sync_platforms() {
 # Execução principal do script
 print_info "🔧 Configurando plataformas móveis..."
 install_dependencies
+run_build
 check_capacitor_initialized
 add_platforms
 install_plugins
