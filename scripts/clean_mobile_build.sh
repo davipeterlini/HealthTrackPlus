@@ -13,12 +13,6 @@ remove_dir() {
   fi
 }
 
-# Navigate to the mobile project directory
-cd mobile || {
-  echo "Mobile directory not found! Exiting..."
-  exit 1
-}
-
 # Remove node_modules, android, and ios directories
 remove_dir "node_modules"
 remove_dir "android"
