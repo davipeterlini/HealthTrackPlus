@@ -24,11 +24,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "frotend", "src"),
+      "@": path.resolve(__dirname, "frontend", "src"),
       "@shared": path.resolve(__dirname, "shared"),
     },
   },
-  root: path.resolve(__dirname, "frotend"),
+  root: path.resolve(__dirname, "frontend"),
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
