@@ -13,9 +13,10 @@ remove_dir() {
   fi
 }
 
-# Remove node_modules, android, and ios directories
+# Remove node_modules, android, ios, and dist directories
 remove_dir "node_modules"
 remove_dir "android"
 remove_dir "ios"
+remove_dir "frontend/dist"
 
 echo "Mobile build cleaned successfully!"

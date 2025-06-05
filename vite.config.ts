@@ -30,7 +30,7 @@ export default defineConfig({
   },
   root: path.resolve(__dirname, "frontend"),
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
+    outDir: path.resolve(__dirname, "frontend/dist"),
     emptyOutDir: true,
   },
 });
