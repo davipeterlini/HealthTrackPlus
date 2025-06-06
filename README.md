@@ -1,205 +1,92 @@
+# Scripts de Instalação e Configuração do Android Studio
 
-# LifeTrek - Monitoramento Integrado de Saúde
+Este repositório contém scripts para automatizar a instalação e configuração do Android Studio em diferentes plataformas.
 
-## 📋 Sobre
+## Conteúdo
 
-HealthTrack é uma aplicação web completa para monitoramento de saúde que permite aos usuários acompanhar diversos aspectos de sua saúde, incluindo atividade física, sono, nutrição e exames médicos.
+- `install_android_studio.sh`: Script para instalação em Linux e macOS
+- `install_android_studio.bat`: Script para instalação em Windows
+- `README.md`: Este arquivo de documentação
 
-## 🚀 Funcionalidades
+## Requisitos
 
-- 🏃‍♂️ Monitoramento de atividade física
-- 💊 Acompanhamento de exames médicos
-- 💧 Controle de hidratação
-- 😴 Registro de padrões de sono
-- 🥗 Acompanhamento nutricional
-- 📊 Insights de saúde personalizados
-- 📱 Interface responsiva
-- 🎥 Conteúdo em vídeo sobre medicina integrativa
+### Windows
+- Windows 10 ou superior
+- Privilégios de administrador (para instalação completa)
+- PowerShell 5.0 ou superior
+- Conexão com a Internet
 
-## 🛠️ Tecnologias
+### macOS
+- macOS 10.14 (Mojave) ou superior
+- Privilégios de administrador
+- Conexão com a Internet
 
-- **Frontend**: React, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Express
-- **Banco de Dados**: PostgreSQL com Drizzle ORM
-- **Autenticação**: Passport.js
+### Linux
+- Distribuição baseada em Debian, Red Hat ou Arch
+- Privilégios de sudo
+- Conexão com a Internet
 
-## 🏃‍♂️ Configuração Local
+## Como usar
 
-### Pré-requisitos
+### Windows
 
-- **Node.js** (versão 18 ou superior)
-- **PostgreSQL** (versão 12 ou superior)
-- **npm** ou **yarn**
+1. Baixe o arquivo `install_android_studio.bat`
+2. Clique com o botão direito e selecione "Executar como administrador"
+3. Siga as instruções na tela
+4. Após a instalação completa do Android Studio e SDK, execute o script `create_android_avd.bat` criado em seu diretório de usuário para configurar um dispositivo virtual
 
-### 1. Clonar e Instalar Dependências
+### macOS e Linux
 
-```bash
-# Clonar o repositório
-git clone <url-do-repositorio>
-cd <nome-do-projeto>
+1. Baixe o arquivo `install_android_studio.sh`
+2. Abra o Terminal e navegue até o diretório onde o arquivo foi baixado
+3. Torne o script executável:
+   ```
+   chmod +x install_android_studio.sh
+   ```
+4. Execute o script:
+   ```
+   ./install_android_studio.sh
+   ```
+5. Após a instalação completa do Android Studio e SDK, execute o script `create_avd.sh` criado em seu diretório home para configurar um dispositivo virtual
 
-# Instalar dependências
-npm install
-```
+## O que os scripts fazem
 
-### 2. Configurar PostgreSQL
+### Instalação
+- Verifica e instala pré-requisitos (Java JDK)
+- Baixa a versão mais recente do Android Studio
+- Instala o Android Studio no local padrão
 
-#### Opção A: Docker (Recomendado)
-```bash
-# Executar PostgreSQL com Docker
-docker run --name postgres-health \
-  -e POSTGRES_PASSWORD=password \
-  -e POSTGRES_DB=health_app \
-  -d -p 5432:5432 postgres:15
-```
+### Configuração
+- Configura o diretório do SDK Android
+- Cria arquivos de configuração básicos
+- Prepara scripts para criação de dispositivos virtuais
 
-#### Opção B: Instalação Local
-```bash
-# Ubuntu/Debian
-sudo apt-get install postgresql postgresql-contrib
+### Criação de Dispositivo Virtual
+- Fornece um script separado para criar um dispositivo virtual Android
+- Configura um dispositivo Pixel 6 com a versão mais recente do Android
+- Aceita automaticamente as licenças necessárias
 
-# macOS (Homebrew)
-brew install postgresql
-brew services start postgresql
+## Notas importantes
 
-# Windows
-# Baixar e instalar do site oficial: https://www.postgresql.org/download/windows/
-```
+- Os scripts baixam a versão 2023.1.1.26 do Android Studio (a mais recente no momento da criação)
+- Para versões mais recentes, você pode precisar atualizar as URLs de download nos scripts
+- A criação do dispositivo virtual requer que o SDK esteja completamente instalado
+- Em alguns casos, pode ser necessário reiniciar o computador após a instalação do JDK
 
-### 3. Configurar Variáveis de Ambiente
+## Solução de problemas
 
-Crie um arquivo `.env` na raiz do projeto:
+### Windows
+- Se o script falhar ao baixar arquivos, verifique sua conexão com a Internet ou baixe manualmente os instaladores
+- Se o Java não for adicionado ao PATH, adicione manualmente o diretório bin do JDK
 
-```env
-# Database Configuration
-DATABASE_URL=postgresql://postgres:password@localhost:5432/health_app
-PGHOST=localhost
-PGPORT=5432
-PGUSER=postgres
-PGPASSWORD=password
-PGDATABASE=health_app
+### macOS
+- Se o script falhar com erro de permissão, verifique se você tem privilégios de administrador
+- Se o Homebrew falhar na instalação, consulte [brew.sh](https://brew.sh) para instruções alternativas
 
-# Stripe Configuration (para sistema de assinatura)
-STRIPE_SECRET_KEY=sk_test_...
-VITE_STRIPE_PUBLIC_KEY=pk_test_...
+### Linux
+- Se o script não detectar seu gerenciador de pacotes, instale manualmente o OpenJDK 11
+- Em algumas distribuições, pode ser necessário instalar pacotes adicionais para suporte a 32 bits
 
-# OpenAI Configuration (para análises de IA)
-OPENAI_API_KEY=sk-...
+## Licença
 
-# Google OAuth (opcional)
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-```
-
-### 4. Configurar Banco de Dados
-
-```bash
-# Aplicar schema do banco de dados
-npm run db:push
-```
-
-### 5. Executar a Aplicação
-
-```bash
-# Modo desenvolvimento
-npm run dev
-
-# A aplicação estará disponível em http://localhost:5000
-```
-
-### 🔑 Chaves de API Necessárias
-
-#### Stripe (Sistema de Assinatura)
-1. Acesse [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
-2. Copie a "Publishable key" para `VITE_STRIPE_PUBLIC_KEY`
-3. Copie a "Secret key" para `STRIPE_SECRET_KEY`
-
-#### OpenAI (Análises de IA)
-1. Acesse [OpenAI API](https://platform.openai.com/api-keys)
-2. Crie uma nova chave de API
-3. Copie para `OPENAI_API_KEY`
-
-#### Google OAuth (Opcional)
-1. Acesse [Google Cloud Console](https://console.cloud.google.com/)
-2. Crie um projeto ou selecione um existente
-3. Ative a API do Google+
-4. Crie credenciais OAuth 2.0
-5. Configure as URLs de callback autorizadas
-
-### 🚨 Problemas Comuns
-
-#### Erro de Conexão com PostgreSQL
-```bash
-# Verificar se PostgreSQL está rodando
-sudo systemctl status postgresql  # Linux
-brew services list | grep postgres  # macOS
-
-# Verificar conectividade
-psql -h localhost -p 5432 -U postgres -d health_app
-```
-
-#### Erro de Permissões
-```bash
-# Dar permissões ao usuário postgres
-sudo -u postgres createdb health_app
-sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'password';"
-```
-
-#### Porta 5000 em uso
-```bash
-# Verificar processo usando a porta
-lsof -i :5000
-
-# Matar processo
-kill -9 <PID>
-```
-
-### 📚 Scripts Disponíveis
-
-```bash
-npm run dev          # Executar em modo desenvolvimento
-npm run build        # Build para produção
-npm run db:push      # Aplicar mudanças no schema do banco
-npm run db:generate  # Gerar migrações
-```
-
-## 📦 Estrutura do Projeto
-
-```
-├── client/          # Frontend React
-├── server/          # Backend Express
-├── shared/          # Tipos e schemas compartilhados
-└── ...
-```
-
-## 👥 Contribuição
-
-Para contribuir com o projeto:
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/NovaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/NovaFeature`)
-5. Abra um Pull Request
-
-## 📱 Gerando Aplicativos Móveis
-
-### Android
-
-1. Instale o aplicativo Replit Mobile em seu dispositivo Android através da [Google Play Store](https://play.google.com/store/apps/details?id=com.replit.mobile)
-2. Faça login com sua conta Replit
-3. Navegue até este projeto
-4. Toque no botão "Run" para iniciar o aplicativo
-5. O app será executado diretamente no seu dispositivo Android
-
-### iOS
-
-1. Instale o aplicativo Replit Mobile em seu dispositivo iOS através da [App Store](https://apps.apple.com/us/app/replit-mobile/id1614022293)
-2. Faça login com sua conta Replit
-3. Navegue até este projeto
-4. Toque no botão "Run" para iniciar o aplicativo
-5. O app será executado diretamente no seu dispositivo iOS
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
+Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.

@@ -95,7 +95,7 @@
 ## Resultados dos Testes
 
 ```
-✅ client/src/test/tailwind-responsive.test.tsx (16 tests)
+✅ frontend/src/test/tailwind-responsive.test.tsx (16 tests)
    ✅ Tailwind CSS Responsive System (16)
      ✅ applies correct responsive grid classes
      ✅ applies responsive typography classes
