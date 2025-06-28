@@ -7,10 +7,12 @@ Este diretório contém scripts para facilitar o desenvolvimento, build e execu�
 
 ```
 scripts/
-├── mobile-build-and-run.sh    # Script principal para build e execução
+├── mobile-build-and-run.sh    # Script principal para build e execução completa
 ├── dev-local.sh               # Configuração para desenvolvimento local
-├── add-platforms.sh           # Adiciona plataformas mobile
+├── add-platforms.sh           # Adiciona plataformas mobile ao projeto
 ├── build-mobile.sh            # Build básico para mobile
+├── build-and-run-emulators.sh # Build e execução em emuladores
+├── check-requirements.sh      # Verificação de pré-requisitos
 └── README.md                  # Esta documentação
 ```
 
@@ -45,326 +47,282 @@ chmod +x scripts/mobile-build-and-run.sh
 # Executar apenas para iOS (requer macOS)
 ./scripts/mobile-build-and-run.sh ios
 
-# Apenas configurar o ambiente
-./scripts/mobile-build-and-run.sh setup
-
-# Limpar recursos e restaurar configurações
-./scripts/mobile-build-and-run.sh clean
-
-# Mostrar ajuda
-./scripts/mobile-build-and-run.sh help
+# Apenas fazer build (sem rodar emuladores)
+./scripts/mobile-build-and-run.sh build
 ```
 
-## 📋 Pré-requisitos
+## 📱 Scripts Específicos
 
-### Requisitos Gerais
-- **Node.js** (v16 ou superior)
-- **npm** ou **yarn**
-- **Git**
-
-### Para Android
-- **Java Development Kit (JDK)** 8 ou superior
-- **Android Studio** com:
-  - Android SDK
-  - Android SDK Build-tools
-  - Android SDK Platform-tools
-  - Android SDK Command-line tools
-- **Variáveis de ambiente**:
-  ```bash
-  export ANDROID_HOME=$HOME/Android/Sdk
-  export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-  export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-  ```
-
-### Para iOS (apenas macOS)
-- **macOS** 10.15 ou superior
-- **Xcode** 12 ou superior
-- **iOS Simulator**
-- **Xcode Command Line Tools**:
-  ```bash
-  xcode-select --install
-  ```
-
-## 🔧 Configuração Inicial
-
-### 1. Instalação das Dependências
+### 1. check-requirements.sh
+Verifica se todas as dependências necessárias estão instaladas.
 
 ```bash
-# Instalar dependências do projeto
-npm install
-
-# Instalar Capacitor CLI globalmente
-npm install -g @capacitor/cli
-
-# Verificar instalação
-cap --version
+./scripts/check-requirements.sh
 ```
 
-### 2. Configuração do Android
+**Verifica:**
+- Node.js e npm
+- Java Development Kit (JDK)
+- Android SDK e ferramentas
+- Xcode (apenas no macOS)
+- Capacitor CLI
 
-1. **Instalar Android Studio**: https://developer.android.com/studio
-2. **Configurar SDK**:
-   - Abrir Android Studio
-   - Ir em File > Settings > System Settings > Android SDK
-   - Instalar as versões necessárias do Android (recomendado: API 31+)
-3. **Configurar variáveis de ambiente** (adicionar ao ~/.bashrc ou ~/.zshrc):
+### 2. dev-local.sh
+Configura o ambiente para desenvolvimento local com dispositivos móveis.
+
+```bash
+./scripts/dev-local.sh
+```
+
+**Funcionalidades:**
+- Detecta IP local automaticamente
+- Configura capacitor.config.ts para desenvolvimento
+- Faz backup das configurações originais
+- Sincroniza com Capacitor
+
+### 3. add-platforms.sh
+Adiciona as plataformas móveis ao projeto Capacitor.
+
+```bash
+./scripts/add-platforms.sh
+```
+
+**Funcionalidades:**
+- Adiciona plataforma iOS
+- Adiciona plataforma Android
+- Instala plugins nativos essenciais
+- Sincroniza todas as plataformas
+
+### 4. build-mobile.sh
+Script básico para build das aplicações móveis.
+
+```bash
+./scripts/build-mobile.sh
+```
+
+**Funcionalidades:**
+- Build do frontend
+- Sincronização com Capacitor
+- Cópia de assets
+- Preparação para abertura nos IDEs
+
+### 5. build-and-run-emulators.sh
+Script avançado para build e execução em emuladores.
+
+```bash
+./scripts/build-and-run-emulators.sh
+```
+
+**Opções interativas:**
+1. Build e rodar no Android
+2. Build e rodar no iOS (macOS apenas)
+3. Build e rodar em ambos
+4. Apenas fazer build (sem rodar)
+
+## 🛠️ Pré-requisitos
+
+### Requisitos Gerais
+- **Node.js** (v18 ou superior)
+- **npm** (v9 ou superior)
+- **Capacitor CLI**: `npm install -g @capacitor/cli`
+
+### Para Android
+1. **Java Development Kit (JDK 11+)**
+2. **Android Studio** com SDK Tools
+3. **Variáveis de ambiente**:
    ```bash
    export ANDROID_HOME=$HOME/Android/Sdk
    export ANDROID_SDK_ROOT=$HOME/Android/Sdk
    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin
    ```
-4. **Verificar configuração**:
-   ```bash
-   adb version
-   ```
 
-### 3. Configuração do iOS (macOS apenas)
-
-1. **Instalar Xcode** da App Store
-2. **Aceitar termos de licença**:
-   ```bash
-   sudo xcodebuild -license accept
-   ```
-3. **Instalar simulador iOS**:
+### Para iOS (macOS apenas)
+1. **Xcode** (versão mais recente)
+2. **Xcode Command Line Tools**:
    ```bash
    sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+   sudo xcodebuild -license accept
    ```
 
 ## 📱 Detalhes das Plataformas
 
 ### Android
 
-#### Emulador
-O script cria automaticamente um emulador Android com as seguintes especificações:
+#### Configuração do Emulador
 - **Nome**: HealthTracker_Emulator
-- **Dispositivo**: Pixel
-- **API Level**: 31
+- **Dispositivo**: Pixel 4
+- **API Level**: 33
 - **Arquitetura**: x86_64
 - **Google APIs**: Habilitadas
 
-#### Build e Execução
-1. O script verifica se o Android SDK está configurado
-2. Cria o emulador se não existir
-3. Inicia o emulador
-4. Faz o build da aplicação
-5. Instala e executa no emulador
+#### Processo de Build
+1. Verificação do Android SDK
+2. Criação do emulador (se necessário)
+3. Inicialização do emulador
+4. Build da aplicação (APK de debug)
+5. Instalação e execução no emulador
 
-#### Troubleshooting Android
-```bash
-# Verificar dispositivos conectados
-adb devices
-
-# Verificar logs do emulador
-adb logcat
-
-# Reiniciar ADB
-adb kill-server && adb start-server
-
-# Listar emuladores disponíveis
-emulator -list-avds
+#### Localização do APK
+```
+android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-### iOS
+### iOS (macOS apenas)
 
-#### Simulador
-O script utiliza o iOS Simulator do Xcode:
-- Detecta automaticamente simuladores disponíveis
-- Prioriza dispositivos iPhone
-- Utiliza a versão mais recente do iOS disponível
+#### Configuração do Simulador
+- **Dispositivo**: iPhone 14
+- **iOS**: Versão mais recente disponível
+- **Arquitetura**: x86_64 (simulador)
 
-#### Build e Execução
-1. Verifica se o Xcode está instalado
-2. Lista simuladores disponíveis
-3. Faz o build da aplicação
-4. Executa no simulador iOS
+#### Processo de Build
+1. Build do projeto iOS no Xcode
+2. Inicialização do simulador
+3. Instalação da aplicação
+4. Execução no simulador
 
-#### Troubleshooting iOS
-```bash
-# Listar simuladores disponíveis
-xcrun simctl list devices
+## 🔧 Configurações de Desenvolvimento
 
-# Resetar simulador
-xcrun simctl erase all
+### Backend Local
+O backend é automaticamente configurado para rodar em:
+- **URL**: `http://[SEU_IP_LOCAL]:5000`
+- **Porta**: 5000
+- **Endpoints**: `/api/*`
 
-# Verificar versão do Xcode
-xcodebuild -version
-```
+### Frontend
+- **Build tool**: Vite
+- **Output**: `frontend/dist/`
+- **Assets**: Copiados automaticamente para as plataformas
 
-## 🌐 Configuração de Rede
+### Capacitor
+- **Configuração**: `capacitor.config.ts`
+- **Plataformas**: `ios/` e `android/`
+- **Plugins**: Instalados automaticamente
 
-O script configura automaticamente o backend para aceitar conexões externas:
-
-1. **Detecção de IP**: Detecta automaticamente o IP da máquina local
-2. **Configuração do Capacitor**: Atualiza `capacitor.config.ts` para usar o IP local
-3. **Backend**: Configura o servidor para escutar em `0.0.0.0:5000`
-4. **CORS**: Permite conexões de qualquer origem durante desenvolvimento
-
-### Configuração Manual do IP
-
-Se a detecção automática falhar:
-
-```bash
-# Encontrar IP manualmente
-ifconfig  # macOS/Linux
-ipconfig  # Windows
-
-# Editar capacitor.config.ts
-# Substituir a linha:
-url: 'http://SEU_IP_LOCAL:5000',
-```
-
-## 🔄 Processo de Build
-
-### 1. Preparação
-- Verificação de pré-requisitos
-- Detecção do IP local
-- Backup das configurações originais
-
-### 2. Configuração
-- Atualização do `capacitor.config.ts`
-- Instalação de plugins nativos
-- Configuração das plataformas
-
-### 3. Build
-- Build do frontend (Vite)
-- Sincronização com Capacitor
-- Preparação dos assets nativos
-
-### 4. Execução
-- Início do backend local
-- Criação/início dos emuladores
-- Build e instalação nos dispositivos
-- Execução da aplicação
-
-## 📊 Monitoramento
-
-### Logs Disponíveis
-
-```bash
-# Log do backend
-tail -f backend.log
-
-# Log do emulador Android
-adb logcat | grep HealthTracker
-
-# Log do simulador iOS
-xcrun simctl spawn booted log stream --predicate 'subsystem contains "HealthTracker"'
-```
-
-### Verificação de Status
-
-```bash
-# Verificar se o backend está rodando
-curl http://localhost:5000/api/health
-
-# Verificar dispositivos conectados
-adb devices  # Android
-xcrun simctl list devices  # iOS
-
-# Verificar processos
-ps aux | grep -E "(node|emulator|simulator)"
-```
-
-## 🧹 Limpeza e Troubleshooting
-
-### Limpeza Automática
-```bash
-./scripts/mobile-build-and-run.sh clean
-```
-
-### Limpeza Manual
-```bash
-# Parar todos os processos
-pkill -f "node.*server"
-pkill -f emulator
-killall "iOS Simulator"
-
-# Restaurar configurações
-mv capacitor.config.ts.backup capacitor.config.ts
-
-# Limpar cache do Capacitor
-npx cap clean
-npm run build
-npx cap sync
-```
+## 🐛 Solução de Problemas
 
 ### Problemas Comuns
 
-#### 1. Erro "Android SDK not found"
+#### "ANDROID_HOME não definido"
 ```bash
-# Verificar variáveis de ambiente
-echo $ANDROID_HOME
-echo $ANDROID_SDK_ROOT
-
-# Configurar manualmente
 export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 ```
 
-#### 2. Erro "No devices/emulators found"
+#### "Emulador não inicia"
 ```bash
-# Android
-adb kill-server && adb start-server
+# Verificar emuladores disponíveis
+emulator -list-avds
+
+# Criar novo emulador
+avdmanager create avd -n Test_Emulator -k "system-images;android-33;google_apis;x86_64"
+```
+
+#### "Erro de build do iOS"
+- Verificar se está no macOS
+- Confirmar instalação do Xcode
+- Verificar certificados de desenvolvedor
+
+#### "Frontend não carrega no app"
+- Verificar se o backend está rodando
+- Confirmar configuração do IP em `capacitor.config.ts`
+- Verificar logs do dispositivo
+
+### Debug e Logs
+
+#### Android
+```bash
+# Logs do dispositivo
+adb logcat | grep -i "health"
+
+# Verificar dispositivos conectados
 adb devices
-
-# iOS
-xcrun simctl delete unavailable
 ```
 
-#### 3. Erro de conexão com o backend
+#### iOS
 ```bash
-# Verificar se o backend está rodando
-netstat -an | grep 5000
+# Logs do simulador
+xcrun simctl list devices
 
-# Verificar IP local
-hostname -I
-
-# Testar conectividade
-curl http://SEU_IP:5000/api/health
+# Ver logs detalhados
+xcrun simctl spawn booted log stream --predicate 'subsystem contains "HealthApp"'
 ```
 
-#### 4. Erro de build do frontend
+## 📊 Comandos Úteis
+
+### Capacitor
 ```bash
-# Limpar cache
-rm -rf frontend/node_modules
-rm -rf frontend/dist
-npm install
-npm run build
-```
-
-## 🔐 Segurança
-
-### Desenvolvimento Local
-- O script configura `cleartext: true` apenas para desenvolvimento
-- Certifique-se de reverter as configurações antes do build de produção
-- Use HTTPS em produção
-
-### Variáveis de Ambiente
-```bash
-# .env.local (não commitado)
-ANDROID_HOME=/path/to/android/sdk
-DEVELOPMENT_IP=192.168.1.100
-```
-
-## 📚 Recursos Adicionais
-
-### Documentação Oficial
-- [Capacitor Documentation](https://capacitorjs.com/docs)
-- [Android Studio Setup](https://developer.android.com/studio/install)
-- [Xcode Setup](https://developer.apple.com/xcode/)
-
-### Comandos Úteis
-```bash
-# Capacitor
 npx cap doctor          # Verificar configuração
-npx cap ls              # Listar plugins
+npx cap ls              # Listar plugins instalados
 npx cap open android    # Abrir no Android Studio
 npx cap open ios        # Abrir no Xcode
-
-# Debug
-npx cap run android --list    # Listar dispositivos Android
-npx cap run ios --list        # Listar simuladores iOS
+npx cap sync            # Sincronizar código com plataformas
 ```
+
+### Android
+```bash
+# Listar dispositivos/emuladores
+adb devices
+
+# Instalar APK manualmente
+adb install path/to/app.apk
+
+# Desinstalar aplicação
+adb uninstall com.healthapp.mobile
+```
+
+### iOS
+```bash
+# Listar simuladores
+xcrun simctl list devices
+
+# Boot simulador específico
+xcrun simctl boot "iPhone 14"
+
+# Instalar app no simulador
+xcrun simctl install booted path/to/app.app
+```
+
+## 🔄 Fluxo de Desenvolvimento
+
+### Desenvolvimento Normal
+1. Execute `./scripts/check-requirements.sh`
+2. Execute `./scripts/dev-local.sh`
+3. Inicie o backend: `npm run dev`
+4. Execute `./scripts/mobile-build-and-run.sh`
+
+### Apenas Testing
+1. Execute `./scripts/build-mobile.sh`
+2. Abra manualmente: `npx cap open android` ou `npx cap open ios`
+
+### Produção/Release
+1. Configure as variáveis de produção
+2. Execute build de release no Android Studio/Xcode
+3. Siga os processos de distribuição das lojas
+
+## 🛡️ Segurança
+
+### Desenvolvimento Local
+- O IP local é detectado automaticamente
+- Configuração `cleartext: true` apenas para desenvolvimento
+- Backup automático das configurações originais
+
+### Produção
+- Configurações de produção devem usar HTTPS
+- Remover `cleartext: true` da configuração
+- Configurar certificados SSL adequados
+
+## 📈 Performance
+
+### Otimizações Aplicadas
+- Build otimizado do Vite
+- Code splitting automático
+- Compressão de assets
+- Lazy loading de componentes
+
+### Monitoramento
+- Logs estruturados
+- Tracking de performance nativo
+- Métricas de uso da aplicação
 
 ## 🤝 Contribuição
 
@@ -372,19 +330,68 @@ Para melhorar os scripts:
 
 1. Fork o repositório
 2. Crie uma branch para sua feature
-3. Teste em diferentes ambientes
+3. Teste em diferentes ambientes (macOS, Linux, Windows)
 4. Documente as mudanças
 5. Abra um Pull Request
+
+### Padrões de Código
+- Use bash script padrão
+- Adicione comentários explicativos
+- Teste em múltiplas plataformas
+- Mantenha compatibilidade com versões anteriores
 
 ## 📞 Suporte
 
 Se encontrar problemas:
 
-1. Verifique os logs: `tail -f backend.log`
-2. Execute o diagnostic: `npx cap doctor`
-3. Limpe o ambiente: `./scripts/mobile-build-and-run.sh clean`
-4. Abra uma issue no repositório
+1. **Verifique os logs**: `tail -f backend.log`
+2. **Execute diagnóstico**: `npx cap doctor`
+3. **Limpe o cache**: `npm run clean && npm install`
+4. **Reporte issues**: Crie um issue no repositório
+
+### Links Úteis
+- [Documentação do Capacitor](https://capacitorjs.com/docs)
+- [Android Developer Guide](https://developer.android.com/guide)
+- [iOS Developer Documentation](https://developer.apple.com/documentation/)
+- [React Native Performance](https://reactnative.dev/docs/performance)
+
+## 📋 Checklist de Deploy
+
+### Antes do Deploy
+- [ ] Todos os testes passando
+- [ ] Build sem erros/warnings
+- [ ] Configurações de produção validadas
+- [ ] Assets otimizados
+- [ ] Certificados configurados
+
+### Android
+- [ ] APK/AAB gerado
+- [ ] Assinado com certificado de produção
+- [ ] Testado em dispositivos reais
+- [ ] Metadados da Play Store atualizados
+
+### iOS
+- [ ] Archive gerado no Xcode
+- [ ] Certificados de distribuição válidos
+- [ ] Testado no TestFlight
+- [ ] Metadados da App Store atualizados
 
 ---
 
-**Nota**: Este script foi desenvolvido e testado em ambientes Linux e macOS. Para Windows, algumas adaptações podem ser necessárias.
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+## 🔄 Changelog
+
+### v1.0.0
+- Scripts iniciais de desenvolvimento mobile
+- Suporte completo para Android e iOS
+- Configuração automática de ambiente local
+- Documentação completa
+
+### Próximas Versões
+- [ ] Suporte para build de produção automatizado
+- [ ] Integração com CI/CD
+- [ ] Scripts de testes automatizados
+- [ ] Suporte para múltiplos ambientes
