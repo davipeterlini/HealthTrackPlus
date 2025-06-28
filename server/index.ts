@@ -21,13 +21,13 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
   try {
     // Create HTTP server
     const server = createServer(app);
-    
+
     // Register API routes
     await registerRoutes(app);
-    
+
     // Setup Vite for serving frontend
     await setupVite(app, server);
-    
+
     // Start server on port 5000
     server.listen(5000, '0.0.0.0', () => {
       log('serving on port 5000');

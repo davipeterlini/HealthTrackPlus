@@ -18,7 +18,9 @@
     "cap:ios": "cap open ios",
     "cap:android": "cap open android",
     "cap:run:ios": "cap run ios",
-    "cap:run:android": "cap run android"
+    "cap:run:android": "cap run android",
+    "dev:local": "chmod +x scripts/dev-local.sh && ./scripts/dev-local.sh",
+    "dev:reset": "mv capacitor.config.ts.backup capacitor.config.ts 2>/dev/null || echo 'Backup não encontrado'"
   },
   "dependencies": {
     "@capacitor/android": "^7.2.0",

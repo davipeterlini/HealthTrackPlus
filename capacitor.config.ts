@@ -6,7 +6,10 @@ const config: CapacitorConfig = {
   appName: 'Health Tracker',
   webDir: 'frontend/dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    // Para desenvolvimento local, descomente a linha abaixo e substitua pelo seu IP local
+    url: 'http://172.31.128.44:5000',
+    cleartext: true
   },
   plugins: {
     SplashScreen: {
