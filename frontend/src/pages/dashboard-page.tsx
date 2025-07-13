@@ -3,7 +3,7 @@ import { MainLayout } from "@/components/layout/main-layout";
 import { Card } from "@/components/ui/card";
 import { 
   Activity, Heart, Moon, Apple, Droplet, AlertCircle, 
-  FileText, Brain, Pill, Calculator, Clock, BellIcon, Timer, Star
+  FileText, Brain, Pill, Calculator, Clock, BellIcon, Timer, Star, Baby
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -617,6 +617,18 @@ export default function DashboardPage() {
               </div>
               <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.notifications', 'Notificações')}</h3>
               <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('health.notificationsCenter', 'Centro de Notificações')}</p>
+            </div>
+          </Card>
+        </Link>
+
+        <Link to="/baby-growth">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/30 dark:to-yellow-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-yellow-500/10 dark:bg-yellow-500/20">
+                <Baby className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-yellow-500 dark:text-yellow-400" />
+              </div>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.baby')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('baby.subtitle')}</p>
             </div>
           </Card>
         </Link>

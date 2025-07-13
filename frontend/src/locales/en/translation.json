@@ -13,6 +13,7 @@
     "hydration": "Hydration",
     "medication": "Medication",
     "womens": "Women's Health",
+    "baby": "Baby",
     "menu": "Menu",
     "account": "Account",
     "profile": "Profile",
@@ -665,5 +666,50 @@
     "completedOn": "Completed on",
     "inProgress": "In progress",
     "completeToUnlock": "Complete previous videos to unlock"
+  },
+  
+  "baby": {
+    "title": "Baby Tracking",
+    "subtitle": "Monitor your baby's growth and development",
+    "add_baby": "Add Baby",
+    "weight": "Weight",
+    "height": "Height",
+    "age": "Age",
+    "milestones": "Milestones",
+    "months": "months",
+    "days": "days",
+    "born": "Born",
+    "recent_milestones": "Recent Milestones",
+    "expected": "Expected",
+    "overview": "Overview",
+    "measurements": "Measurements",
+    "feeding": "Feeding",
+    "sleep": "Sleep",
+    "vaccinations": "Vaccinations",
+    "notes": "Notes",
+    "milestones": {
+      "first_smile": "First smile",
+      "holds_head_up": "Holds head up",
+      "rolls_over": "Rolls over"
+    }
+  },
+  
+  "common": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "remove": "Remove",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "back": "Back",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Info"
   }
 }

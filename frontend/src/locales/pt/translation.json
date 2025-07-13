@@ -13,6 +13,7 @@
     "hydration": "Hidratação",
     "medication": "Medicação",
     "womens": "Saúde da Mulher",
+    "baby": "Bebê",
     "menu": "Menu",
     "account": "Conta",
     "profile": "Perfil",
@@ -689,5 +690,50 @@
     "completedOn": "Concluído em",
     "inProgress": "Em andamento",
     "completeToUnlock": "Complete os vídeos anteriores para desbloquear"
+  },
+  
+  "baby": {
+    "title": "Acompanhamento do Bebê",
+    "subtitle": "Monitore o crescimento e desenvolvimento do seu bebê",
+    "add_baby": "Adicionar Bebê",
+    "weight": "Peso",
+    "height": "Altura",
+    "age": "Idade",
+    "milestones": "Marcos",
+    "months": "meses",
+    "days": "dias",
+    "born": "Nascido",
+    "recent_milestones": "Marcos Recentes",
+    "expected": "Esperado",
+    "overview": "Visão Geral",
+    "measurements": "Medições",
+    "feeding": "Alimentação",
+    "sleep": "Sono",
+    "vaccinations": "Vacinação",
+    "notes": "Anotações",
+    "milestones": {
+      "first_smile": "Primeiro sorriso",
+      "holds_head_up": "Sustenta a cabeça",
+      "rolls_over": "Rola"
+    }
+  },
+  
+  "common": {
+    "edit": "Editar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "add": "Adicionar",
+    "remove": "Remover",
+    "close": "Fechar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "back": "Voltar",
+    "submit": "Enviar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "warning": "Aviso",
+    "info": "Informação"
   }
 }
