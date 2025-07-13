@@ -345,6 +345,6 @@ npx playwright test  # Testes E2E
 ## Documentação Adicional
 
 - **API**: `/api/docs` (Swagger UI)
-- **Testes**: `client/src/test/comprehensive-test-summary.md`
+- **Testes**: `frontend/src/test/comprehensive-test-summary.md`
 - **Schema**: `shared/schema.ts` (auto-documentado)
 - **Componentes**: Storybook planejado
