@@ -343,6 +343,107 @@ export const pregnancyTracking = pgTable("pregnancy_tracking", {
   babyMovements: boolean("baby_movements"),
 });
 
+// Tabela para acompanhamento de crescimento e evolução do bebê
+export const babyGrowthTracking = pgTable("baby_growth_tracking", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  babyName: text("baby_name").notNull(),
+  birthDate: timestamp("birth_date").notNull(),
+  gender: text("gender"), // male, female, other
+  birthWeight: integer("birth_weight"), // em gramas
+  birthHeight: integer("birth_height"), // em cm
+  birthHeadCircumference: integer("birth_head_circumference"), // em cm
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const babyMeasurements = pgTable("baby_measurements", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  date: timestamp("date").notNull(),
+  ageInDays: integer("age_in_days").notNull(),
+  weight: integer("weight").notNull(), // em gramas
+  height: integer("height").notNull(), // em cm
+  headCircumference: integer("head_circumference"), // em cm
+  notes: text("notes"),
+  measuredBy: text("measured_by"), // doctor, parent, etc
+  photoUrl: text("photo_url"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babyMilestones = pgTable("baby_milestones", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  milestoneType: text("milestone_type").notNull(), // motor, cognitive, social, language
+  milestoneName: text("milestone_name").notNull(),
+  expectedAgeInDays: integer("expected_age_in_days").notNull(),
+  actualAgeInDays: integer("actual_age_in_days"),
+  achieved: boolean("achieved").default(false),
+  achievedDate: timestamp("achieved_date"),
+  notes: text("notes"),
+  videoUrl: text("video_url"),
+  photoUrl: text("photo_url"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babyFeeding = pgTable("baby_feeding", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  date: timestamp("date").notNull(),
+  time: timestamp("time").notNull(),
+  feedingType: text("feeding_type").notNull(), // breastfeeding, bottle_formula, bottle_breast_milk, solid_food
+  duration: integer("duration"), // em minutos para amamentação
+  amount: integer("amount"), // em ml para mamadeira
+  notes: text("notes"),
+  side: text("side"), // left, right, both (para amamentação)
+  formula: text("formula"), // tipo de fórmula
+  foodDescription: text("food_description"), // para sólidos
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babySleep = pgTable("baby_sleep", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  date: timestamp("date").notNull(),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time"),
+  duration: integer("duration"), // em minutos
+  sleepType: text("sleep_type").notNull(), // nap, night_sleep
+  location: text("location"), // crib, bed, car_seat, stroller
+  quality: text("quality"), // peaceful, restless, interrupted
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babyVaccinations = pgTable("baby_vaccinations", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  vaccineName: text("vaccine_name").notNull(),
+  scheduledDate: timestamp("scheduled_date").notNull(),
+  administeredDate: timestamp("administered_date"),
+  administered: boolean("administered").default(false),
+  location: text("location"), // clinic, hospital, etc
+  doctorName: text("doctor_name"),
+  batchNumber: text("batch_number"),
+  sideEffects: text("side_effects"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babyDevelopmentNotes = pgTable("baby_development_notes", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  date: timestamp("date").notNull(),
+  category: text("category").notNull(), // behavior, health, development, funny_moment
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  photoUrl: text("photo_url"),
+  videoUrl: text("video_url"),
+  tags: text("tags").array(),
+  mood: text("mood"), // happy, fussy, sleepy, alert
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Tabela para perfil de saúde personalizado
 export const healthProfiles = pgTable("health_profiles", {
   id: serial("id").primaryKey(),
@@ -525,6 +626,42 @@ export const insertHealthPlanSchema = createInsertSchema(healthPlans).omit({
   createdAt: true,
 });
 
+export const insertBabyGrowthTrackingSchema = createInsertSchema(babyGrowthTracking).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertBabyMeasurementSchema = createInsertSchema(babyMeasurements).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabyMilestoneSchema = createInsertSchema(babyMilestones).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabyFeedingSchema = createInsertSchema(babyFeeding).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabySleepSchema = createInsertSchema(babySleep).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabyVaccinationSchema = createInsertSchema(babyVaccinations).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabyDevelopmentNoteSchema = createInsertSchema(babyDevelopmentNotes).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -551,10 +688,24 @@ export type TrackVideo = typeof trackVideos.$inferSelect;
 export type HealthInsight = typeof healthInsights.$inferSelect;
 export type HealthProfile = typeof healthProfiles.$inferSelect;
 export type HealthPlan = typeof healthPlans.$inferSelect;
+export type BabyGrowthTracking = typeof babyGrowthTracking.$inferSelect;
+export type BabyMeasurement = typeof babyMeasurements.$inferSelect;
+export type BabyMilestone = typeof babyMilestones.$inferSelect;
+export type BabyFeeding = typeof babyFeeding.$inferSelect;
+export type BabySleep = typeof babySleep.$inferSelect;
+export type BabyVaccination = typeof babyVaccinations.$inferSelect;
+export type BabyDevelopmentNote = typeof babyDevelopmentNotes.$inferSelect;
 
 // Insert types
 export type InsertHealthProfile = z.infer<typeof insertHealthProfileSchema>;
 export type InsertHealthPlan = z.infer<typeof insertHealthPlanSchema>;
+export type InsertBabyGrowthTracking = z.infer<typeof insertBabyGrowthTrackingSchema>;
+export type InsertBabyMeasurement = z.infer<typeof insertBabyMeasurementSchema>;
+export type InsertBabyMilestone = z.infer<typeof insertBabyMilestoneSchema>;
+export type InsertBabyFeeding = z.infer<typeof insertBabyFeedingSchema>;
+export type InsertBabySleep = z.infer<typeof insertBabySleepSchema>;
+export type InsertBabyVaccination = z.infer<typeof insertBabyVaccinationSchema>;
+export type InsertBabyDevelopmentNote = z.infer<typeof insertBabyDevelopmentNoteSchema>;
 
 // Interface estendida para vídeos com URL
 export interface VideoWithUrl {
