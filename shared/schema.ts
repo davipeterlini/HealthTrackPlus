@@ -444,6 +444,47 @@ export const babyDevelopmentNotes = pgTable("baby_development_notes", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const babyVitamins = pgTable("baby_vitamins", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  vitaminName: text("vitamin_name").notNull(),
+  dosage: text("dosage").notNull(),
+  frequency: text("frequency").notNull(), // daily, weekly, monthly
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date"),
+  prescribedBy: text("prescribed_by"),
+  instructions: text("instructions"),
+  sideEffects: text("side_effects"),
+  reminderEnabled: boolean("reminder_enabled").default(true),
+  reminderTimes: json("reminder_times"),
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babyVitaminLogs = pgTable("baby_vitamin_logs", {
+  id: serial("id").primaryKey(),
+  vitaminId: integer("vitamin_id").notNull().references(() => babyVitamins.id),
+  timeTaken: timestamp("time_taken").notNull(),
+  taken: boolean("taken").default(true),
+  skipped: boolean("skipped").default(false),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const babyMilkConsumption = pgTable("baby_milk_consumption", {
+  id: serial("id").primaryKey(),
+  babyId: integer("baby_id").notNull().references(() => babyGrowthTracking.id),
+  date: timestamp("date").notNull(),
+  time: timestamp("time").notNull(),
+  milkType: text("milk_type").notNull(), // breast_milk, formula, cow_milk, other
+  amount: integer("amount").notNull(), // em ml
+  duration: integer("duration"), // em minutos (para amamentação)
+  notes: text("notes"),
+  temperature: text("temperature"), // room_temperature, warm, cold
+  feedingMethod: text("feeding_method"), // bottle, breastfeeding, cup, spoon
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Tabela para perfil de saúde personalizado
 export const healthProfiles = pgTable("health_profiles", {
   id: serial("id").primaryKey(),
@@ -662,6 +703,21 @@ export const insertBabyDevelopmentNoteSchema = createInsertSchema(babyDevelopmen
   createdAt: true,
 });
 
+export const insertBabyVitaminSchema = createInsertSchema(babyVitamins).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabyVitaminLogSchema = createInsertSchema(babyVitaminLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBabyMilkConsumptionSchema = createInsertSchema(babyMilkConsumption).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -695,6 +751,9 @@ export type BabyFeeding = typeof babyFeeding.$inferSelect;
 export type BabySleep = typeof babySleep.$inferSelect;
 export type BabyVaccination = typeof babyVaccinations.$inferSelect;
 export type BabyDevelopmentNote = typeof babyDevelopmentNotes.$inferSelect;
+export type BabyVitamin = typeof babyVitamins.$inferSelect;
+export type BabyVitaminLog = typeof babyVitaminLogs.$inferSelect;
+export type BabyMilkConsumption = typeof babyMilkConsumption.$inferSelect;
 
 // Insert types
 export type InsertHealthProfile = z.infer<typeof insertHealthProfileSchema>;
@@ -706,6 +765,9 @@ export type InsertBabyFeeding = z.infer<typeof insertBabyFeedingSchema>;
 export type InsertBabySleep = z.infer<typeof insertBabySleepSchema>;
 export type InsertBabyVaccination = z.infer<typeof insertBabyVaccinationSchema>;
 export type InsertBabyDevelopmentNote = z.infer<typeof insertBabyDevelopmentNoteSchema>;
+export type InsertBabyVitamin = z.infer<typeof insertBabyVitaminSchema>;
+export type InsertBabyVitaminLog = z.infer<typeof insertBabyVitaminLogSchema>;
+export type InsertBabyMilkConsumption = z.infer<typeof insertBabyMilkConsumptionSchema>;
 
 // Interface estendida para vídeos com URL
 export interface VideoWithUrl {

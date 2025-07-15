@@ -17,7 +17,9 @@ import {
   BookOpen,
   Plus,
   Edit,
-  CheckCircle
+  CheckCircle,
+  Milk,
+  Pill
 } from 'lucide-react';
 import { BabyGrowthOverview } from '@/components/baby/baby-growth-overview';
 import { BabyMeasurements } from '@/components/baby/baby-measurements';
@@ -25,6 +27,8 @@ import { BabyMilestones } from '@/components/baby/baby-milestones';
 import { BabyFeeding } from '@/components/baby/baby-feeding';
 import { BabySleep } from '@/components/baby/baby-sleep';
 import { BabyVaccinations } from '@/components/baby/baby-vaccinations';
+import { BabyVitamins } from '@/components/baby/baby-vitamins';
+import { BabyMilkConsumption } from '@/components/baby/baby-milk-consumption';
 import { BabyNotes } from '@/components/baby/baby-notes';
 import { AddBabyDialog } from '@/components/baby/add-baby-dialog';
 
@@ -194,7 +198,7 @@ export default function BabyGrowthPage() {
 
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7">
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9">
           <TabsTrigger value="overview" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.overview')}</span>
@@ -218,6 +222,14 @@ export default function BabyGrowthPage() {
           <TabsTrigger value="vaccinations" className="flex items-center gap-2">
             <Stethoscope className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.vaccinations')}</span>
+          </TabsTrigger>
+          <TabsTrigger value="vitamins" className="flex items-center gap-2">
+            <Pill className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('baby.vitamins')}</span>
+          </TabsTrigger>
+          <TabsTrigger value="milk" className="flex items-center gap-2">
+            <Milk className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('baby.milk_consumption')}</span>
           </TabsTrigger>
           <TabsTrigger value="notes" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
@@ -247,6 +259,14 @@ export default function BabyGrowthPage() {
 
         <TabsContent value="vaccinations" className="space-y-4">
           <BabyVaccinations babyId={babyData.id} />
+        </TabsContent>
+
+        <TabsContent value="vitamins" className="space-y-4">
+          <BabyVitamins babyId={babyData.id} />
+        </TabsContent>
+
+        <TabsContent value="milk" className="space-y-4">
+          <BabyMilkConsumption babyId={babyData.id} />
         </TabsContent>
 
         <TabsContent value="notes" className="space-y-4">
