@@ -126,7 +126,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold">
             {t('baby.milk_consumption')}
@@ -186,11 +186,11 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
                 <Label htmlFor="notes">Observações</Label>
                 <Textarea id="notes" placeholder="Observações adicionais" />
               </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setShowAddDialog(false)}>
+              <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
+                <Button variant="outline" onClick={() => setShowAddDialog(false)} className="w-full sm:w-auto">
                   {t('common.cancel')}
                 </Button>
-                <Button onClick={handleAddConsumption}>
+                <Button onClick={handleAddConsumption} className="w-full sm:w-auto">
                   {t('common.add')}
                 </Button>
               </div>
@@ -200,12 +200,12 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
       </div>
 
       {/* Resumo Diário */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Droplets className="h-5 w-5 text-blue-500" />
+                <Droplets className="h-5 w-5 text-primary" />
                 <span className="text-sm font-medium">{t('baby.daily_milk_goal')}</span>
               </div>
             </div>
@@ -220,7 +220,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-green-500" />
+                <TrendingUp className="h-5 w-5 text-primary" />
                 <span className="text-sm font-medium">{t('baby.total_consumed')}</span>
               </div>
             </div>
@@ -235,7 +235,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Baby className="h-5 w-5 text-orange-500" />
+                <Baby className="h-5 w-5 text-primary" />
                 <span className="text-sm font-medium">{t('baby.remaining')}</span>
               </div>
             </div>
@@ -251,7 +251,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Droplets className="h-5 w-5 text-blue-500" />
+            <Droplets className="h-5 w-5 text-primary" />
             Progresso do Dia
           </CardTitle>
         </CardHeader>
@@ -264,11 +264,12 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
             <Progress value={consumptionPercentage} className="h-3" />
             
             {/* Botões de Adição Rápida */}
-            <div className="flex gap-2 mt-4">
+            <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button 
                 variant="outline" 
                 size="sm"
                 onClick={() => handleQuickAdd(60)}
+                className="w-full sm:w-auto"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 +60ml
@@ -277,6 +278,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
                 variant="outline" 
                 size="sm"
                 onClick={() => handleQuickAdd(120)}
+                className="w-full sm:w-auto"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 +120ml
@@ -285,6 +287,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
                 variant="outline" 
                 size="sm"
                 onClick={() => handleQuickAdd(180)}
+                className="w-full sm:w-auto"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 +180ml
@@ -298,7 +301,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Clock className="h-5 w-5 text-gray-500" />
+            <Clock className="h-5 w-5 text-primary" />
             Histórico de Hoje
           </CardTitle>
         </CardHeader>
@@ -306,10 +309,10 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
           <div className="space-y-3">
             {consumptionData.map((consumption) => (
               <div key={consumption.id} className="border rounded-lg p-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="h-4 w-4 text-gray-500" />
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <Clock className="h-4 w-4 text-muted-foreground" />
                       <span className="font-medium">{consumption.time}</span>
                       <Badge variant="outline">
                         {getMilkTypeLabel(consumption.milkType)}
@@ -320,8 +323,8 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
                       {consumption.duration && ` • ${consumption.duration} min`}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-blue-600">
+                  <div className="text-right sm:text-right">
+                    <div className="text-lg font-bold text-primary">
                       {consumption.amount} ml
                     </div>
                   </div>

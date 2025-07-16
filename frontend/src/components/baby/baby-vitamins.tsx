@@ -112,7 +112,7 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold">
             {t('baby.vitamins')}
@@ -154,7 +154,7 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="startDate">{t('baby.start_date')}</Label>
                   <Input id="startDate" type="date" />
@@ -168,11 +168,11 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
                 <Label htmlFor="instructions">Instruções</Label>
                 <Textarea id="instructions" placeholder="Instruções de administração" />
               </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setShowAddDialog(false)}>
+              <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
+                <Button variant="outline" onClick={() => setShowAddDialog(false)} className="w-full sm:w-auto">
                   {t('common.cancel')}
                 </Button>
-                <Button onClick={handleAddVitamin}>
+                <Button onClick={handleAddVitamin} className="w-full sm:w-auto">
                   {t('common.add')}
                 </Button>
               </div>
@@ -185,7 +185,7 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Pill className="h-5 w-5 text-yellow-500" />
+            <Pill className="h-5 w-5 text-primary" />
             Vitaminas Ativas
           </CardTitle>
         </CardHeader>
@@ -205,7 +205,7 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
                       </p>
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                     <Badge variant="outline" className="text-green-600 border-green-600">
                       <CheckCircle className="h-3 w-3 mr-1" />
                       {vitamin.completed}/{vitamin.total}
@@ -214,6 +214,7 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
                       size="sm"
                       variant="outline"
                       onClick={() => handleMarkTaken(vitamin.id)}
+                      className="w-full sm:w-auto"
                     >
                       <Clock className="h-4 w-4 mr-1" />
                       {vitamin.nextDose}
