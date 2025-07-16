@@ -729,6 +729,10 @@
     "milk_type": "Tipo de Leite",
     "amount": "Quantidade",
     "time": "Horário",
+    "vitamins_description": "Controle as vitaminas e suplementos do bebê",
+    "milk_consumption_description": "Monitore o consumo diário de leite do bebê",
+    "no_active_vitamins": "Nenhuma vitamina ativa cadastrada",
+    "no_milk_consumption": "Nenhum consumo registrado hoje",
     "milestones": {
       "first_smile": "Primeiro sorriso",
       "holds_head_up": "Sustenta a cabeça",

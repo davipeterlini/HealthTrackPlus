@@ -705,6 +705,10 @@
     "milk_type": "Milk Type",
     "amount": "Amount",
     "time": "Time",
+    "vitamins_description": "Manage baby vitamins and supplements",
+    "milk_consumption_description": "Monitor baby's daily milk intake",
+    "no_active_vitamins": "No active vitamins registered",
+    "no_milk_consumption": "No consumption recorded today",
     "milestones": {
       "first_smile": "First smile",
       "holds_head_up": "Holds head up",

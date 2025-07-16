@@ -128,16 +128,16 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold">
             {t('baby.milk_consumption')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Monitore o consumo diário de leite do bebê
+          <p className="text-muted-foreground">
+            {t('baby.milk_consumption_description', 'Monitore o consumo diário de leite do bebê')}
           </p>
         </div>
         <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-500 hover:bg-blue-600">
+            <Button>
               <Plus className="h-4 w-4 mr-2" />
               {t('baby.add_milk_intake')}
             </Button>
@@ -211,7 +211,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
             </div>
             <div className="mt-2">
               <div className="text-2xl font-bold">{dailyGoal} ml</div>
-              <div className="text-sm text-gray-600">Meta diária</div>
+              <div className="text-sm text-muted-foreground">Meta diária</div>
             </div>
           </CardContent>
         </Card>
@@ -226,7 +226,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
             </div>
             <div className="mt-2">
               <div className="text-2xl font-bold">{todayConsumption} ml</div>
-              <div className="text-sm text-gray-600">{Math.round(consumptionPercentage)}% da meta</div>
+              <div className="text-sm text-muted-foreground">{Math.round(consumptionPercentage)}% da meta</div>
             </div>
           </CardContent>
         </Card>
@@ -241,7 +241,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
             </div>
             <div className="mt-2">
               <div className="text-2xl font-bold">{remaining} ml</div>
-              <div className="text-sm text-gray-600">Para atingir a meta</div>
+              <div className="text-sm text-muted-foreground">Para atingir a meta</div>
             </div>
           </CardContent>
         </Card>
@@ -259,7 +259,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-lg font-medium">{todayConsumption} ml de {dailyGoal} ml</span>
-              <span className="text-sm text-gray-600">{Math.round(consumptionPercentage)}%</span>
+              <span className="text-sm text-muted-foreground">{Math.round(consumptionPercentage)}%</span>
             </div>
             <Progress value={consumptionPercentage} className="h-3" />
             
@@ -315,7 +315,7 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
                         {getMilkTypeLabel(consumption.milkType)}
                       </Badge>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       {getFeedingMethodLabel(consumption.feedingMethod)}
                       {consumption.duration && ` • ${consumption.duration} min`}
                     </p>
@@ -330,9 +330,9 @@ export function BabyMilkConsumption({ babyId }: BabyMilkConsumptionProps) {
             ))}
             
             {consumptionData.length === 0 && (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <div className="text-center py-8 text-muted-foreground">
                 <Milk className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                <p>Nenhum consumo registrado hoje</p>
+                <p>{t('baby.no_milk_consumption', 'Nenhum consumo registrado hoje')}</p>
               </div>
             )}
           </div>

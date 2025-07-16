@@ -114,16 +114,16 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold">
             {t('baby.vitamins')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Controle as vitaminas e suplementos do bebê
+          <p className="text-muted-foreground">
+            {t('baby.vitamins_description', 'Controle as vitaminas e suplementos do bebê')}
           </p>
         </div>
         <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
           <DialogTrigger asChild>
-            <Button className="bg-yellow-500 hover:bg-yellow-600">
+            <Button>
               <Plus className="h-4 w-4 mr-2" />
               {t('baby.add_vitamin')}
             </Button>
@@ -196,11 +196,11 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="font-semibold text-lg">{vitamin.vitaminName}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       {vitamin.dosage} • {getFrequencyLabel(vitamin.frequency)}
                     </p>
                     {vitamin.prescribedBy && (
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-muted-foreground">
                         Prescrito por: {vitamin.prescribedBy}
                       </p>
                     )}
@@ -222,7 +222,7 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
                 </div>
                 
                 <div className="mb-3">
-                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  <div className="flex justify-between text-sm text-muted-foreground mb-1">
                     <span>Progresso</span>
                     <span>{Math.round((vitamin.completed / vitamin.total) * 100)}%</span>
                   </div>
@@ -241,9 +241,9 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
             ))}
             
             {activeVitamins.length === 0 && (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <div className="text-center py-8 text-muted-foreground">
                 <Pill className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                <p>Nenhuma vitamina ativa cadastrada</p>
+                <p>{t('baby.no_active_vitamins', 'Nenhuma vitamina ativa cadastrada')}</p>
               </div>
             )}
           </div>
@@ -262,11 +262,11 @@ export function BabyVitamins({ babyId }: BabyVitaminsProps) {
           <CardContent>
             <div className="space-y-3">
               {completedVitamins.map((vitamin) => (
-                <div key={vitamin.id} className="border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+                <div key={vitamin.id} className="border rounded-lg p-4 bg-muted/50">
                   <div className="flex justify-between items-center">
                     <div>
                       <h3 className="font-semibold">{vitamin.vitaminName}</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         {vitamin.dosage} • {getFrequencyLabel(vitamin.frequency)}
                       </p>
                     </div>
