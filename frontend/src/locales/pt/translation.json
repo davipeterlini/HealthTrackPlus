@@ -19,7 +19,8 @@
     "profile": "Perfil",
     "settings": "Configurações",
     "help": "Ajuda",
-    "logout": "Sair"
+    "logout": "Sair",
+    "pregnancy": "Gravidez"
   },
   "activity": {
     "title": "Atividade Física",
@@ -737,6 +738,101 @@
       "first_smile": "Primeiro sorriso",
       "holds_head_up": "Sustenta a cabeça",
       "rolls_over": "Rola"
+    }
+  },
+  
+  "pregnancy": {
+    "title": "Gestação",
+    "subtitle": "Acompanhe sua gravidez semana a semana",
+    "current_week": "Semana Atual",
+    "current_day": "Dia Atual",
+    "weeks": "semanas",
+    "days": "dias",
+    "baby_evolution": "Evolução do Bebê",
+    "baby_size": "Tamanho do Bebê",
+    "baby_weight": "Peso do Bebê",
+    "baby_development": "Desenvolvimento do Bebê",
+    "maternal_changes": "Mudanças Maternas",
+    "tips": "Dicas",
+    "vitamins": "Vitaminas",
+    "exams": "Exames",
+    "alerts": "Alertas",
+    "evolution": {
+      "title": "Evolução Gestacional",
+      "description": "Veja como seu bebê está se desenvolvendo",
+      "development_milestones": "Marcos de Desenvolvimento",
+      "weeks_completed": "semanas completas",
+      "days_in_week": "dias na semana"
+    },
+    "tips": {
+      "title": "Dicas para uma Gravidez Saudável",
+      "nutrition": "Nutrição",
+      "exercise": "Exercício",
+      "health": "Saúde",
+      "preparation": "Preparação",
+      "importance": {
+        "high": "Alta",
+        "medium": "Média",
+        "low": "Baixa"
+      }
+    },
+    "vitamins": {
+      "title": "Vitaminas da Gravidez",
+      "description": "Controle suas vitaminas e suplementos",
+      "essential": "Essencial",
+      "recommended": "Recomendado",
+      "optional": "Opcional",
+      "prenatal": "Pré-natal",
+      "specific_deficiency": "Deficiência Específica",
+      "general_health": "Saúde Geral",
+      "add_vitamin": "Adicionar Vitamina",
+      "vitamin_name": "Nome da Vitamina",
+      "dosage": "Dosagem",
+      "frequency": "Frequência",
+      "prescribed_by": "Prescrito por",
+      "reminder_times": "Horários de Lembrete",
+      "taken": "Tomado",
+      "skipped": "Pulado",
+      "no_vitamins": "Nenhuma vitamina cadastrada"
+    },
+    "exams": {
+      "title": "Exames da Gravidez",
+      "description": "Acompanhe seus exames e consultas",
+      "scheduled": "Agendado",
+      "completed": "Concluído",
+      "missed": "Perdido",
+      "rescheduled": "Reagendado",
+      "ultrasound": "Ultrassom",
+      "blood_test": "Exame de Sangue",
+      "urine_test": "Exame de Urina",
+      "glucose_test": "Teste de Glicose",
+      "priority": {
+        "low": "Baixa",
+        "normal": "Normal",
+        "high": "Alta",
+        "urgent": "Urgente"
+      },
+      "add_exam": "Adicionar Exame",
+      "exam_name": "Nome do Exame",
+      "exam_type": "Tipo de Exame",
+      "scheduled_date": "Data Agendada",
+      "location": "Local",
+      "doctor_name": "Nome do Médico",
+      "alert_days_before": "Alertar X dias antes",
+      "abnormal_results": "Resultados Anormais",
+      "requires_follow_up": "Requer acompanhamento",
+      "no_exams": "Nenhum exame agendado"
+    },
+    "alerts": {
+      "title": "Alertas e Notificações",
+      "exam_reminder": "Lembrete de Exame",
+      "exam_overdue": "Exame em Atraso",
+      "abnormal_results": "Resultados Anormais",
+      "follow_up_needed": "Acompanhamento Necessário",
+      "vitamin_reminder": "Lembrete de Vitamina",
+      "mark_as_read": "Marcar como Lido",
+      "dismiss": "Descartar",
+      "no_alerts": "Nenhum alerta ativo"
     }
   },
   

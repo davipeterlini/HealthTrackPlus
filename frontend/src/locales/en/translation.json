@@ -19,7 +19,8 @@
     "profile": "Profile",
     "settings": "Settings",
     "help": "Help",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "pregnancy": "Pregnancy"
   },
   "activity": {
     "title": "Physical Activity",
@@ -713,6 +714,101 @@
       "first_smile": "First smile",
       "holds_head_up": "Holds head up",
       "rolls_over": "Rolls over"
+    }
+  },
+  
+  "pregnancy": {
+    "title": "Pregnancy",
+    "subtitle": "Track your pregnancy week by week",
+    "current_week": "Current Week",
+    "current_day": "Current Day",
+    "weeks": "weeks",
+    "days": "days",
+    "baby_evolution": "Baby Evolution",
+    "baby_size": "Baby Size",
+    "baby_weight": "Baby Weight",
+    "baby_development": "Baby Development",
+    "maternal_changes": "Maternal Changes",
+    "tips": "Tips",
+    "vitamins": "Vitamins",
+    "exams": "Exams",
+    "alerts": "Alerts",
+    "evolution": {
+      "title": "Pregnancy Evolution",
+      "description": "See how your baby is developing",
+      "development_milestones": "Development Milestones",
+      "weeks_completed": "weeks completed",
+      "days_in_week": "days in week"
+    },
+    "tips": {
+      "title": "Tips for a Healthy Pregnancy",
+      "nutrition": "Nutrition",
+      "exercise": "Exercise",
+      "health": "Health",
+      "preparation": "Preparation",
+      "importance": {
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    },
+    "vitamins": {
+      "title": "Pregnancy Vitamins",
+      "description": "Manage your vitamins and supplements",
+      "essential": "Essential",
+      "recommended": "Recommended",
+      "optional": "Optional",
+      "prenatal": "Prenatal",
+      "specific_deficiency": "Specific Deficiency",
+      "general_health": "General Health",
+      "add_vitamin": "Add Vitamin",
+      "vitamin_name": "Vitamin Name",
+      "dosage": "Dosage",
+      "frequency": "Frequency",
+      "prescribed_by": "Prescribed By",
+      "reminder_times": "Reminder Times",
+      "taken": "Taken",
+      "skipped": "Skipped",
+      "no_vitamins": "No vitamins registered"
+    },
+    "exams": {
+      "title": "Pregnancy Exams",
+      "description": "Track your exams and appointments",
+      "scheduled": "Scheduled",
+      "completed": "Completed",
+      "missed": "Missed",
+      "rescheduled": "Rescheduled",
+      "ultrasound": "Ultrasound",
+      "blood_test": "Blood Test",
+      "urine_test": "Urine Test",
+      "glucose_test": "Glucose Test",
+      "priority": {
+        "low": "Low",
+        "normal": "Normal",
+        "high": "High",
+        "urgent": "Urgent"
+      },
+      "add_exam": "Add Exam",
+      "exam_name": "Exam Name",
+      "exam_type": "Exam Type",
+      "scheduled_date": "Scheduled Date",
+      "location": "Location",
+      "doctor_name": "Doctor Name",
+      "alert_days_before": "Alert X days before",
+      "abnormal_results": "Abnormal Results",
+      "requires_follow_up": "Requires Follow Up",
+      "no_exams": "No exams scheduled"
+    },
+    "alerts": {
+      "title": "Alerts and Notifications",
+      "exam_reminder": "Exam Reminder",
+      "exam_overdue": "Exam Overdue",
+      "abnormal_results": "Abnormal Results",
+      "follow_up_needed": "Follow Up Needed",
+      "vitamin_reminder": "Vitamin Reminder",
+      "mark_as_read": "Mark as Read",
+      "dismiss": "Dismiss",
+      "no_alerts": "No active alerts"
     }
   },
   

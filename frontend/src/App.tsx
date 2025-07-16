@@ -21,6 +21,7 @@ import SubscriptionPage from "@/pages/subscription-page";
 import NotificationsPage from "@/pages/notifications-page";
 import { HealthPlanSetup } from "@/pages/health-plan-setup";
 import BabyGrowthPage from "@/pages/baby-growth-page";
+import PregnancyPage from "@/pages/pregnancy-page";
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
@@ -45,6 +46,7 @@ function Router(): ReactElement {
       <ProtectedRoute path="/womens-health" component={WomensHealthPage} />
       <ProtectedRoute path="/fasting" component={FastingPage} />
       <ProtectedRoute path="/baby-growth" component={BabyGrowthPage} />
+      <ProtectedRoute path="/pregnancy" component={PregnancyPage} />
       <ProtectedRoute path="/health-plan-setup" component={HealthPlanSetup} />
       <ProtectedRoute path="/subscription" component={SubscriptionPage} />
       <ProtectedRoute path="/notifications" component={NotificationsPage} />

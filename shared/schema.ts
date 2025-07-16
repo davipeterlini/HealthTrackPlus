@@ -335,12 +335,104 @@ export const pregnancyTracking = pgTable("pregnancy_tracking", {
   dueDate: timestamp("due_date").notNull(),
   lastPeriod: timestamp("last_period"),
   currentWeek: integer("current_week"),
+  currentDay: integer("current_day"),
   symptoms: text("symptoms").array(),
   notes: text("notes"),
   appointments: json("appointments"),
   weightGain: integer("weight_gain"),
   babySize: text("baby_size"),
   babyMovements: boolean("baby_movements"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const pregnancyEvolution = pgTable("pregnancy_evolution", {
+  id: serial("id").primaryKey(),
+  week: integer("week").notNull(),
+  day: integer("day").notNull(),
+  babySize: text("baby_size").notNull(),
+  babyWeight: text("baby_weight").notNull(),
+  babyDescription: text("baby_description").notNull(),
+  maternalChanges: text("maternal_changes").notNull(),
+  tips: text("tips").array(),
+  imageUrl: text("image_url"),
+  developmentMilestones: text("development_milestones").array(),
+});
+
+export const pregnancyTips = pgTable("pregnancy_tips", {
+  id: serial("id").primaryKey(),
+  week: integer("week").notNull(),
+  category: text("category").notNull(), // nutrition, exercise, health, preparation
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  importance: text("importance").notNull(), // low, medium, high
+  iconName: text("icon_name"),
+});
+
+export const pregnancyVitamins = pgTable("pregnancy_vitamins", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  pregnancyId: integer("pregnancy_id").notNull().references(() => pregnancyTracking.id),
+  vitaminName: text("vitamin_name").notNull(),
+  dosage: text("dosage").notNull(),
+  frequency: text("frequency").notNull(),
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date"),
+  prescribedBy: text("prescribed_by"),
+  importance: text("importance").notNull(), // essential, recommended, optional
+  category: text("category").notNull(), // prenatal, specific_deficiency, general_health
+  reminderEnabled: boolean("reminder_enabled").default(true),
+  reminderTimes: json("reminder_times"),
+  notes: text("notes"),
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const pregnancyVitaminLogs = pgTable("pregnancy_vitamin_logs", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  vitaminId: integer("vitamin_id").notNull().references(() => pregnancyVitamins.id),
+  date: timestamp("date").notNull(),
+  time: timestamp("time").notNull(),
+  taken: boolean("taken").notNull(),
+  skipped: boolean("skipped").default(false),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const pregnancyExams = pgTable("pregnancy_exams", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  pregnancyId: integer("pregnancy_id").notNull().references(() => pregnancyTracking.id),
+  examName: text("exam_name").notNull(),
+  examType: text("exam_type").notNull(), // ultrasound, blood_test, urine_test, glucose_test
+  scheduledDate: timestamp("scheduled_date").notNull(),
+  completedDate: timestamp("completed_date"),
+  location: text("location"),
+  doctorName: text("doctor_name"),
+  results: json("results"),
+  status: text("status").notNull().default("scheduled"), // scheduled, completed, missed, rescheduled
+  priority: text("priority").notNull().default("normal"), // low, normal, high, urgent
+  notes: text("notes"),
+  alertEnabled: boolean("alert_enabled").default(true),
+  alertDaysBefore: integer("alert_days_before").default(3),
+  fileUrl: text("file_url"),
+  abnormalResults: boolean("abnormal_results").default(false),
+  requiresFollowUp: boolean("requires_follow_up").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const pregnancyExamAlerts = pgTable("pregnancy_exam_alerts", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  examId: integer("exam_id").notNull().references(() => pregnancyExams.id),
+  alertType: text("alert_type").notNull(), // reminder, overdue, abnormal_results, follow_up
+  alertDate: timestamp("alert_date").notNull(),
+  message: text("message").notNull(),
+  read: boolean("read").default(false),
+  dismissed: boolean("dismissed").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Tabela para acompanhamento de crescimento e evolução do bebê
@@ -645,10 +737,6 @@ export const insertFertilityTrackingSchema = createInsertSchema(fertilityTrackin
   id: true,
 });
 
-export const insertPregnancyTrackingSchema = createInsertSchema(pregnancyTracking).omit({
-  id: true,
-});
-
 export const insertHealthInsightSchema = createInsertSchema(healthInsights).omit({
   id: true,
 });
@@ -718,6 +806,41 @@ export const insertBabyMilkConsumptionSchema = createInsertSchema(babyMilkConsum
   createdAt: true,
 });
 
+export const insertPregnancyTrackingSchema = createInsertSchema(pregnancyTracking).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPregnancyEvolutionSchema = createInsertSchema(pregnancyEvolution).omit({
+  id: true,
+});
+
+export const insertPregnancyTipsSchema = createInsertSchema(pregnancyTips).omit({
+  id: true,
+});
+
+export const insertPregnancyVitaminSchema = createInsertSchema(pregnancyVitamins).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPregnancyVitaminLogSchema = createInsertSchema(pregnancyVitaminLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPregnancyExamSchema = createInsertSchema(pregnancyExams).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPregnancyExamAlertSchema = createInsertSchema(pregnancyExamAlerts).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -754,6 +877,12 @@ export type BabyDevelopmentNote = typeof babyDevelopmentNotes.$inferSelect;
 export type BabyVitamin = typeof babyVitamins.$inferSelect;
 export type BabyVitaminLog = typeof babyVitaminLogs.$inferSelect;
 export type BabyMilkConsumption = typeof babyMilkConsumption.$inferSelect;
+export type PregnancyEvolution = typeof pregnancyEvolution.$inferSelect;
+export type PregnancyTips = typeof pregnancyTips.$inferSelect;
+export type PregnancyVitamin = typeof pregnancyVitamins.$inferSelect;
+export type PregnancyVitaminLog = typeof pregnancyVitaminLogs.$inferSelect;
+export type PregnancyExam = typeof pregnancyExams.$inferSelect;
+export type PregnancyExamAlert = typeof pregnancyExamAlerts.$inferSelect;
 
 // Insert types
 export type InsertHealthProfile = z.infer<typeof insertHealthProfileSchema>;
@@ -768,6 +897,13 @@ export type InsertBabyDevelopmentNote = z.infer<typeof insertBabyDevelopmentNote
 export type InsertBabyVitamin = z.infer<typeof insertBabyVitaminSchema>;
 export type InsertBabyVitaminLog = z.infer<typeof insertBabyVitaminLogSchema>;
 export type InsertBabyMilkConsumption = z.infer<typeof insertBabyMilkConsumptionSchema>;
+export type InsertPregnancyTracking = z.infer<typeof insertPregnancyTrackingSchema>;
+export type InsertPregnancyEvolution = z.infer<typeof insertPregnancyEvolutionSchema>;
+export type InsertPregnancyTips = z.infer<typeof insertPregnancyTipsSchema>;
+export type InsertPregnancyVitamin = z.infer<typeof insertPregnancyVitaminSchema>;
+export type InsertPregnancyVitaminLog = z.infer<typeof insertPregnancyVitaminLogSchema>;
+export type InsertPregnancyExam = z.infer<typeof insertPregnancyExamSchema>;
+export type InsertPregnancyExamAlert = z.infer<typeof insertPregnancyExamAlertSchema>;
 
 // Interface estendida para vídeos com URL
 export interface VideoWithUrl {

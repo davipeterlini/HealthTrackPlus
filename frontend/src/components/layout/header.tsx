@@ -7,7 +7,7 @@ import { NotificationsDropdown } from '../notifications-dropdown';
 import { DevModeHeaderToggle } from '../dev-mode-header-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
-import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown } from "lucide-react";
+import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown, Heart, Baby } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -102,6 +102,18 @@ const getNavItems = (t: any, settings: any = {}) => {
       path: "/fasting", 
       label: t('navigation.fasting', 'Jejum'), 
       icon: Timer, 
+      show: true 
+    },
+    { 
+      path: "/baby-growth", 
+      label: t('navigation.baby', 'Bebê'), 
+      icon: Baby, 
+      show: true 
+    },
+    { 
+      path: "/pregnancy", 
+      label: t('navigation.pregnancy', 'Gravidez'), 
+      icon: Heart, 
       show: true 
     }
   ];
