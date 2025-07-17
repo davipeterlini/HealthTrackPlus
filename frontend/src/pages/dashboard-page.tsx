@@ -697,6 +697,18 @@ export default function DashboardPage() {
           </Card>
         </Link>
 
+        <Link to="/pregnancy">
+          <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-pink-50 to-purple-100 dark:from-pink-900/30 dark:to-purple-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+            <div className="flex flex-col items-center text-center">
+              <div className="p-2 sm:p-3 mb-2 rounded-full bg-pink-500/10 dark:bg-pink-500/20">
+                <Heart className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-pink-500 dark:text-pink-400" />
+              </div>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-800 dark:text-white">{t('navigation.pregnancy')}</h3>
+              <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5 hidden md:block">{t('pregnancy.subtitle')}</p>
+            </div>
+          </Card>
+        </Link>
+
         <Link to="/exams">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-cyan-50 to-cyan-100 dark:from-cyan-900/30 dark:to-cyan-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">
