@@ -11,6 +11,11 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
+    // Safe way to check for browser environment
+    if (typeof window === "undefined") {
+      return "light";
+    }
+    
     // Check if there's a saved theme in localStorage
     const savedTheme = localStorage.getItem("theme");
     

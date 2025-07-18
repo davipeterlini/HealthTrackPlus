@@ -35,7 +35,7 @@ export function MainLayout({
       </main>
       
       <MobileNav />
-      <MedicalChat />
+      {/* <MedicalChat /> */}
     </div>
   );
 }
