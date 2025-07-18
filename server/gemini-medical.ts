@@ -45,7 +45,6 @@ export interface ChatMessage {
 }
 
 export class MedicalAI {
-  private model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
   private getSystemPrompt(): string {
     return `Você é Dr. Gemma, um assistente médico virtual especializado em medicina preventiva e análise de dados de saúde. Você tem acesso aos dados de saúde do usuário e pode fornecer insights personalizados.
@@ -111,9 +110,12 @@ Usuário: ${userMessage}
 
 Dr. Gemma:`;
 
-      const result = await this.model.generateContent(fullPrompt);
-      const response = result.response;
-      return response.text() || "Desculpe, não consegui processar sua solicitação no momento.";
+      const result = await genAI.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: fullPrompt,
+      });
+      
+      return result.text || "Desculpe, não consegui processar sua solicitação no momento.";
     } catch (error) {
       console.error('Erro ao gerar resposta médica:', error);
       return "Desculpe, ocorreu um erro ao processar sua solicitação. Tente novamente em alguns instantes.";
@@ -136,8 +138,12 @@ Forneça uma análise detalhada incluindo:
 
 Mantenha um tom profissional mas acessível.`;
 
-      const result = await this.model.generateContent(prompt);
-      return result.response.text() || "Não foi possível analisar os dados no momento.";
+      const result = await genAI.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+      
+      return result.text || "Não foi possível analisar os dados no momento.";
     } catch (error) {
       console.error('Erro ao analisar dados de saúde:', error);
       return "Erro ao analisar os dados de saúde. Tente novamente mais tarde.";

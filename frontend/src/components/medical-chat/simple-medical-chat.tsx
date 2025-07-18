@@ -159,7 +159,7 @@ export const SimpleMedicalChat = () => {
           <Button
             onClick={toggleChat}
             size="lg"
-            className="rounded-full w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
+            className="rounded-full w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <Stethoscope className="h-6 w-6 text-white" />
           </Button>
@@ -168,10 +168,18 @@ export const SimpleMedicalChat = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-2rem)]">
-          <Card className="h-full flex flex-col bg-white dark:bg-gray-900 shadow-2xl border-0">
+        <>
+          {/* Mobile Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            onClick={toggleChat}
+          />
+          
+          {/* Chat Container */}
+          <div className="fixed inset-0 md:inset-auto md:bottom-6 md:right-6 z-50 md:w-96 md:max-w-[calc(100vw-2rem)] md:h-[600px] md:max-h-[calc(100vh-2rem)]">
+            <Card className="h-full flex flex-col bg-white dark:bg-gray-900 shadow-2xl border-0 md:rounded-lg">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
+            <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white md:rounded-t-lg">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                   <Stethoscope className="h-5 w-5" />
@@ -203,7 +211,7 @@ export const SimpleMedicalChat = () => {
 
             {/* Quick Actions */}
             <div className="p-3 border-b bg-gray-50 dark:bg-gray-800">
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap justify-center md:justify-start">
                 <Button
                   variant="outline"
                   size="sm"
@@ -228,7 +236,7 @@ export const SimpleMedicalChat = () => {
             </div>
 
             {/* Messages */}
-            <ScrollArea className="flex-1 p-4" ref={scrollRef}>
+            <ScrollArea className="flex-1 p-2 md:p-4" ref={scrollRef}>
               <div className="space-y-4">
                 {messages.map((message) => (
                   <div
@@ -300,7 +308,7 @@ export const SimpleMedicalChat = () => {
             )}
 
             {/* Input */}
-            <div className="p-4 border-t bg-gray-50 dark:bg-gray-800">
+            <div className="p-3 md:p-4 border-t bg-gray-50 dark:bg-gray-800">
               <div className="flex gap-2">
                 <Input
                   ref={inputRef}
@@ -323,8 +331,9 @@ export const SimpleMedicalChat = () => {
                 💡 Dica: Use o botão "Analisar Saúde" para insights personalizados
               </p>
             </div>
-          </Card>
-        </div>
+            </Card>
+          </div>
+        </>
       )}
     </>
   );
