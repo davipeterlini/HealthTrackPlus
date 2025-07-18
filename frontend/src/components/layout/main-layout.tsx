@@ -1,5 +1,6 @@
 import { Header } from "./header";
 import { MobileNav } from "./mobile-nav";
+import { MedicalChat } from "@/components/medical-chat/medical-chat";
 import { ReactNode } from "react";
 
 interface MainLayoutProps {
@@ -34,6 +35,7 @@ export function MainLayout({
       </main>
       
       <MobileNav />
+      <MedicalChat />
     </div>
   );
 }

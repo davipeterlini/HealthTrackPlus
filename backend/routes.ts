@@ -1491,6 +1491,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Medical Chat Routes
+  app.post("/api/medical-chat/message", async (req, res) => {
+    try {
+      const { message, chatHistory } = req.body;
+      
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ error: "Message is required" });
+      }
+
+      // Import medical AI module
+      const { medicalAI } = await import('../server/gemini-medical');
+      
+      // Get user health data (mock for now - in real implementation, fetch from database)
+      let userHealthData = null;
+      
+      if (req.isAuthenticated()) {
+        const userId = (req.user as Express.User).id;
+        // Fetch user's health data from database
+        // For now, we'll use mock data
+        userHealthData = {
+          activities: {
+            steps: 8500,
+            calories: 2200,
+            activeMinutes: 45
+          },
+          sleep: {
+            duration: 7.5,
+            quality: "good"
+          },
+          hydration: {
+            current: 1800,
+            goal: 2500
+          },
+          mentalHealth: {
+            mood: "good",
+            stress: 3
+          }
+        };
+      }
+
+      const response = await medicalAI.generateResponse(
+        message,
+        chatHistory || [],
+        userHealthData
+      );
+
+      res.json({ 
+        response,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Medical chat error:', error);
+      res.status(500).json({ 
+        error: "Erro ao processar mensagem. Tente novamente." 
+      });
+    }
+  });
+
+  app.post("/api/medical-chat/analyze-health", async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ error: "Authentication required" });
+      }
+
+      const userId = (req.user as Express.User).id;
+      
+      // Import medical AI module
+      const { medicalAI } = await import('../server/gemini-medical');
+      
+      // Fetch user's comprehensive health data
+      // For now, we'll use mock data
+      const userHealthData = {
+        activities: {
+          steps: 8500,
+          calories: 2200,
+          activeMinutes: 45
+        },
+        sleep: {
+          duration: 7.5,
+          quality: "good"
+        },
+        nutrition: {
+          calories: 2000,
+          meals: ["Café da manhã", "Almoço", "Jantar"]
+        },
+        hydration: {
+          current: 1800,
+          goal: 2500
+        },
+        mentalHealth: {
+          mood: "good",
+          stress: 3
+        },
+        vitals: {
+          heartRate: 75,
+          weight: 70
+        }
+      };
+
+      const analysis = await medicalAI.analyzeHealthData(userHealthData);
+
+      res.json({ 
+        analysis,
+        timestamp: new Date().toISOString(),
+        userData: userHealthData
+      });
+    } catch (error) {
+      console.error('Health analysis error:', error);
+      res.status(500).json({ 
+        error: "Erro ao analisar dados de saúde. Tente novamente." 
+      });
+    }
+  });
+
   // Add test route
   app.get('/api/test', (req, res) => {
     res.json({ message: 'Server is running!' });

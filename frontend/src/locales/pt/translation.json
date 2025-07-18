@@ -836,6 +836,30 @@
     }
   },
   
+  "medicalChat": {
+    "title": "Chat Médico",
+    "subtitle": "Assistente médico virtual com IA",
+    "drGemma": "Dr. Gemma",
+    "assistantDescription": "Assistente Médico IA",
+    "placeholder": "Digite sua pergunta médica...",
+    "analyzeHealth": "Analisar Saúde",
+    "tips": "Dicas",
+    "clearChat": "Limpar Chat",
+    "thinking": "Pensando...",
+    "tip": "Dica: Use o botão 'Analisar Saúde' para insights personalizados",
+    "greeting": "Olá! Sou Dr. Gemma, seu assistente médico virtual. Como posso ajudá-lo hoje? Posso responder perguntas sobre saúde, analisar seus dados de atividade e fornecer orientações personalizadas.",
+    "errorSending": "Erro ao enviar mensagem. Tente novamente.",
+    "errorAnalyzing": "Erro ao analisar dados de saúde. Tente novamente.",
+    "disclaimer": "💡 Importante: As respostas são para fins educativos. Consulte um médico para diagnósticos e tratamentos.",
+    "quickActions": {
+      "analyzeHealth": "Analisar Saúde",
+      "getTips": "Como posso melhorar minha saúde?",
+      "symptoms": "Sintomas",
+      "nutrition": "Nutrição",
+      "exercise": "Exercício"
+    }
+  },
+  
   "common": {
     "edit": "Editar",
     "save": "Salvar",
