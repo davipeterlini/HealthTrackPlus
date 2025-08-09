@@ -179,13 +179,13 @@ export function ContextualTipsOverlay({
   const getTipBackground = (priority: string) => {
     switch (priority) {
       case 'high':
-        return 'bg-gradient-to-r from-red-50 to-orange-50 border-red-200';
+        return 'bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border-red-200 dark:border-red-700';
       case 'medium':
-        return 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-200';
+        return 'bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 border-yellow-200 dark:border-yellow-700';
       case 'low':
-        return 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200';
+        return 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-700';
       default:
-        return 'bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200';
+        return 'bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-800 dark:to-slate-800 border-gray-200 dark:border-gray-700';
     }
   };
 
@@ -198,18 +198,23 @@ export function ContextualTipsOverlay({
       {/* Floating Tip Indicator */}
       {!showOverlay && activeTip && (
         <div 
-          className="fixed bottom-20 right-4 z-50 cursor-pointer animate-bounce"
+          className="fixed bottom-20 md:bottom-6 right-4 z-50 cursor-pointer transform transition-transform hover:scale-110"
           onClick={() => {
             setShowOverlay(true);
             setShowTipHistory(true);
           }}
         >
           <div className="relative">
-            <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
-              <Brain className="h-6 w-6 text-white" />
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow">
+              <Brain className="h-6 w-6 md:h-7 md:w-7 text-white" />
             </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-              <span className="text-xs text-white font-bold">!</span>
+            <div className={`absolute -top-1 -right-1 w-5 h-5 ${
+              activeTip.priority === 'high' ? 'bg-red-500' : 
+              activeTip.priority === 'medium' ? 'bg-yellow-500' : 'bg-blue-500'
+            } rounded-full flex items-center justify-center animate-pulse`}>
+              <span className="text-xs text-white font-bold">
+                {tipHistory.length}
+              </span>
             </div>
           </div>
         </div>
@@ -222,19 +227,25 @@ export function ContextualTipsOverlay({
           setShowTipHistory(false);
         }
       }}>
-        <DialogContent className={`max-w-md ${getTipBackground(activeTip.priority)} dark:bg-[#1a2127] dark:border-gray-700`}>
-          <DialogHeader>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {getTipIcon(activeTip.type)}
-                <DialogTitle className="text-lg font-semibold dark:text-white">
+        <DialogContent className={`w-[95vw] max-w-md mx-auto ${getTipBackground(activeTip.priority)} border-2 shadow-2xl rounded-2xl overflow-hidden`}>
+          <DialogHeader className="pb-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3 flex-1">
+                <div className="flex-shrink-0">
+                  {getTipIcon(activeTip.type)}
+                </div>
+                <DialogTitle className="text-base md:text-lg font-semibold text-gray-800 dark:text-white leading-tight">
                   {activeTip.title}
                 </DialogTitle>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <Badge 
-                  variant={activeTip.priority === 'high' ? 'destructive' : 'secondary'}
-                  className="text-xs"
+                  variant={activeTip.priority === 'high' ? 'destructive' : activeTip.priority === 'medium' ? 'default' : 'secondary'}
+                  className={`text-xs font-medium px-2 py-1 ${
+                    activeTip.priority === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300' :
+                    activeTip.priority === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300' :
+                    'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                  }`}
                 >
                   {activeTip.priority.toUpperCase()}
                 </Badge>
@@ -245,31 +256,37 @@ export function ContextualTipsOverlay({
                     handleDismissTip(activeTip.id);
                     setShowTipHistory(false);
                   }}
-                  className="h-6 w-6 p-0"
+                  className="h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                 </Button>
               </div>
             </div>
           </DialogHeader>
 
-          <CardContent className="p-0 space-y-4">
-            <div className="space-y-3">
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+          <div className="space-y-4">
+            <div className="space-y-4">
+              <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                 {activeTip.message}
               </p>
 
               {activeTip.contextData && (
-                <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 space-y-2">
-                  <h4 className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-                    {t('aiTips.context', 'Contexto')}
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 border border-gray-200/50 dark:border-gray-600/50">
+                  <h4 className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3">
+                    {t('aiTips.context', 'CONTEXTO')}
                   </h4>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                     {activeTip.contextData.currentActivity && (
-                      <p>• {t('aiTips.currentActivity', 'Atividade atual')}: {activeTip.contextData.currentActivity}</p>
+                      <p className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span><strong>{t('aiTips.currentActivity', 'Atividade atual')}:</strong> {activeTip.contextData.currentActivity}</span>
+                      </p>
                     )}
                     {activeTip.contextData.timeBasedInsight && (
-                      <p>• {activeTip.contextData.timeBasedInsight}</p>
+                      <p className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>{activeTip.contextData.timeBasedInsight}</span>
+                      </p>
                     )}
                   </div>
                 </div>
@@ -278,9 +295,9 @@ export function ContextualTipsOverlay({
 
             {/* Action Buttons */}
             {activeTip.actions && activeTip.actions.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {t('aiTips.suggestedActions', 'Ações Sugeridas')}
+              <div className="space-y-3">
+                <h4 className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                  {t('aiTips.suggestedActions', 'AÇÕES SUGERIDAS')}
                 </h4>
                 <div className="flex flex-col gap-2">
                   {activeTip.actions.map((action, index) => (
@@ -289,11 +306,15 @@ export function ContextualTipsOverlay({
                       variant={action.primary ? "default" : "outline"}
                       size="sm"
                       onClick={() => handleTipAction(action.action)}
-                      className="justify-between"
+                      className={`justify-between h-12 px-4 rounded-xl font-medium transition-all ${
+                        action.primary 
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl' 
+                          : 'border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                      }`}
                       disabled={actionTipMutation.isPending}
                     >
-                      <span>{action.label}</span>
-                      <ChevronRight className="h-4 w-4" />
+                      <span className="text-sm">{action.label}</span>
+                      <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>
                   ))}
                 </div>
@@ -301,12 +322,12 @@ export function ContextualTipsOverlay({
             )}
 
             {/* Quick Actions */}
-            <div className="flex justify-between pt-2 border-t border-white/20">
+            <div className="flex justify-between items-center pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleDismissTip(activeTip.id)}
-                className="text-gray-600"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-2"
               >
                 {t('aiTips.dismiss', 'Dispensar')}
               </Button>
@@ -315,42 +336,61 @@ export function ContextualTipsOverlay({
                 size="sm"
                 onClick={() => generateTipMutation.mutate({})}
                 disabled={generateTipMutation.isPending}
-                className="text-purple-600"
+                className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg px-3 py-2 font-medium"
               >
-                <Sparkles className="h-4 w-4 mr-1" />
+                <Sparkles className="h-4 w-4 mr-2" />
                 {t('aiTips.moreTips', 'Mais Dicas')}
               </Button>
             </div>
-          </CardContent>
+          </div>
         </DialogContent>
       </Dialog>
 
       {/* Tips History Sidebar (Optional) */}
       {tipHistory.length > 0 && showTipHistory && (
-        <div className="fixed top-20 right-4 z-40">
-          <Card className="w-64 max-h-96 overflow-hidden shadow-lg">
-            <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-              <h3 className="font-medium text-sm">
-                {t('aiTips.recentTips', 'Dicas Recentes')}
-              </h3>
+        <div className="fixed top-4 md:top-20 right-4 z-40 w-[90vw] md:w-80">
+          <Card className="max-h-[70vh] md:max-h-96 overflow-hidden shadow-2xl border-0 rounded-2xl backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
+            <div className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-sm md:text-base">
+                  {t('aiTips.recentTips', 'Dicas Recentes')}
+                </h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowTipHistory(false)}
+                  className="h-8 w-8 p-0 text-white hover:bg-white/20 rounded-full"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <div className="max-h-80 overflow-y-auto">
               {tipHistory.slice(0, 5).map((tip, index) => (
                 <div 
                   key={tip.id}
-                  className="p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                  className="p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
                   onClick={() => {
                     setActiveTip(tip);
                     setShowOverlay(true);
                   }}
                 >
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-3 mb-2">
                     {getTipIcon(tip.type)}
-                    <span className="text-sm font-medium truncate">{tip.title}</span>
+                    <span className="text-sm font-medium truncate text-gray-800 dark:text-gray-200 flex-1">{tip.title}</span>
+                    <Badge 
+                      variant={tip.priority === 'high' ? 'destructive' : 'secondary'}
+                      className="text-xs"
+                    >
+                      {tip.priority}
+                    </Badge>
                   </div>
-                  <p className="text-xs text-gray-600 line-clamp-2">{tip.message}</p>
-                  <span className="text-xs text-gray-400 mt-1">
-                    {new Date(tip.timestamp).toLocaleTimeString()}
+                  <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed mb-1">{tip.message}</p>
+                  <span className="text-xs text-gray-400 dark:text-gray-500">
+                    {new Date(tip.timestamp).toLocaleTimeString('pt-BR', {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
                   </span>
                 </div>
               ))}
