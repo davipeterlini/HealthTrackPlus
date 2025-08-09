@@ -144,8 +144,13 @@ export function Header() {
       .slice(0, 2);
   };
 
-  const handleLogout = () => {
-    logoutMutation.mutate();
+  const handleLogout = async () => {
+    try {
+      await logoutMutation.mutateAsync();
+    } catch (error) {
+      // Error is already handled in the mutation
+      console.warn("Logout error handled:", error);
+    }
   };
 
   // Função para determinar se a tela é menor que determinado tamanho
