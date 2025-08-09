@@ -28,6 +28,7 @@
     "mobile:clean": "chmod +x scripts/mobile-build-and-run.sh && ./scripts/mobile-build-and-run.sh clean"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
     "@capacitor/android": "^7.2.0",
     "@capacitor/app": "^7.0.1",
     "@capacitor/browser": "^7.0.1",
@@ -44,6 +45,7 @@
     "@capacitor/share": "^7.0.1",
     "@capacitor/splash-screen": "^7.0.1",
     "@capacitor/status-bar": "^7.0.1",
+    "@google/genai": "^1.10.0",
     "@hookform/resolvers": "^3.9.1",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@neondatabase/serverless": "^0.10.4",

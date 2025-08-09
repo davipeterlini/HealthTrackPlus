@@ -10,7 +10,9 @@ import {
   Brain,
   Pill,
   PieChart,
-  Timer
+  Timer,
+  Baby,
+  Heart
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
@@ -104,6 +106,20 @@ export function MobileNav() {
         path: "/fasting", 
         label: t('navigation.fasting', 'Jejum'), 
         icon: Timer,
+        show: true,
+        alwaysShow: false 
+      },
+      { 
+        path: "/baby-growth", 
+        label: t('navigation.baby', 'Bebê'), 
+        icon: Baby,
+        show: true,
+        alwaysShow: false 
+      },
+      { 
+        path: "/pregnancy", 
+        label: t('navigation.pregnancy', 'Gravidez'), 
+        icon: Heart,
         show: true,
         alwaysShow: false 
       }
