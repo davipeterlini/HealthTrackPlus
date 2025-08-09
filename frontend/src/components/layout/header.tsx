@@ -164,11 +164,11 @@ export function Header() {
 
   return (
     <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
-      <div className="flex items-center justify-between w-full px-4 md:px-6 h-14 md:h-16">
+      <div className="flex items-center justify-between w-full px-4 md:px-6 h-16">
         {/* Logo - sempre à esquerda */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
-            <h1 className="responsive-logo text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-blue-600 dark:text-emerald-400">LifeTrek</h1>
           </Link>
         </div>
 
