@@ -7,3 +7,4 @@ vite.config.ts.*
 ios/
 android/
 no-commit/
+no-commit

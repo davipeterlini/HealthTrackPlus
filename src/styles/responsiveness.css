@@ -1,0 +1,120 @@
+/* Responsive styles */
+
+/* Base styles */
+:root {
+  --header-height: 4rem; /* 64px */
+  --sidebar-width: 16rem; /* 256px */
+  --mobile-nav-height: 3.5rem; /* 56px */
+}
+
+/* Mobile first approach */
+.container-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.main-content {
+  padding-bottom: var(--mobile-nav-height);
+}
+
+/* Small screens (sm): 640px+ */
+@media (min-width: 640px) {
+  .container-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Medium screens (md): 768px+ */
+@media (min-width: 768px) {
+  .container-padding {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .main-content {
+    padding-bottom: 0;
+    padding-left: var(--sidebar-width);
+  }
+}
+
+/* Large screens (lg): 1024px+ */
+@media (min-width: 1024px) {
+  .container-padding {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* XL screens (xl): 1280px+ */
+@media (min-width: 1280px) {
+  .container-padding {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Special utility classes */
+.hide-on-mobile {
+  display: none;
+}
+
+.show-on-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hide-on-mobile {
+    display: block;
+  }
+  
+  .show-on-mobile {
+    display: none;
+  }
+}
+
+/* Card responsiveness */
+.responsive-card {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .responsive-card {
+    width: calc(50% - 0.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-card {
+    width: calc(33.333% - 0.667rem);
+  }
+}
+
+/* Flex direction changes based on screen size */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .flex-responsive {
+    flex-direction: row;
+  }
+}
+
+/* Gap spacing responsive adjustments */
+.gap-responsive {
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .gap-responsive {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gap-responsive {
+    gap: 1.5rem;
+  }
+}

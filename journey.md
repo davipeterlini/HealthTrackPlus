@@ -1,0 +1,16 @@
+- 16/08/2025
+    - Arrume todo o layout responsivo da aplicação, considere para isso, deixar a esssa parte de component centralizada e aplicá-la em todas as paginas da aplicação. Além disso o layout responsivo deve considerar o uso da aplicação em dispositivos mobile e navegadores, considere adequação dos componentes de tela para cada um deles
+    - Como rodar a aplicação local, considere a aplicação completa, frontend, backend, banco de dados, atualize o readme da aplicação e se for necessário crie um script de setup
+- 17/08/2025
+    - Baixar itens do xcode 
+    - Baixar android studio 
+    - Criar emulador de android studio 
+    - Analise a aplicação do codebase e me de detalhes de como posso subir essa aplicação no GCP, considere os detalhes abaixo 
+        - A aplicação será servida via Web e via Aplicativos Moveis 
+    - Crie uma conta no Google Play (Loja do Android) 
+        - Como subir uma aplicação para a loja da Apple
+        - Disponibilizar a aplicação para emails específicos
+    - Crie uma conta no Apple Store Developer 
+        - Como subir uma aplicação para a loja da Apple
+        - Disponibilizar a aplicação para emails específicos
+    - Como rodar local a aplicação

@@ -1,92 +1,172 @@
-# Scripts de Instalação e Configuração do Android Studio
+# HealthTrackPlus
 
-Este repositório contém scripts para automatizar a instalação e configuração do Android Studio em diferentes plataformas.
+A comprehensive health tracking application with responsive design for both mobile and web interfaces.
 
-## Conteúdo
+## Features
 
-- `install_android_studio.sh`: Script para instalação em Linux e macOS
-- `install_android_studio.bat`: Script para instalação em Windows
-- `README.md`: Este arquivo de documentação
+- Health and activity tracking
+- Medical exam records
+- Responsive UI for mobile and desktop
+- Dark mode support
 
-## Requisitos
+## System Requirements
 
-### Windows
-- Windows 10 ou superior
-- Privilégios de administrador (para instalação completa)
-- PowerShell 5.0 ou superior
-- Conexão com a Internet
+- Node.js 18+ 
+- npm 8+ or Yarn 1.22+
+- PostgreSQL 14+ (for the database)
+- Android Studio / Xcode (for mobile development)
 
-### macOS
-- macOS 10.14 (Mojave) ou superior
-- Privilégios de administrador
-- Conexão com a Internet
+## Project Structure
 
-### Linux
-- Distribuição baseada em Debian, Red Hat ou Arch
-- Privilégios de sudo
-- Conexão com a Internet
+```
+HealthTrackPlus/
+├── src/                    # Source code
+│   ├── components/         # UI components
+│   │   ├── layout/         # Layout components
+│   │   └── ui/             # Reusable UI components
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Utility functions
+│   ├── pages/              # Application pages
+│   ├── styles/             # CSS stylesheets
+│   └── main.tsx            # Application entry point
+├── server/                 # Backend server code
+├── scripts/                # Utility scripts
+│   └── setup.sh            # Setup script
+├── index.html              # HTML entry point
+└── package.json            # Project dependencies
+```
 
-## Como usar
+## Quick Start (Development)
 
-### Windows
+### 1. Install Dependencies
 
-1. Baixe o arquivo `install_android_studio.bat`
-2. Clique com o botão direito e selecione "Executar como administrador"
-3. Siga as instruções na tela
-4. Após a instalação completa do Android Studio e SDK, execute o script `create_android_avd.bat` criado em seu diretório de usuário para configurar um dispositivo virtual
+```bash
+# Install project dependencies
+npm install
+```
 
-### macOS e Linux
+### 2. Set up the Database
 
-1. Baixe o arquivo `install_android_studio.sh`
-2. Abra o Terminal e navegue até o diretório onde o arquivo foi baixado
-3. Torne o script executável:
-   ```
-   chmod +x install_android_studio.sh
-   ```
-4. Execute o script:
-   ```
-   ./install_android_studio.sh
-   ```
-5. Após a instalação completa do Android Studio e SDK, execute o script `create_avd.sh` criado em seu diretório home para configurar um dispositivo virtual
+Make sure PostgreSQL is running on your system.
 
-## O que os scripts fazem
+```bash
+# Create and seed the database
+npm run db:push
+```
 
-### Instalação
-- Verifica e instala pré-requisitos (Java JDK)
-- Baixa a versão mais recente do Android Studio
-- Instala o Android Studio no local padrão
+### 3. Run Development Server
 
-### Configuração
-- Configura o diretório do SDK Android
-- Cria arquivos de configuração básicos
-- Prepara scripts para criação de dispositivos virtuais
+```bash
+# Start both frontend and backend in development mode
+npm run dev:local
+```
 
-### Criação de Dispositivo Virtual
-- Fornece um script separado para criar um dispositivo virtual Android
-- Configura um dispositivo Pixel 6 com a versão mais recente do Android
-- Aceita automaticamente as licenças necessárias
+The application will be available at `http://localhost:3000`.
 
-## Notas importantes
+## Mobile Development
 
-- Os scripts baixam a versão 2023.1.1.26 do Android Studio (a mais recente no momento da criação)
-- Para versões mais recentes, você pode precisar atualizar as URLs de download nos scripts
-- A criação do dispositivo virtual requer que o SDK esteja completamente instalado
-- Em alguns casos, pode ser necessário reiniciar o computador após a instalação do JDK
+### Prerequisites
 
-## Solução de problemas
+- Android Studio for Android development
+- Xcode for iOS development (macOS only)
+- Capacitor CLI (installed with project dependencies)
 
-### Windows
-- Se o script falhar ao baixar arquivos, verifique sua conexão com a Internet ou baixe manualmente os instaladores
-- Se o Java não for adicionado ao PATH, adicione manualmente o diretório bin do JDK
+### Setup Mobile Environment
 
-### macOS
-- Se o script falhar com erro de permissão, verifique se você tem privilégios de administrador
-- Se o Homebrew falhar na instalação, consulte [brew.sh](https://brew.sh) para instruções alternativas
+```bash
+# Setup mobile development environment
+npm run mobile:setup
+```
 
-### Linux
-- Se o script não detectar seu gerenciador de pacotes, instale manualmente o OpenJDK 11
-- Em algumas distribuições, pode ser necessário instalar pacotes adicionais para suporte a 32 bits
+### Run on Mobile
 
-## Licença
+```bash
+# For Android
+npm run mobile:android
 
-Este projeto é distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+# For iOS (macOS only)
+npm run mobile:ios
+
+# For both platforms (macOS only)
+npm run mobile:both
+```
+
+## Production Deployment
+
+### 1. Build the Application
+
+```bash
+# Build both frontend and backend
+npm run build
+```
+
+### 2. Start Production Server
+
+```bash
+# Run in production mode
+npm run start
+```
+
+## Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build for production
+- `npm run start` - Start the production server
+- `npm run check` - TypeScript type checking
+- `npm run test` - Run tests
+- `npm run test:ui` - Run tests with UI
+- `npm run db:push` - Push database schema changes
+
+### Mobile Scripts
+
+- `npm run mobile:setup` - Set up mobile development environment
+- `npm run mobile:android` - Build and run on Android
+- `npm run mobile:ios` - Build and run on iOS (macOS only)
+- `npm run mobile:both` - Build and run on both platforms (macOS only)
+- `npm run mobile:clean` - Clean mobile build files
+
+## Environment Configuration
+
+Create a `.env` file in the project root with the following variables:
+
+```
+# Database
+DATABASE_URL=postgres://username:password@localhost:5432/healthtrackplus
+
+# Server
+PORT=3000
+NODE_ENV=development
+
+# Auth (if using authentication)
+JWT_SECRET=your_jwt_secret
+
+# External Services (optional)
+STRIPE_SECRET_KEY=your_stripe_key
+```
+
+## Android Studio Installation
+
+For Android development, you can use the included script:
+
+```bash
+chmod +x install_android_studio.sh
+./install_android_studio.sh
+```
+
+## Troubleshooting
+
+### Database Connection Issues
+
+- Ensure PostgreSQL is running
+- Check the DATABASE_URL in your .env file
+- Try running `npm run db:push` to recreate the schema
+
+### Mobile Development Issues
+
+- Run `npm run mobile:clean` and try again
+- Ensure Android Studio / Xcode is installed correctly
+- Check the output of `npx cap doctor` for environment issues
+
+## License
+
+This project is licensed under the MIT License.
