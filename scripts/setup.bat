@@ -67,7 +67,7 @@ if not exist .env (
   echo DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus >> .env
   echo. >> .env
   echo # Server configuration >> .env
-  echo PORT=3000 >> .env
+  echo PORT=5000 >> .env
   echo NODE_ENV=development >> .env
   echo. >> .env
   echo # JWT configuration >> .env
@@ -110,7 +110,7 @@ echo ================================================
 echo Setup Complete!
 echo ================================================
 echo To start the development server, run:
-echo   npm run dev:local
+echo   npm run dev:start
 echo.
 echo To run on Android:
 echo   npm run mobile:android

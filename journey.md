@@ -1,6 +1,7 @@
 - 16/08/2025
     - Arrume todo o layout responsivo da aplicação, considere para isso, deixar a esssa parte de component centralizada e aplicá-la em todas as paginas da aplicação. Além disso o layout responsivo deve considerar o uso da aplicação em dispositivos mobile e navegadores, considere adequação dos componentes de tela para cada um deles
     - Como rodar a aplicação local, considere a aplicação completa, frontend, backend, banco de dados, atualize o readme da aplicação e se for necessário crie um script de setup
+    - Ajustes da aplicação para rodar local
 - 17/08/2025
     - Baixar itens do xcode 
     - Baixar android studio 

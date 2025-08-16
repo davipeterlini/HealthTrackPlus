@@ -8,3 +8,5 @@ ios/
 android/
 no-commit/
 no-commit
+
+.env

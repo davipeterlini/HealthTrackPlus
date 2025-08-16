@@ -50,18 +50,51 @@ npm install
 Make sure PostgreSQL is running on your system.
 
 ```bash
-# Create and seed the database
+# Create the database and set up schema
+npm run db:setup
+```
+
+This script will:
+- Check if PostgreSQL is installed
+- Create the database if it doesn't exist
+- Push the database schema using Drizzle
+
+If you prefer to do these steps manually:
+
+```bash
+# Create the database only
+npm run db:create
+
+# Push the schema only
 npm run db:push
 ```
 
-### 3. Run Development Server
+### 3. Configure Environment Variables
+
+Ensure you have a `.env` file in the project root. If not, create one with the following content:
+
+```
+# Database URL for PostgreSQL
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus
+
+# Server configuration
+PORT=5000
+NODE_ENV=development
+
+# JWT configuration
+JWT_SECRET=your_jwt_secret_key_replace_with_secure_random_string
+```
+
+Adjust these values according to your local setup.
+
+### 4. Run Development Server
 
 ```bash
 # Start both frontend and backend in development mode
-npm run dev:local
+npm run dev:start
 ```
 
-The application will be available at `http://localhost:3000`.
+The application will be available at `http://<your-local-IP>:5000` or `http://localhost:5000`.
 
 ## Mobile Development
 

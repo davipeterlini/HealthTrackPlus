@@ -80,7 +80,7 @@ if [ ! -f .env ]; then
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus
 
 # Server configuration
-PORT=3000
+PORT=5000
 NODE_ENV=development
 
 # JWT configuration (generate a secure random string)
@@ -145,7 +145,7 @@ echo -e "${BLUE}================================================${NC}"
 echo -e "${GREEN}Setup Complete!${NC}"
 echo -e "${BLUE}================================================${NC}"
 echo -e "To start the development server, run:"
-echo -e "  ${YELLOW}npm run dev:local${NC}"
+echo -e "  ${YELLOW}npm run dev:start${NC}"
 echo
 echo -e "To run on Android:"
 echo -e "  ${YELLOW}npm run mobile:android${NC}"
