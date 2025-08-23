@@ -77,7 +77,9 @@ if [ ! -f .env ]; then
   echo -e "${GREEN}Creating .env file...${NC}"
   cat > .env << EOF
 # Database configuration
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus
+# Detect username for database URL
+CURRENT_USER=$(whoami)
+DATABASE_URL=postgres://$CURRENT_USER@localhost:5432/healthtrackplus
 
 # Server configuration
 PORT=5000

@@ -31,7 +31,9 @@
     "setup": "node -e \"process.platform === 'win32' ? require('child_process').execSync('scripts\\setup.bat', {stdio: 'inherit'}) : require('child_process').execSync('chmod +x scripts/setup.sh && scripts/setup.sh', {stdio: 'inherit'})\"",
     "check:env": "node scripts/check-env.js",
     "db:init": "node scripts/init-db.js",
-    "db:create": "node -e \"const { execSync } = require('child_process'); try { execSync(process.platform === 'win32' ? 'psql -U postgres -c \\\"CREATE DATABASE healthtrackplus;\\\"' : 'createdb healthtrackplus'); console.log('Database created'); } catch(e) { console.log('Database may already exist: ' + e.message); }\""
+    "db:create": "node -e \"const { execSync } = require('child_process'); try { execSync(process.platform === 'win32' ? 'psql -U postgres -c \\\"CREATE DATABASE healthtrackplus;\\\"' : 'createdb healthtrackplus'); console.log('Database created'); } catch(e) { console.log('Database may already exist: ' + e.message); }\"",
+    "postgres:install:mac": "./scripts/install-postgres-mac.sh",
+    "postgres:start": "node -e \"const { execSync } = require('child_process'); try { execSync(process.platform === 'win32' ? 'pg_ctl start' : 'brew services start postgresql@15'); console.log('PostgreSQL started'); } catch(e) { console.log('Error starting PostgreSQL: ' + e.message); }\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

@@ -45,12 +45,38 @@ HealthTrackPlus/
 npm install
 ```
 
-### 2. Set up the Database
+### 2. Install and Set up PostgreSQL
 
-Make sure PostgreSQL is running on your system.
+The application requires PostgreSQL to be installed and running.
+
+#### On macOS:
 
 ```bash
-# Create the database and set up schema
+# Install PostgreSQL using the provided script
+npm run postgres:install:mac
+```
+
+This script will:
+- Install PostgreSQL via Homebrew
+- Start the PostgreSQL service
+- Create the 'healthtrackplus' database
+- Use your system username as the PostgreSQL user
+
+#### On Windows:
+
+Download and install PostgreSQL from the [official website](https://www.postgresql.org/download/windows/).
+During installation:
+- Use password 'postgres' for the default user
+- Keep the default port (5432)
+- After installation, create the database by running:
+  ```
+  npm run db:create
+  ```
+
+#### If PostgreSQL is already installed:
+
+```bash
+# Just create the database and set up schema
 npm run db:setup
 ```
 
@@ -74,8 +100,11 @@ npm run db:push
 Ensure you have a `.env` file in the project root. If not, create one with the following content:
 
 ```
-# Database URL for PostgreSQL
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus
+# Database URL for PostgreSQL (Windows)
+# DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus
+
+# Database URL for PostgreSQL (macOS)
+DATABASE_URL=postgres://YOURUSERNAME@localhost:5432/healthtrackplus
 
 # Server configuration
 PORT=5000
@@ -84,6 +113,8 @@ NODE_ENV=development
 # JWT configuration
 JWT_SECRET=your_jwt_secret_key_replace_with_secure_random_string
 ```
+
+Substitua `YOURUSERNAME` pelo seu nome de usuário do sistema, que você pode obter executando o comando `whoami`.
 
 Adjust these values according to your local setup.
 
@@ -190,9 +221,22 @@ chmod +x install_android_studio.sh
 
 ### Database Connection Issues
 
-- Ensure PostgreSQL is running
-- Check the DATABASE_URL in your .env file
-- Try running `npm run db:push` to recreate the schema
+- Ensure PostgreSQL is installed and running:
+  ```bash
+  # On macOS
+  brew services list  # Check if PostgreSQL is running
+  brew services start postgresql@15  # Start if not running
+  
+  # On Windows
+  pg_ctl status  # Check status
+  pg_ctl start  # Start if not running
+  ```
+- Check the DATABASE_URL in your .env file matches your PostgreSQL configuration
+- If you get ECONNREFUSED errors, PostgreSQL is not running. Start it using:
+  ```bash
+  npm run postgres:start
+  ```
+- Try running `npm run db:push` to recreate the schema after PostgreSQL is running
 
 ### Mobile Development Issues
 
