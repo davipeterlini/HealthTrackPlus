@@ -15,3 +15,6 @@
         - Como subir uma aplicação para a loja da Apple
         - Disponibilizar a aplicação para emails específicos
     - Como rodar local a aplicação
+- 25/08/2025
+    - Setup básico de acordo com o que está no README
+    - Extnesão para leitura de PDF
