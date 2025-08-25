@@ -87,7 +87,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             currency: 'usd',
             product_data: {
               name: 'Health & Wellness Premium',
-              description: 'Acesso completo ao aplicativo de saúde e bem-estar',
+              description: 'Complete access to health and wellness app',
             },
             unit_amount: 1999, // $19.99 per month
             recurring: {
@@ -199,7 +199,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Dashboard routes
   app.get("/api/dashboard", async (req, res) => {
     if (!req.isAuthenticated()) {
-      // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+      // For development, allow access without authentication using fixed userId
       const stats = await storage.getDashboardStats(1);
       return res.json(stats);
     }
@@ -237,10 +237,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Unauthorized" });
       }
       
-      // Buscar insights relacionados a este exame
+      // Get insights related to this exam
       const insights = await storage.getHealthInsightsByExam(examId);
       
-      // Buscar detalhes específicos do exame
+      // Get specific exam details
       const examDetails = await storage.getExamDetails(examId);
       
       res.json({ exam, insights, examDetails });
@@ -250,7 +250,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Rota para obter apenas os detalhes específicos de um exame
+  // Route to get only specific exam details
   app.get("/api/exams/:id/details", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
@@ -270,7 +270,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Unauthorized" });
       }
       
-      // Buscar detalhes específicos do exame
+      // Get specific exam details
       const examDetails = await storage.getExamDetails(examId);
       
       res.json(examDetails);
@@ -281,7 +281,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   app.post("/api/exams", upload.single("file"), async (req, res) => {
-    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    // For development, allow access without authentication using fixed userId
     let userId = 1;
     
     if (req.isAuthenticated()) {
@@ -310,40 +310,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
         aiProcessed: false
       });
       
-      // Responder imediatamente com o exame criado
+      // Respond immediately with the created exam
       res.status(201).json(exam);
       
-      // Iniciar análise automática em background
+      // Start automatic analysis in background
       setTimeout(async () => {
         try {
-          console.log(`Iniciando análise do exame ${exam.id}...`);
+          console.log(`Starting analysis of exam ${exam.id}...`);
           
-          // Preparar resultado da análise AI
+          // Prepare AI analysis result
           let aiAnalysis = null;
           let examStatus = "Normal";
           let examRiskLevel = "normal";
           
-          // Verificar se existe arquivo para análise
+          // Check if file exists for analysis
           if (file && exam.fileUrl) {
-            console.log(`Analisando arquivo: ${exam.fileUrl}`);
+            console.log(`Analyzing file: ${exam.fileUrl}`);
             
-            // Extrair texto do PDF/imagem (simulado aqui)
-            // Em uma implementação real, usaria OCR para imagens ou parser para PDFs
+            // Extract text from PDF/image (simulated here)
+            // In a real implementation, would use OCR for images or parser for PDFs
             let extractedText = "";
             
-            // Gerar resultados baseados no tipo de exame
+            // Generate results based on exam type
             if (type.toLowerCase().includes('blood') || type.toLowerCase().includes('sangue')) {
               extractedText = "Hemoglobina: 14.2 g/dL (Ref: 13.5-17.5)\nGlicose: 98 mg/dL (Ref: 70-99)\nColesterol total: 185 mg/dL (Ref: <200)\nHDL: 52 mg/dL (Ref: >40)\nLDL: 115 mg/dL (Ref: <130)\nTriglicerídeos: 150 mg/dL (Ref: <150)";
               
-              // Análise AI do conteúdo extraído
+              // AI analysis of extracted content
               aiAnalysis = {
-                summary: "A análise do exame de sangue indica resultados próximos aos limites superiores normais, com alguns pontos de atenção.",
+                summary: "The blood test analysis indicates results close to normal upper limits, with some points of attention.",
                 details: {
                   bloodGlucose: {
                     value: 98,
                     status: "normal",
                     reference: "70-99 mg/dL",
-                    attention: "Próximo ao limite superior"
+                    attention: "Close to upper limit"
                   },
                   cholesterol: {
                     total: {
@@ -365,7 +365,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                       value: 150,
                       status: "attention",
                       reference: "<150 mg/dL",
-                      note: "No limite superior da referência"
+                      note: "At the upper reference limit"
                     }
                   },
                   hemoglobin: {
@@ -407,7 +407,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               extractedText = "Pressão arterial: 135/85 mmHg\nFrequência cardíaca: 72 bpm\nECG: Ritmo sinusal normal";
               
               aiAnalysis = {
-                summary: "Avaliação cardíaca apresenta leve elevação da pressão arterial, mas demais parâmetros normais.",
+                summary: "Cardiac evaluation shows slight elevation of blood pressure, but other parameters normal.",
                 details: {
                   bloodPressure: {
                     systolic: {
@@ -445,19 +445,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
               examStatus = "Attention";
               examRiskLevel = "attention";
             } else {
-              // Para outros tipos de exame
+              // For other exam types
               aiAnalysis = {
-                summary: "A análise do exame indica resultados dentro dos parâmetros normais, com algumas observações.",
+                summary: "The exam analysis indicates results within normal parameters, with some observations.",
                 details: {
                   general: {
                     status: "normal",
-                    findings: "Sem alterações significativas"
+                    findings: "No significant changes"
                   }
                 },
                 recommendations: [
-                  "Mantenha uma dieta balanceada rica em frutas e vegetais",
-                  "Continue praticando exercícios físicos regularmente",
-                  "Considere aumentar a ingestão de água diária"
+                  "Maintain a balanced diet rich in fruits and vegetables",
+                  "Continue practicing physical exercises regularly",
+                  "Consider increasing your daily water intake"
                 ]
               };
               
@@ -465,18 +465,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
               examRiskLevel = "normal";
             }
           } else {
-            // Sem arquivo para análise, fornecer análise genérica
+            // No file for analysis, provide generic analysis
             aiAnalysis = {
-              summary: "Não foi possível realizar análise detalhada por falta de arquivo anexo.",
+              summary: "Detailed analysis was not possible due to lack of attached file.",
               details: {
                 notice: {
                   status: "attention",
-                  message: "Recomendamos anexar os resultados do exame para uma análise completa."
+                  message: "We recommend attaching the exam results for a complete analysis."
                 }
               },
               recommendations: [
-                "Anexar arquivo do exame para análise completa",
-                "Agendar consulta com seu médico para revisão dos resultados"
+                "Attach exam file for complete analysis",
+                "Schedule an appointment with your doctor to review the results"
               ]
             };
             
@@ -484,7 +484,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             examRiskLevel = "attention";
           }
           
-          // Atualizar o exame com os resultados da análise
+          // Update the exam with analysis results
           const updatedExam = await storage.updateMedicalExam(exam.id, {
             status: examStatus,
             aiAnalysis,
@@ -492,9 +492,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             aiProcessed: true
           });
           
-          // Extrair e salvar detalhes do exame
+          // Extract and save exam details
           if (aiAnalysis && aiAnalysis.details) {
-            // Processar detalhes de exame de sangue
+            // Process blood test details
             if (type.toLowerCase().includes('blood') || type.toLowerCase().includes('sangue')) {
               if (aiAnalysis.details.bloodGlucose) {
                 await storage.createExamDetail({
@@ -581,14 +581,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 });
               }
             } 
-            // Processar detalhes de exame cardíaco
+            // Process cardiac exam details
             else if (type.toLowerCase().includes('cardiac') || type.toLowerCase().includes('cardio')) {
-              // Pressão arterial - sistólica
+              // Blood pressure - systolic
               if (aiAnalysis.details.bloodPressure && aiAnalysis.details.bloodPressure.systolic) {
                 await storage.createExamDetail({
                   examId: exam.id,
-                  category: 'Pressão Arterial',
-                  name: 'Pressão Sistólica',
+                  category: 'Blood Pressure',
+                  name: 'Systolic Pressure',
                   value: String(aiAnalysis.details.bloodPressure.systolic.value),
                   unit: 'mmHg',
                   referenceRange: aiAnalysis.details.bloodPressure.systolic.reference,
@@ -597,12 +597,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 });
               }
               
-              // Pressão arterial - diastólica
+              // Blood pressure - diastolic
               if (aiAnalysis.details.bloodPressure && aiAnalysis.details.bloodPressure.diastolic) {
                 await storage.createExamDetail({
                   examId: exam.id,
-                  category: 'Pressão Arterial',
-                  name: 'Pressão Diastólica',
+                  category: 'Blood Pressure',
+                  name: 'Diastolic Pressure',
                   value: String(aiAnalysis.details.bloodPressure.diastolic.value),
                   unit: 'mmHg',
                   referenceRange: aiAnalysis.details.bloodPressure.diastolic.reference,
@@ -611,12 +611,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 });
               }
               
-              // Frequência cardíaca
+              // Heart rate
               if (aiAnalysis.details.heartRate) {
                 await storage.createExamDetail({
                   examId: exam.id,
-                  category: 'Cardíaco',
-                  name: 'Frequência Cardíaca',
+                  category: 'Cardiac',
+                  name: 'Heart Rate',
                   value: String(aiAnalysis.details.heartRate.value),
                   unit: 'bpm',
                   referenceRange: aiAnalysis.details.heartRate.reference,
@@ -629,7 +629,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               if (aiAnalysis.details.ecg) {
                 await storage.createExamDetail({
                   examId: exam.id,
-                  category: 'Cardíaco',
+                  category: 'Cardiac',
                   name: 'ECG',
                   value: "N/A", // Valor numérico não aplicável
                   unit: '',
@@ -660,14 +660,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     const diastolic = aiAnalysis.details.bloodPressure.diastolic;
                     
                     if (systolic.status === "attention" || diastolic.status === "attention") {
-                      title = "Atenção à Pressão Arterial";
-                      description = "Sua pressão arterial está levemente elevada, requerendo monitoramento.";
-                      recommendation = "Reduza o consumo de sal e pratique atividades físicas regularmente.";
+                      title = "Blood Pressure Alert";
+                      description = "Your blood pressure is slightly elevated, requiring monitoring.";
+                      recommendation = "Reduce salt intake and practice physical activities regularly.";
                       severity = "attention";
                     } else {
-                      title = "Saúde Cardiovascular Adequada";
-                      description = "Seus parâmetros cardíacos estão em níveis adequados.";
-                      recommendation = "Continue com bons hábitos para manter a saúde cardíaca.";
+                      title = "Adequate Cardiovascular Health";
+                      description = "Your cardiac parameters are at adequate levels.";
+                      recommendation = "Continue with good habits to maintain heart health.";
                       severity = "normal";
                     }
                     
@@ -679,9 +679,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
                       }
                     };
                   } else {
-                    title = "Monitoramento Cardíaco";
-                    description = "Acompanhamento regular de seus indicadores cardiovasculares.";
-                    recommendation = "Mantenha o controle regular da pressão arterial e frequência cardíaca.";
+                    title = "Cardiac Monitoring";
+                    description = "Regular monitoring of your cardiovascular indicators.";
+                    recommendation = "Maintain regular control of blood pressure and heart rate.";
                     severity = "normal";
                     data = {};
                   }
@@ -692,14 +692,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   if (cholesterol.total?.status === "attention" || 
                       cholesterol.ldl?.status === "attention" ||
                       cholesterol.triglycerides?.status === "attention") {
-                    title = "Monitoramento de Lipídios";
-                    description = "Seus níveis de colesterol estão próximos dos limites recomendados.";
-                    recommendation = "Considere reduzir alimentos processados e aumentar o consumo de fibras.";
+                    title = "Lipid Monitoring";
+                    description = "Your cholesterol levels are close to the recommended limits.";
+                    recommendation = "Consider reducing processed foods and increasing fiber intake.";
                     severity = "attention";
                   } else {
-                    title = "Perfil Lipídico Saudável";
-                    description = "Seus níveis de colesterol estão dentro dos parâmetros recomendados.";
-                    recommendation = "Continue com uma alimentação balanceada e exercícios regulares.";
+                    title = "Healthy Lipid Profile";
+                    description = "Your cholesterol levels are within the recommended parameters.";
+                    recommendation = "Continue with a balanced diet and regular exercise.";
                     severity = "normal";
                   }
                   
@@ -707,9 +707,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     cholesterol: aiAnalysis.details.cholesterol
                   };
                 } else {
-                  title = "Saúde Cardiovascular";
-                  description = "Monitore regularmente seus indicadores cardíacos.";
-                  recommendation = "Pratique exercícios físicos e mantenha uma alimentação balanceada.";
+                  title = "Cardiovascular Health";
+                  description = "Regularly monitor your cardiac indicators.";
+                  recommendation = "Practice physical exercises and maintain a balanced diet.";
                   severity = "normal";
                   data = {};
                 }
@@ -719,22 +719,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   let nutritionalIssues = [];
                   
                   if (aiAnalysis.details.cholesterol?.triglycerides?.status === "attention") {
-                    nutritionalIssues.push("triglicerídeos");
+                    nutritionalIssues.push("triglycerides");
                   }
                   
                   if (aiAnalysis.details.bloodGlucose?.status === "attention") {
-                    nutritionalIssues.push("glicemia");
+                    nutritionalIssues.push("blood glucose");
                   }
                   
                   if (nutritionalIssues.length > 0) {
-                    title = "Atenção Nutricional";
-                    description = `Seus marcadores de ${nutritionalIssues.join(" e ")} merecem atenção.`;
-                    recommendation = "Reduza o consumo de carboidratos refinados e aumente o consumo de vegetais.";
+                    title = "Nutritional Alert";
+                    description = `Your ${nutritionalIssues.join(" and ")} markers deserve attention.`;
+                    recommendation = "Reduce consumption of refined carbohydrates and increase consumption of vegetables.";
                     severity = "attention";
                   } else {
-                    title = "Nutrição Adequada";
-                    description = "Seus marcadores nutricionais apresentam bom equilíbrio.";
-                    recommendation = "Mantenha uma dieta variada e rica em nutrientes essenciais.";
+                    title = "Adequate Nutrition";
+                    description = "Your nutritional markers show good balance.";
+                    recommendation = "Maintain a varied diet rich in essential nutrients.";
                     severity = "normal";
                   }
                   
@@ -745,9 +745,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     }
                   };
                 } else {
-                  title = "Acompanhamento Nutricional";
-                  description = "Acompanhamento contínuo do seu perfil nutricional.";
-                  recommendation = "Mantenha uma dieta equilibrada com todos os grupos alimentares.";
+                  title = "Nutritional Monitoring";
+                  description = "Continuous monitoring of your nutritional profile.";
+                  recommendation = "Maintain a balanced diet with all food groups.";
                   severity = "normal";
                   data = {};
                 }
@@ -757,14 +757,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   const glucose = aiAnalysis.details.bloodGlucose;
                   
                   if (glucose.status === "attention" || glucose.attention) {
-                    title = "Atenção ao Metabolismo da Glicose";
-                    description = "Seus níveis de glicose estão próximos dos limites superiores.";
-                    recommendation = "Considere reduzir o consumo de açúcares e carboidratos refinados.";
+                    title = "Glucose Metabolism Alert";
+                    description = "Your glucose levels are close to the upper limits.";
+                    recommendation = "Consider reducing the consumption of sugars and refined carbohydrates.";
                     severity = "attention";
                   } else {
-                    title = "Metabolismo Saudável";
-                    description = "Seus níveis de glicose estão dentro dos parâmetros normais.";
-                    recommendation = "Mantenha hábitos saudáveis para conservar seu equilíbrio metabólico.";
+                    title = "Healthy Metabolism";
+                    description = "Your glucose levels are within normal parameters.";
+                    recommendation = "Maintain healthy habits to preserve your metabolic balance.";
                     severity = "normal";
                   }
                   
@@ -772,9 +772,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     glucose: aiAnalysis.details.bloodGlucose
                   };
                 } else {
-                  title = "Acompanhamento Metabólico";
-                  description = "Monitoramento regular do seu equilíbrio metabólico.";
-                  recommendation = "Mantenha uma rotina de atividades físicas e alimentação balanceada.";
+                  title = "Metabolic Monitoring";
+                  description = "Regular monitoring of your metabolic balance.";
+                  recommendation = "Maintain a routine of physical activities and balanced nutrition.";
                   severity = "normal";
                   data = {};
                 }
@@ -797,9 +797,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             });
           }
           
-          console.log(`Auto-análise completa para o exame ${exam.id}`);
+          console.log(`Auto-analysis complete for exam ${exam.id}`);
         } catch (error) {
-          console.error(`Erro na auto-análise do exame ${exam.id}:`, error);
+          console.error(`Error in auto-analysis of exam ${exam.id}:`, error);
         }
       }, 3000); // Aguardar 3 segundos para simular processamento
     } catch (error) {
@@ -832,7 +832,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Simular análise de IA
       // Na implementação real, aqui chamaria uma API de IA externa
       const aiAnalysis = {
-        summary: "A análise do exame indica resultados dentro dos parâmetros normais, com algumas observações.",
+        summary: "The exam analysis indicates results within normal parameters, with some observations.",
         details: {
           bloodGlucose: {
             value: 95,
@@ -863,9 +863,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         },
         recommendations: [
-          "Manter alimentação balanceada e prática regular de exercícios",
-          "Reduzir o consumo de gorduras saturadas para melhorar os níveis de colesterol",
-          "Continuar com a rotina de exames periódicos"
+          "Maintain a balanced diet and regular exercise practice",
+          "Reduce consumption of saturated fats to improve cholesterol levels",
+          "Continue with the routine of periodic exams"
         ]
       };
       
@@ -944,8 +944,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
     } catch (error) {
-      console.error("Erro ao analisar exame:", error);
-      res.status(500).json({ message: "Falha ao processar a análise do exame" });
+      console.error("Error analyzing exam:", error);
+      res.status(500).json({ message: "Failed to process exam analysis" });
     }
   });
   
@@ -1204,7 +1204,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Health Insights routes
   app.get("/api/health-insights", async (req, res) => {
-    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    // For development, allow access without authentication using fixed userId
     let userId = 1;
     
     if (req.isAuthenticated()) {
@@ -1215,13 +1215,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const insights = await storage.getHealthInsights(userId);
       res.json(insights);
     } catch (error) {
-      console.error("Erro ao buscar health insights:", error);
-      res.status(500).json({ message: "Falha ao buscar insights de saúde" });
+      console.error("Error fetching health insights:", error);
+      res.status(500).json({ message: "Failed to fetch health insights" });
     }
   });
   
   app.get("/api/health-insights/category/:category", async (req, res) => {
-    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    // For development, allow access without authentication using fixed userId
     let userId = 1;
     
     if (req.isAuthenticated()) {
@@ -1231,20 +1231,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { category } = req.params;
       if (!category) {
-        return res.status(400).json({ message: "Categoria é obrigatória" });
+        return res.status(400).json({ message: "Category is required" });
       }
       
       const insights = await storage.getHealthInsightsByCategory(userId, category);
       res.json(insights);
     } catch (error) {
-      console.error("Erro ao buscar health insights por categoria:", error);
-      res.status(500).json({ message: "Falha ao buscar insights por categoria" });
+      console.error("Error fetching health insights by category:", error);
+      res.status(500).json({ message: "Failed to fetch insights by category" });
     }
   });
   
   // Generate new AI insights manually
   app.post("/api/health-insights/generate", async (req, res) => {
-    // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+    // For development, allow access without authentication using fixed userId
     let userId = 1;
     
     if (req.isAuthenticated()) {
@@ -1255,7 +1255,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profile = await storage.getHealthProfile(userId);
       
       if (!profile) {
-        return res.status(404).json({ message: "Perfil de saúde não encontrado. Crie um perfil primeiro." });
+        return res.status(404).json({ message: "Health profile not found. Create a profile first." });
       }
 
       // Regenerate insights using the AI integration
@@ -1264,12 +1264,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Return updated insights
       const insights = await storage.getHealthInsights(userId);
       res.json({
-        message: "Insights personalizados gerados com sucesso!",
+        message: "Personalized insights successfully generated!",
         insights
       });
     } catch (error) {
-      console.error("Erro ao gerar insights de IA:", error);
-      res.status(500).json({ message: "Falha ao gerar insights personalizados" });
+      console.error("Error generating AI insights:", error);
+      res.status(500).json({ message: "Failed to generate personalized insights" });
     }
   });
 
@@ -1298,8 +1298,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(tips);
     } catch (error) {
-      console.error("Erro ao buscar dicas contextuais:", error);
-      res.status(500).json({ message: "Falha ao buscar dicas contextuais" });
+      console.error("Error fetching contextual tips:", error);
+      res.status(500).json({ message: "Failed to fetch contextual tips" });
     }
   });
 
@@ -1317,7 +1317,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profile = await storage.getHealthProfile(userId);
       
       if (!profile) {
-        return res.status(404).json({ message: "Perfil de saúde necessário para gerar dicas personalizadas" });
+        return res.status(404).json({ message: "Health profile required to generate personalized tips" });
       }
       
       // Generate AI-powered contextual tip
@@ -1325,8 +1325,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(tip);
     } catch (error) {
-      console.error("Erro ao gerar dica contextual:", error);
-      res.status(500).json({ message: "Falha ao gerar dica contextual" });
+      console.error("Error generating contextual tip:", error);
+      res.status(500).json({ message: "Failed to generate contextual tip" });
     }
   });
 
@@ -1343,10 +1343,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Log the tip action for learning and analytics
       await storage.logTipAction(userId, tipId, action);
       
-      res.json({ message: "Ação registrada com sucesso" });
+      res.json({ message: "Action successfully registered" });
     } catch (error) {
-      console.error("Erro ao registrar ação da dica:", error);
-      res.status(500).json({ message: "Falha ao registrar ação" });
+      console.error("Error registering tip action:", error);
+      res.status(500).json({ message: "Failed to register action" });
     }
   });
 
@@ -1356,7 +1356,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const examId = parseInt(req.params.examId);
       if (isNaN(examId)) {
-        return res.status(400).json({ message: "ID de exame inválido" });
+        return res.status(400).json({ message: "Invalid exam ID" });
       }
       
       // Verificar se o exame pertence ao usuário
@@ -1364,25 +1364,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const exam = await storage.getMedicalExam(examId);
       
       if (!exam) {
-        return res.status(404).json({ message: "Exame não encontrado" });
+        return res.status(404).json({ message: "Exam not found" });
       }
       
       if (exam.userId !== userId) {
-        return res.status(403).json({ message: "Não autorizado" });
+        return res.status(403).json({ message: "Unauthorized" });
       }
       
       const insights = await storage.getHealthInsightsByExam(examId);
       res.json(insights);
     } catch (error) {
-      console.error("Erro ao buscar health insights por exame:", error);
-      res.status(500).json({ message: "Falha ao buscar insights por exame" });
+      console.error("Error fetching health insights by exam:", error);
+      res.status(500).json({ message: "Failed to fetch insights by exam" });
     }
   });
   
   // Health Profile routes
   app.get("/api/health-profile", async (req, res) => {
     if (!req.isAuthenticated()) {
-      // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+      // For development, allow access without authentication using fixed userId
       const profile = await storage.getHealthProfile(1);
       return res.json(profile);
     }
@@ -1394,7 +1394,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/health-profile", async (req, res) => {
     if (!req.isAuthenticated()) {
-      // Para desenvolvimento, use userId fixo
+      // For development, use fixed userId
       const userId = 1;
       try {
         const profile = await storage.createHealthProfile({
@@ -1403,8 +1403,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
         return res.status(201).json(profile);
       } catch (error) {
-        console.error("Erro ao criar perfil de saúde:", error);
-        return res.status(500).json({ message: "Falha ao criar perfil de saúde" });
+        console.error("Error creating health profile:", error);
+        return res.status(500).json({ message: "Failed to create health profile" });
       }
     }
     
@@ -1418,21 +1418,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(201).json(profile);
     } catch (error) {
-      console.error("Erro ao criar perfil de saúde:", error);
-      res.status(500).json({ message: "Falha ao criar perfil de saúde" });
+      console.error("Error creating health profile:", error);
+      res.status(500).json({ message: "Failed to create health profile" });
     }
   });
 
   app.put("/api/health-profile", async (req, res) => {
     if (!req.isAuthenticated()) {
-      // Para desenvolvimento, use userId fixo
+      // For development, use fixed userId
       const userId = 1;
       try {
         const profile = await storage.updateHealthProfile(userId, req.body);
         return res.json(profile);
       } catch (error) {
-        console.error("Erro ao atualizar perfil de saúde:", error);
-        return res.status(500).json({ message: "Falha ao atualizar perfil de saúde" });
+        console.error("Error updating health profile:", error);
+        return res.status(500).json({ message: "Failed to update health profile" });
       }
     }
     
@@ -1442,15 +1442,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profile = await storage.updateHealthProfile(userId, req.body);
       res.json(profile);
     } catch (error) {
-      console.error("Erro ao atualizar perfil de saúde:", error);
-      res.status(500).json({ message: "Falha ao atualizar perfil de saúde" });
+      console.error("Error updating health profile:", error);
+      res.status(500).json({ message: "Failed to update health profile" });
     }
   });
 
   // Health Plan routes
   app.get("/api/health-plan", async (req, res) => {
     if (!req.isAuthenticated()) {
-      // Para desenvolvimento, permita acesso sem autenticação usando userId fixo
+      // For development, allow access without authentication using fixed userId
       const plan = await storage.getHealthPlan(1);
       return res.json(plan);
     }
@@ -1462,7 +1462,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/health-plan", async (req, res) => {
     if (!req.isAuthenticated()) {
-      // Para desenvolvimento, use userId fixo
+      // For development, use fixed userId
       const userId = 1;
       try {
         const plan = await storage.createHealthPlan({
@@ -1471,8 +1471,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
         return res.status(201).json(plan);
       } catch (error) {
-        console.error("Erro ao criar plano de saúde:", error);
-        return res.status(500).json({ message: "Falha ao criar plano de saúde" });
+        console.error("Error creating health plan:", error);
+        return res.status(500).json({ message: "Failed to create health plan" });
       }
     }
     
@@ -1486,8 +1486,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(201).json(plan);
     } catch (error) {
-      console.error("Erro ao criar plano de saúde:", error);
-      res.status(500).json({ message: "Falha ao criar plano de saúde" });
+      console.error("Error creating health plan:", error);
+      res.status(500).json({ message: "Failed to create health plan" });
     }
   });
 
@@ -1544,7 +1544,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Medical chat error:', error);
       res.status(500).json({ 
-        error: "Erro ao processar mensagem. Tente novamente." 
+        error: "Error processing message. Please try again." 
       });
     }
   });
@@ -1574,7 +1574,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         nutrition: {
           calories: 2000,
-          meals: ["Café da manhã", "Almoço", "Jantar"]
+          meals: ["Breakfast", "Lunch", "Dinner"]
         },
         hydration: {
           current: 1800,
@@ -1600,7 +1600,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Health analysis error:', error);
       res.status(500).json({ 
-        error: "Erro ao analisar dados de saúde. Tente novamente." 
+        error: "Error analyzing health data. Please try again." 
       });
     }
   });

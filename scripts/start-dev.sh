@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Iniciando servidor de desenvolvimento..."
+echo "🚀 Starting development server..."
 
 # Detect operating system
 OS=$(uname)
@@ -18,21 +18,21 @@ else
 fi
 
 if [ -z "$IP" ]; then
-    echo "⚠️ Não foi possível detectar o IP local automaticamente."
-    echo "Usando localhost como fallback."
+    echo "⚠️ Could not detect local IP automatically."
+    echo "Using localhost as fallback."
     IP="localhost"
 fi
 
-echo "📡 Endereço de rede: $IP"
+echo "📡 Network address: $IP"
 
 # Check if capacitor.config.ts exists and update it for mobile development
 if [ -f "capacitor.config.ts" ]; then
-    echo "📱 Configurando para desenvolvimento mobile em $IP:5001"
+    echo "📱 Configuring for mobile development at $IP:5001"
     
-    # Backup da configuração original
+    # Backup original configuration
     cp capacitor.config.ts capacitor.config.ts.backup
     
-    # Atualizar configuração do Capacitor usando método compatível com todos os sistemas
+    # Update Capacitor configuration using OS-compatible method
     if [ "$OS" = "Darwin" ]; then
         # macOS requires different sed syntax
         sed -i '' "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5001',|g" capacitor.config.ts
@@ -43,21 +43,21 @@ if [ -f "capacitor.config.ts" ]; then
         sed -i "s|// cleartext: true|cleartext: true|g" capacitor.config.ts
     fi
     
-    echo "✅ Configuração Capacitor atualizada"
+    echo "✅ Capacitor configuration updated"
 fi
 
 # Start the server in development mode
-echo "🌐 Iniciando servidor em http://$IP:5001"
-echo "⌛ Aguarde..."
+echo "🌐 Starting server at http://$IP:5001"
+echo "⌛ Please wait..."
 
 # Check if .env file exists
 if [ ! -f ".env" ]; then
-    echo "⚠️ Arquivo .env não encontrado. Copiando sample.env para .env..."
+    echo "⚠️ .env file not found. Copying sample.env to .env..."
     cp sample.env .env
-    echo "✅ Arquivo .env criado. Por favor, verifique as configurações."
+    echo "✅ .env file created. Please check the configuration."
 fi
 
 # Start vite dev server with environment variables
-echo "🔄 Carregando variáveis de ambiente de .env"
+echo "🔄 Loading environment variables from .env"
 export $(grep -v '^#' .env | xargs)
 VITE_HOST=$IP npm run dev

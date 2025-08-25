@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para instalar PostgreSQL no macOS
+# Script to install PostgreSQL on macOS
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -8,74 +8,74 @@ NC='\033[0m' # No Color
 BLUE='\033[0;34m'
 
 echo -e "${BLUE}================================================${NC}"
-echo -e "${GREEN}Instalação do PostgreSQL para macOS${NC}"
+echo -e "${GREEN}PostgreSQL Installation for macOS${NC}"
 echo -e "${BLUE}================================================${NC}"
 
-# Verificar se o Homebrew está instalado
+# Check if Homebrew is installed
 if ! command -v brew &> /dev/null; then
-    echo -e "${YELLOW}Homebrew não está instalado. Instalando Homebrew...${NC}"
+    echo -e "${YELLOW}Homebrew is not installed. Installing Homebrew...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Falha ao instalar o Homebrew. Por favor, instale manualmente.${NC}"
-        echo -e "Visite: https://brew.sh"
+        echo -e "${RED}Failed to install Homebrew. Please install manually.${NC}"
+        echo -e "Visit: https://brew.sh"
         exit 1
     fi
     
-    echo -e "${GREEN}Homebrew instalado com sucesso!${NC}"
+    echo -e "${GREEN}Homebrew installed successfully!${NC}"
 else
-    echo -e "${GREEN}Homebrew já está instalado.${NC}"
+    echo -e "${GREEN}Homebrew is already installed.${NC}"
 fi
 
-# Atualizar Homebrew
-echo -e "${GREEN}Atualizando Homebrew...${NC}"
+# Update Homebrew
+echo -e "${GREEN}Updating Homebrew...${NC}"
 brew update
 
-# Instalar PostgreSQL
-echo -e "${GREEN}Instalando PostgreSQL...${NC}"
+# Install PostgreSQL
+echo -e "${GREEN}Installing PostgreSQL...${NC}"
 brew install postgresql@15
 
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Falha ao instalar o PostgreSQL. Tente instalar manualmente.${NC}"
-    echo -e "Execute: brew install postgresql@15"
+    echo -e "${RED}Failed to install PostgreSQL. Try installing manually.${NC}"
+    echo -e "Run: brew install postgresql@15"
     exit 1
 fi
 
-# Iniciar serviço do PostgreSQL
-echo -e "${GREEN}Iniciando serviço do PostgreSQL...${NC}"
+# Start PostgreSQL service
+echo -e "${GREEN}Starting PostgreSQL service...${NC}"
 brew services start postgresql@15
 
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Falha ao iniciar o serviço do PostgreSQL.${NC}"
-    echo -e "Execute manualmente: brew services start postgresql@15"
+    echo -e "${RED}Failed to start PostgreSQL service.${NC}"
+    echo -e "Run manually: brew services start postgresql@15"
     exit 1
 fi
 
-echo -e "${GREEN}Aguardando o PostgreSQL inicializar...${NC}"
+echo -e "${GREEN}Waiting for PostgreSQL to initialize...${NC}"
 sleep 5
 
-# No macOS, não precisamos criar o usuário postgres, pois o usuário do sistema é usado por padrão
-echo -e "${GREEN}Verificando usuário atual para PostgreSQL...${NC}"
+# On macOS, we don't need to create a postgres user, as the system user is used by default
+echo -e "${GREEN}Checking current PostgreSQL user...${NC}"
 CURRENT_USER=$(whoami)
-echo -e "${GREEN}Usando usuário: $CURRENT_USER${NC}"
+echo -e "${GREEN}Using user: $CURRENT_USER${NC}"
 
-# Verificar se o banco de dados já existe e criar se não existir
-echo -e "${GREEN}Verificando e criando banco de dados healthtrackplus se necessário...${NC}"
+# Check if database exists and create if necessary
+echo -e "${GREEN}Checking and creating healthtrackplus database if needed...${NC}"
 if /opt/homebrew/opt/postgresql@15/bin/psql -lqt | cut -d \| -f 1 | grep -qw healthtrackplus; then
-    echo -e "${YELLOW}Banco de dados 'healthtrackplus' já existe.${NC}"
+    echo -e "${YELLOW}Database 'healthtrackplus' already exists.${NC}"
 else
     /opt/homebrew/opt/postgresql@15/bin/createdb healthtrackplus
-    echo -e "${GREEN}Banco de dados 'healthtrackplus' criado com sucesso.${NC}"
+    echo -e "${GREEN}Database 'healthtrackplus' created successfully.${NC}"
 fi
 
 echo -e "${BLUE}================================================${NC}"
-echo -e "${GREEN}PostgreSQL instalado e configurado com sucesso!${NC}"
+echo -e "${GREEN}PostgreSQL installed and configured successfully!${NC}"
 echo -e "${BLUE}================================================${NC}"
-echo -e "Resumo:"
-echo -e "- PostgreSQL 15 instalado"
-echo -e "- Serviço iniciado automaticamente"
-echo -e "- Usando usuário do sistema '$CURRENT_USER'"
-echo -e "- Banco de dados 'healthtrackplus' verificado/criado"
+echo -e "Summary:"
+echo -e "- PostgreSQL 15 installed"
+echo -e "- Service started automatically"
+echo -e "- Using system user '$CURRENT_USER'"
+echo -e "- Database 'healthtrackplus' checked/created"
 echo -e "${BLUE}================================================${NC}"
-echo -e "Agora você pode executar: npm run db:push"
+echo -e "Now you can run: npm run db:push"
 echo -e "${BLUE}================================================${NC}"

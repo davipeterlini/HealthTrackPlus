@@ -1,102 +1,102 @@
 # Clean Architecture Implementation Summary
 
 ## Overview
-Este documento descreve a implementação dos princípios de Clean Code, SOLID e Clean Architecture na aplicação LifeTrek Health App, mantendo todas as funcionalidades existentes operacionais.
+This document describes the implementation of Clean Code, SOLID, and Clean Architecture principles in the LifeTrek Health App, maintaining all existing functionalities operational.
 
-## Estrutura Implementada
+## Implemented Structure
 
-### 1. Domain Layer (Camada de Domínio)
-- **Entities**: Entidades de domínio com lógica de negócio encapsulada
-  - `User.ts`: Gerenciamento de usuários e assinaturas
-  - `MedicalExam.ts`: Exames médicos com regras de processamento
-  - `HealthInsight.ts`: Insights de saúde com status e severidade
-  - `Activity.ts`: Atividades físicas com cálculos de performance
+### 1. Domain Layer
+- **Entities**: Domain entities with encapsulated business logic
+  - `User.ts`: User and subscription management
+  - `MedicalExam.ts`: Medical exams with processing rules
+  - `HealthInsight.ts`: Health insights with status and severity
+  - `Activity.ts`: Physical activities with performance calculations
 
-- **Interfaces**: Contratos para repositórios (Dependency Inversion Principle)
-  - `IUserRepository.ts`: Interface para operações de usuário
-  - `IMedicalExamRepository.ts`: Interface para exames médicos
-  - `IHealthInsightRepository.ts`: Interface para insights de saúde
+- **Interfaces**: Contracts for repositories (Dependency Inversion Principle)
+  - `IUserRepository.ts`: Interface for user operations
+  - `IMedicalExamRepository.ts`: Interface for medical exams
+  - `IHealthInsightRepository.ts`: Interface for health insights
 
-- **Value Objects**: Objetos de valor imutáveis (Domain-Driven Design)
-  - `Email.ts`: Validação e encapsulamento de email
-  - `Username.ts`: Regras de negócio para username
+- **Value Objects**: Immutable value objects (Domain-Driven Design)
+  - `Email.ts`: Email validation and encapsulation
+  - `Username.ts`: Business rules for username
 
-### 2. Application Layer (Camada de Aplicação)
-- **Services**: Serviços de aplicação com lógica de negócio
-  - `UserService.ts`: Operações de usuário seguindo SRP
-  - `MedicalExamService.ts`: Gestão de exames médicos
+### 2. Application Layer
+- **Services**: Application services with business logic
+  - `UserService.ts`: User operations following SRP
+  - `MedicalExamService.ts`: Medical exam management
 
-- **Use Cases**: Casos de uso específicos (Single Responsibility Principle)
-  - `CreateUserUseCase.ts`: Criação de usuários com validações
-  - `AnalyzeMedicalExamUseCase.ts`: Análise de exames com IA
+- **Use Cases**: Specific use cases (Single Responsibility Principle)
+  - `CreateUserUseCase.ts`: User creation with validations
+  - `AnalyzeMedicalExamUseCase.ts`: AI-based exam analysis
 
-### 3. Infrastructure Layer (Camada de Infraestrutura)
-- **Repositories**: Implementações concretas das interfaces
-  - `UserRepository.ts`: Implementação com Drizzle ORM
-  - `MedicalExamRepository.ts`: Persistência de exames
-  - `HealthInsightRepository.ts`: Gestão de insights
+### 3. Infrastructure Layer
+- **Repositories**: Concrete implementations of interfaces
+  - `UserRepository.ts`: Implementation with Drizzle ORM
+  - `MedicalExamRepository.ts`: Exam persistence
+  - `HealthInsightRepository.ts`: Insight management
 
-### 4. Presentation Layer (Camada de Apresentação)
-- **Controllers**: Controladores seguindo Clean Architecture
-  - `UserController.ts`: Endpoints de usuário
-  - `MedicalExamController.ts`: Endpoints de exames médicos
+### 4. Presentation Layer
+- **Controllers**: Controllers following Clean Architecture
+  - `UserController.ts`: User endpoints
+  - `MedicalExamController.ts`: Medical exam endpoints
 
-## Princípios SOLID Aplicados
+## Applied SOLID Principles
 
 ### Single Responsibility Principle (SRP)
-- Cada classe tem uma única responsabilidade bem definida
-- Services focados em domínios específicos
+- Each class has a well-defined single responsibility
+- Services focused on specific domains
 - Use Cases para operações específicas
 
 ### Open/Closed Principle (OCP)
-- Interfaces abstratas permitem extensão sem modificação
-- Repositórios podem ser facilmente substituídos
+- Abstract interfaces allow extension without modification
+- Repositories can be easily replaced
 
 ### Liskov Substitution Principle (LSP)
-- Implementações de repositórios são intercambiáveis
-- Entidades podem ser substituídas por suas abstrações
+- Repository implementations are interchangeable
+- Entities can be replaced by their abstractions
 
 ### Interface Segregation Principle (ISP)
-- Interfaces específicas para cada tipo de operação
-- Clientes dependem apenas dos métodos que utilizam
+- Specific interfaces for each type of operation
+- Clients depend only on the methods they use
 
 ### Dependency Inversion Principle (DIP)
-- Camadas superiores não dependem de implementações concretas
-- Uso de injeção de dependência nos construtores
+- Upper layers do not depend on concrete implementations
+- Use of dependency injection in constructors
 
 ## Clean Code Principles
 
 ### Naming
-- Nomes descritivos e expressivos
-- Métodos com verbos claros
-- Classes com substantivos específicos
+- Descriptive and expressive names
+- Methods with clear verbs
+- Classes with specific nouns
 
 ### Functions
-- Funções pequenas com responsabilidade única
-- Parâmetros limitados e bem tipados
-- Evitar efeitos colaterais
+- Small functions with single responsibility
+- Limited and well-typed parameters
+- Avoid side effects
 
 ### Comments
-- Código auto-documentado
-- Comentários apenas quando necessário
-- Documentação de regras de negócio
+- Self-documenting code
+- Comments only when necessary
+- Documentation of business rules
 
 ### Error Handling
-- Tratamento adequado de erros
-- Mensagens de erro informativas
-- Logging estruturado
+- Proper error handling
+- Informative error messages
+- Structured logging
 
-## Benefícios Implementados
+## Implemented Benefits
 
-### Manutenibilidade
-- Código organizado em camadas bem definidas
-- Separação clara de responsabilidades
-- Facilidade para modificações futuras
+### Maintainability
+- Code organized in well-defined layers
+- Clear separation of responsibilities
+- Ease for future modifications
 
-### Testabilidade
-- Dependências injetadas facilitam testes unitários
-- Interfaces permitem mocking eficaz
-- Lógica de negócio isolada
+### Testability
+- Injected dependencies facilitate unit tests
+- Interfaces allow effective mocking
+- Isolated business logic
 
 ### Escalabilidade
 - Arquitetura preparada para crescimento
@@ -123,12 +123,12 @@ Este documento descreve a implementação dos princípios de Clean Code, SOLID e
 
 ## Próximos Passos Recomendados
 
-1. **Testes Unitários**: Implementar testes para todas as camadas
-2. **Validação**: Adicionar validação usando Value Objects
-3. **Eventos**: Implementar Domain Events para operações complexas
-4. **Monitoring**: Adicionar logging estruturado
-5. **Documentation**: Expandir documentação de APIs
+1. **Unit Tests**: Implement tests for all layers
+2. **Validation**: Add validation using Value Objects
+3. **Events**: Implement Domain Events for complex operations
+4. **Monitoring**: Add structured logging
+5. **Documentation**: Expand API documentation
 
-## Conclusão
+## Conclusion
 
-A implementação de Clean Architecture, SOLID e Clean Code foi realizada com sucesso, mantendo todas as funcionalidades existentes operacionais. O código agora está mais organizando, manutenível e preparado para evolução futura, seguindo as melhores práticas de desenvolvimento de software.
+The implementation of Clean Architecture, SOLID, and Clean Code was successfully completed, maintaining all existing functionalities operational. The code is now more organized, maintainable, and prepared for future evolution, following best practices in software development.
