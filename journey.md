@@ -17,4 +17,11 @@
     - Como rodar local a aplicação
 - 25/08/2025
     - Setup básico de acordo com o que está no README
-    - Extnesão para leitura de PDF
+        - Configuração de banco de dados 
+        - Subir o projeto local 
+    - Extensão para leitura de PDF
+    - Entendimento da arquitetura atual do projeto 
+        - o npm installl na raiz do repo configura tanto o projeto de backend quanto o de front ?
+    - Alteração na arquitetura para isolar as camadas de front e back 
+        - Ver se faz sentido 
+        - Se estou pensando em usar o Cloud Provider do GCP para escolar esse Aplicativo faz sentido manter essa arquitetura ou mudar ?
