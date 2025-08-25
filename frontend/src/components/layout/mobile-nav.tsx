@@ -1,93 +1,162 @@
-import React from 'react';
-import { cn } from '../../lib/utils';
+import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
+import { 
+  LayoutDashboard,
+  FileText,
+  Activity,
+  Droplets,
+  Film,
+  Moon,
+  Brain,
+  Pill,
+  PieChart,
+  Timer,
+  Baby,
+  Heart
+} from "lucide-react";
+import { LucideIcon } from "lucide-react";
+import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
 
-interface MobileNavItemProps {
-  icon: React.ReactNode;
+// Interface para os itens do menu
+interface NavItem {
+  path: string;
   label: string;
-  href: string;
-  active?: boolean;
+  icon: LucideIcon;
+  show?: boolean;
+  alwaysShow?: boolean;
 }
 
-export function MobileNavItem({ icon, label, href, active = false }: MobileNavItemProps) {
+export function MobileNav() {
+  const [location] = useLocation();
+  const { t } = useTranslation();
+  const { settings } = useDashboardSettings();
+  
+  // Função para gerar os itens do menu com base nas configurações do dashboard
+  const getNavItems = () => {
+    const defaultSettings = {
+      showActivityTracker: true,
+      showWaterTracker: true,
+      showSleepTracker: true,
+      showMentalHealthTracker: true,
+      showMedicationTracker: true,
+      showWomensHealthTracker: true,
+      showVideoSubscription: true,
+    };
+    
+    const effectiveSettings = settings || defaultSettings;
+    
+    // Itens básicos que sempre aparecem
+    const baseItems = [
+      { path: "/", label: t('navigation.home'), icon: LayoutDashboard, alwaysShow: true },
+      { path: "/exams", label: t('navigation.exams'), icon: FileText, alwaysShow: true },
+    ];
+    
+    // Itens condicionais baseados nas configurações
+    const conditionalItems = [
+      { 
+        path: "/activity", 
+        label: t('navigation.activity'), 
+        icon: Activity, 
+        show: effectiveSettings.showActivityTracker,
+        alwaysShow: false 
+      },
+      { 
+        path: "/nutrition", 
+        label: t('navigation.water'), 
+        icon: Droplets, 
+        show: effectiveSettings.showWaterTracker,
+        alwaysShow: false 
+      },
+      { 
+        path: "/sleep", 
+        label: t('navigation.sleep'), 
+        icon: Moon, 
+        show: effectiveSettings.showSleepTracker,
+        alwaysShow: false 
+      },
+      { 
+        path: "/mental", 
+        label: t('navigation.mental'), 
+        icon: Brain, 
+        show: effectiveSettings.showMentalHealthTracker,
+        alwaysShow: false 
+      },
+      { 
+        path: "/medication", 
+        label: t('navigation.medication'), 
+        icon: Pill, 
+        show: effectiveSettings.showMedicationTracker,
+        alwaysShow: false 
+      },
+      { 
+        path: "/womens-health", 
+        label: t('navigation.womens'), 
+        icon: PieChart, 
+        show: effectiveSettings.showWomensHealthTracker,
+        alwaysShow: false 
+      },
+      { 
+        path: "/videos", 
+        label: t('navigation.videos'), 
+        icon: Film,
+        show: effectiveSettings.showVideoSubscription,
+        alwaysShow: false 
+      },
+      { 
+        path: "/fasting", 
+        label: t('navigation.fasting', 'Jejum'), 
+        icon: Timer,
+        show: true,
+        alwaysShow: false 
+      },
+      { 
+        path: "/baby-growth", 
+        label: t('navigation.baby', 'Bebê'), 
+        icon: Baby,
+        show: true,
+        alwaysShow: false 
+      },
+      { 
+        path: "/pregnancy", 
+        label: t('navigation.pregnancy', 'Gravidez'), 
+        icon: Heart,
+        show: true,
+        alwaysShow: false 
+      }
+    ];
+    
+    // Combinar itens base com os condicionais
+    const allItems = [
+      ...baseItems,
+      ...conditionalItems.filter(item => item.alwaysShow || item.show)
+    ];
+    
+    // Limitar a 5 itens para o menu inferior
+    return allItems.slice(0, 5);
+  };
+  
+  const navItems = getNavItems();
+  
   return (
-    <a
-      href={href}
-      className={cn(
-        'flex flex-col items-center justify-center',
-        'text-xs font-medium',
-        active 
-          ? 'text-blue-600 dark:text-blue-400'
-          : 'text-gray-600 dark:text-gray-400'
-      )}
-    >
-      <div className={cn(
-        'rounded-lg p-1 mb-1',
-        active 
-          ? 'bg-blue-100 dark:bg-blue-900/30'
-          : 'bg-transparent'
-      )}>
-        {icon}
-      </div>
-      <span>{label}</span>
-    </a>
-  );
-}
-
-interface MobileNavProps {
-  className?: string;
-}
-
-export function MobileNav({ className }: MobileNavProps) {
-  return (
-    <div className={cn(
-      'fixed bottom-0 left-0 right-0 z-10',
-      'bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800',
-      'px-4 py-2',
-      className
-    )}>
-      <div className="flex items-center justify-between">
-        <MobileNavItem 
-          icon={
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="7" height="9" x="3" y="3" rx="1" />
-              <rect width="7" height="5" x="14" y="3" rx="1" />
-              <rect width="7" height="9" x="14" y="12" rx="1" />
-              <rect width="7" height="5" x="3" y="16" rx="1" />
-            </svg>
-          }
-          label="Dashboard"
-          href="/dashboard"
-          active
-        />
-        <MobileNavItem 
-          icon={
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-            </svg>
-          }
-          label="Activity"
-          href="/activity"
-        />
-        <MobileNavItem 
-          icon={
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M8 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 19.414 6L14 .586A2 2 0 0 0 12.586 0H8a2 2 0 0 0-2 2z" />
-              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-            </svg>
-          }
-          label="Exams"
-          href="/exams"
-        />
-        <MobileNavItem 
-          icon={
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          }
-          label="Settings"
-          href="/settings"
-        />
+    <div className="block xs:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-10">
+      <div className="grid grid-cols-5">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = location === item.path;
+          
+          return (
+            <div key={item.path} className="flex justify-center">
+              <Link href={item.path} className={`flex flex-col items-center px-1 py-2 responsive-transition ${
+                isActive 
+                  ? 'text-blue-600 dark:text-emerald-400 font-medium' 
+                  : 'text-slate-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-emerald-300'
+              }`}>
+                <Icon className="responsive-icon-sm" />
+                <span className="responsive-nav-text text-[10px] mt-1 text-center truncate max-w-[60px]">{item.label}</span>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

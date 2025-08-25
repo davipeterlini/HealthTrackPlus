@@ -1,156 +1,387 @@
-import React from 'react';
-import { MainLayout } from '../components/layout/main-layout';
-import { NavMenu } from '../components/layout/nav-menu';
-import { MobileNav } from '../components/layout/mobile-nav';
-import { Container } from '../components/ui/container';
-import { Grid, GridItem } from '../components/ui/grid';
-import { useResponsive } from '../hooks/use-responsive';
+import { MainLayout } from "@/components/layout/main-layout";
+import { ActivitySummary } from "@/components/activity/activity-summary";
+import { ActivityChart } from "@/components/activity/activity-chart";
+import { ActivityBreakdown } from "@/components/activity/activity-breakdown";
+import { ActivityWeeklyChart } from "@/components/activity/activity-weekly-chart";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Activity } from "@shared/schema";
+import { DashboardStats } from "@shared/dashboard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { PlusCircle, Clock, Footprints, Dumbbell } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
-interface CardProps {
-  title: string;
-  children: React.ReactNode;
-  className?: string;
-}
+// Schema para formulário de atividade
+const activityFormSchema = z.object({
+  activityType: z.string().min(1, { message: "Please select an activity type" }),
+  steps: z.coerce.number().min(0, { message: "Steps must be 0 or higher" }),
+  minutes: z.coerce.number().min(0, { message: "Duration must be 0 or higher" }),
+  calories: z.coerce.number().min(0, { message: "Calories must be 0 or higher" }),
+  distance: z.coerce.number().optional(),
+  notes: z.string().optional(),
+});
 
-function Card({ title, children, className }: CardProps) {
-  return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 ${className}`}>
-      <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4">{title}</h2>
-      {children}
-    </div>
-  );
-}
+type ActivityFormValues = z.infer<typeof activityFormSchema>;
 
-export function ActivityPage() {
-  const { isMobile, isTablet } = useResponsive();
+export default function ActivityPage() {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
+  const form = useForm<ActivityFormValues>({
+    resolver: zodResolver(activityFormSchema),
+    defaultValues: {
+      activityType: "walking",
+      steps: 0,
+      minutes: 0,
+      calories: 0,
+      distance: undefined,
+      notes: ""
+    }
+  });
+  
+  const { data: activities, isLoading: isLoadingActivities } = useQuery<Activity[]>({
+    queryKey: ["/api/activities"],
+  });
+  
+  const { data: dashboardStats, isLoading: isLoadingStats } = useQuery<DashboardStats>({
+    queryKey: ["/api/dashboard"],
+  });
+  
+  const isLoading = isLoadingActivities || isLoadingStats;
+  
+  // Mutação para adicionar nova atividade
+  const addActivityMutation = useMutation({
+    mutationFn: async (values: ActivityFormValues) => {
+      // Criar objeto de atividade completo
+      const newActivity = {
+        ...values,
+        date: new Date(),
+        userId: 1
+      };
+      return await apiRequest("POST", "/api/activities", newActivity);
+    },
+    onSuccess: () => {
+      toast({
+        title: t('activity.activityAdded'),
+        description: t('activity.activityAddedMessage')
+      });
+      setDialogOpen(false);
+      form.reset();
+      // Invalidate both activities and dashboard queries to refresh all data
+      queryClient.invalidateQueries({ queryKey: ["/api/activities"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard"] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: t('activity.failedToAdd'),
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  });
+  
+  const onSubmit = (values: ActivityFormValues) => {
+    addActivityMutation.mutate(values);
+  };
+  
+  // Formatar data de acordo com o idioma
+  const formatDate = (dateString: string | Date) => {
+    const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
+    const locale = i18n.language === 'pt' ? 'pt-BR' : 'en-US';
+    return date.toLocaleDateString(locale, {
+      weekday: "long",
+      month: "long",
+      day: "numeric"
+    });
+  };
+  
+  // Pegar as atividades mais recentes
+  // Obter atividades recentes - as 5 mais recentes
+  const recentActivities = activities ? [...activities]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5) : [];
+  
+  // Função para obter ícone de acordo com o tipo de atividade
+  const getActivityIcon = (type: string) => {
+    switch (type?.toLowerCase()) {
+      case "walking":
+        return <Footprints className="h-5 w-5 text-primary-600 dark-text-accent-primary" />;
+      case "running":
+        return <Footprints className="h-5 w-5 text-green-500 dark-text-accent-green" />;
+      case "cycling":
+        return <Dumbbell className="h-5 w-5 text-purple-500 dark-text-accent-purple" />;
+      default:
+        return <Dumbbell className="h-5 w-5 text-blue-500 dark-text-accent-blue" />;
+    }
+  };
   
   return (
-    <>
-      <MainLayout
-        title="Activity"
-        navItems={<NavMenu />}
-      >
-        <Container>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Activity Tracking</h1>
-          
-          <div className={`flex ${isMobile || isTablet ? 'flex-col' : 'flex-row'} gap-6 mb-6`}>
-            <div className={`${isMobile || isTablet ? 'w-full' : 'w-2/3'}`}>
-              <Card title="Weekly Activity">
-                <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-                  <span className="text-gray-500 dark:text-gray-400">Activity Chart</span>
-                </div>
-              </Card>
-            </div>
-            
-            <div className={`${isMobile || isTablet ? 'w-full' : 'w-1/3'}`}>
-              <Card title="Activity Summary">
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-300">Steps</span>
-                    <span className="font-medium">8,742</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
-                    <div className="h-2 bg-blue-500 rounded-full" style={{ width: '70%' }}></div>
-                  </div>
+    <MainLayout title={t('activity.title')} hideTitle={true}>
+      <div className="flex justify-between items-center responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">{t('activity.title')}</h1>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button variant="default" className="bg-green-600 hover:bg-green-700 dark:text-white dark:bg-green-700 dark:hover:bg-green-600 responsive-button">
+              <PlusCircle className="mr-2 responsive-icon-sm" /> {t('activity.addActivity')}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md md:max-w-lg">
+            <DialogHeader>
+              <DialogTitle className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-white">{t('activity.recordActivity')}</DialogTitle>
+            </DialogHeader>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-2">
+                <FormField
+                  control={form.control}
+                  name="activityType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.activityType')}</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                            <SelectValue placeholder={t('activity.selectActivityType')} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
+                          <SelectItem value="walking" className="dark:text-white dark:focus:bg-gray-700">{t('activity.walking')}</SelectItem>
+                          <SelectItem value="running" className="dark:text-white dark:focus:bg-gray-700">{t('activity.running')}</SelectItem>
+                          <SelectItem value="cycling" className="dark:text-white dark:focus:bg-gray-700">{t('activity.cycling')}</SelectItem>
+                          <SelectItem value="swimming" className="dark:text-white dark:focus:bg-gray-700">{t('activity.swimming')}</SelectItem>
+                          <SelectItem value="yoga" className="dark:text-white dark:focus:bg-gray-700">{t('activity.yoga')}</SelectItem>
+                          <SelectItem value="gym" className="dark:text-white dark:focus:bg-gray-700">{t('activity.gym')}</SelectItem>
+                          <SelectItem value="hiking" className="dark:text-white dark:focus:bg-gray-700">{t('activity.hiking')}</SelectItem>
+                          <SelectItem value="other" className="dark:text-white dark:focus:bg-gray-700">{t('activity.other')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="steps"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.steps')}</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-300">Distance</span>
-                    <span className="font-medium">5.3 km</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
-                    <div className="h-2 bg-green-500 rounded-full" style={{ width: '65%' }}></div>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="calories"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.calories')}</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-300">Active Minutes</span>
-                    <span className="font-medium">42 min</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
-                    <div className="h-2 bg-orange-500 rounded-full" style={{ width: '50%' }}></div>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="minutes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.duration')} ({t('activity.minutes')})</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="distance"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.distance')} (km)</FormLabel>
+                        <FormControl>
+                          <Input type="number" step="0.1" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-              </Card>
-            </div>
-          </div>
-          
-          <Grid 
-            columns={{ 
-              xs: 1, 
-              md: 3 
-            }}
-            gap={6}
-            className="mb-6"
-          >
-            <GridItem>
-              <Card title="Steps">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-500">8,742</div>
-                  <div className="text-gray-500 dark:text-gray-400">Daily Goal: 10,000</div>
-                </div>
-              </Card>
-            </GridItem>
-            
-            <GridItem>
-              <Card title="Distance">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-green-500">5.3 km</div>
-                  <div className="text-gray-500 dark:text-gray-400">Daily Goal: 8 km</div>
-                </div>
-              </Card>
-            </GridItem>
-            
-            <GridItem>
-              <Card title="Active Minutes">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-orange-500">42 min</div>
-                  <div className="text-gray-500 dark:text-gray-400">Daily Goal: 60 min</div>
-                </div>
-              </Card>
-            </GridItem>
-          </Grid>
-          
-          <Card title="Activity Breakdown">
-            <div className="space-y-4">
-              <div className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500">
-                    <path d="M19 5.93 19 19"></path>
-                    <path d="m5 15.93 4-2 3 2 4-2"></path>
-                    <path d="M19 13.93 19 19"></path>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium">Walking</h3>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">7:30 - 8:15 AM · 4.2 km</div>
-                </div>
-                <div className="text-right">
-                  <div className="font-medium">45 min</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">3,240 steps</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500">
-                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                    <path d="M11 2a2 2 0 0 1 2 2c0 .6-.4 1-1 1.5-2 1.7-2 6.5 0 8 .6.5 1 .9 1 1.5a2 2 0 1 1-4 0c0-.6.4-1 1-1.5 2-1.5 2-6.3 0-8-.6-.5-1-.9-1-1.5a2 2 0 0 1 2-2Z"></path>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium">Yoga</h3>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">6:00 - 6:30 PM</div>
-                </div>
-                <div className="text-right">
-                  <div className="font-medium">30 min</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">120 calories</div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </Container>
-      </MainLayout>
+                
+                <FormField
+                  control={form.control}
+                  name="notes"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-slate-700 dark:text-gray-300">{t('activity.notes')}</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="" {...field} className="dark:bg-gray-800 dark:border-gray-700 dark:text-white resize-none min-h-[80px]" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <DialogFooter>
+                  <Button 
+                    type="submit" 
+                    disabled={addActivityMutation.isPending} 
+                    className="bg-green-600 hover:bg-green-700 dark-btn-success"
+                  >
+                    {addActivityMutation.isPending ? t('activity.savingActivity') : t('activity.saveActivity')}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      </div>
       
-      {isMobile && <MobileNav />}
-    </>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 responsive-gap-y">
+        {isLoading ? (
+          <>
+            <div className="lg:col-span-2">
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <Skeleton className="h-80 w-full dark:bg-gray-700" />
+              </Card>
+            </div>
+            <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+              <Skeleton className="h-80 w-full dark:bg-gray-700" />
+            </Card>
+          </>
+        ) : (
+          <>
+            <div className="lg:col-span-2 space-y-6 responsive-gap-y">
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <CardHeader className="responsive-card-header">
+                  <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('activity.summary')}</CardTitle>
+                </CardHeader>
+                <ActivitySummary 
+                  activities={activities || []}
+                  dashboardStats={dashboardStats}
+                  selectedDate={selectedDate}
+                />
+              </Card>
+              
+              {/* Weekly Activities Chart - igual ao da página inicial */}
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <CardHeader className="responsive-card-header">
+                  <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('health.weeklyActivities')}</CardTitle>
+                </CardHeader>
+                <ActivityWeeklyChart 
+                  activities={activities || []} 
+                  onSelectDate={setSelectedDate}
+                />
+              </Card>
+              
+              {/* Recent Activities Section */}
+              <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+                <CardHeader className="responsive-card-header">
+                  <CardTitle className="responsive-title-sm text-slate-800 dark:text-white">{t('activity.recentActivities')}</CardTitle>
+                </CardHeader>
+                <CardContent className="responsive-card-content">
+                  {recentActivities.length > 0 ? (
+                    <div className="space-y-4">
+                      {recentActivities.map((activity, index) => (
+                        <div key={index} className="flex space-x-4 items-start border-b dark:border-gray-700 pb-4 last:border-0 last:pb-0">
+                          <div className="responsive-icon-container rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
+                            {getActivityIcon(activity.activityType)}
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex justify-between">
+                              <h4 className="font-medium responsive-text capitalize text-slate-800 dark:text-white">{activity.activityType}</h4>
+                              <span className="responsive-text-sm text-slate-500 dark:text-slate-400">{formatDate(activity.date)}</span>
+                            </div>
+                            
+                            <div className="mt-1 flex flex-wrap gap-3">
+                              <div className="flex items-center responsive-text-sm text-slate-600 dark:text-slate-400">
+                                <Footprints className="responsive-icon-sm mr-1 text-green-500" />
+                                {activity.steps} {t('activity.steps')}
+                              </div>
+                              
+                              <div className="flex items-center responsive-text-sm text-slate-600 dark:text-slate-400">
+                                <Clock className="responsive-icon-sm mr-1 text-blue-500" />
+                                {activity.minutes} {t('activity.minutes')}
+                              </div>
+                              
+                              {activity.distance && (
+                                <div className="flex items-center responsive-text-sm text-slate-600 dark:text-slate-400">
+                                  <Dumbbell className="responsive-icon-sm mr-1 text-purple-500" />
+                                  {activity.distance} km
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <div className="responsive-icon-container mx-auto rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 mb-2">
+                        <Dumbbell className="responsive-icon text-gray-400 dark:text-gray-500" />
+                      </div>
+                      <h3 className="mt-2 responsive-text font-medium text-slate-800 dark:text-white">{t('activity.noActivities')}</h3>
+                      <p className="mt-1 responsive-text-sm text-slate-500 dark:text-slate-400">
+                        {t('activity.startTracking')}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+            
+            <ActivityBreakdown 
+              activity={activities?.find(a => 
+                new Date(a.date).toDateString() === selectedDate.toDateString()
+              )}
+            />
+          </>
+        )}
+      </div>
+    </MainLayout>
   );
 }
