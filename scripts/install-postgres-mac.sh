@@ -59,9 +59,14 @@ echo -e "${GREEN}Verificando usuário atual para PostgreSQL...${NC}"
 CURRENT_USER=$(whoami)
 echo -e "${GREEN}Usando usuário: $CURRENT_USER${NC}"
 
-# Criar o banco de dados
-echo -e "${GREEN}Criando banco de dados healthtrackplus...${NC}"
-/opt/homebrew/opt/postgresql@15/bin/createdb healthtrackplus
+# Verificar se o banco de dados já existe e criar se não existir
+echo -e "${GREEN}Verificando e criando banco de dados healthtrackplus se necessário...${NC}"
+if /opt/homebrew/opt/postgresql@15/bin/psql -lqt | cut -d \| -f 1 | grep -qw healthtrackplus; then
+    echo -e "${YELLOW}Banco de dados 'healthtrackplus' já existe.${NC}"
+else
+    /opt/homebrew/opt/postgresql@15/bin/createdb healthtrackplus
+    echo -e "${GREEN}Banco de dados 'healthtrackplus' criado com sucesso.${NC}"
+fi
 
 echo -e "${BLUE}================================================${NC}"
 echo -e "${GREEN}PostgreSQL instalado e configurado com sucesso!${NC}"
@@ -70,7 +75,7 @@ echo -e "Resumo:"
 echo -e "- PostgreSQL 15 instalado"
 echo -e "- Serviço iniciado automaticamente"
 echo -e "- Usando usuário do sistema '$CURRENT_USER'"
-echo -e "- Banco de dados 'healthtrackplus' criado"
+echo -e "- Banco de dados 'healthtrackplus' verificado/criado"
 echo -e "${BLUE}================================================${NC}"
 echo -e "Agora você pode executar: npm run db:push"
 echo -e "${BLUE}================================================${NC}"
