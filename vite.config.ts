@@ -12,7 +12,8 @@ export default defineConfig({
   plugins: [
     react(),
     runtimeErrorOverlay(),
-    themePlugin(),
+    // Disable theme plugin temporarily
+    // themePlugin(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [

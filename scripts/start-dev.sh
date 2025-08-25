@@ -27,7 +27,7 @@ echo "📡 Endereço de rede: $IP"
 
 # Check if capacitor.config.ts exists and update it for mobile development
 if [ -f "capacitor.config.ts" ]; then
-    echo "📱 Configurando para desenvolvimento mobile em $IP:5000"
+    echo "📱 Configurando para desenvolvimento mobile em $IP:5001"
     
     # Backup da configuração original
     cp capacitor.config.ts capacitor.config.ts.backup
@@ -35,11 +35,11 @@ if [ -f "capacitor.config.ts" ]; then
     # Atualizar configuração do Capacitor usando método compatível com todos os sistemas
     if [ "$OS" = "Darwin" ]; then
         # macOS requires different sed syntax
-        sed -i '' "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5000',|g" capacitor.config.ts
+        sed -i '' "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5001',|g" capacitor.config.ts
         sed -i '' "s|// cleartext: true|cleartext: true|g" capacitor.config.ts
     else
         # Linux and other systems
-        sed -i "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5000',|g" capacitor.config.ts
+        sed -i "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5001',|g" capacitor.config.ts
         sed -i "s|// cleartext: true|cleartext: true|g" capacitor.config.ts
     fi
     
@@ -47,8 +47,17 @@ if [ -f "capacitor.config.ts" ]; then
 fi
 
 # Start the server in development mode
-echo "🌐 Iniciando servidor em http://$IP:5000"
+echo "🌐 Iniciando servidor em http://$IP:5001"
 echo "⌛ Aguarde..."
 
-# Start vite dev server
+# Check if .env file exists
+if [ ! -f ".env" ]; then
+    echo "⚠️ Arquivo .env não encontrado. Copiando sample.env para .env..."
+    cp sample.env .env
+    echo "✅ Arquivo .env criado. Por favor, verifique as configurações."
+fi
+
+# Start vite dev server with environment variables
+echo "🔄 Carregando variáveis de ambiente de .env"
+export $(grep -v '^#' .env | xargs)
 VITE_HOST=$IP npm run dev

@@ -16,11 +16,18 @@
         - Disponibilizar a aplicação para emails específicos
     - Como rodar local a aplicação
 - 25/08/2025
-    - Setup básico de acordo com o que está no README
+    - Extensão para leitura de PDF
+    - Setup básico de acordo com o que está no README - Web
         - Configuração de banco de dados 
         - Subir o projeto local 
         - Ajustes de scripts informados no Readme
-    - Extensão para leitura de PDF
+    - Setup básico de acordo com o que está no README - Mobile
+        - 
+    - Arquitetura 
+        - Remova os scripts que não estão sendo mais utilizados 
+        - Ajustes de Arquitetura para fazer sentindo o layout responsivo 
+        - Traduza tudo que estiver nesse repo para o inglês, desde arquivos, comentários, todos entre outros
+
     - Entendimento da arquitetura atual do projeto 
         - o npm installl na raiz do repo configura tanto o projeto de backend quanto o de front ?
     - Alteração na arquitetura para isolar as camadas de front e back 
