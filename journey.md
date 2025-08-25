@@ -19,6 +19,7 @@
     - Setup básico de acordo com o que está no README
         - Configuração de banco de dados 
         - Subir o projeto local 
+        - Ajustes de scripts informados no Readme
     - Extensão para leitura de PDF
     - Entendimento da arquitetura atual do projeto 
         - o npm installl na raiz do repo configura tanto o projeto de backend quanto o de front ?

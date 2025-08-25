@@ -61,7 +61,7 @@ echo -e "${GREEN}Usando usuário: $CURRENT_USER${NC}"
 
 # Criar o banco de dados
 echo -e "${GREEN}Criando banco de dados healthtrackplus...${NC}"
-createdb healthtrackplus
+/opt/homebrew/opt/postgresql@15/bin/createdb healthtrackplus
 
 echo -e "${BLUE}================================================${NC}"
 echo -e "${GREEN}PostgreSQL instalado e configurado com sucesso!${NC}"
