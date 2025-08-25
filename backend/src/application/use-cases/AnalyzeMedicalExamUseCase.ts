@@ -96,7 +96,7 @@ export class AnalyzeMedicalExamUseCase {
     // Business logic for generating mock AI analysis based on exam type
     if (exam.type.toLowerCase().includes('blood') || exam.type.toLowerCase().includes('lab')) {
       return {
-        summary: "Complete laboratory analysis performed successfully.",
+        summary: "Análise laboratorial completa realizada com sucesso.",
         details: {
           bloodGlucose: {
             value: 95,
@@ -110,41 +110,41 @@ export class AnalyzeMedicalExamUseCase {
           }
         },
         recommendations: [
-          "Maintain a balanced diet",
-          "Practice regular exercise",
-          "Continue with periodic exams"
+          "Manter alimentação balanceada",
+          "Praticar exercícios regularmente",
+          "Continuar com exames periódicos"
         ]
       };
     }
 
     if (exam.type.toLowerCase().includes('cardiac') || exam.type.toLowerCase().includes('cardio')) {
       return {
-        summary: "Cardiac evaluation shows parameters within normal range.",
+        summary: "Avaliação cardíaca apresenta parâmetros dentro da normalidade.",
         details: {
           bloodPressure: {
             systolic: { value: 120, status: "normal", reference: "<120 mmHg" },
             diastolic: { value: 80, status: "normal", reference: "<80 mmHg" }
           },
           heartRate: { value: 72, status: "normal", reference: "60-100 bpm" },
-          ecg: { finding: "Normal sinus rhythm", status: "normal" }
+          ecg: { finding: "Ritmo sinusal normal", status: "normal" }
         },
         recommendations: [
-          "Maintain regular physical activity",
-          "Control sodium intake",
-          "Monitor blood pressure"
+          "Manter atividade física regular",
+          "Controlar ingestão de sódio",
+          "Monitorar pressão arterial"
         ]
       };
     }
 
     // Default analysis
     return {
-      summary: "Exam analysis completed with satisfactory results.",
+      summary: "Análise do exame concluída com resultados satisfatórios.",
       details: {
-        general: { status: "normal", findings: "No significant changes" }
+        general: { status: "normal", findings: "Sem alterações significativas" }
       },
       recommendations: [
-        "Maintain healthy habits",
-        "Continue regular medical follow-up"
+        "Manter hábitos saudáveis",
+        "Continuar acompanhamento médico regular"
       ]
     };
   }
@@ -216,39 +216,39 @@ export class AnalyzeMedicalExamUseCase {
     switch (category) {
       case "Cardiovascular":
         return {
-          title: riskLevel === 'attention' ? "Cardiovascular Alert" : "Cardiovascular Health",
+          title: riskLevel === 'attention' ? "Atenção Cardiovascular" : "Saúde Cardiovascular",
           description: riskLevel === 'attention' 
-            ? "Some cardiovascular indicators require attention."
-            : "Your cardiovascular indicators are adequate.",
+            ? "Alguns indicadores cardiovasculares merecem atenção."
+            : "Seus indicadores cardiovasculares estão adequados.",
           recommendation: riskLevel === 'attention'
-            ? "Consider reducing sodium intake and practicing regular exercise."
-            : "Maintain regular exercise practice.",
+            ? "Considere reduzir o consumo de sódio e praticar exercícios regulares."
+            : "Mantenha a prática regular de exercícios.",
           severity,
           data: aiAnalysis?.details?.bloodPressure || aiAnalysis?.details?.heartRate || {}
         };
       
       case "Nutrition":
         return {
-          title: riskLevel === 'attention' ? "Nutritional Alert" : "Nutritional Profile",
+          title: riskLevel === 'attention' ? "Atenção Nutricional" : "Perfil Nutricional",
           description: riskLevel === 'attention'
-            ? "Some nutritional markers need adjustments."
-            : "Your nutritional markers are balanced.",
+            ? "Alguns marcadores nutricionais necessitam ajustes."
+            : "Seus marcadores nutricionais estão equilibrados.",
           recommendation: riskLevel === 'attention'
-            ? "Reduce refined carbohydrates and increase vegetable consumption."
-            : "Maintain a balanced and varied diet.",
+            ? "Reduza carboidratos refinados e aumente o consumo de vegetais."
+            : "Mantenha uma dieta balanceada e variada.",
           severity,
           data: aiAnalysis?.details?.cholesterol || aiAnalysis?.details?.bloodGlucose || {}
         };
         
       case "Metabolism":
         return {
-          title: riskLevel === 'attention' ? "Metabolic Control" : "Adequate Metabolism",
+          title: riskLevel === 'attention' ? "Controle Metabólico" : "Metabolismo Adequado",
           description: riskLevel === 'attention'
-            ? "Your metabolic levels require monitoring."
-            : "Your metabolism is functioning properly.",
+            ? "Seus níveis metabólicos requerem monitoramento."
+            : "Seu metabolismo está funcionando adequadamente.",
           recommendation: riskLevel === 'attention'
-            ? "Maintain regular meal times and practice physical activities."
-            : "Continue with healthy habits to maintain metabolic balance.",
+            ? "Mantenha horários regulares de alimentação e pratique atividades físicas."
+            : "Continue com hábitos saudáveis para manter o equilíbrio metabólico.",
           severity,
           data: aiAnalysis?.details?.bloodGlucose || {}
         };

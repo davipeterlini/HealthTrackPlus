@@ -168,13 +168,13 @@ export class MedicalExamService {
       case "Cardiovascular":
         if (details.bloodPressure || details.heartRate || details.cholesterol) {
           return {
-            title: riskLevel === 'attention' ? "Cardiovascular Alert" : "Cardiovascular Health",
+            title: riskLevel === 'attention' ? "Atenção Cardiovascular" : "Saúde Cardiovascular",
             description: riskLevel === 'attention' 
-              ? "Some cardiovascular indicators require attention."
-              : "Your cardiovascular indicators are adequate.",
+              ? "Alguns indicadores cardiovasculares merecem atenção."
+              : "Seus indicadores cardiovasculares estão adequados.",
             recommendation: riskLevel === 'attention'
-              ? "Consider reducing sodium intake and practicing regular exercise."
-              : "Maintain regular exercise practice.",
+              ? "Considere reduzir o consumo de sódio e praticar exercícios regulares."
+              : "Mantenha a prática regular de exercícios.",
             severity: riskLevel === 'high' ? 'high' : (riskLevel === 'attention' ? 'attention' : 'normal'),
             data: {
               bloodPressure: details.bloodPressure,
@@ -188,13 +188,13 @@ export class MedicalExamService {
       case "Nutrition":
         if (details.cholesterol || details.bloodGlucose) {
           return {
-            title: riskLevel === 'attention' ? "Nutritional Alert" : "Nutritional Profile",
+            title: riskLevel === 'attention' ? "Atenção Nutricional" : "Perfil Nutricional",
             description: riskLevel === 'attention'
-              ? "Some nutritional markers need adjustments."
-              : "Your nutritional markers are balanced.",
+              ? "Alguns marcadores nutricionais necessitam ajustes."
+              : "Seus marcadores nutricionais estão equilibrados.",
             recommendation: riskLevel === 'attention'
-              ? "Reduce refined carbohydrates and increase vegetable consumption."
-              : "Maintain a balanced and varied diet.",
+              ? "Reduza carboidratos refinados e aumente o consumo de vegetais."
+              : "Mantenha uma dieta balanceada e variada.",
             severity: riskLevel === 'high' ? 'high' : (riskLevel === 'attention' ? 'attention' : 'normal'),
             data: {
               cholesterol: details.cholesterol,
@@ -207,13 +207,13 @@ export class MedicalExamService {
       case "Metabolism":
         if (details.bloodGlucose) {
           return {
-            title: riskLevel === 'attention' ? "Metabolic Control" : "Adequate Metabolism",
+            title: riskLevel === 'attention' ? "Controle Metabólico" : "Metabolismo Adequado",
             description: riskLevel === 'attention'
-              ? "Your blood glucose levels require monitoring."
-              : "Your metabolism is functioning properly.",
+              ? "Seus níveis de glicemia requerem monitoramento."
+              : "Seu metabolismo está funcionando adequadamente.",
             recommendation: riskLevel === 'attention'
-              ? "Maintain regular meal times and practice physical activities."
-              : "Continue with healthy habits to maintain metabolic balance.",
+              ? "Mantenha horários regulares de alimentação e pratique atividades físicas."
+              : "Continue com hábitos saudáveis para manter o equilíbrio metabólico.",
             severity: riskLevel === 'high' ? 'high' : (riskLevel === 'attention' ? 'attention' : 'normal'),
             data: {
               bloodGlucose: details.bloodGlucose

@@ -1,35 +1,35 @@
-// Function to add to the storage.ts file
+// Função para adicionar ao arquivo storage.ts
 
 /*
-// Initialize sample activities for demonstration
+// Inicializa atividades de exemplo para demonstração
 private initSampleActivities() {
-  // Mock user if it doesn't exist
+  // Mock de usuário se não existir
   if (!this.users.has(1)) {
     this.users.set(1, {
       id: 1,
       username: "usuario_teste",
-      email: "test@example.com",
-      password: "encrypted_password",
-      name: "Test User",
+      email: "teste@exemplo.com",
+      password: "senha_criptografada",
+      name: "Usuário Teste",
       avatar: null,
       createdAt: new Date()
     });
   }
   
-  // Activity types for variety
+  // Tipos de atividades para variedade
   const activityTypes = ["walking", "running", "cycling", "swimming", "yoga", "gym", "hiking"];
   
-  // Create activities for the last 30 days
+  // Criar atividades para os últimos 30 dias
   const today = new Date();
   
   for (let i = 0; i < 25; i++) {
     const activityDate = new Date();
     activityDate.setDate(today.getDate() - i);
     
-    // Generate a random activity type
+    // Gerar um tipo de atividade aleatório
     const randomType = activityTypes[Math.floor(Math.random() * activityTypes.length)];
     
-    // Random values for each activity
+    // Valores aleatórios para cada atividade
     const stepsCount = Math.floor(Math.random() * 10000) + 2000; // Entre 2000 e 12000 passos
     const durationMinutes = Math.floor(Math.random() * 60) + 30; // Entre 30 e 90 minutos
     const caloriesBurned = Math.floor(Math.random() * 500) + 150; // Entre 150 e 650 calorias

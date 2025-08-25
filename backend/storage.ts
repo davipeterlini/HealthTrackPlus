@@ -286,7 +286,7 @@ export class MemStorage implements IStorage {
         title: data.title,
         duration: '18:32',
         category: 'Mental Health',
-        description: 'A guided meditation to reduce anxiety and stress, focusing on breathing and deep relaxation',
+        description: 'Uma meditação guiada para reduzir ansiedade e estresse, com foco em respiração e relaxamento profundo',
         thumbnailUrl: `https://img.youtube.com/vi/0F9szTYowN0/maxresdefault.jpg`
       },
       {
@@ -367,9 +367,9 @@ export class MemStorage implements IStorage {
       this.users.set(1, {
         id: 1,
         username: "usuario_teste",
-        email: "test@example.com",
+        email: "teste@exemplo.com",
         password: "senha_criptografada",
-        name: "Test User",
+        name: "Usuário Teste",
         avatar: null,
         createdAt: new Date()
       });
@@ -1899,11 +1899,11 @@ export class DatabaseStorage implements IStorage {
           actionable: true,
           actions: [
             { label: 'Iniciar meditação 5min', action: 'meditation_break', primary: true },
-            { label: 'View relaxation exercises', action: 'view_relaxation' }
+            { label: 'Ver exercícios de relaxamento', action: 'view_relaxation' }
           ],
           timestamp: currentTime.toISOString(),
           contextData: {
-            timeBasedInsight: 'Best time for relaxation',
+            timeBasedInsight: 'Melhor momento para relaxamento',
             currentActivity: 'Fim do dia'
           }
         });
@@ -2010,19 +2010,19 @@ export class DatabaseStorage implements IStorage {
       return {
         id: `fallback-tip-${Date.now()}`,
         type: 'suggestion',
-        title: 'Stay Hydrated',
-        message: 'Remember to drink water regularly throughout the day to stay healthy.',
+        title: 'Mantenha-se Hidratado',
+        message: 'Lembre-se de beber água regularmente ao longo do dia para manter-se saudável.',
         category: 'hydration',
         priority: 'medium',
         triggerCondition: 'fallback',
         actionable: true,
         actions: [
-          { label: 'Log water', action: 'hydrate_now', primary: true }
+          { label: 'Registrar água', action: 'hydrate_now', primary: true }
         ],
         timestamp: new Date().toISOString(),
         contextData: {
-          personalizedInsight: 'General hydration tip',
-          reasoning: 'Hydration is essential for health'
+          personalizedInsight: 'Dica geral de hidratação',
+          reasoning: 'Hidratação é fundamental para a saúde'
         }
       };
     }
