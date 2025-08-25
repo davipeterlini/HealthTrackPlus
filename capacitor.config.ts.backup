@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   webDir: 'frontend/dist',
   server: {
     androidScheme: 'https',
-    // Para desenvolvimento local, descomente a linha abaixo e substitua pelo seu IP local
+    // For local development, uncomment the line below and replace with your local IP
     url: 'http://172.31.128.44:5000',
     cleartext: true
   },
