@@ -50,16 +50,9 @@ fi
 echo "✅ Configuração atualizada para desenvolvimento local"
 echo "🔧 Servidor configurado em: http://$IP:5000"
 
-# Check if frontend directory exists
-if [ -d "frontend" ]; then
-    # Build do frontend
-    echo "📦 Fazendo build do frontend..."
-    cd frontend
-    npm run build
-    cd ..
-else
-    echo "ℹ️ Diretório frontend não encontrado, pulando build do frontend."
-fi
+# Build do frontend
+echo "📦 Fazendo build do frontend..."
+npm run build:frontend
 
 # Check if npx is available
 if command -v npx &> /dev/null; then

@@ -12,7 +12,6 @@ export default defineConfig({
   plugins: [
     react(),
     runtimeErrorOverlay(),
-    // Disable theme plugin temporarily
     // themePlugin(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
@@ -34,7 +33,7 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "frontend/dist"),
     emptyOutDir: true,
     rollupOptions: {
-      input: 'frontend/index.html'
+      input: path.resolve(__dirname, 'frontend/index.html')
     }
   },
 });

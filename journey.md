@@ -22,8 +22,9 @@
         - Subir o projeto local 
         - Ajustes de scripts informados no Readme
     - Setup básico de acordo com o que está no README - Mobile
-        - 
+        - Rodar o comando: npm run dev:start
     - Arquitetura 
+        - mova a estrutura do source para dentro de uma pasta na raiz com o nome de frontend, corrija os scripts e setup e tudo que estiver relacionado a essa mudança
         - Remova os scripts que não estão sendo mais utilizados 
         - Ajustes de Arquitetura para fazer sentindo o layout responsivo 
         - Traduza tudo que estiver nesse repo para o inglês, desde arquivos, comentários, todos entre outros
