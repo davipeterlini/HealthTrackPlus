@@ -1,0 +1,39 @@
+- 16/08/2025
+    - Arrume todo o layout responsivo da aplicação, considere para isso, deixar a esssa parte de component centralizada e aplicá-la em todas as paginas da aplicação. Além disso o layout responsivo deve considerar o uso da aplicação em dispositivos mobile e navegadores, considere adequação dos componentes de tela para cada um deles
+    - Como rodar a aplicação local, considere a aplicação completa, frontend, backend, banco de dados, atualize o readme da aplicação e se for necessário crie um script de setup
+    - Ajustes da aplicação para rodar local
+- 17/08/2025
+    - Baixar itens do xcode 
+    - Baixar android studio 
+    - Criar emulador de android studio 
+    - Analise a aplicação do codebase e me de detalhes de como posso subir essa aplicação no GCP, considere os detalhes abaixo 
+        - A aplicação será servida via Web e via Aplicativos Moveis 
+    - Crie uma conta no Google Play (Loja do Android) 
+        - Como subir uma aplicação para a loja da Apple
+        - Disponibilizar a aplicação para emails específicos
+    - Crie uma conta no Apple Store Developer 
+        - Como subir uma aplicação para a loja da Apple
+        - Disponibilizar a aplicação para emails específicos
+    - Como rodar local a aplicação
+- 25/08/2025
+    - Extensão para leitura de PDF
+    - Setup básico de acordo com o que está no README - Web
+        - Configuração de banco de dados 
+        - Subir o projeto local 
+        - Ajustes de scripts informados no Readme
+        - Correção de Arq para rodar local 
+    - Arquitetura 
+        - mova a estrutura do source para dentro de uma pasta na raiz com o nome de frontend, corrija os scripts e setup e tudo que estiver relacionado a essa mudança
+        - Remova os scripts que não estão sendo mais utilizados 
+        - Traduza tudo que estiver nesse repo para o inglês, desde arquivos, comentários, todos entre outros    
+    - Setup básico de acordo com o que está no README - Mobile
+        - Rodar o comando: npm run dev:start
+    - Desing
+        - Ajustes de Arquitetura para fazer sentindo o layout responsivo 
+        
+
+    - Entendimento da arquitetura atual do projeto 
+        - o npm installl na raiz do repo configura tanto o projeto de backend quanto o de front ?
+    - Alteração na arquitetura para isolar as camadas de front e back 
+        - Ver se faz sentido 
+        - Se estou pensando em usar o Cloud Provider do GCP para escolar esse Aplicativo faz sentido manter essa arquitetura ou mudar ?

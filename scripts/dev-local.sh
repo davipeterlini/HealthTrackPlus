@@ -1,39 +1,68 @@
-
 #!/bin/bash
 
 echo "🚀 Configurando desenvolvimento local para móvel..."
 
-# Obter IP local
-IP=$(hostname -I | awk '{print $1}' 2>/dev/null || ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n1)
+# Detect operating system
+OS=$(uname)
+
+# Get local IP based on OS
+if [ "$OS" = "Darwin" ]; then
+    # macOS
+    IP=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | head -n 1 | awk '{print $2}')
+elif [ "$OS" = "Linux" ]; then
+    # Linux
+    IP=$(ip -4 addr show scope global | grep inet | awk '{print $2}' | cut -d/ -f1 | head -n 1)
+else
+    # Windows with Git Bash or other
+    IP=$(ipconfig | grep -i "IPv4" | head -n 1 | awk '{print $NF}')
+fi
 
 if [ -z "$IP" ]; then
     echo "❌ Não foi possível detectar o IP local automaticamente."
     echo "Por favor, descubra seu IP local e edite capacitor.config.ts manualmente."
-    echo "Execute: ip addr show (Linux) ou ifconfig (macOS)"
+    echo "Execute: ip addr show (Linux), ifconfig (macOS) ou ipconfig (Windows)"
     exit 1
 fi
 
 echo "📱 IP local detectado: $IP"
 
+# Check if capacitor.config.ts exists
+if [ ! -f "capacitor.config.ts" ]; then
+    echo "❌ Arquivo capacitor.config.ts não encontrado."
+    echo "Verifique se você está executando o script do diretório raiz do projeto."
+    exit 1
+fi
+
 # Backup da configuração original
 cp capacitor.config.ts capacitor.config.ts.backup
 
-# Atualizar configuração do Capacitor
-sed -i.tmp "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5000',|g" capacitor.config.ts
-sed -i.tmp "s|// cleartext: true|cleartext: true|g" capacitor.config.ts
+# Atualizar configuração do Capacitor usando método compatível com todos os sistemas
+if [ "$OS" = "Darwin" ]; then
+    # macOS requires different sed syntax
+    sed -i '' "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5000',|g" capacitor.config.ts
+    sed -i '' "s|// cleartext: true|cleartext: true|g" capacitor.config.ts
+else
+    # Linux and other systems
+    sed -i "s|// url: 'http://192.168.1.100:5000',|url: 'http://$IP:5000',|g" capacitor.config.ts
+    sed -i "s|// cleartext: true|cleartext: true|g" capacitor.config.ts
+fi
 
 echo "✅ Configuração atualizada para desenvolvimento local"
 echo "🔧 Servidor configurado em: http://$IP:5000"
 
 # Build do frontend
 echo "📦 Fazendo build do frontend..."
-cd frontend
-npm run build
-cd ..
+npm run build:frontend
 
-# Sync com Capacitor
-echo "🔄 Sincronizando com Capacitor..."
-npx cap sync
+# Check if npx is available
+if command -v npx &> /dev/null; then
+    # Sync com Capacitor
+    echo "🔄 Sincronizando com Capacitor..."
+    npx cap sync
+else
+    echo "❌ npx não encontrado. Certifique-se de que o Node.js está instalado corretamente."
+    exit 1
+fi
 
 echo "✅ Configuração concluída!"
 echo ""
@@ -42,4 +71,4 @@ echo "1. Inicie o backend: npm run dev"
 echo "2. Para iOS: npx cap open ios"
 echo "3. Para Android: npx cap open android"
 echo ""
-echo "⚠️  Para reverter as configurações: mv capacitor.config.ts.backup capacitor.config.ts"
+echo "⚠️  Para reverter as configurações: npm run dev:reset"

@@ -28,9 +28,10 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
     // Setup Vite for serving frontend
     await setupVite(app, server);
 
-    // Start server on port 5000
-    server.listen(5000, '0.0.0.0', () => {
-      log('serving on port 5000');
+    // Get port from environment variable or default to 5000
+    const port = process.env.PORT || 5000;
+    server.listen(port, '0.0.0.0', () => {
+      log(`serving on port ${port}`);
     });
   } catch (err) {
     console.error('Failed to start server:', err);
