@@ -27,6 +27,7 @@ import { AuthProvider } from "./hooks/use-auth";
 import { DevModeProvider } from "./hooks/use-dev-mode";
 import { ThemeProvider } from "./hooks/use-theme";
 import { DashboardSettingsProvider } from "./hooks/use-dashboard-settings";
+import { DeviceProvider } from "./providers/device-provider";
 
 import { ReactElement } from "react";
 
@@ -64,12 +65,14 @@ function App() {
       <ThemeProvider>
         <DevModeProvider>
           <AuthProvider>
-            <DashboardSettingsProvider>
-              <WouterRouter>
-                <Router />
-                <Toaster />
-              </WouterRouter>
-            </DashboardSettingsProvider>
+            <DeviceProvider>
+              <DashboardSettingsProvider>
+                <WouterRouter>
+                  <Router />
+                  <Toaster />
+                </WouterRouter>
+              </DashboardSettingsProvider>
+            </DeviceProvider>
           </AuthProvider>
         </DevModeProvider>
       </ThemeProvider>

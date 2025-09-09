@@ -38,14 +38,31 @@ HealthTrackPlus/
 
 ## Quick Start (Development)
 
-### 1. Install Dependencies
+### 1. Clone the Repository and Install Dependencies
 
 ```bash
+# Clone the repository (if you haven't already)
+git clone https://github.com/yourusername/HealthTrackPlus.git
+cd HealthTrackPlus
+
 # Install project dependencies
 npm install
 ```
 
-### 2. Install and Set up PostgreSQL
+### 2. Configure Environment Variables
+
+Copy the example environment file and configure it for your system:
+
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit the .env file with your specific settings
+# Especially update DATABASE_URL with your username
+# You can find your username by running: whoami
+```
+
+### 3. Install and Set up PostgreSQL
 
 The application requires PostgreSQL to be installed and running.
 
@@ -97,26 +114,23 @@ npm run db:push
 
 ### 3. Configure Environment Variables
 
-Ensure you have a `.env` file in the project root. If not, create one with the following content:
+The `.env.example` file was copied to `.env` in the previous step. Make sure to edit the `.env` file with your specific settings:
 
 ```
-# Database URL for PostgreSQL (Windows)
-# DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthtrackplus
-
 # Database URL for PostgreSQL (macOS)
 DATABASE_URL=postgres://YOURUSERNAME@localhost:5432/healthtrackplus
 
 # Server configuration
-PORT=5000
+PORT=5001
 NODE_ENV=development
 
 # JWT configuration
 JWT_SECRET=your_jwt_secret_key_replace_with_secure_random_string
 ```
 
-Substitua `YOURUSERNAME` pelo seu nome de usuário do sistema, que você pode obter executando o comando `whoami`.
+Replace `YOURUSERNAME` with your system username, which you can find by running: `whoami`
 
-Adjust these values according to your local setup.
+Adjust other values as needed for your local setup.
 
 ### 4. Run Development Server
 
@@ -125,7 +139,7 @@ Adjust these values according to your local setup.
 npm run dev:start
 ```
 
-The application will be available at `http://<your-local-IP>:5000` or `http://localhost:5000`.
+The application will be available at `http://localhost:5001` (or whichever port you specified in the .env file).
 
 ## Mobile Development
 

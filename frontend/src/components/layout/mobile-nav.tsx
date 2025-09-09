@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
+import { useResponsive } from "@/hooks/use-responsive";
 import { 
   LayoutDashboard,
   FileText,
@@ -30,6 +31,7 @@ export function MobileNav() {
   const [location] = useLocation();
   const { t } = useTranslation();
   const { settings } = useDashboardSettings();
+  const { getIconSize } = useResponsive();
   
   // Função para gerar os itens do menu com base nas configurações do dashboard
   const getNavItems = () => {
@@ -138,7 +140,7 @@ export function MobileNav() {
   const navItems = getNavItems();
   
   return (
-    <div className="block xs:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-10">
+    <div className="block xs:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-50">
       <div className="grid grid-cols-5">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -151,7 +153,7 @@ export function MobileNav() {
                   ? 'text-blue-600 dark:text-emerald-400 font-medium' 
                   : 'text-slate-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-emerald-300'
               }`}>
-                <Icon className="responsive-icon-sm" />
+                <Icon className={getIconSize('sm')} />
                 <span className="responsive-nav-text text-[10px] mt-1 text-center truncate max-w-[60px]">{item.label}</span>
               </Link>
             </div>

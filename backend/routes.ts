@@ -7,13 +7,16 @@ import path from "path";
 import { randomBytes } from "crypto";
 import Stripe from "stripe";
 
-// Initialize Stripe
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+// Initialize Stripe (if key available)
+let stripe: Stripe | undefined;
+
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2023-10-16",
+  });
+} else {
+  console.warn('Warning: STRIPE_SECRET_KEY not found. Stripe functionality will be disabled.');
 }
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
 
 // Configure multer for file uploads
 const upload = multer({
@@ -49,6 +52,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Subscription routes
   app.post("/api/create-subscription", async (req, res) => {
     try {
+      // Check if Stripe is available
+      if (!stripe) {
+        return res.status(503).json({ 
+          message: "Subscription service is currently unavailable. Please try again later.", 
+          reason: "stripe_unavailable" 
+        });
+      }
+
       if (!req.isAuthenticated()) {
         return res.status(401).json({ message: "Authentication required" });
       }
@@ -120,6 +131,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/cancel-subscription", async (req, res) => {
     try {
+      // Check if Stripe is available
+      if (!stripe) {
+        return res.status(503).json({ 
+          message: "Subscription service is currently unavailable. Please try again later.", 
+          reason: "stripe_unavailable" 
+        });
+      }
+
       if (!req.isAuthenticated()) {
         return res.status(401).json({ message: "Authentication required" });
       }
@@ -165,8 +184,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         endDate: user.subscriptionEndDate,
       };
 
-      // If user has a Stripe subscription, check its current status
-      if (user.stripeSubscriptionId) {
+      // If user has a Stripe subscription and Stripe is available, check its current status
+      if (user.stripeSubscriptionId && stripe) {
         try {
           const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
           
@@ -187,6 +206,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         } catch (stripeError) {
           console.error('Error fetching subscription from Stripe:', stripeError);
         }
+      } else if (user.stripeSubscriptionId && !stripe) {
+        console.warn('Stripe not initialized, using cached subscription data for user:', user.id);
       }
 
       res.json(subscriptionStatus);

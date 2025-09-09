@@ -6,7 +6,5 @@ vite.config.ts.*
 *.tar.gz
 ios/
 android/
-no-commit/
-no-commit
-
+task.md
 .env

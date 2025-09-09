@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
@@ -7,6 +7,7 @@ import { NotificationsDropdown } from '../notifications-dropdown';
 import { DevModeHeaderToggle } from '../dev-mode-header-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
+import { useResponsive } from "@/hooks/use-responsive";
 import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown, Heart, Baby } from "lucide-react";
 import {
   Avatar,
@@ -131,6 +132,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const { settings } = useDashboardSettings();
+  const { isMobile, getFontSize, getIconSize } = useResponsive();
   
   // Get translated navigation items with visibility based on dashboard settings
   const navItems = getNavItems(t, settings);
@@ -148,27 +150,13 @@ export function Header() {
     logoutMutation.mutate();
   };
 
-  // Função para determinar se a tela é menor que determinado tamanho
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== 'undefined' ? window.innerWidth < 768 : false
-  );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
       <div className="flex items-center justify-between w-full px-4 md:px-6 h-14 md:h-16">
         {/* Logo - sempre à esquerda */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
-            <h1 className="responsive-logo text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+            <h1 className={`${getFontSize('title-md')} sm:${getFontSize('title-lg')} font-bold tracking-tight text-blue-600 dark:text-emerald-400`}>LifeTrek</h1>
           </Link>
         </div>
 
@@ -186,7 +174,7 @@ export function Header() {
                     : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                 }`}
               >
-                <Icon className="h-4 w-4 flex-shrink-0" />
+                <Icon className={`${getIconSize('sm')} flex-shrink-0`} />
                 <span className="text-sm font-medium">{item.label}</span>
               </Link>
             );
@@ -241,7 +229,7 @@ export function Header() {
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className={getIconSize('sm')} />
                         <span className="text-sm font-medium">{item.label}</span>
                       </Link>
                     );
