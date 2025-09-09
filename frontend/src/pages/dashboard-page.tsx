@@ -78,11 +78,11 @@ export default function DashboardPage() {
 
       {/* Big Numbers */}
       <div className="responsive-grid-4 responsive-mb">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('activity.activeMinutes')}</p>
-              <h2 className="responsive-title-xl font-bold mb-1.5">
+              <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('activity.activeMinutes')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
                 {isLoadingStats ? '...' : dashboardStats?.activeMinutes?.value || 45}
               </h2>
               <p className={`flex items-center responsive-text-sm ${dashboardStats?.activeMinutes?.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
@@ -90,17 +90,17 @@ export default function DashboardPage() {
                 {isLoadingStats ? '...' : dashboardStats?.activeMinutes?.change || 15}% {t('health.stepsUp')}
               </p>
             </div>
-            <div className="bg-purple-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
-              <Clock className="text-purple-500 dark:text-purple-400 responsive-icon" />
+            <div className="bg-purple-100 dark:bg-[#2a3137] p-1.5 xxs:p-2 xs:p-2.5 rounded-full shadow-sm">
+              <Clock className="w-3.5 h-3.5 xxs:w-4 xxs:h-4 xs:w-5 xs:h-5 text-purple-500 dark:text-purple-400" />
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.calories')}</p>
-              <h2 className="responsive-title-xl font-bold mb-1.5">
+              <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('health.calories')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
                 {isLoadingStats ? '...' : dashboardStats?.calories?.value?.toLocaleString() || '1,450'}
               </h2>
               <p className="text-red-500 dark:text-red-400 responsive-text-sm">
@@ -108,17 +108,17 @@ export default function DashboardPage() {
                 {isLoadingStats ? '...' : dashboardStats?.calories?.remaining || 320} {t('health.remaining')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
-              <Apple className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
+            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 xxs:p-2 xs:p-2.5 rounded-full shadow-sm">
+              <Apple className="w-3.5 h-3.5 xxs:w-4 xxs:h-4 xs:w-5 xs:h-5 text-emerald-500 dark:text-emerald-400" />
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.sleep')}</p>
-              <h2 className="responsive-title-xl font-bold mb-1.5">
+              <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('health.sleep')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
                 {isLoadingStats ? '...' : `${dashboardStats?.sleep?.value || 7.5}h`}
               </h2>
               <p className={`flex items-center responsive-text-sm ${dashboardStats?.sleep?.trend === 'up' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
@@ -126,17 +126,17 @@ export default function DashboardPage() {
                 {isLoadingStats ? '...' : dashboardStats?.sleep?.change || 30}min {t('health.moreMinutes')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
-              <Moon className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
+            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 xxs:p-2 xs:p-2.5 rounded-full shadow-sm">
+              <Moon className="w-3.5 h-3.5 xxs:w-4 xxs:h-4 xs:w-5 xs:h-5 text-emerald-500 dark:text-emerald-400" />
             </div>
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 responsive-card shadow-md">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-slate-600 dark:text-gray-400 mb-1.5 responsive-text-sm">{t('health.avgBPM')}</p>
-              <h2 className="responsive-title-xl font-bold mb-1.5">
+              <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('health.avgBPM')}</p>
+              <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
                 {isLoadingStats ? '...' : dashboardStats?.heartRate?.value || 72}
               </h2>
               <p className={`flex items-center responsive-text-sm ${dashboardStats?.heartRate?.status === 'normal' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
@@ -144,8 +144,8 @@ export default function DashboardPage() {
                 {t('health.healthy')}
               </p>
             </div>
-            <div className="bg-emerald-100 dark:bg-[#2a3137] responsive-icon-container rounded-full shadow-sm">
-              <Heart className="text-emerald-500 dark:text-emerald-400 responsive-icon" />
+            <div className="bg-emerald-100 dark:bg-[#2a3137] p-1.5 xxs:p-2 xs:p-2.5 rounded-full shadow-sm">
+              <Heart className="w-3.5 h-3.5 xxs:w-4 xxs:h-4 xs:w-5 xs:h-5 text-emerald-500 dark:text-emerald-400" />
             </div>
           </div>
         </Card>
@@ -153,22 +153,22 @@ export default function DashboardPage() {
 
       {/* Weekly Activity Chart */}
       {settings.showActivityTracker && (
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 mb-8 shadow-md overflow-hidden">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-            <h3 className="text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 sm:p-5 mb-4 xs:mb-6 md:mb-8 shadow-md overflow-hidden">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 xxs:mb-3 xs:mb-4 gap-1 xxs:gap-2">
+            <h3 className="text-base xxs:text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
+            <div className="flex flex-wrap items-center gap-2 xxs:gap-3 sm:gap-4 text-[10px] xxs:text-xs">
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-emerald-500 mr-1.5"></div>
-                <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
+                <div className="w-2.5 h-2.5 xxs:w-3 xxs:h-3 rounded-full bg-emerald-500 mr-1 xxs:mr-1.5"></div>
+                <span className="text-[10px] xxs:text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-blue-500 mr-1.5"></div>
-                <span className="text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
+                <div className="w-2.5 h-2.5 xxs:w-3 xxs:h-3 rounded-full bg-blue-500 mr-1 xxs:mr-1.5"></div>
+                <span className="text-[10px] xxs:text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
               </div>
             </div>
           </div>
           
-          <div className="relative h-40 sm:h-52 mt-6 sm:mt-2 ml-4 sm:ml-6 mr-1">
+          <div className="relative h-32 xxs:h-36 xs:h-40 sm:h-48 md:h-52 mt-4 xxs:mt-5 sm:mt-2 ml-2 xxs:ml-3 xs:ml-4 sm:ml-6 mr-1">
             {/* Linhas de grade horizontais */}
             <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none">
               {[0, 1, 2, 3, 4].map((_, i) => (
@@ -307,48 +307,48 @@ export default function DashboardPage() {
       <div className="responsive-grid-2 responsive-mb">
         {/* Hydration Tracker */}
         {settings.showWaterTracker && (
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-6 shadow-md rounded-xl">
-            <div className="flex justify-between items-center mb-6">
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 xxs:p-4 xs:p-5 sm:p-6 shadow-md rounded-lg xxs:rounded-xl">
+            <div className="flex justify-between items-center mb-3 xxs:mb-4 xs:mb-5 sm:mb-6">
               <Link to="/hydration" className="group">
-                <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
+                <h3 className="text-base xxs:text-lg xs:text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
               </Link>
-              <div className="relative w-10 h-6">
-                <Droplet className="absolute h-6 w-6 text-blue-500 dark:text-blue-400 right-0" />
-                <Droplet className="absolute h-5 w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
+              <div className="relative w-7 xxs:w-8 xs:w-10 h-5 xxs:h-6">
+                <Droplet className="absolute h-5 w-5 xxs:h-6 xxs:w-6 text-blue-500 dark:text-blue-400 right-0" />
+                <Droplet className="absolute h-4 w-4 xxs:h-5 xxs:w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
               </div>
             </div>
             
-            <div className="space-y-5">
+            <div className="space-y-3 xxs:space-y-4 xs:space-y-5">
               <div className="flex justify-between items-center">
-                <span className="text-slate-800 dark:text-white text-xl font-medium">{waterAmount} ml</span>
-                <span className="text-slate-500 dark:text-gray-400">{t('health.goal')}: {waterGoal} ml</span>
+                <span className="text-slate-800 dark:text-white text-base xxs:text-lg xs:text-xl font-medium">{waterAmount} ml</span>
+                <span className="text-slate-500 dark:text-gray-400 text-xs xxs:text-sm">{t('health.goal')}: {waterGoal} ml</span>
               </div>
               
-              <div className="h-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-2 xxs:h-2.5 xs:h-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-teal-400 dark:bg-teal-500 rounded-full transition-all duration-300" 
                   style={{ width: `${waterPercentage}%` }}
                 ></div>
               </div>
               
-              <div className="flex justify-center gap-4 mt-6">
+              <div className="flex justify-center gap-2 xxs:gap-3 xs:gap-4 mt-3 xxs:mt-4 xs:mt-6">
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => removeWater(150)}
-                  className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-9 px-3"
+                  className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-7 xxs:h-8 xs:h-9 px-2 xxs:px-2.5 xs:px-3"
                 >
                   <span className="text-teal-500 dark:text-blue-400 mr-1">−</span>
-                  <span className="text-teal-500 dark:text-blue-400 text-sm">150ml</span>
+                  <span className="text-teal-500 dark:text-blue-400 text-xs xxs:text-sm">150ml</span>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => addWater(250)}
-                  className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-9 px-3"
+                  className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-7 xxs:h-8 xs:h-9 px-2 xxs:px-2.5 xs:px-3"
                 >
                   <span className="text-blue-500 dark:text-blue-400 mr-1">+</span>
-                  <span className="text-blue-500 dark:text-blue-400 text-sm">250ml</span>
+                  <span className="text-blue-500 dark:text-blue-400 text-xs xxs:text-sm">250ml</span>
                 </Button>
               </div>
             </div>
@@ -357,30 +357,30 @@ export default function DashboardPage() {
         
         {/* Sleep Tracker */}
         {settings.showSleepTracker && (
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-5 shadow-md rounded-xl">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
-              <Moon className="text-indigo-500 dark:text-indigo-300 responsive-icon" />
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 xxs:p-4 xs:p-4 sm:p-5 shadow-md rounded-lg xxs:rounded-xl">
+            <div className="flex justify-between items-center mb-2 xxs:mb-3">
+              <h3 className="text-sm xxs:text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
+              <Moon className="h-4 w-4 xxs:h-5 xxs:w-5 text-indigo-500 dark:text-indigo-300" />
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
+            <div className="space-y-1 xxs:space-y-2">
+              <div className="flex justify-between text-[10px] xxs:text-xs xs:text-sm">
                 <div className="flex items-center">
-                  <Moon className="h-4 w-4 text-slate-500 dark:text-gray-400 mr-1.5" />
+                  <Moon className="h-3 w-3 xxs:h-4 xxs:w-4 text-slate-500 dark:text-gray-400 mr-1 xxs:mr-1.5" />
                   <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
-                  <span className="h-4 w-4 text-yellow-500 dark:text-yellow-400 ml-1.5">☀</span>
+                  <span className="h-3 w-3 xxs:h-4 xxs:w-4 text-yellow-500 dark:text-yellow-400 ml-1 xxs:ml-1.5">☀</span>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2 xxs:mt-3 xs:mt-4">
                 <div className="flex items-start">
-                  <h2 className="text-4xl font-bold text-slate-800 dark:text-white">
+                  <h2 className="text-2xl xxs:text-3xl xs:text-4xl font-bold text-slate-800 dark:text-white">
                     {isLoadingStats ? '...' : `${dashboardStats?.sleep?.value || 7.5}h`}
                   </h2>
-                  <span className="ml-auto text-green-500 dark:text-green-400 text-lg">{t('health.goodQuality')}</span>
+                  <span className="ml-auto text-green-500 dark:text-green-400 text-sm xxs:text-base xs:text-lg">{t('health.goodQuality')}</span>
                 </div>
-                <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
+                <p className="text-xs xxs:text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
               </div>
             </div>
           </Card>

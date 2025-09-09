@@ -39,8 +39,8 @@ export function MainLayout({
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-gray-900">
       <Header />
       
-      <main className={`flex-1 w-full py-4 xs:py-5 sm:py-6 md:py-8 ${contentHeightClass} pb-16 xs:pb-0`}>
-        <div className="my-3 xs:my-4 sm:my-5 md:my-8">
+      <main className={`flex-1 w-full py-3 xxs:py-4 xs:py-5 sm:py-6 md:py-8 ${contentHeightClass} pb-20 xs:pb-0`}>
+        <div className="my-2 xxs:my-3 xs:my-4 sm:my-5 md:my-8">
           <div className={containerClass}>
             {title && !hideTitle && (
               <h1 className={`${titleClass} text-slate-800 dark:text-gray-100 ${titleSpacingClass}`}>{title}</h1>

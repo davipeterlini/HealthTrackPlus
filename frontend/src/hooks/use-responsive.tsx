@@ -40,15 +40,15 @@ export function useResponsive() {
   const getGrid = (columns: 1 | 2 | 3 | 4) => {
     switch (columns) {
       case 1:
-        return 'grid grid-cols-1 gap-3 xs:gap-4';
+        return 'grid grid-cols-1 gap-2 xxs:gap-3 xs:gap-4 w-full overflow-hidden';
       case 2:
-        return 'grid grid-cols-1 xs:grid-cols-2 gap-3 xs:gap-4';
+        return 'grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 gap-2 xxs:gap-3 xs:gap-4 w-full overflow-hidden';
       case 3:
-        return 'grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 xs:gap-4';
+        return 'grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-2 xxs:gap-3 xs:gap-4 w-full overflow-hidden';
       case 4:
-        return 'grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 xs:gap-4';
+        return 'grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xxs:gap-3 xs:gap-4 w-full overflow-hidden';
       default:
-        return 'grid grid-cols-1 gap-3 xs:gap-4';
+        return 'grid grid-cols-1 gap-2 xxs:gap-3 xs:gap-4 w-full overflow-hidden';
     }
   };
 

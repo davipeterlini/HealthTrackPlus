@@ -148,13 +148,13 @@ export function MobileNav() {
           
           return (
             <div key={item.path} className="flex justify-center">
-              <Link href={item.path} className={`flex flex-col items-center px-1 py-2 responsive-transition ${
+              <Link href={item.path} className={`flex flex-col items-center px-1.5 py-2.5 responsive-transition ${
                 isActive 
-                  ? 'text-blue-600 dark:text-emerald-400 font-medium' 
+                  ? 'text-blue-600 dark:text-emerald-400 font-medium bg-blue-50/70 dark:bg-emerald-900/20 rounded-t-md' 
                   : 'text-slate-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-emerald-300'
               }`}>
-                <Icon className={getIconSize('sm')} />
-                <span className="responsive-nav-text text-[10px] mt-1 text-center truncate max-w-[60px]">{item.label}</span>
+                <Icon className={`${isActive ? 'h-4 w-4 xxs:h-5 xxs:w-5' : 'h-3.5 w-3.5 xxs:h-4.5 xxs:w-4.5'}`} />
+                <span className={`text-[9px] xxs:text-[10px] mt-1 text-center truncate max-w-[60px] ${isActive ? 'font-medium' : ''}`}>{item.label}</span>
               </Link>
             </div>
           );

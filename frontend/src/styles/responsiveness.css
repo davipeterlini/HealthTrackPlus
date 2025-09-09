@@ -21,30 +21,30 @@
   
   /* Container padrão com margens responsivas para melhor uso do espaço em cada tamanho de tela */
   .responsive-container {
-    @apply w-full max-w-full px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 mx-auto;
+    @apply w-full max-w-full px-2 xxs:px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 mx-auto overflow-hidden;
   }
   
   /* Container para conteúdo principal com tamanho máximo limitado em telas grandes */
   .responsive-content-container {
-    @apply w-full max-w-full md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-3 xs:px-4 sm:px-6 md:px-8;
+    @apply w-full max-w-full md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-2 xxs:px-3 xs:px-4 sm:px-6 md:px-8 overflow-hidden;
   }
   
   /* Margens verticais responsivas para seções com maior espaçamento em telas maiores */
   .responsive-section {
-    @apply my-3 xs:my-4 sm:my-5 md:my-8 lg:my-10 xl:my-12;
+    @apply my-2 xxs:my-3 xs:my-4 sm:my-5 md:my-8 lg:my-10 xl:my-12 overflow-hidden;
   }
   
   /* Espaçamento entre elementos - ajustado para melhor visualização em dispositivos pequenos */
   .responsive-gap {
-    @apply gap-2 xs:gap-3 sm:gap-4 md:gap-5 lg:gap-6;
+    @apply gap-1.5 xxs:gap-2 xs:gap-3 sm:gap-4 md:gap-5 lg:gap-6;
   }
   
   .responsive-gap-y {
-    @apply gap-y-2 xs:gap-y-3 sm:gap-y-4 md:gap-y-5 lg:gap-y-6;
+    @apply gap-y-1.5 xxs:gap-y-2 xs:gap-y-3 sm:gap-y-4 md:gap-y-5 lg:gap-y-6;
   }
   
   .responsive-gap-x {
-    @apply gap-x-2 xs:gap-x-3 sm:gap-x-4 md:gap-x-5 lg:gap-x-6;
+    @apply gap-x-1.5 xxs:gap-x-2 xs:gap-x-3 sm:gap-x-4 md:gap-x-5 lg:gap-x-6;
   }
   
   /* Espaçamentos menores para designs mais compactos */
@@ -54,19 +54,19 @@
   
   /* Padding responsivo para cards e containers */
   .responsive-p {
-    @apply p-3 xs:p-3.5 sm:p-4 md:p-5 lg:p-6;
+    @apply p-2 xxs:p-3 xs:p-3.5 sm:p-4 md:p-5 lg:p-6;
   }
   
   .responsive-p-xs {
-    @apply p-2 xs:p-2.5 sm:p-3 md:p-4;
+    @apply p-1.5 xxs:p-2 xs:p-2.5 sm:p-3 md:p-4;
   }
   
   .responsive-px {
-    @apply px-3 xs:px-3.5 sm:px-4 md:px-5 lg:px-6;
+    @apply px-2 xxs:px-3 xs:px-3.5 sm:px-4 md:px-5 lg:px-6;
   }
   
   .responsive-py {
-    @apply py-2 xs:py-2.5 sm:py-3 md:py-4 lg:py-5;
+    @apply py-1.5 xxs:py-2 xs:py-2.5 sm:py-3 md:py-4 lg:py-5;
   }
   
   /* ===== TIPOGRAFIA OTIMIZADA ===== */
@@ -188,34 +188,34 @@
   
   /* Grid responsivo com diferentes colunas baseado no tamanho da tela */
   .responsive-grid-2 {
-    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-2 xxs:gap-3 xs:gap-4 md:gap-5;
+    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-2 xxs:gap-3 xs:gap-4 md:gap-5 w-full max-w-full overflow-hidden;
   }
   
   .responsive-grid-3 {
-    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 xxs:gap-3 xs:gap-4 md:gap-5;
+    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 xxs:gap-3 xs:gap-4 md:gap-5 w-full max-w-full overflow-hidden;
   }
   
   .responsive-grid-4 {
-    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xxs:gap-3 xs:gap-4 md:gap-5;
+    @apply grid grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xxs:gap-3 xs:gap-4 md:gap-5 w-full max-w-full overflow-hidden;
   }
   
   /* Grid para list items */
   .responsive-list-grid {
-    @apply grid grid-cols-1 gap-2 xxs:gap-2 xs:gap-3 sm:gap-4;
+    @apply grid grid-cols-1 gap-2 xxs:gap-2 xs:gap-3 sm:gap-4 w-full max-w-full overflow-hidden;
   }
   
   /* Grid para dispositivos extremamente pequenos */
   .responsive-xxs-grid {
-    @apply grid grid-cols-1 xxs:grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 xxs:gap-2 xs:gap-3 md:gap-4;
+    @apply grid grid-cols-1 xxs:grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 xxs:gap-2 xs:gap-3 md:gap-4 w-full max-w-full overflow-hidden;
   }
   
   /* Flexbox responsivo para layouts adaptáveis */
   .responsive-flex {
-    @apply flex flex-col sm:flex-row gap-3 xs:gap-4 md:gap-5;
+    @apply flex flex-col sm:flex-row gap-3 xs:gap-4 md:gap-5 w-full max-w-full overflow-hidden flex-wrap;
   }
   
   .responsive-flex-reverse {
-    @apply flex flex-col sm:flex-row-reverse gap-3 xs:gap-4 md:gap-5;
+    @apply flex flex-col sm:flex-row-reverse gap-3 xs:gap-4 md:gap-5 w-full max-w-full overflow-hidden flex-wrap;
   }
   
   /* ===== HEADER E NAVEGAÇÃO OTIMIZADOS ===== */
@@ -473,15 +473,15 @@
   
   /* Layouts de página adaptáveis */
   .responsive-page-layout {
-    @apply flex flex-col min-h-screen;
+    @apply flex flex-col min-h-screen w-full max-w-full overflow-hidden;
   }
   
   .responsive-page-content {
-    @apply flex-1 w-full py-4 xs:py-5 sm:py-6 md:py-8;
+    @apply flex-1 w-full py-3 xxs:py-4 xs:py-5 sm:py-6 md:py-8 overflow-hidden;
   }
   
   /* Altura de viewport com ajuste para barra de navegação mobile */
   .responsive-vh {
-    @apply min-h-[calc(100vh-60px)] xs:min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-68px)] md:min-h-[calc(100vh-72px)];
+    @apply min-h-[calc(100vh-56px)] xxs:min-h-[calc(100vh-60px)] xs:min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-68px)] md:min-h-[calc(100vh-72px)] overflow-hidden;
   }
 }
