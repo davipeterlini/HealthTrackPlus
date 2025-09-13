@@ -554,25 +554,84 @@ export default function SettingsPage() {
                       
                       <Separator className="my-4" />
                       
+                      <h3 className="text-lg font-semibold">{t('settings.headerLayout', 'Barra Superior')}</h3>
+                      <div className="space-y-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium">{t('settings.showNotifications', 'Mostrar Notificações')}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                              {t('settings.showNotificationsDescription', 'Exibe o ícone de notificações na barra superior')}
+                            </span>
+                          </div>
+                          <Switch 
+                            className="mt-1 sm:mt-0" 
+                            checked={true}
+                            onCheckedChange={(checked) => {
+                              // Poderia ser implementada esta configuração no futuro
+                              toast({
+                                title: t('settings.comingSoon', 'Em breve'),
+                                description: t('settings.featureInDevelopment', 'Esta funcionalidade está em desenvolvimento'),
+                                duration: 3000,
+                              });
+                            }}
+                          />
+                        </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium">{t('settings.showLanguageSwitcher', 'Mostrar Seletor de Idioma')}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                              {t('settings.showLanguageSwitcherDescription', 'Exibe o seletor de idioma na barra superior')}
+                            </span>
+                          </div>
+                          <Switch 
+                            className="mt-1 sm:mt-0" 
+                            checked={true}
+                            onCheckedChange={(checked) => {
+                              // Poderia ser implementada esta configuração no futuro
+                              toast({
+                                title: t('settings.comingSoon', 'Em breve'),
+                                description: t('settings.featureInDevelopment', 'Esta funcionalidade está em desenvolvimento'),
+                                duration: 3000,
+                              });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      
+                      <Separator className="my-4" />
+                      
                       <h3 className="text-lg font-semibold">{t('settings.dashboardLayout')}</h3>
+                      <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-md">
+                        <p className="text-sm text-blue-700 dark:text-blue-300">
+                          {t('settings.layoutDescription', 'Estas configurações afetam como o layout e os ícones são exibidos na barra superior do aplicativo. O modo compacto automaticamente oculta alguns ícones em telas menores para melhor visualização.')}
+                        </p>
+                      </div>
                       <div className="space-y-3">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
                             <span className="font-medium">{t('settings.compactView')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {t('settings.compactViewDescription')}
+                              {t('settings.compactViewDescription', 'Mostra menos informações para otimizar o espaço em tela')}
                             </span>
                           </div>
-                          <Switch className="mt-1 sm:mt-0" defaultChecked />
+                          <Switch 
+                            className="mt-1 sm:mt-0" 
+                            checked={settings.compactView}
+                            onCheckedChange={(checked) => updateSettings({ compactView: checked })}
+                          />
                         </div>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="flex flex-col">
                             <span className="font-medium">{t('settings.enableDragAndDrop')}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {t('settings.enableDragAndDropDescription')}
+                              {t('settings.enableDragAndDropDescription', 'Permite reorganizar os elementos do dashboard arrastando-os')}
                             </span>
                           </div>
-                          <Switch className="mt-1 sm:mt-0" defaultChecked />
+                          <Switch 
+                            className="mt-1 sm:mt-0" 
+                            checked={settings.enableDragAndDrop}
+                            onCheckedChange={(checked) => updateSettings({ enableDragAndDrop: checked })}
+                          />
                         </div>
                       </div>
                     </div>

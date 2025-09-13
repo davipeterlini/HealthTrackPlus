@@ -36,17 +36,17 @@ export function MainLayout({
   const titleSpacingClass = getSpacingClass('m', 'b');
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-gray-900">
+    <div className="flex flex-col min-h-[100vh] h-full max-w-full overflow-x-hidden bg-slate-50 dark:bg-gray-900">
       <Header />
       
-      <main className={`flex-1 w-full py-3 xxs:py-4 xs:py-5 sm:py-6 md:py-8 ${contentHeightClass} pb-20 xs:pb-0`}>
-        <div className="my-2 xxs:my-3 xs:my-4 sm:my-5 md:my-8">
-          <div className={containerClass}>
+      <main className={`flex-1 w-full max-w-full overflow-x-hidden py-2 xxs:py-3 xs:py-4 sm:py-5 ${contentHeightClass} pb-16 xs:pb-0`}>
+        <div className="mb-2 xxs:mb-3 xs:mb-4 w-full max-w-full overflow-x-hidden">
+          <div className={`${containerClass} max-w-full overflow-x-hidden box-border`}>
             {title && !hideTitle && (
-              <h1 className={`${titleClass} text-slate-800 dark:text-gray-100 ${titleSpacingClass}`}>{title}</h1>
+              <h1 className={`${titleClass} text-slate-800 dark:text-gray-100 ${titleSpacingClass} break-words`}>{title}</h1>
             )}
             
-            <div className={`${title && !hideTitle ? '' : 'mt-0'}`}>
+            <div className={`${title && !hideTitle ? '' : 'mt-0'} w-full max-w-full overflow-x-hidden box-border`}>
               {children}
             </div>
           </div>

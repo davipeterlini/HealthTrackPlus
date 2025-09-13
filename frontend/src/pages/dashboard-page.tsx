@@ -74,11 +74,11 @@ export default function DashboardPage() {
   
   return (
     <MainLayout title={t('health.greeting')}>
-      <p className="text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">{t('health.todayOverview')}</p>
+      <p className="text-gray-600 dark:text-gray-400 mb-2 xxs:mb-3 xs:mb-4 sm:mb-5 text-sm sm:text-base">{t('health.todayOverview')}</p>
 
       {/* Big Numbers */}
-      <div className="responsive-grid-4 responsive-mb">
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
+      <div className="responsive-grid-4 mb-2 xxs:mb-3 xs:mb-4 w-full max-w-full overflow-hidden box-border">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-1.5 xxs:p-2 xs:p-3 md:p-4 rounded-lg shadow-md w-full max-w-full overflow-hidden box-border box-border">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('activity.activeMinutes')}</p>
@@ -96,8 +96,8 @@ export default function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
-          <div className="flex justify-between items-start">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md w-full max-w-full overflow-hidden box-border">
+          <div className="flex justify-between items-start w-full max-w-full overflow-hidden box-border">
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('health.calories')}</p>
               <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
@@ -114,8 +114,8 @@ export default function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
-          <div className="flex justify-between items-start">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md w-full max-w-full overflow-hidden box-border">
+          <div className="flex justify-between items-start w-full max-w-full overflow-hidden box-border">
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('health.sleep')}</p>
               <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
@@ -132,8 +132,8 @@ export default function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md">
-          <div className="flex justify-between items-start">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 md:p-5 rounded-lg shadow-md w-full max-w-full overflow-hidden box-border">
+          <div className="flex justify-between items-start w-full max-w-full overflow-hidden box-border">
             <div>
               <p className="text-slate-600 dark:text-gray-400 mb-1 xxs:mb-1.5 responsive-text-sm">{t('health.avgBPM')}</p>
               <h2 className="responsive-title-xl font-bold mb-1 xxs:mb-1.5">
@@ -153,8 +153,8 @@ export default function DashboardPage() {
 
       {/* Weekly Activity Chart */}
       {settings.showActivityTracker && (
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 sm:p-5 mb-4 xs:mb-6 md:mb-8 shadow-md overflow-hidden">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 xxs:mb-3 xs:mb-4 gap-1 xxs:gap-2">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-1.5 xxs:p-2 xs:p-3 sm:p-4 mb-2 xxs:mb-3 xs:mb-4 shadow-md overflow-hidden w-full max-w-full">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 xxs:mb-2 xs:mb-3 gap-1 xxs:gap-1.5 w-full max-w-full overflow-hidden box-border">
             <h3 className="text-base xxs:text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
             <div className="flex flex-wrap items-center gap-2 xxs:gap-3 sm:gap-4 text-[10px] xxs:text-xs">
               <div className="flex items-center">
@@ -168,7 +168,7 @@ export default function DashboardPage() {
             </div>
           </div>
           
-          <div className="relative h-32 xxs:h-36 xs:h-40 sm:h-48 md:h-52 mt-4 xxs:mt-5 sm:mt-2 ml-2 xxs:ml-3 xs:ml-4 sm:ml-6 mr-1">
+          <div className="relative h-24 xxs:h-28 xs:h-32 sm:h-40 md:h-44 mt-2 xxs:mt-3 sm:mt-2 ml-2 xxs:ml-3 xs:ml-4 sm:ml-6 mr-1">
             {/* Linhas de grade horizontais */}
             <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none">
               {[0, 1, 2, 3, 4].map((_, i) => (
@@ -304,51 +304,51 @@ export default function DashboardPage() {
       )}
 
       {/* Hydration & Sleep Trackers */}
-      <div className="responsive-grid-2 responsive-mb">
+      <div className="responsive-grid-2 mb-2 xxs:mb-3 xs:mb-4 w-full max-w-full overflow-hidden box-border">
         {/* Hydration Tracker */}
         {settings.showWaterTracker && (
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 xxs:p-4 xs:p-5 sm:p-6 shadow-md rounded-lg xxs:rounded-xl">
-            <div className="flex justify-between items-center mb-3 xxs:mb-4 xs:mb-5 sm:mb-6">
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 sm:p-5 shadow-md rounded-lg w-full max-w-full overflow-hidden box-border">
+            <div className="flex justify-between items-center mb-2 xxs:mb-3 xs:mb-4">
               <Link to="/hydration" className="group">
-                <h3 className="text-base xxs:text-lg xs:text-xl sm:text-2xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
+                <h3 className="text-sm xxs:text-base xs:text-lg sm:text-xl font-semibold text-slate-800 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t('health.hydration')}</h3>
               </Link>
-              <div className="relative w-7 xxs:w-8 xs:w-10 h-5 xxs:h-6">
-                <Droplet className="absolute h-5 w-5 xxs:h-6 xxs:w-6 text-blue-500 dark:text-blue-400 right-0" />
-                <Droplet className="absolute h-4 w-4 xxs:h-5 xxs:w-5 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
+              <div className="relative w-5 xxs:w-6 xs:w-8 h-4 xxs:h-5">
+                <Droplet className="absolute h-4 w-4 xxs:h-5 xxs:w-5 text-blue-500 dark:text-blue-400 right-0" />
+                <Droplet className="absolute h-3 w-3 xxs:h-4 xxs:w-4 text-teal-400 dark:text-teal-300 left-0 top-0.5" />
               </div>
             </div>
             
-            <div className="space-y-3 xxs:space-y-4 xs:space-y-5">
+            <div className="space-y-2 xxs:space-y-3 xs:space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-slate-800 dark:text-white text-base xxs:text-lg xs:text-xl font-medium">{waterAmount} ml</span>
-                <span className="text-slate-500 dark:text-gray-400 text-xs xxs:text-sm">{t('health.goal')}: {waterGoal} ml</span>
+                <span className="text-slate-800 dark:text-white text-sm xxs:text-base xs:text-lg font-medium">{waterAmount} ml</span>
+                <span className="text-slate-500 dark:text-gray-400 text-[10px] xxs:text-xs">{t('health.goal')}: {waterGoal} ml</span>
               </div>
               
-              <div className="h-2 xxs:h-2.5 xs:h-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-1.5 xxs:h-2 xs:h-2.5 w-full bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-teal-400 dark:bg-teal-500 rounded-full transition-all duration-300" 
                   style={{ width: `${waterPercentage}%` }}
                 ></div>
               </div>
               
-              <div className="flex justify-center gap-2 xxs:gap-3 xs:gap-4 mt-3 xxs:mt-4 xs:mt-6">
+              <div className="flex justify-center gap-2 xxs:gap-2.5 xs:gap-3 mt-2 xxs:mt-3 xs:mt-4">
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => removeWater(150)}
-                  className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-7 xxs:h-8 xs:h-9 px-2 xxs:px-2.5 xs:px-3"
+                  className="border-teal-400 dark:border-teal-500 border bg-transparent hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-500 dark:text-blue-400 rounded-full h-6 xxs:h-7 xs:h-8 px-1.5 xxs:px-2 xs:px-2.5"
                 >
-                  <span className="text-teal-500 dark:text-blue-400 mr-1">−</span>
-                  <span className="text-teal-500 dark:text-blue-400 text-xs xxs:text-sm">150ml</span>
+                  <span className="text-teal-500 dark:text-blue-400 mr-0.5">−</span>
+                  <span className="text-teal-500 dark:text-blue-400 text-[10px] xxs:text-xs">150ml</span>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => addWater(250)}
-                  className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-7 xxs:h-8 xs:h-9 px-2 xxs:px-2.5 xs:px-3"
+                  className="border-blue-400 dark:border-blue-500 border bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 dark:text-blue-400 rounded-full h-6 xxs:h-7 xs:h-8 px-1.5 xxs:px-2 xs:px-2.5"
                 >
-                  <span className="text-blue-500 dark:text-blue-400 mr-1">+</span>
-                  <span className="text-blue-500 dark:text-blue-400 text-xs xxs:text-sm">250ml</span>
+                  <span className="text-blue-500 dark:text-blue-400 mr-0.5">+</span>
+                  <span className="text-blue-500 dark:text-blue-400 text-[10px] xxs:text-xs">250ml</span>
                 </Button>
               </div>
             </div>
@@ -357,30 +357,30 @@ export default function DashboardPage() {
         
         {/* Sleep Tracker */}
         {settings.showSleepTracker && (
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-3 xxs:p-4 xs:p-4 sm:p-5 shadow-md rounded-lg xxs:rounded-xl">
-            <div className="flex justify-between items-center mb-2 xxs:mb-3">
-              <h3 className="text-sm xxs:text-base sm:text-lg font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
-              <Moon className="h-4 w-4 xxs:h-5 xxs:w-5 text-indigo-500 dark:text-indigo-300" />
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 shadow-md rounded-lg w-full max-w-full overflow-hidden box-border">
+            <div className="flex justify-between items-center mb-1 xxs:mb-2">
+              <h3 className="text-xs xxs:text-sm sm:text-base font-semibold text-slate-800 dark:text-white">{t('health.sleepQuality')}</h3>
+              <Moon className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 text-indigo-500 dark:text-indigo-300" />
             </div>
-            <div className="space-y-1 xxs:space-y-2">
-              <div className="flex justify-between text-[10px] xxs:text-xs xs:text-sm">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[9px] xxs:text-[10px] xs:text-xs">
                 <div className="flex items-center">
-                  <Moon className="h-3 w-3 xxs:h-4 xxs:w-4 text-slate-500 dark:text-gray-400 mr-1 xxs:mr-1.5" />
+                  <Moon className="h-2.5 w-2.5 xxs:h-3 xxs:w-3 text-slate-500 dark:text-gray-400 mr-0.5 xxs:mr-1" />
                   <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '11:30 PM' : '23:30'}</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-slate-500 dark:text-gray-400">{localStorage.getItem('i18nextLng')?.startsWith('en') ? '7:00 AM' : '07:00'}</span>
-                  <span className="h-3 w-3 xxs:h-4 xxs:w-4 text-yellow-500 dark:text-yellow-400 ml-1 xxs:ml-1.5">☀</span>
+                  <span className="h-2.5 w-2.5 xxs:h-3 xxs:w-3 text-yellow-500 dark:text-yellow-400 ml-0.5 xxs:ml-1">☀</span>
                 </div>
               </div>
-              <div className="mt-2 xxs:mt-3 xs:mt-4">
-                <div className="flex items-start">
-                  <h2 className="text-2xl xxs:text-3xl xs:text-4xl font-bold text-slate-800 dark:text-white">
+              <div className="mt-1.5 xxs:mt-2 xs:mt-3">
+                <div className="flex items-center">
+                  <h2 className="text-xl xxs:text-2xl xs:text-3xl font-bold text-slate-800 dark:text-white">
                     {isLoadingStats ? '...' : `${dashboardStats?.sleep?.value || 7.5}h`}
                   </h2>
-                  <span className="ml-auto text-green-500 dark:text-green-400 text-sm xxs:text-base xs:text-lg">{t('health.goodQuality')}</span>
+                  <span className="ml-auto text-green-500 dark:text-green-400 text-xs xxs:text-sm xs:text-base">{t('health.goodQuality')}</span>
                 </div>
-                <p className="text-xs xxs:text-sm text-slate-500 dark:text-gray-400 mt-1">{t('health.totalTime')}</p>
+                <p className="text-[10px] xxs:text-xs text-slate-500 dark:text-gray-400 mt-0.5">{t('health.totalTime')}</p>
               </div>
             </div>
           </Card>
@@ -388,68 +388,68 @@ export default function DashboardPage() {
       </div>
       
       {/* Medication & Exam Alerts */}
-      <div className="responsive-grid-2 responsive-mb">
+      <div className="responsive-grid-2 mb-2 xxs:mb-3 xs:mb-4 w-full max-w-full overflow-hidden box-border">
         {/* Medication Reminders */}
         {settings.showMedicationTracker && (
-          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
-            <div className="flex justify-between items-center mb-3 sm:mb-4">
-              <h3 className="text-base sm:text-lg font-semibold">{t('health.upcomingReminders')}</h3>
-              <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
+          <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 shadow-md w-full max-w-full overflow-hidden box-border">
+            <div className="flex justify-between items-center mb-1.5 xxs:mb-2 sm:mb-3">
+              <h3 className="text-xs xxs:text-sm xs:text-base font-semibold">{t('health.upcomingReminders')}</h3>
+              <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-0.5 h-auto text-[10px] xxs:text-xs">
                 {t("health.viewAll")}
               </Button>
             </div>
-            <div className="space-y-2 sm:space-y-3">
-              <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
-                    <Pill className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
+            <div className="space-y-1 xxs:space-y-1.5 sm:space-y-2">
+              <div className="flex justify-between items-center p-1.5 xxs:p-2 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
+                <div className="flex items-center gap-1 xxs:gap-1.5">
+                  <div className="p-1 xxs:p-1.5 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden xxs:block">
+                    <Pill className="h-2.5 w-2.5 xxs:h-3 xxs:w-3 text-emerald-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    <p className="font-medium text-slate-800 dark:text-white text-[10px] xxs:text-xs xs:text-sm">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Take Vitamin D' : 'Tomar Vitamina D'}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-[9px] xxs:text-[10px] xs:text-xs text-slate-600 dark:text-gray-400">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? '1 capsule with breakfast' : '1 cápsula com café da manhã'}
                     </p>
                   </div>
                 </div>
-                <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                <span className="text-emerald-500 dark:text-emerald-400 text-[10px] xxs:text-xs ml-1">
                   {localStorage.getItem('i18nextLng')?.startsWith('en') ? '8:00 AM' : '08:00'}
                 </span>
               </div>
-              <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
-                    <Activity className="h-3 w-3 sm:h-4 sm:w-4 text-rose-500" />
+              <div className="flex justify-between items-center p-1.5 xxs:p-2 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
+                <div className="flex items-center gap-1 xxs:gap-1.5">
+                  <div className="p-1 xxs:p-1.5 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden xxs:block">
+                    <Activity className="h-2.5 w-2.5 xxs:h-3 xxs:w-3 text-rose-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    <p className="font-medium text-slate-800 dark:text-white text-[10px] xxs:text-xs xs:text-sm">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Exercise' : 'Exercícios'}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-[9px] xxs:text-[10px] xs:text-xs text-slate-600 dark:text-gray-400">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? '30 minutes of walking' : '30 minutos de caminhada'}
                     </p>
                   </div>
                 </div>
-                <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                <span className="text-emerald-500 dark:text-emerald-400 text-[10px] xxs:text-xs ml-1">
                   {localStorage.getItem('i18nextLng')?.startsWith('en') ? '6:30 PM' : '18:30'}
                 </span>
               </div>
-              <div className="flex justify-between items-center p-2 sm:p-3 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden sm:block">
-                    <Brain className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500" />
+              <div className="flex justify-between items-center p-1.5 xxs:p-2 bg-emerald-50 dark:bg-[#2a3137] rounded-lg border border-emerald-100 dark:border-0 shadow-sm">
+                <div className="flex items-center gap-1 xxs:gap-1.5">
+                  <div className="p-1 xxs:p-1.5 rounded-full bg-white dark:bg-[#1a2127] shadow-sm hidden xxs:block">
+                    <Brain className="h-2.5 w-2.5 xxs:h-3 xxs:w-3 text-purple-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    <p className="font-medium text-slate-800 dark:text-white text-[10px] xxs:text-xs xs:text-sm">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Evening Meditation' : 'Meditação Noturna'}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-[9px] xxs:text-[10px] xs:text-xs text-slate-600 dark:text-gray-400">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Relaxation routine' : 'Rotina de relaxamento'}
                     </p>
                   </div>
                 </div>
-                <span className="text-emerald-500 dark:text-emerald-400 text-sm ml-2">
+                <span className="text-emerald-500 dark:text-emerald-400 text-[10px] xxs:text-xs ml-1">
                   {localStorage.getItem('i18nextLng')?.startsWith('en') ? '10:00 PM' : '22:00'}
                 </span>
               </div>
@@ -458,10 +458,10 @@ export default function DashboardPage() {
         )}
         
         {/* Exam Alerts */}
-        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-4 sm:p-6 shadow-md">
-          <div className="flex justify-between items-center mb-3 sm:mb-4">
-            <h3 className="text-base sm:text-lg font-semibold">{t('health.examAlerts')}</h3>
-            <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-1 h-auto text-xs sm:text-sm">
+        <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-2 xxs:p-3 xs:p-4 shadow-md w-full max-w-full overflow-hidden box-border">
+          <div className="flex justify-between items-center mb-1.5 xxs:mb-2 sm:mb-3">
+            <h3 className="text-xs xxs:text-sm xs:text-base font-semibold">{t('health.examAlerts')}</h3>
+            <Button variant="ghost" className="text-emerald-500 dark:text-emerald-400 p-0.5 h-auto text-[10px] xxs:text-xs">
               {t("health.viewAll")}
             </Button>
           </div>
@@ -475,8 +475,8 @@ export default function DashboardPage() {
                       <FileText className={`h-3 w-3 sm:h-4 sm:w-4 ${exam.status === "Critical" || exam.status === "Low" ? "text-red-500" : exam.status === "High" || exam.status === "Attention" ? "text-amber-500" : "text-emerald-500"}`} />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">{exam.name}</p>
-                      <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">{formatDate(exam.date)}</p>
+                      <p className="font-medium text-slate-800 dark:text-white text-[10px] xxs:text-xs xs:text-sm">{exam.name}</p>
+                      <p className="text-[9px] xxs:text-[10px] xs:text-xs text-slate-600 dark:text-gray-400">{formatDate(exam.date)}</p>
                     </div>
                   </div>
                   <Badge variant="outline" className={`text-xs ${exam.status === "Critical" || exam.status === "Low" ? "border-red-200 text-red-500" : exam.status === "High" || exam.status === "Attention" ? "border-amber-200 text-amber-500" : "border-emerald-200 text-emerald-500"}`}>
@@ -486,28 +486,28 @@ export default function DashboardPage() {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-4 sm:py-6 text-center">
-              <div className="bg-emerald-50 dark:bg-[#2a3137] p-2 sm:p-3 rounded-full mb-2 sm:mb-3">
-                <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-500 dark:text-emerald-400" />
+            <div className="flex flex-col items-center justify-center py-2 xxs:py-3 sm:py-4 text-center">
+              <div className="bg-emerald-50 dark:bg-[#2a3137] p-1.5 xxs:p-2 rounded-full mb-1.5 xxs:mb-2">
+                <AlertCircle className="h-4 w-4 xxs:h-5 xxs:w-5 text-emerald-500 dark:text-emerald-400" />
               </div>
-              <p className="text-sm sm:text-base text-slate-700 dark:text-gray-300 mb-1">{t('health.noExamAlerts')}</p>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">{t('health.allExamsNormal')}</p>
+              <p className="text-xs xxs:text-sm text-slate-700 dark:text-gray-300 mb-0.5">{t('health.noExamAlerts')}</p>
+              <p className="text-[10px] xxs:text-xs text-slate-500 dark:text-gray-400">{t('health.allExamsNormal')}</p>
             </div>
           )}
           
           {/* Dados mockados para demonstração - se não houver alertExams */}
           {alertExams.length === 0 && (
-            <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3">
+            <div className="mt-2 xxs:mt-3 space-y-1 xxs:space-y-1.5 sm:space-y-2">
               <div className="flex justify-between items-center p-2 sm:p-3 bg-amber-50 dark:bg-[#2a3137] rounded-lg border border-amber-200 dark:border-0 shadow-sm">
                 <div className="flex items-start gap-2 sm:gap-3">
                   <div className="p-1.5 sm:p-2 rounded-full bg-white dark:bg-[#1a2127] shadow-sm">
                     <FileText className="h-3 w-3 sm:h-4 sm:w-4 text-amber-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    <p className="font-medium text-slate-800 dark:text-white text-[10px] xxs:text-xs xs:text-sm">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Complete Blood Count' : 'Hemograma'}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-[9px] xxs:text-[10px] xs:text-xs text-slate-600 dark:text-gray-400">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'March 15, 2023' : '15 de março, 2023'}
                     </p>
                   </div>
@@ -523,10 +523,10 @@ export default function DashboardPage() {
                     <FileText className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-800 dark:text-white text-sm sm:text-base">
+                    <p className="font-medium text-slate-800 dark:text-white text-[10px] xxs:text-xs xs:text-sm">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'Blood Glucose' : 'Glicemia'}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-400">
+                    <p className="text-[9px] xxs:text-[10px] xs:text-xs text-slate-600 dark:text-gray-400">
                       {localStorage.getItem('i18nextLng')?.startsWith('en') ? 'April 2, 2023' : '02 de abril, 2023'}
                     </p>
                   </div>
@@ -548,7 +548,7 @@ export default function DashboardPage() {
         </Button>
       </div>
       
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 responsive-mb">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 responsive-mb w-full max-w-full overflow-hidden box-border">
         <Link to="/activity">
           <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/30 dark:to-rose-800/20 border-0 shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
             <div className="flex flex-col items-center text-center">

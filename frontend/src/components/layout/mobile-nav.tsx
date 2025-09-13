@@ -140,8 +140,8 @@ export function MobileNav() {
   const navItems = getNavItems();
   
   return (
-    <div className="block xs:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-50">
-      <div className="grid grid-cols-5">
+    <div className="block xs:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1a2127] border-t border-blue-100 dark:border-gray-800 shadow-lg z-40 w-full max-w-full overflow-x-hidden">
+      <div className="grid grid-cols-5 w-full max-w-full overflow-x-hidden box-border">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.path;
@@ -153,8 +153,8 @@ export function MobileNav() {
                   ? 'text-blue-600 dark:text-emerald-400 font-medium bg-blue-50/70 dark:bg-emerald-900/20 rounded-t-md' 
                   : 'text-slate-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-emerald-300'
               }`}>
-                <Icon className={`${isActive ? 'h-4 w-4 xxs:h-5 xxs:w-5' : 'h-3.5 w-3.5 xxs:h-4.5 xxs:w-4.5'}`} />
-                <span className={`text-[9px] xxs:text-[10px] mt-1 text-center truncate max-w-[60px] ${isActive ? 'font-medium' : ''}`}>{item.label}</span>
+                <Icon className={`${isActive ? 'h-4 w-4 xxs:h-5 xxs:w-5' : 'h-3.5 w-3.5 xxs:h-4.5 xxs:w-4.5'} flex-shrink-0`} />
+                <span className={`text-[9px] xxs:text-[10px] mt-1 text-center truncate max-w-[55px] xxs:max-w-[60px] ${isActive ? 'font-medium' : ''}`}>{item.label}</span>
               </Link>
             </div>
           );

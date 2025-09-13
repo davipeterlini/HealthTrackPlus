@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher';
@@ -8,6 +8,7 @@ import { DevModeHeaderToggle } from '../dev-mode-header-toggle';
 import { useAuth } from "@/hooks/use-auth";
 import { useDashboardSettings } from "@/hooks/use-dashboard-settings";
 import { useResponsive } from "@/hooks/use-responsive";
+import { BREAKPOINTS } from "@/contexts/device-context";
 import { BellIcon, Home, Activity, Droplets, Moon, Brain, FileText, Menu, Settings, HelpCircle, LogOut, X, Pill, PieChart, Film, Target, Timer, Crown, Heart, Baby } from "lucide-react";
 import {
   Avatar,
@@ -131,8 +132,36 @@ export function Header() {
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
-  const { settings } = useDashboardSettings();
-  const { isMobile, getFontSize, getIconSize } = useResponsive();
+  const { settings, updateSettings } = useDashboardSettings();
+  const { isMobile, isTablet, isDesktop, windowWidth, matches, getFontSize, getIconSize } = useResponsive();
+  
+  // Determinar dinamicamente quais ícones mostrar com base no espaço disponível e nas configurações
+  const { compactView } = settings;
+  
+  // Lógica avançada para determinar a visibilidade dos ícones
+  const showNotifications = compactView 
+    ? matches('xxs', '>=') 
+    : true; // Exibir notificações somente se tiver espaço ou se compactView = false
+    
+  const showLanguageSwitcher = compactView 
+    ? matches('xxs', '>=') 
+    : true; // Exibir seletor de idioma somente se tiver espaço ou se compactView = false
+    
+  const showDevMode = compactView 
+    ? matches('xs', '>=') 
+    : true; // Exibir modo dev somente se tiver espaço ou se compactView = false
+    
+  const showAvatar = compactView 
+    ? matches('md', '>=') 
+    : true; // Mostrar avatar somente se tiver espaço ou se compactView = false
+    
+  // Ajustar automaticamente para o modo compacto em telas muito pequenas
+  useEffect(() => {
+    // Ajustar automaticamente para modo compacto em telas menores que 'xs'
+    if (windowWidth < BREAKPOINTS.xs && !compactView) {
+      updateSettings({ compactView: true });
+    }
+  }, [windowWidth, compactView, updateSettings]);
   
   // Get translated navigation items with visibility based on dashboard settings
   const navItems = getNavItems(t, settings);
@@ -151,72 +180,78 @@ export function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50">
-      <div className="flex items-center justify-between w-full px-2 xxs:px-3 xs:px-4 md:px-6 h-12 xxs:h-14 md:h-16">
+    <header className="bg-white dark:bg-[#1a2127] border-b border-blue-100 dark:border-gray-800 shadow-sm sticky top-0 z-50 w-full max-w-full overflow-x-hidden">
+      <div className="flex items-center justify-between w-full max-w-full px-1.5 xxs:px-2.5 xs:px-3.5 sm:px-4 md:px-6 h-12 xxs:h-14 md:h-16 overflow-hidden box-border">
         {/* Logo - sempre à esquerda */}
-        <div className="flex items-center">
+        <div className="flex items-center flex-shrink-0 min-w-0">
           <Link href="/" className="flex items-center">
-            <h1 className="text-sm xxs:text-base xs:text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-blue-600 dark:text-emerald-400">LifeTrek</h1>
+            <h1 className="text-sm xxs:text-base xs:text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-blue-600 dark:text-emerald-400 whitespace-nowrap">LifeTrek</h1>
           </Link>
         </div>
 
         {/* Menu de navegação para telas médias e grandes - centro */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-2 lg:space-x-4 xl:space-x-6 overflow-hidden mx-auto px-2 flex-grow flex-shrink justify-center">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
               <Link 
                 key={item.path}
                 href={item.path}
-                className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+                className={`flex items-center gap-1.5 px-2 lg:px-3 py-1.5 lg:py-2 rounded-md transition-colors whitespace-nowrap ${
                   location === item.path
                     ? "text-blue-600 dark:text-emerald-400 bg-blue-50 dark:bg-gray-800 font-medium"
                     : "text-slate-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:text-emerald-400 dark:hover:bg-gray-800"
                 }`}
               >
                 <Icon className={`${getIconSize('sm')} flex-shrink-0`} />
-                <span className="text-sm font-medium">{item.label}</span>
+                <span className="text-xs lg:text-sm font-medium truncate">{item.label}</span>
               </Link>
             );
           })}
         </nav>
 
         {/* Controles sempre à direita */}
-        <div className="flex items-center gap-0.5 xxs:gap-1 xs:gap-1.5 md:gap-2">
-          {/* Notificações - hide on very small screens */}
-          <div className="hidden xxs:block">
-            <NotificationsDropdown />
-          </div>
+        <div className="flex items-center gap-0.5 xxs:gap-1 xs:gap-1.5 md:gap-2 flex-shrink-0">
+          {/* Notificações - exibição dinâmica */}
+          {showNotifications && (
+            <div>
+              <NotificationsDropdown />
+            </div>
+          )}
 
-          {/* Toggle de tema */}
+          {/* Toggle de tema - sempre visível */}
           <ThemeToggle />
           
-          {/* Alternador de idioma - hide on very small screens */}
-          <div className="hidden xxs:block">
-            <LanguageSwitcher />
-          </div>
+          {/* Alternador de idioma - exibição dinâmica */}
+          {showLanguageSwitcher && (
+            <div>
+              <LanguageSwitcher />
+            </div>
+          )}
 
-          {/* Modo desenvolvedor - hide on small screens */}
-          <div className="hidden xs:block">
-            <DevModeHeaderToggle />
-          </div>
+          {/* Modo desenvolvedor - exibição dinâmica */}
+          {showDevMode && (
+            <div>
+              <DevModeHeaderToggle />
+            </div>
+          )}
 
           {/* Menu de navegação móvel - sempre visível em telas pequenas */}
           <div className="md:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700">
-                  <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4" />
+                <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700 dark:bg-gray-800 dark:text-emerald-400 dark:hover:bg-gray-700 flex-shrink-0">
+                  <Menu className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 flex-shrink-0" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[90vw] xxs:w-[85vw] max-w-xs py-3 xxs:py-4">
+              <SheetContent side="left" className="bg-white dark:bg-[#1a2127] border-r border-blue-50 dark:border-gray-800 w-[90vw] xxs:w-[85vw] sm:w-[75vw] max-w-xs py-3 xxs:py-4 overflow-y-auto overflow-x-hidden">
                 <div className="flex items-center justify-between mb-3 xxs:mb-4">
                   <SheetTitle className="text-base xxs:text-lg font-semibold text-blue-600 dark:text-white">
                     {t('navigation.menu')}
                   </SheetTitle>
                   <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="h-7 xxs:h-8 w-7 xxs:w-8 text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400">
-                      <X className="h-3.5 xxs:h-4 w-3.5 xxs:w-4" />
+                    <Button variant="ghost" size="icon" className="h-7 xxs:h-8 w-7 xxs:w-8 text-slate-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-emerald-400 flex-shrink-0">
+                      <X className="h-3.5 xxs:h-4 w-3.5 xxs:w-4 flex-shrink-0" />
                     </Button>
                   </SheetClose>
                 </div>
@@ -235,8 +270,8 @@ export function Header() {
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <Icon className="h-3.5 w-3.5 xxs:h-4 xxs:w-4" />
-                        <span className="text-xs xxs:text-sm font-medium">{item.label}</span>
+                        <Icon className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 flex-shrink-0" />
+                        <span className="text-xs xxs:text-sm font-medium truncate">{item.label}</span>
                       </Link>
                     );
                   })}
@@ -289,20 +324,21 @@ export function Header() {
             </Sheet>
           </div>
 
-          {/* Avatar do usuário - apenas para desktop */}
-          <div className="hidden md:block">
+          {/* Avatar do usuário - exibição dinâmica */}
+          {showAvatar && (
+          <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative flex items-center p-1">
-                  <Avatar className="h-8 w-8 border border-blue-100 dark:border-gray-700">
+                <Button variant="ghost" className="relative flex items-center p-0.5 md:p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+                  <Avatar className="h-7 w-7 md:h-8 md:w-8 border border-blue-100 dark:border-gray-700">
                     <AvatarImage src={user?.avatar || undefined} alt={user?.name || user?.username || ''} />
-                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-xs">
+                    <AvatarFallback className="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-gray-200 text-[10px] md:text-xs font-medium">
                       {user?.name ? getInitials(user.name) : user?.username?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48">
+              <DropdownMenuContent align="end" className="border border-blue-100 dark:border-gray-700 w-48 mt-1 shadow-lg rounded-md z-50">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-slate-800 dark:text-white">{user?.name || user?.username}</span>
@@ -329,6 +365,16 @@ export function Header() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+          </div>
+          )}
+          
+          {/* Botão de configuração para ajustar os ícones visíveis - sempre visível */}
+          <div className="ml-1 xxs:ml-1.5">
+            <Link href="/settings">
+              <Button variant="ghost" size="icon" className="h-7 w-7 xxs:h-8 xxs:w-8 rounded-full text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <Settings className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 flex-shrink-0" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

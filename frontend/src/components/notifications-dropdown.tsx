@@ -152,20 +152,20 @@ export function NotificationsDropdown() {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="relative h-8 w-8 md:h-9 md:w-9 text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300"
+          className="relative h-7 w-7 xxs:h-8 xxs:w-8 md:h-9 md:w-9 text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-gray-300 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
         >
-          <BellIcon className="h-4 w-4 md:h-5 md:w-5" />
+          <BellIcon className="h-3.5 w-3.5 xxs:h-4 xxs:w-4 md:h-5 md:w-5 flex-shrink-0" />
           {unreadCount > 0 && (
             <Badge 
               variant="destructive" 
-              className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+              className="absolute -top-0.5 -right-0.5 h-4 w-4 xxs:h-5 xxs:w-5 rounded-full p-0 flex items-center justify-center text-[10px] xxs:text-xs shadow-sm border border-white dark:border-gray-800"
             >
               {unreadCount > 9 ? '9+' : unreadCount}
             </Badge>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80 p-0">
+      <DropdownMenuContent align="end" className="w-72 xxs:w-80 p-0 mt-1 shadow-lg rounded-md z-50 border-slate-200 dark:border-gray-700">
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="font-semibold text-slate-800 dark:text-white">
             {t('notifications.title', 'Notificações')}
