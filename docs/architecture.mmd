@@ -1,9 +1,48 @@
 graph TD
     %% Application Architecture Diagram for HealthTrackPlus
     
+    %% Platform-Specific and Shared Components
+    subgraph "Cross-Platform Architecture"
+        SharedCore["Shared Core<br>TypeScript/JavaScript"]
+        
+        subgraph "Platform Specific"
+            WebApp["Web Application<br>(React)"]
+            IOSApp["iOS Application<br>(Capacitor + Native)"]
+            AndroidApp["Android Application<br>(Capacitor + Native)"]
+        end
+        
+        subgraph "Shared Components"
+            SharedLogic["Shared Business Logic<br>(TypeScript)"]
+            SharedAPI["Shared API Client<br>(TypeScript)"]
+            SharedModels["Shared Data Models<br>(TypeScript Interfaces)"]
+            SharedValidation["Shared Validation<br>(Zod Schemas)"]
+        end
+        
+        SharedCore --> SharedLogic
+        SharedCore --> SharedAPI
+        SharedCore --> SharedModels
+        SharedCore --> SharedValidation
+        
+        SharedLogic --> WebApp
+        SharedLogic --> IOSApp
+        SharedLogic --> AndroidApp
+        
+        SharedAPI --> WebApp
+        SharedAPI --> IOSApp
+        SharedAPI --> AndroidApp
+        
+        SharedModels --> WebApp
+        SharedModels --> IOSApp
+        SharedModels --> AndroidApp
+        
+        SharedValidation --> WebApp
+        SharedValidation --> IOSApp
+        SharedValidation --> AndroidApp
+    end
+    
     %% Client / Frontend
-    subgraph "Frontend"
-        UI["User Interface (React)"]
+    subgraph "Frontend Architecture"
+        UI["User Interface Layer"]
         
         subgraph "Frontend Clean Architecture"
             FDomain["Domain Layer<br>- Entities<br>- Interfaces<br>- Value Objects"]
@@ -37,10 +76,38 @@ graph TD
         UI --> Settings
         
         FPresent --> UI
+        WebApp --- UI
     end
     
+    %% Mobile Native Features
+    subgraph "Native Features"
+        NativeCamera["Camera Access<br>(Image Capture)"]
+        NativeStorage["Secure Storage<br>(Auth Tokens)"]
+        NativeNotifications["Push Notifications"]
+        NativeSensors["Health Sensors<br>(Step Counter, Heart Rate)"]
+        NativeLocation["Geolocation<br>(Activity Tracking)"]
+        NativeSharing["Native Sharing<br>(Reports, Results)"]
+        NativeBiometrics["Biometric Authentication<br>(FaceID/TouchID)"]
+    end
+    
+    IOSApp --> NativeCamera
+    IOSApp --> NativeStorage
+    IOSApp --> NativeNotifications
+    IOSApp --> NativeSensors
+    IOSApp --> NativeLocation
+    IOSApp --> NativeSharing
+    IOSApp --> NativeBiometrics
+    
+    AndroidApp --> NativeCamera
+    AndroidApp --> NativeStorage
+    AndroidApp --> NativeNotifications
+    AndroidApp --> NativeSensors
+    AndroidApp --> NativeLocation
+    AndroidApp --> NativeSharing
+    AndroidApp --> NativeBiometrics
+    
     %% Backend Server
-    subgraph "Backend"
+    subgraph "Backend Architecture"
         Server["Express Server"]
         
         subgraph "Backend Clean Architecture"
@@ -88,8 +155,28 @@ graph TD
         Server --> SubscriptionRoutes
     end
     
+    %% Security Layer
+    subgraph "Security Architecture"
+        Auth["Authentication<br>- JWT Tokens<br>- OAuth 2.0<br>- Two-Factor Auth"]
+        AuthZ["Authorization<br>- Role-Based Access<br>- Permission Controls"]
+        DataSec["Data Security<br>- Encryption at Rest<br>- Encryption in Transit"]
+        SecMonitor["Security Monitoring<br>- Audit Logs<br>- Intrusion Detection"]
+        InputVal["Input Validation<br>- Schema Validation<br>- Sanitization"]
+        CSRF["CSRF Protection"]
+        RateLimit["Rate Limiting"]
+    end
+    
+    SharedAPI --> Auth
+    Server --> Auth
+    Server --> AuthZ
+    Server --> DataSec
+    Server --> SecMonitor
+    Server --> InputVal
+    Server --> CSRF
+    Server --> RateLimit
+    
     %% Database
-    subgraph "Database"
+    subgraph "Database Architecture"
         PostgreSQL["PostgreSQL Database"]
         
         subgraph "Database Schema"
@@ -147,39 +234,69 @@ graph TD
     
     %% External Services
     subgraph "External Services"
-        Stripe["Stripe Payment Processing"]
-        GoogleAI["Google Gemini AI"]
-        AnthropicAI["Anthropic AI"]
-        NeonDB["Neon Serverless PostgreSQL"]
+        Stripe["Stripe Payment Processing<br>- Subscriptions<br>- Payment Processing"]
+        GoogleAI["Google Gemini AI<br>- Medical Chat<br>- Health Insights"]
+        AnthropicAI["Anthropic AI<br>- Content Analysis<br>- Exam Processing"]
+        NeonDB["Neon Serverless PostgreSQL<br>- Managed Database"]
+        CloudStorage["Cloud Storage<br>- Exams & Documents<br>- Media Storage"]
+        PushProvider["Push Notification Service<br>- Mobile Notifications"]
+        EmailService["Email Service<br>- Transactional Emails<br>- Reports"]
     end
     
-    %% Connections between components
-    UI <--> Server
+    %% Data Flow
+    subgraph "Data Flow Patterns"
+        APIFlow["RESTful API Calls"]
+        RealTimeFlow["WebSocket Real-time Updates"]
+        AsyncFlow["Asynchronous Processing"]
+        EventFlow["Event-based Communication"]
+        BatchFlow["Batch Processing"]
+        OfflineSync["Offline Data Synchronization"]
+    end
+    
+    WebApp --> APIFlow
+    IOSApp --> APIFlow
+    AndroidApp --> APIFlow
+    IOSApp --> OfflineSync
+    AndroidApp --> OfflineSync
+    WebApp --> RealTimeFlow
+    IOSApp --> RealTimeFlow
+    AndroidApp --> RealTimeFlow
+    Server --> AsyncFlow
+    Server --> EventFlow
+    Server --> BatchFlow
+    AsyncFlow --> GoogleAI
+    AsyncFlow --> AnthropicAI
+    
+    %% Connections between major components
+    WebApp <--> APIFlow
+    IOSApp <--> APIFlow
+    AndroidApp <--> APIFlow
+    APIFlow <--> Server
+    RealTimeFlow <--> Server
     Server <--> PostgreSQL
     Server <--> Stripe
     Server <--> GoogleAI
     Server <--> AnthropicAI
+    Server <--> CloudStorage
+    Server <--> EmailService
+    Server <--> PushProvider
     PostgreSQL <--> NeonDB
+    Auth <--> Users
 
-    %% Mobile Integration
-    subgraph "Mobile Integration"
-        Capacitor["Capacitor Framework"]
-        IOS["iOS App"]
-        Android["Android App"]
-        
-        Capacitor --> IOS
-        Capacitor --> Android
-        UI <--> Capacitor
-    end
-    
     classDef frontend fill:#f9f,stroke:#333,stroke-width:2px;
     classDef backend fill:#bbf,stroke:#333,stroke-width:2px;
     classDef database fill:#bfb,stroke:#333,stroke-width:2px;
     classDef external fill:#fbb,stroke:#333,stroke-width:2px;
     classDef mobile fill:#ffb,stroke:#333,stroke-width:2px;
+    classDef shared fill:#9ef,stroke:#333,stroke-width:2px;
+    classDef security fill:#fd9,stroke:#333,stroke-width:2px;
+    classDef dataflow fill:#dff,stroke:#333,stroke-width:2px;
     
-    class UI,Dashboard,MedicalExams,Activities,Nutrition,Baby,Pregnancy,Auth,Settings,FDomain,FApp,FInfra,FPresent frontend;
+    class WebApp,UI,Dashboard,MedicalExams,Activities,Nutrition,Baby,Pregnancy,Auth,Settings,FDomain,FApp,FInfra,FPresent frontend;
     class Server,AuthRoutes,ExamRoutes,ActivityRoutes,NutritionRoutes,SleepRoutes,WaterRoutes,VideoRoutes,HealthRoutes,ProfileRoutes,PlanRoutes,AIRoutes,BabyRoutes,PregnancyRoutes,SubscriptionRoutes,BDomain,BApp,BInfra,BPresent backend;
     class PostgreSQL,Users,MedicalExams,ExamDetails,Activities,SleepRecords,WaterIntake,Meals,FoodItems,Recipes,Videos,VideoProgress,CourseTracks,TrackVideos,HealthInsights,HealthProfiles,HealthPlans,Medications,MedicationLogs,MeditationSessions,MenstrualCycles,FertilityTracking,PregnancyTracking,BabyGrowth,BabyMeasurements database;
-    class Stripe,GoogleAI,AnthropicAI,NeonDB external;
-    class Capacitor,IOS,Android mobile;
+    class Stripe,GoogleAI,AnthropicAI,NeonDB,CloudStorage,PushProvider,EmailService external;
+    class IOSApp,AndroidApp,NativeCamera,NativeStorage,NativeNotifications,NativeSensors,NativeLocation,NativeSharing,NativeBiometrics mobile;
+    class SharedCore,SharedLogic,SharedAPI,SharedModels,SharedValidation shared;
+    class Auth,AuthZ,DataSec,SecMonitor,InputVal,CSRF,RateLimit security;
+    class APIFlow,RealTimeFlow,AsyncFlow,EventFlow,BatchFlow,OfflineSync dataflow;
