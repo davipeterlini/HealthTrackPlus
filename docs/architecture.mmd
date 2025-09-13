@@ -1,0 +1,185 @@
+graph TD
+    %% Application Architecture Diagram for HealthTrackPlus
+    
+    %% Client / Frontend
+    subgraph "Frontend"
+        UI["User Interface (React)"]
+        
+        subgraph "Frontend Clean Architecture"
+            FDomain["Domain Layer<br>- Entities<br>- Interfaces<br>- Value Objects"]
+            FApp["Application Layer<br>- Services<br>- Use Cases"]
+            FInfra["Infrastructure Layer<br>- Repositories (API calls)"]
+            FPresent["Presentation Layer<br>- Hooks<br>- Components"]
+            
+            FDomain --> FApp
+            FApp --> FInfra
+            FInfra --> FPresent
+        end
+        
+        subgraph "UI Components"
+            Dashboard["Dashboard Components"]
+            MedicalExams["Medical Exam Components"]
+            Activities["Activity Components"]
+            Nutrition["Nutrition Components"]
+            Baby["Baby Tracking Components"]
+            Pregnancy["Pregnancy Components"]
+            Auth["Auth Components"]
+            Settings["Settings"]
+        end
+        
+        UI --> Dashboard
+        UI --> MedicalExams
+        UI --> Activities
+        UI --> Nutrition
+        UI --> Baby
+        UI --> Pregnancy
+        UI --> Auth
+        UI --> Settings
+        
+        FPresent --> UI
+    end
+    
+    %% Backend Server
+    subgraph "Backend"
+        Server["Express Server"]
+        
+        subgraph "Backend Clean Architecture"
+            BDomain["Domain Layer<br>- Entities<br>- Interfaces<br>- Value Objects"]
+            BApp["Application Layer<br>- Services<br>- Use Cases"]
+            BInfra["Infrastructure Layer<br>- Repositories"]
+            BPresent["Presentation Layer<br>- Controllers<br>- Routes"]
+            
+            BDomain --> BApp
+            BApp --> BInfra
+            BInfra --> BPresent
+        end
+        
+        subgraph "API Routes"
+            AuthRoutes["Authentication Routes"]
+            ExamRoutes["Medical Exam Routes"]
+            ActivityRoutes["Activity Routes"]
+            NutritionRoutes["Nutrition Routes"]
+            SleepRoutes["Sleep Routes"]
+            WaterRoutes["Water Intake Routes"]
+            VideoRoutes["Video Routes"]
+            HealthRoutes["Health Insights Routes"]
+            ProfileRoutes["Health Profile Routes"]
+            PlanRoutes["Health Plan Routes"]
+            AIRoutes["AI Chat Routes"]
+            BabyRoutes["Baby Tracking Routes"]
+            PregnancyRoutes["Pregnancy Routes"]
+            SubscriptionRoutes["Subscription Routes"]
+        end
+        
+        BPresent --> Server
+        Server --> AuthRoutes
+        Server --> ExamRoutes
+        Server --> ActivityRoutes
+        Server --> NutritionRoutes
+        Server --> SleepRoutes
+        Server --> WaterRoutes
+        Server --> VideoRoutes
+        Server --> HealthRoutes
+        Server --> ProfileRoutes
+        Server --> PlanRoutes
+        Server --> AIRoutes
+        Server --> BabyRoutes
+        Server --> PregnancyRoutes
+        Server --> SubscriptionRoutes
+    end
+    
+    %% Database
+    subgraph "Database"
+        PostgreSQL["PostgreSQL Database"]
+        
+        subgraph "Database Schema"
+            Users["Users Table"]
+            MedicalExams["Medical Exams Table"]
+            ExamDetails["Exam Details Table"]
+            Activities["Activities Table"]
+            SleepRecords["Sleep Records Table"]
+            WaterIntake["Water Intake Table"]
+            Meals["Meals Table"]
+            FoodItems["Food Items Table"]
+            Recipes["Recipes Table"]
+            Videos["Videos Table"]
+            VideoProgress["Video Progress Table"]
+            CourseTracks["Course Tracks Table"]
+            TrackVideos["Track Videos Table"]
+            HealthInsights["Health Insights Table"]
+            HealthProfiles["Health Profiles Table"]
+            HealthPlans["Health Plans Table"]
+            Medications["Medications Table"]
+            MedicationLogs["Medication Logs Table"]
+            MeditationSessions["Meditation Sessions Table"]
+            MenstrualCycles["Menstrual Cycles Table"]
+            FertilityTracking["Fertility Tracking Table"]
+            PregnancyTracking["Pregnancy Tracking Table"]
+            BabyGrowth["Baby Growth Tracking Table"]
+            BabyMeasurements["Baby Measurements Table"]
+        end
+        
+        PostgreSQL --> Users
+        PostgreSQL --> MedicalExams
+        PostgreSQL --> ExamDetails
+        PostgreSQL --> Activities
+        PostgreSQL --> SleepRecords
+        PostgreSQL --> WaterIntake
+        PostgreSQL --> Meals
+        PostgreSQL --> FoodItems
+        PostgreSQL --> Recipes
+        PostgreSQL --> Videos
+        PostgreSQL --> VideoProgress
+        PostgreSQL --> CourseTracks
+        PostgreSQL --> TrackVideos
+        PostgreSQL --> HealthInsights
+        PostgreSQL --> HealthProfiles
+        PostgreSQL --> HealthPlans
+        PostgreSQL --> Medications
+        PostgreSQL --> MedicationLogs
+        PostgreSQL --> MeditationSessions
+        PostgreSQL --> MenstrualCycles
+        PostgreSQL --> FertilityTracking
+        PostgreSQL --> PregnancyTracking
+        PostgreSQL --> BabyGrowth
+        PostgreSQL --> BabyMeasurements
+    end
+    
+    %% External Services
+    subgraph "External Services"
+        Stripe["Stripe Payment Processing"]
+        GoogleAI["Google Gemini AI"]
+        AnthropicAI["Anthropic AI"]
+        NeonDB["Neon Serverless PostgreSQL"]
+    end
+    
+    %% Connections between components
+    UI <--> Server
+    Server <--> PostgreSQL
+    Server <--> Stripe
+    Server <--> GoogleAI
+    Server <--> AnthropicAI
+    PostgreSQL <--> NeonDB
+
+    %% Mobile Integration
+    subgraph "Mobile Integration"
+        Capacitor["Capacitor Framework"]
+        IOS["iOS App"]
+        Android["Android App"]
+        
+        Capacitor --> IOS
+        Capacitor --> Android
+        UI <--> Capacitor
+    end
+    
+    classDef frontend fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef backend fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef database fill:#bfb,stroke:#333,stroke-width:2px;
+    classDef external fill:#fbb,stroke:#333,stroke-width:2px;
+    classDef mobile fill:#ffb,stroke:#333,stroke-width:2px;
+    
+    class UI,Dashboard,MedicalExams,Activities,Nutrition,Baby,Pregnancy,Auth,Settings,FDomain,FApp,FInfra,FPresent frontend;
+    class Server,AuthRoutes,ExamRoutes,ActivityRoutes,NutritionRoutes,SleepRoutes,WaterRoutes,VideoRoutes,HealthRoutes,ProfileRoutes,PlanRoutes,AIRoutes,BabyRoutes,PregnancyRoutes,SubscriptionRoutes,BDomain,BApp,BInfra,BPresent backend;
+    class PostgreSQL,Users,MedicalExams,ExamDetails,Activities,SleepRecords,WaterIntake,Meals,FoodItems,Recipes,Videos,VideoProgress,CourseTracks,TrackVideos,HealthInsights,HealthProfiles,HealthPlans,Medications,MedicationLogs,MeditationSessions,MenstrualCycles,FertilityTracking,PregnancyTracking,BabyGrowth,BabyMeasurements database;
+    class Stripe,GoogleAI,AnthropicAI,NeonDB external;
+    class Capacitor,IOS,Android mobile;
