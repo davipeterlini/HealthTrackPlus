@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -105,39 +106,30 @@ export default function BabyGrowthPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-pink-100 rounded-lg">
-            <Baby className="h-6 w-6 text-pink-600" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold">{t('baby.title')}</h1>
-            <p className="text-gray-600">{t('baby.subtitle')}</p>
-          </div>
-        </div>
-        <Button onClick={() => setShowAddBaby(true)} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
+    <MainLayout title={t('baby.title')} hideTitle={true}>
+      <div className="flex justify-between items-center responsive-mb">
+        <h1 className="responsive-title-lg text-slate-800 dark:text-white">{t('baby.title')}</h1>
+        <Button onClick={() => setShowAddBaby(true)} className="bg-pink-600 hover:bg-pink-700 dark:text-white dark:bg-pink-700 dark:hover:bg-pink-600 responsive-button">
+          <Plus className="mr-2 responsive-icon-sm" />
           {t('baby.add_baby')}
         </Button>
       </div>
 
       {/* Baby Info Card */}
-      <Card>
+      <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
         <CardContent className="p-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center">
-              <Baby className="h-8 w-8 text-pink-600" />
+            <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900/30 dark:to-purple-900/30 rounded-full flex items-center justify-center">
+              <Baby className="h-8 w-8 text-pink-600 dark:text-pink-400" />
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-semibold">{babyData.name}</h2>
-              <div className="flex items-center gap-4 text-sm text-gray-600">
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-white">{babyData.name}</h2>
+              <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                 <span>{t('baby.born')}: {new Date(babyData.birthDate).toLocaleDateString()}</span>
-                <Badge variant="outline">{babyData.gender === 'female' ? '👧' : '👦'}</Badge>
+                <Badge variant="outline" className="dark:border-gray-700">{babyData.gender === 'female' ? '👧' : '👦'}</Badge>
               </div>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="dark:border-gray-700 dark:text-white">
               <Edit className="h-4 w-4 mr-2" />
               {t('common.edit')}
             </Button>
@@ -146,19 +138,19 @@ export default function BabyGrowthPage() {
       </Card>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 responsive-gap-y">
         {quickStats.map((stat, index) => (
-          <Card key={index}>
-            <CardContent className="p-4">
+          <Card key={index} className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-4 responsive-card-content">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   {stat.icon}
-                  <span className="text-sm font-medium">{stat.label}</span>
+                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{stat.label}</span>
                 </div>
               </div>
               <div className="mt-2">
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="text-sm text-gray-600">{stat.change}</div>
+                <div className="text-2xl font-bold text-slate-800 dark:text-white">{stat.value}</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">{stat.change}</div>
               </div>
             </CardContent>
           </Card>
@@ -166,24 +158,24 @@ export default function BabyGrowthPage() {
       </div>
 
       {/* Recent Milestones */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+      <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+        <CardHeader className="responsive-card-header">
+          <CardTitle className="responsive-title-sm text-slate-800 dark:text-white flex items-center gap-2">
             <CheckCircle className="h-5 w-5" />
             {t('baby.recent_milestones')}
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="responsive-card-content">
           <div className="space-y-3">
             {recentMilestones.map((milestone, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${milestone.achieved ? 'bg-green-500' : 'bg-gray-300'}`} />
-                  <span className={milestone.achieved ? 'text-green-700' : 'text-gray-600'}>
+                  <div className={`w-2 h-2 rounded-full ${milestone.achieved ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`} />
+                  <span className={milestone.achieved ? 'text-green-700 dark:text-green-400' : 'text-slate-600 dark:text-slate-400'}>
                     {milestone.name}
                   </span>
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-slate-500 dark:text-slate-400">
                   {milestone.achieved ? (
                     <span>{new Date(milestone.date).toLocaleDateString()}</span>
                   ) : (
@@ -197,80 +189,116 @@ export default function BabyGrowthPage() {
       </Card>
 
       {/* Main Content Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-1">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="responsive-gap-y">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-md">
+          <TabsTrigger value="overview" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <TrendingUp className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.overview')}</span>
           </TabsTrigger>
-          <TabsTrigger value="measurements" className="flex items-center gap-2">
+          <TabsTrigger value="measurements" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <TrendingUp className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.measurements')}</span>
           </TabsTrigger>
-          <TabsTrigger value="milestones" className="flex items-center gap-2">
+          <TabsTrigger value="milestones" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <CheckCircle className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.milestones')}</span>
           </TabsTrigger>
-          <TabsTrigger value="feeding" className="flex items-center gap-2">
+          <TabsTrigger value="feeding" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <Utensils className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.feeding')}</span>
           </TabsTrigger>
-          <TabsTrigger value="sleep" className="flex items-center gap-2">
+          <TabsTrigger value="sleep" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <Clock className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.sleep')}</span>
           </TabsTrigger>
-          <TabsTrigger value="vaccinations" className="flex items-center gap-2">
+          <TabsTrigger value="vaccinations" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <Stethoscope className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.vaccinations')}</span>
           </TabsTrigger>
-          <TabsTrigger value="vitamins" className="flex items-center gap-2">
+          <TabsTrigger value="vitamins" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <Pill className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.vitamins')}</span>
           </TabsTrigger>
-          <TabsTrigger value="milk" className="flex items-center gap-2">
+          <TabsTrigger value="milk" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <Milk className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.milk_consumption')}</span>
           </TabsTrigger>
-          <TabsTrigger value="notes" className="flex items-center gap-2">
+          <TabsTrigger value="notes" className="flex items-center gap-2 data-[state=active]:bg-white dark:data-[state=active]:bg-[#1a2127] data-[state=active]:text-blue-600 dark:data-[state=active]:text-emerald-400">
             <BookOpen className="h-4 w-4" />
             <span className="hidden sm:inline">{t('baby.notes')}</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-4">
-          <BabyGrowthOverview baby={babyData} />
+        <TabsContent value="overview" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyGrowthOverview baby={babyData} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="measurements" className="space-y-4">
-          <BabyMeasurements babyId={babyData.id} />
+        <TabsContent value="measurements" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyMeasurements babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="milestones" className="space-y-4">
-          <BabyMilestones babyId={babyData.id} />
+        <TabsContent value="milestones" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyMilestones babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="feeding" className="space-y-4">
-          <BabyFeeding babyId={babyData.id} />
+        <TabsContent value="feeding" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyFeeding babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="sleep" className="space-y-4">
-          <BabySleep babyId={babyData.id} />
+        <TabsContent value="sleep" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabySleep babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="vaccinations" className="space-y-4">
-          <BabyVaccinations babyId={babyData.id} />
+        <TabsContent value="vaccinations" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyVaccinations babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="vitamins" className="space-y-4">
-          <BabyVitamins babyId={babyData.id} />
+        <TabsContent value="vitamins" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyVitamins babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="milk" className="space-y-4">
-          <BabyMilkConsumption babyId={babyData.id} />
+        <TabsContent value="milk" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyMilkConsumption babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        <TabsContent value="notes" className="space-y-4">
-          <BabyNotes babyId={babyData.id} />
+        <TabsContent value="notes" className="space-y-4 mt-6">
+          <Card className="bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
+            <CardContent className="p-6 responsive-card-content">
+              <BabyNotes babyId={babyData.id} />
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
 
@@ -279,6 +307,6 @@ export default function BabyGrowthPage() {
         open={showAddBaby} 
         onOpenChange={setShowAddBaby}
       />
-    </div>
+    </MainLayout>
   );
 }
