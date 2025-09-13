@@ -1,0 +1,65 @@
+# Example terraform.tfvars file for production environment
+# Copy to terraform.tfvars and fill in the values
+
+# Project settings
+project_id     = "healthtrackplus-prod"
+project_prefix = "healthtrackplus"
+region         = "us-central1"
+secondary_region = "us-east1"
+multi_region   = true
+
+# Network configuration - Primary Region
+private_subnet_cidr = "10.0.0.0/20"
+public_subnet_cidr  = "10.0.16.0/24"
+connector_cidr      = "10.8.0.0/28"
+
+# Network configuration - Secondary Region
+secondary_private_subnet_cidr = "10.1.0.0/20"
+secondary_public_subnet_cidr  = "10.1.16.0/24"
+secondary_connector_cidr      = "10.9.0.0/28"
+
+# Database credentials and configuration
+db_name           = "healthtrackplus"
+db_user           = "app"
+db_password       = "change-me-in-prod" # Use a secure password
+db_admin_user     = "admin"
+db_admin_password = "change-me-in-prod" # Use a secure password
+db_read_replicas_count = 2
+
+# API configuration
+api_image_tag    = "v2.0.0"
+api_min_instances = "2"
+api_max_instances = "100"
+
+# Payment integration (use production keys)
+stripe_publishable_key = "pk_live_example"
+stripe_secret_key      = "sk_live_example"
+stripe_webhook_secret  = "whsec_example"
+
+# Authentication (use production credentials)
+firebase_server_key  = "example-server-key"
+google_client_id     = "example-google-client-id.apps.googleusercontent.com"
+google_client_secret = "example-google-client-secret"
+apple_client_id      = "example.apple.client.id"
+apple_client_secret  = "example-apple-client-secret"
+
+# Domain name
+domain_name = "app.healthtrackplus.com"
+
+# Alerting
+alert_email       = "alerts@healthtrackplus.com"
+slack_webhook_url = "https://hooks.slack.com/services/example"
+slack_channel     = "#production-alerts"
+
+# Functions version
+functions_version = "2.0"
+
+# AI model configuration
+model_artifact_uri = "gs://healthtrackplus-prod-models/medical-analysis-v2"
+model_container_image = "us-docker.pkg.dev/vertex-ai/prediction/tf2-gpu.2-8:latest"
+model_accelerator_type = "NVIDIA_TESLA_T4"
+model_accelerator_count = 1
+gemini_base_model = "gemini-1.5-pro-001"
+gemini_training_data_uri = "gs://healthtrackplus-prod-ai-data/training-data"
+gemini_eval_data_uri = "gs://healthtrackplus-prod-ai-data/eval-data"
+gemini_validation_data_uri = "gs://healthtrackplus-prod-ai-data/validation-data"

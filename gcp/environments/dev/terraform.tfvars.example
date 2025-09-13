@@ -1,0 +1,45 @@
+# Example terraform.tfvars file for development environment
+# Copy to terraform.tfvars and fill in the values
+
+# Project settings
+project_id     = "healthtrackplus-dev"
+project_prefix = "healthtrackplus"
+region         = "us-central1"
+
+# Network configuration
+private_subnet_cidr = "10.0.0.0/20"
+public_subnet_cidr  = "10.0.16.0/24"
+connector_cidr      = "10.8.0.0/28"
+
+# Database credentials
+db_name           = "healthtrackplus"
+db_user           = "app"
+db_password       = "change-me-123" # Change this!
+db_admin_user     = "admin"
+db_admin_password = "change-me-456" # Change this!
+
+# API configuration
+api_image_tag = "dev-latest"
+
+# Payment integration
+stripe_publishable_key = "pk_test_example"
+stripe_secret_key      = "sk_test_example"
+stripe_webhook_secret  = "whsec_example"
+
+# Authentication
+firebase_server_key  = "example-server-key"
+google_client_id     = "example-google-client-id.apps.googleusercontent.com"
+google_client_secret = "example-google-client-secret"
+apple_client_id      = "example.apple.client.id"
+apple_client_secret  = "example-apple-client-secret"
+
+# Domain name
+domain_name = "dev.healthtrackplus.com"
+
+# Alerting
+alert_email       = "dev-alerts@healthtrackplus.com"
+slack_webhook_url = "https://hooks.slack.com/services/example"
+slack_channel     = "#dev-alerts"
+
+# Functions version
+functions_version = "0.1"
