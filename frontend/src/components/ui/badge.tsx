@@ -35,10 +35,10 @@ export interface BadgeProps
       size?: "sm" | "default";
     }
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+const Badge = React.memo(function Badge({ className, variant, ...props }: BadgeProps) {
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...props} />
   )
-}
+})
 
 export { Badge, badgeVariants }

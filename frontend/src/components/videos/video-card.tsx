@@ -2,6 +2,7 @@ import { Video, VideoProgress } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Play } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -20,7 +21,7 @@ interface VideoCardProps {
   video: Video;
 }
 
-export function VideoCard({ video }: VideoCardProps) {
+export const VideoCard = React.memo(({ video }: VideoCardProps) => {
   const { t } = useTranslation();
   const [videoOpen, setVideoOpen] = useState(false);
   const [watchProgress, setWatchProgress] = useState(0);
@@ -104,10 +105,17 @@ export function VideoCard({ video }: VideoCardProps) {
   return (
     <Card className="overflow-hidden responsive-shadow responsive-transition hover:shadow-md border-emerald-100 dark:border-gray-700">
       <div className="relative pb-[56.25%] bg-slate-100 dark:bg-gray-800">
-        <div 
-          className={`absolute inset-0 flex items-center justify-center ${video.thumbnailUrl ? '' : bgColor}`} 
-          style={video.thumbnailUrl ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
-        >
+        <div className={`absolute inset-0 flex items-center justify-center ${video.thumbnailUrl ? '' : bgColor}`}>
+          {video.thumbnailUrl ? (
+            <OptimizedImage 
+              src={video.thumbnailUrl}
+              alt={video.title}
+              className="absolute inset-0"
+              objectFit="cover"
+              loading="lazy"
+              placeholderColor="#e2e8f0"
+            />
+          ) : null}
           <button 
             className="responsive-button-icon-lg bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 hover:bg-opacity-90 dark:hover:bg-opacity-90 responsive-transition"
             onClick={handleWatchVideo}
@@ -203,4 +211,6 @@ export function VideoCard({ video }: VideoCardProps) {
       </Dialog>
     </Card>
   );
-}
+});
+
+VideoCard.displayName = "VideoCard";

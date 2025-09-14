@@ -1,8 +1,11 @@
 
-/* Importar estilos padronizados para o modo escuro */
+/* Import design tokens first to make them available to other files */
+@import './styles/design-tokens.css';
+
+/* Import standardized styles for dark mode */
 @import './styles/dark-mode.css';
 
-/* Importar estilos padronizados para responsividade */
+/* Import standardized styles for responsiveness */
 @import './styles/responsiveness.css';
 
 @tailwind base;

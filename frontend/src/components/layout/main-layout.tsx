@@ -11,7 +11,7 @@ interface MainLayoutProps {
   fullWidth?: boolean; // Opção para conteúdo em largura total
 }
 
-export function MainLayout({ 
+export const MainLayout = React.memo(function MainLayout({ 
   children, 
   title, 
   hideTitle = false,
@@ -57,4 +57,4 @@ export function MainLayout({
       <SimpleMedicalChat />
     </div>
   );
-}
+})

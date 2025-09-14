@@ -7,7 +7,7 @@
 
 export const CARD_CONFIG = {
   // Card border radius
-  borderRadius: 'var(--radius-lg)',
+  borderRadius: 'var(--radius-xl)',
   
   // Card shadow
   shadow: 'var(--shadow-md)',

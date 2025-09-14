@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 import { 
   Baby, 
   ChevronLeft, 
@@ -18,7 +19,7 @@ interface PregnancyEvolutionProps {
   currentDay: number;
 }
 
-export function PregnancyEvolution({ currentWeek, currentDay }: PregnancyEvolutionProps) {
+export const PregnancyEvolution = React.memo(({ currentWeek, currentDay }: PregnancyEvolutionProps) => {
   const { t } = useTranslation();
   const [selectedWeek, setSelectedWeek] = useState(currentWeek);
   const [selectedDay, setSelectedDay] = useState(currentDay);
@@ -279,10 +280,23 @@ export function PregnancyEvolution({ currentWeek, currentDay }: PregnancyEvoluti
           <CardContent>
             <div className="text-center">
               <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg p-8 mb-4">
-                {/* Placeholder for baby image */}
-                <div className="w-32 h-32 mx-auto bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center">
-                  <Baby className="h-16 w-16 text-primary" />
-                </div>
+                {data.imageUrl ? (
+                  <OptimizedImage
+                    src={data.imageUrl}
+                    alt={`Baby development at week ${selectedWeek}`}
+                    width={160}
+                    height={160}
+                    className="w-32 h-32 mx-auto rounded-full"
+                    loading="lazy"
+                    objectFit="cover"
+                    fallbackSrc="/assets/images/pregnancy-placeholder.svg"
+                    placeholderColor="#f9d4fa"
+                  />
+                ) : (
+                  <div className="w-32 h-32 mx-auto bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center">
+                    <Baby className="h-16 w-16 text-primary" />
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <p className="text-lg font-semibold">{data.babySize}</p>
@@ -375,4 +389,6 @@ export function PregnancyEvolution({ currentWeek, currentDay }: PregnancyEvoluti
       </Card>
     </div>
   );
-}
+});
+
+PregnancyEvolution.displayName = "PregnancyEvolution";

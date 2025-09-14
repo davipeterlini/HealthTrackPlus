@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import { useMemo } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { MedicalExam, HealthInsight } from "@shared/schema";
@@ -12,7 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ExamList } from "@/components/exams/exam-list";
+import { VirtualizedExamList } from "@/components/exams/virtualized-exam-list";
+import { VirtualizedInsightsGrid } from "@/components/health/virtualized-insights-grid";
 import { ExamInsightsChart } from "@/components/exams/exam-insights-chart";
 import { InsightDetailCharts } from "@/components/exams/insight-detail-charts";
 import { 
@@ -292,10 +292,11 @@ export default function ExamsPage() {
       
       {/* Lista de exames */}
       <Card className="responsive-mb bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
-        <ExamList 
+        <VirtualizedExamList 
           exams={exams} 
           isLoading={isLoadingExams} 
           onSelectExam={(id: number) => setSelectedExamId(id)}
+          containerHeight={400}
         />
       </Card>
       
@@ -307,58 +308,13 @@ export default function ExamsPage() {
         </Button>
       </div>
       
-      {isLoadingInsights ? (
-        <div className="responsive-grid-3 responsive-gap-y">
-          {[1, 2, 3].map((i) => (
-            <Card key={i} className="p-4 animate-pulse bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 w-1/2 rounded mb-3"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 w-3/4 rounded mb-2"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 w-full rounded mb-2"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 w-5/6 rounded mb-4"></div>
-              <div className="h-6 bg-gray-200 dark:bg-gray-700 w-1/3 rounded"></div>
-            </Card>
-          ))}
-        </div>
-      ) : healthInsights.length === 0 ? (
-        <Card className="p-6 text-center bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
-          <div className="mx-auto w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-            <AlertCircle className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-          </div>
-          <h3 className="responsive-title-sm mb-2 text-slate-800 dark:text-white">{t('health.noInsightsYet')}</h3>
-          <p className="responsive-text-sm text-slate-600 dark:text-slate-400 mb-4">
-            {t('health.uploadExamToGetInsights')}
-          </p>
-        </Card>
-      ) : (
-        <div className="responsive-grid-3 responsive-gap-y">
-          {healthInsights.map((insight) => (
-            <Card key={insight.id} className="p-5 flex flex-col h-full bg-white dark:bg-[#1a2127] border-emerald-100 dark:border-[#2b353e] responsive-card">
-              <div className="flex justify-between items-start responsive-mb-xs">
-                <div className="flex items-center">
-                  <div className={`p-2 rounded-full ${insight.severity === 'normal' ? 'bg-emerald-50 dark:bg-emerald-900/20' : insight.severity === 'attention' ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-red-50 dark:bg-red-900/20'} mr-3`}>
-                    {getCategoryIcon(insight.category)}
-                  </div>
-                  <h3 className="responsive-text-md font-semibold text-slate-800 dark:text-white">{insight.title}</h3>
-                </div>
-                <Badge className={getSeverityColor(insight.severity)}>
-                  {insight.severity.charAt(0).toUpperCase() + insight.severity.slice(1)}
-                </Badge>
-              </div>
-              <p className="responsive-text-sm text-slate-600 dark:text-slate-400 responsive-mb-xs">
-                {insight.description}
-              </p>
-              <div className="mt-auto">
-                <div className="responsive-text-xs text-slate-500 dark:text-slate-400 mb-1">
-                  {t('health.recommendation')}:
-                </div>
-                <p className="responsive-text-sm text-emerald-600 dark:text-emerald-400">
-                  {insight.recommendation}
-                </p>
-              </div>
-            </Card>
-          ))}
-        </div>
-      )}
+      <VirtualizedInsightsGrid
+        insights={healthInsights}
+        isLoading={isLoadingInsights}
+        height={600}
+        columnCount={3}
+        rowHeight={220}
+      />
       
       {/* Dialog de visualização de exame */}
       <Dialog open={!!selectedExamId} onOpenChange={(open) => !open && setSelectedExamId(null)}>
