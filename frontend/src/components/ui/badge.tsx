@@ -2,30 +2,38 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { BADGE_SIZES, BADGE_VARIANTS } from "@/config/components/badge"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center gap-1 rounded-[var(--badge-border-radius)] border text-[var(--badge-font-size)] font-[var(--badge-font-weight)] transition-colors focus:outline-none focus:ring-[var(--focus-ring-width)] focus:ring-[rgb(var(--focus-ring-color))] focus:ring-offset-[var(--focus-ring-offset)]",
   {
     variants: {
       variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
+        default: BADGE_VARIANTS.default.base,
+        secondary: BADGE_VARIANTS.secondary.base,
+        destructive: BADGE_VARIANTS.destructive.base,
+        outline: BADGE_VARIANTS.outline.base,
+        success: BADGE_VARIANTS.success.base,
+        warning: BADGE_VARIANTS.warning.base,
+        info: BADGE_VARIANTS.info.base,
+      },
+      size: {
+        sm: BADGE_SIZES.sm,
+        default: BADGE_SIZES.md,
       },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 )
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants> {
+      size?: "sm" | "default";
+    }
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
