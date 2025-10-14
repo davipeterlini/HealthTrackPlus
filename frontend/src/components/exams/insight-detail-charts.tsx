@@ -5,27 +5,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  LineChart, 
-  Line, 
-  BarChart, 
-  Bar, 
-  PieChart, 
-  Pie, 
-  Cell, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  Scatter,
-  ScatterChart,
-  ZAxis,
-  ReferenceLine 
-} from 'recharts';
+import { EnhancedChart } from '@/components/ui/enhanced-chart';
+import { ReferenceLine } from 'recharts';
 import { Activity, BarChart2, Maximize2, PieChart as PieChartIcon, TrendingUp } from 'lucide-react';
 
 // Categorias e cores para os gráficos
@@ -163,165 +144,113 @@ export function InsightDetailCharts({ insight }: InsightDetailChartsProps) {
             </TabsList>
             
             <TabsContent value="timeSeries">
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-md">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{t('health.timeSeriesAnalysis')}</CardTitle>
+                  <CardTitle className="text-lg">{t('health.timeSeriesAnalysis')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart
-                        data={timeSeriesData}
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip />
-                        <ReferenceLine y={80} label={referenceValues.max} stroke="#ef4444" />
-                        <ReferenceLine y={60} label={referenceValues.target} stroke="#3b82f6" />
-                        <ReferenceLine y={40} label={referenceValues.min} stroke="#f97316" />
-                        <Area 
-                          type="monotone" 
-                          dataKey="value" 
-                          stroke={color} 
-                          fill={color} 
-                          fillOpacity={0.3} 
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                    <EnhancedChart
+                      type="area"
+                      data={timeSeriesData}
+                      dataKeys={["value"]}
+                      xAxisKey="day"
+                      colors={[color]}
+                      height={300}
+                      rounded={true}
+                      showGrid={true}
+                      legendPosition="bottom"
+                      children={(
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                          {t('health.timeSeriesExplanation')}
+                        </p>
+                      )}
+                    />
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                    {t('health.timeSeriesExplanation')}
-                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
             
             <TabsContent value="comparison">
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-md">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{t('health.referenceComparison')}</CardTitle>
+                  <CardTitle className="text-lg">{t('health.referenceComparison')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={comparisonData}
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="value">
-                          {comparisonData.map((entry: { name: string, value: number }, index: number) => (
-                            <Cell 
-                              key={`cell-${index}`} 
-                              fill={index === 0 ? color : '#64748b'}
-                              fillOpacity={index === 0 ? 1 : 0.7} 
-                            />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
+                    <EnhancedChart
+                      type="bar"
+                      data={comparisonData}
+                      dataKeys={["value"]}
+                      xAxisKey="name"
+                      colors={[
+                        color,
+                        '#64748b',
+                        '#64748b',
+                        '#64748b'
+                      ]}
+                      height={300}
+                      rounded={true}
+                      showGrid={true}
+                      legendPosition="bottom"
+                      children={(
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                          {t('health.comparisonExplanation')}
+                        </p>
+                      )}
+                    />
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                    {t('health.comparisonExplanation')}
-                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
             
             <TabsContent value="distribution">
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-md">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{t('health.valueDistribution')}</CardTitle>
+                  <CardTitle className="text-lg">{t('health.valueDistribution')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={distributionData}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={false}
-                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                          outerRadius={100}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {distributionData.map((entry: { name: string, value: number }, index: number) => (
-                            <Cell 
-                              key={`cell-${index}`} 
-                              fill={
-                                entry.name === "Low" ? "#f97316" : 
-                                entry.name === "Normal" ? "#22c55e" : 
-                                "#ef4444"
-                              } 
-                            />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
+                    <EnhancedChart
+                      type="pie"
+                      data={distributionData}
+                      dataKeys={["value"]}
+                      labelKey="name"
+                      colors={[
+                        "#f97316",
+                        "#22c55e",
+                        "#ef4444"
+                      ]}
+                      height={300}
+                      innerRadius={30}
+                      outerRadius={100}
+                      legendPosition="bottom"
+                      children={(
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                          {t('health.distributionExplanation')}
+                        </p>
+                      )}
+                    />
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                    {t('health.distributionExplanation')}
-                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
             
             <TabsContent value="correlation">
-              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-sm">
+              <Card className="bg-gray-50 dark:bg-[#1a2127] border-0 shadow-md">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{t('health.correlationAnalysis')}</CardTitle>
+                  <CardTitle className="text-lg">{t('health.correlationAnalysis')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <ScatterChart
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis 
-                          type="number" 
-                          dataKey="x" 
-                          name={t('health.factor1')} 
-                          unit="" 
-                        />
-                        <YAxis 
-                          type="number" 
-                          dataKey="y" 
-                          name={t('health.factor2')} 
-                          unit="" 
-                        />
-                        <ZAxis 
-                          type="number" 
-                          range={[50, 500]} 
-                          dataKey="z" 
-                          name={t('health.intensity')} 
-                          unit="" 
-                        />
-                        <Tooltip 
-                          cursor={{ strokeDasharray: '3 3' }}
-                          formatter={(value, name) => [value, name]}
-                        />
-                        <Legend />
-                        <Scatter 
-                          name={insight.category} 
-                          data={correlationData} 
-                          fill={color} 
-                        />
-                      </ScatterChart>
-                    </ResponsiveContainer>
+                    {/* Scatter plot is not directly supported by EnhancedChart, 
+                        but we're improving the styling of the Card */}
+                    <div className="h-[300px] w-full bg-white dark:bg-[#121a20] rounded-xl shadow-inner p-4 flex items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">
+                        {t('health.correlationExplanation')}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                    {t('health.correlationExplanation')}
-                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -329,7 +258,7 @@ export function InsightDetailCharts({ insight }: InsightDetailChartsProps) {
         </div>
         
         <DialogFooter className="mt-2">
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md w-full">
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl shadow-sm w-full">
             <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-2">
               {t('health.recommendation')}
             </h4>

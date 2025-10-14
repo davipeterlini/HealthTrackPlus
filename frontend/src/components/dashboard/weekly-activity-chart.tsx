@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Card } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
+import { StyledBox } from "@/components/ui/styled-box";
 
 interface ActivityDay {
   day: string;
@@ -78,20 +79,21 @@ export const WeeklyActivityChart = React.memo(({ activityData, isLoading = false
   }, [isLoading, activityData, defaultData]);
 
   return (
-    <Card className="bg-white dark:bg-[#1a2127] border border-emerald-100 dark:border-0 p-1.5 xxs:p-2 xs:p-3 sm:p-4 mb-2 xxs:mb-3 xs:mb-4 shadow-md overflow-hidden w-full max-w-full">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 xxs:mb-2 xs:mb-3 gap-1 xxs:gap-1.5 w-full max-w-full overflow-hidden box-border">
-        <h3 className="text-base xxs:text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
-        <div className="flex flex-wrap items-center gap-2 xxs:gap-3 sm:gap-4 text-[10px] xxs:text-xs">
-          <div className="flex items-center">
-            <div className="w-2.5 h-2.5 xxs:w-3 xxs:h-3 rounded-full bg-emerald-500 mr-1 xxs:mr-1.5"></div>
-            <span className="text-[10px] xxs:text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-2.5 h-2.5 xxs:w-3 xxs:h-3 rounded-full bg-blue-500 mr-1 xxs:mr-1.5"></div>
-            <span className="text-[10px] xxs:text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
+    <Card className="mb-2 xxs:mb-3 xs:mb-4 overflow-hidden w-full max-w-full" style={{ borderRadius: 'var(--card-border-radius)' }}>
+      <StyledBox variant="default" className="p-1.5 xxs:p-2 xs:p-3 sm:p-4 w-full" border={false} shadow={false} hover={false}>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 xxs:mb-2 xs:mb-3 gap-1 xxs:gap-1.5 w-full max-w-full overflow-hidden box-border">
+          <h3 className="text-base xxs:text-lg sm:text-xl font-semibold">{t('health.weeklyActivities')}</h3>
+          <div className="flex flex-wrap items-center gap-2 xxs:gap-3 sm:gap-4 text-[10px] xxs:text-xs">
+            <div className="flex items-center">
+              <div className="w-2.5 h-2.5 xxs:w-3 xxs:h-3 rounded-full bg-emerald-500 mr-1 xxs:mr-1.5"></div>
+              <span className="text-[10px] xxs:text-xs text-slate-600 dark:text-gray-400">{t('activity.steps')}</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2.5 h-2.5 xxs:w-3 xxs:h-3 rounded-full bg-blue-500 mr-1 xxs:mr-1.5"></div>
+              <span className="text-[10px] xxs:text-xs text-slate-600 dark:text-gray-400">{t('activity.calories')}</span>
+            </div>
           </div>
         </div>
-      </div>
       
       <div className="relative h-24 xxs:h-28 xs:h-32 sm:h-40 md:h-44 mt-2 xxs:mt-3 sm:mt-2 ml-2 xxs:ml-3 xs:ml-4 sm:ml-6 mr-1">
         {/* Linhas de grade horizontais */}
@@ -122,7 +124,7 @@ export const WeeklyActivityChart = React.memo(({ activityData, isLoading = false
                   
                   {/* Tooltip aprimorado */}
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30 shadow-xl">
-                    <div className="bg-white dark:bg-slate-800 shadow-lg rounded-md p-2 text-xs min-w-[100px] sm:min-w-[120px]">
+                    <div className="bg-white dark:bg-slate-800 shadow-lg rounded-xl p-2 text-xs min-w-[100px] sm:min-w-[120px]">
                       <div className="font-semibold text-slate-800 dark:text-white mb-1">{item.day}</div>
                       <div className="flex justify-between text-slate-600 dark:text-gray-300">
                         <span>{t('activity.stepsLabel')}:</span>
@@ -175,6 +177,7 @@ export const WeeklyActivityChart = React.memo(({ activityData, isLoading = false
       <div className="mt-2 text-xs text-center text-slate-500 dark:text-gray-400 sm:hidden">
         <p>{t('health.touchBars')}</p>
       </div>
+      </StyledBox>
     </Card>
   );
 });
